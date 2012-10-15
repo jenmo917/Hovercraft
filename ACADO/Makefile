@@ -20,6 +20,7 @@ IFLAGS	= -I. \
 CPPFLAGS  =	${IFLAGS} ${CPP_GLOBAL_FLAGS}
 
 SRCS_CLEAN = \
+	HelloWorld/ACADO.cpp
 
 SRCS = $(patsubst %, $(SOURCE_PATH)/%, $(SRCS_CLEAN))
 OBJS = $(SRCS:$(SOURCE_PATH)/%.cpp=$(BUILD_PATH)/%.${OBJEXT})
