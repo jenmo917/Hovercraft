@@ -1,0 +1,7 @@
+.metadata/*
+
+ArduinoCore/*
+
+USBHost/*
+
+USBHost_lib/*
