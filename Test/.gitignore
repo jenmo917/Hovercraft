@@ -1,0 +1,9 @@
+.settings/*
+examples/*
+Debug/*
+Release/*
+utility/*
+.cproject
+.project
+Wire.cpp
+Wire.h
