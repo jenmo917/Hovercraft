@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">bluetoothServerTest</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_bluetooth_server">BluetoothServer</string>
+    <string name="btnSetup">I am Server!</string>
+    <string name="textInfo">Info...</string>
+    <string name="btnClose">Close</string>
+    <string name="btnConnect">Wait for connection</string>
+    <string name="textMessage">No messages...</string>
+    <string name="btnListen">Listen for messages</string>
+
+</resources>
