@@ -15,11 +15,10 @@ void setup()   {
 void loop()
 {
   digitalWrite(ledPin, HIGH);   // set the LED on
-  delay(500);                  // wait for a second
+  delay(2000);                  // wait for a second
   digitalWrite(ledPin, LOW);    // set the LED off
-  delay(500);                  // wait for a second
+  delay(2000);                  // wait for a second
 }
-
 
 int main(void) {
 
