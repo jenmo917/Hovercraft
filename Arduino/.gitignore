@@ -1,7 +1,8 @@
 .metadata/*
-
 ArduinoCore/*
-
 USBHost/*
-
 USBHostLib/*
+I2C_basic/*
+WireLib/*
+I2C_master/*
+I2C_slave/*

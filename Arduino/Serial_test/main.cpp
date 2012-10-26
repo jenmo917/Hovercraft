@@ -7,7 +7,6 @@ int ledPin =  13;    // LED connected to digital pin 13
 void setup()   {
   // initialize the digital pin as an output:
 	Serial.begin(9600);
-	Serial2.begin(19200);
 }
 
 // the loop() method runs over and over again,
@@ -16,7 +15,6 @@ void setup()   {
 void loop()
 {
 	Serial.println("Hello Computer 1");
-	Serial2.println("Hello Computer 2");
 }
 
 
