@@ -4,5 +4,10 @@ USBHost/*
 USBHostLib/*
 I2C_basic/*
 WireLib/*
-I2C_master/*
-I2C_slave/*
+i2cMaster/*
+i2cslave/*
+USBControlledLED/*
+Cplusplus/*
+EventsLib/*
+TestProject/*
+
