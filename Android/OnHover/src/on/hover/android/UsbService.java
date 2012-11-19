@@ -39,7 +39,7 @@ public class UsbService extends IntentService
 	
 	public UsbService() 
 	{
-		super("IntentTestService");
+		super("UsbService");
 	}
 
     public static UsbService getInstance() 
