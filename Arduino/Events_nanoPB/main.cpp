@@ -20,7 +20,7 @@ void setup() {
     driveSetup();
     disp.addEventListener(Events::EV_TIME_1000, timeHandler1000);
     //disp.addEventListener(Events::EV_TIME_1000, usbSoftwareTestHandler);
-    disp.addEventListener(Events::EV_TIME_1000, IRSensorHandler);
+    //disp.addEventListener(Events::EV_TIME_1000, IRSensorHandler);
     //disp.addEventListener(Events::EV_TIME_1000, I2CSensorDataHandler);
     disp.addEventListener(Events::EV_TIME_500, timeHandler500);
     //disp.addEventListener(Events::EV_TIME_100, timeHandler100);
@@ -45,7 +45,7 @@ int main(void)
   /* Must call init for arduino to work properly */
 	init();
 	setup();
-
+	//encodeMsg();
 	for (;;)
 	{
 	  loop();
