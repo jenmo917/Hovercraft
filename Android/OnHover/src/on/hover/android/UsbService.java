@@ -1,11 +1,15 @@
 package on.hover.android;
 
+import java.util.Random;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import on.hover.android.Command.Protocol;
+
 import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
+import com.google.protobuf.InvalidProtocolBufferException;
 
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
@@ -17,6 +21,8 @@ import android.util.Log;
 
 public class UsbService extends IntentService
 {
+	Random generator = new Random();
+	
 	public static boolean isActive = false; // this is true if the service is up and running
 	private boolean accessoryDetached = false; // TODO: true if android accessory is detached
 	
@@ -29,7 +35,7 @@ public class UsbService extends IntentService
 
     private static String TAG = "JMMainActivity";
     private static UsbService singleton;
-	private static final byte TOGGLE_LED_COMMAND = 15;
+	private static final byte RIGHT_POWER_COMMAND = 0x5;
 	
 	private UsbManager mUsbManager = UsbManager.getInstance(this);
 	private UsbAccessory mAccessory;
@@ -49,7 +55,7 @@ public class UsbService extends IntentService
     
     public void sendString()
     {    	   
-    	sendCommand(TOGGLE_LED_COMMAND);
+    	sendCommand(RIGHT_POWER_COMMAND);
     }
     
     @Override
@@ -166,17 +172,56 @@ public class UsbService extends IntentService
 		}
 	}
 
+	static Protocol createProtocol(String command, String address, String message) 
+	{
+		Protocol.Builder right = Protocol.newBuilder();
+		right.setCommand(command);
+		right.setAddress(address);
+		right.setMessage(message);
+		return right.build();
+	}
+	
 	private void sendCommand(byte command)
 	{
+	    int roll = generator.nextInt(256);
+		Protocol right = createProtocol(""+roll, "Motor", "turn 200 degrees to the right"); 
+		byte[] message = right.toByteArray();
+		int byteLength = message.length;
+		
+		try 
+		{
+			Protocol protocol = Protocol.parseFrom(message);
+			Log.d(TAG,"address: "+protocol.getAddress());
+			Log.d(TAG,"command: "+protocol.getCommand());
+			Log.d(TAG,"message: "+protocol.getMessage());
+		} 
+		catch (InvalidProtocolBufferException e1) 
+		{
+			e1.printStackTrace();
+		}
+		
+		byte[] buffer = new byte[3+byteLength];
+		
+		buffer[0] = 0x5; // command
+		buffer[1] = 0x1; // target
+		buffer[2] = (byte) byteLength; // length
+
+		for (int x = 0; x < byteLength; x++) 
+		{
+			buffer[3 + x] = message[x]; // message
+			Log.d(TAG, ""+message[x]);
+		}
+		Log.d(TAG,"byteLength:"+byteLength);
+		
 		if (mOutputStream != null)
 		{
 			try
 			{
-				mOutputStream.write(command);
+				mOutputStream.write(buffer);
 			}
 			catch (IOException e) 
 			{
-				// Do nothing
+				Log.e(TAG, "write failed", e);
 			}
 		} 
 		else
@@ -207,7 +252,7 @@ public class UsbService extends IntentService
         	}
         	
 			// try to send data to arduino
-        	sendCommand(TOGGLE_LED_COMMAND);
+        	sendCommand(RIGHT_POWER_COMMAND);
 
         	try
         	{

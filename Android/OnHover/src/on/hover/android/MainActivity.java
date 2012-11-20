@@ -54,7 +54,8 @@ public class MainActivity extends Activity
 		Log.d(TAG,"onCreate start");
 		super.onCreate(savedInstanceState);
 		
-		if(usbManager.getAccessoryList() == null)
+		//usbManager.getAccessoryList() == null
+		if(false)
 		{
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			 
