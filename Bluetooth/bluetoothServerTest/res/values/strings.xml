@@ -10,5 +10,6 @@
     <string name="btnConnect">Wait for connection</string>
     <string name="textMessage">No messages...</string>
     <string name="btnListen">Listen for messages</string>
+    <string name="btnRead">Read</string>
 
 </resources>

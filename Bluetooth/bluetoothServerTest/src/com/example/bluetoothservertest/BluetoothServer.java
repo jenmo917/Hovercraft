@@ -2,13 +2,11 @@ package com.example.bluetoothservertest;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Iterator;
+import java.io.InputStreamReader;
 import java.util.UUID;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -22,17 +20,22 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-@SuppressLint("HandlerLeak")
+import protocolbufferjava.Test.Protocol;
+
 public class BluetoothServer extends Activity {
 
 	Button btnSetup;
 	Button btnClose;
 	Button btnConnect;
 	Button btnListen;
+	Button btnRead;
 
 	TextView textInfo;
 	TextView textMessage;
+	
+	Protocol coords;
 
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -45,7 +48,9 @@ public class BluetoothServer extends Activity {
 		btnClose = (Button) findViewById(R.id.btn_close);
 		btnConnect = (Button) findViewById(R.id.btn_connect);
 		btnListen = (Button) findViewById(R.id.btn_collect);
-
+		btnRead = (Button) findViewById(R.id.btn_read);
+		
+		
 		textInfo = (TextView) findViewById(R.id.text_info);
 		textMessage = (TextView) findViewById(R.id.text_messages);
 
@@ -100,14 +105,73 @@ public class BluetoothServer extends Activity {
 
 		btnListen.setOnClickListener( new OnClickListener() 
 		{
-
 			@Override
 			public void onClick(View v) 
 			{
 				listen();
 			}
 		});
+		
 
+		
+		
+		
+		btnRead.setOnClickListener(new OnClickListener() 
+		{
+			
+			@Override
+			public void onClick(View v) 
+			{
+
+				char[] tempCharArray = new char[1024];
+				String tempString = null;
+				
+				int tempInt = 0;
+				int i = 0;
+				
+				while( true )
+				{
+					try 
+					{
+						tempInt = btReader.read();
+					} 
+					catch (IOException e1) 
+					{
+						
+						textMessage.setText("Failed ones..");
+					}
+					
+					if(tempInt == 36)
+						break;
+
+					tempCharArray[i] = (char)tempInt;;
+
+					i++;	
+				}
+				
+				tempString = new String(tempCharArray);
+				String selectedPart = tempString.substring(0, i);
+				
+				textMessage.setText(selectedPart);
+							
+				byte[] protoByte = selectedPart.getBytes();			
+		
+				try
+				{
+						Protocol coords = protocolbufferjava.Test.Protocol.parseFrom(protoByte);
+						
+						if(coords.hasXCoor())
+						{
+							textMessage.setText("Proto: " + coords.getXCoor());
+						}
+				}
+				
+				catch (IOException e)
+				{
+					textMessage.setText(">" + selectedPart + "<"+ "Failed...");
+				}				
+			}
+		});
 	}
 
 
@@ -215,8 +279,9 @@ public class BluetoothServer extends Activity {
 
 
 	private InputStream mmInStream;
+	private InputStreamReader btReader;
 
-	byte[] buffer = new byte[1024];  // buffer store for the stream
+	byte[] buffer = new byte[2048]; // buffer store for the stream
 	int bytes; // bytes returned from read()
 
 
@@ -236,7 +301,12 @@ public class BluetoothServer extends Activity {
 				//TODO
 				return;
 			}		
+			
+			btReader = new InputStreamReader(mmInStream);
+			
+			
 		}
+		
 		//Start thread to read bluetooth
 		if(!thread.isAlive())
 		{
@@ -250,13 +320,14 @@ public class BluetoothServer extends Activity {
 	{
 		public void run() 
 		{
-			//textInfo.append("..WOHO..");
-
-			textMessage.setText(str);
+			if(coords.hasXCoor())
+			{
+				textMessage.setText("X: " + coords.getXCoor() + "\nY: " + coords.getYCoor() +  "\nZ: " + coords.getZCoor());
+			}
 		}
 	};
 
-	String str;
+	String str = "ost";
 	
 	Thread thread = new Thread()
 	{
@@ -274,33 +345,61 @@ public class BluetoothServer extends Activity {
 					e.printStackTrace();
 				}
 				
-				try
-				{
-					bytes = mmInStream.read(buffer);
-
-					if(bytes != -1)
-					{
-						str = new String(buffer);
-					}
-
-				}
-				catch (IOException e)
-				{
-
-				}
+				readBuff();
+				
 				
 				handler.post(r);
 			}
 		}
 	};
 
+	int tempInt = 0;
+	int i = 0;
+	char[] tempCharArray = new char[1024];
+	String tempString = null;
+	String selectedPart = null;
+	
+	void readBuff()
+	{
+		tempInt = 0;
+		i = 0;
+		
+		//Ytterst obra!!!
+		while( true )
+		{
+			try 
+			{
+				tempInt = btReader.read();
+			} 
+			catch (IOException e1) 
+			{
+				
+			}
+			
+			//Ytterst obra!
+			if(tempInt == 36)
+				break;
 
+			tempCharArray[i] = (char)tempInt;;
 
+			i++;	
+		}
+		
+		
+		
+		tempString = new String(tempCharArray);
+		selectedPart = tempString.substring(0, i);
+		
+		
+		byte[] protoByte = selectedPart.getBytes();			
 
-
-
-
-
-
-
+		try
+		{
+				coords = protocolbufferjava.Test.Protocol.parseFrom(protoByte);
+		}
+		
+		catch (IOException e)
+		{
+		}				
+	}
 }
