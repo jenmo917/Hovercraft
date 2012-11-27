@@ -1,7 +1,6 @@
 .metadata/*
+pb/*
 com.embeddedartists.aoa.MainActivity/*
 Demo_AOA_Basic/*
 Demo_AOA_Nodes/*
-MyFirstApp
-ADKMiniHack/*
-pb/*
+MyFirstApp/*
