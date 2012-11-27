@@ -8,58 +8,62 @@ public final class Command {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface ProtocolOrBuilder
+  public interface SensorDataOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
-    // required string command = 1;
-    boolean hasCommand();
-    String getCommand();
+    // required string type = 1;
+    boolean hasType();
+    String getType();
     
-    // required string address = 2;
+    // required string description = 2;
+    boolean hasDescription();
+    String getDescription();
+    
+    // required uint32 address = 3;
     boolean hasAddress();
-    String getAddress();
+    int getAddress();
     
-    // optional string message = 3;
-    boolean hasMessage();
-    String getMessage();
+    // required uint32 value = 4;
+    boolean hasValue();
+    int getValue();
   }
-  public static final class Protocol extends
+  public static final class SensorData extends
       com.google.protobuf.GeneratedMessage
-      implements ProtocolOrBuilder {
-    // Use Protocol.newBuilder() to construct.
-    private Protocol(Builder builder) {
+      implements SensorDataOrBuilder {
+    // Use SensorData.newBuilder() to construct.
+    private SensorData(Builder builder) {
       super(builder);
     }
-    private Protocol(boolean noInit) {}
+    private SensorData(boolean noInit) {}
     
-    private static final Protocol defaultInstance;
-    public static Protocol getDefaultInstance() {
+    private static final SensorData defaultInstance;
+    public static SensorData getDefaultInstance() {
       return defaultInstance;
     }
     
-    public Protocol getDefaultInstanceForType() {
+    public SensorData getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return on.hover.android.Command.internal_static_on_hover_android_Protocol_descriptor;
+      return on.hover.android.Command.internal_static_on_hover_android_SensorData_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return on.hover.android.Command.internal_static_on_hover_android_Protocol_fieldAccessorTable;
+      return on.hover.android.Command.internal_static_on_hover_android_SensorData_fieldAccessorTable;
     }
     
     private int bitField0_;
-    // required string command = 1;
-    public static final int COMMAND_FIELD_NUMBER = 1;
-    private java.lang.Object command_;
-    public boolean hasCommand() {
+    // required string type = 1;
+    public static final int TYPE_FIELD_NUMBER = 1;
+    private java.lang.Object type_;
+    public boolean hasType() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public String getCommand() {
-      java.lang.Object ref = command_;
+    public String getType() {
+      java.lang.Object ref = type_;
       if (ref instanceof String) {
         return (String) ref;
       } else {
@@ -67,31 +71,31 @@ public final class Command {
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-          command_ = s;
+          type_ = s;
         }
         return s;
       }
     }
-    private com.google.protobuf.ByteString getCommandBytes() {
-      java.lang.Object ref = command_;
+    private com.google.protobuf.ByteString getTypeBytes() {
+      java.lang.Object ref = type_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-        command_ = b;
+        type_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     
-    // required string address = 2;
-    public static final int ADDRESS_FIELD_NUMBER = 2;
-    private java.lang.Object address_;
-    public boolean hasAddress() {
+    // required string description = 2;
+    public static final int DESCRIPTION_FIELD_NUMBER = 2;
+    private java.lang.Object description_;
+    public boolean hasDescription() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-    public String getAddress() {
-      java.lang.Object ref = address_;
+    public String getDescription() {
+      java.lang.Object ref = description_;
       if (ref instanceof String) {
         return (String) ref;
       } else {
@@ -99,70 +103,67 @@ public final class Command {
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-          address_ = s;
+          description_ = s;
         }
         return s;
       }
     }
-    private com.google.protobuf.ByteString getAddressBytes() {
-      java.lang.Object ref = address_;
+    private com.google.protobuf.ByteString getDescriptionBytes() {
+      java.lang.Object ref = description_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-        address_ = b;
+        description_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     
-    // optional string message = 3;
-    public static final int MESSAGE_FIELD_NUMBER = 3;
-    private java.lang.Object message_;
-    public boolean hasMessage() {
+    // required uint32 address = 3;
+    public static final int ADDRESS_FIELD_NUMBER = 3;
+    private int address_;
+    public boolean hasAddress() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
-    public String getMessage() {
-      java.lang.Object ref = message_;
-      if (ref instanceof String) {
-        return (String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-          message_ = s;
-        }
-        return s;
-      }
+    public int getAddress() {
+      return address_;
     }
-    private com.google.protobuf.ByteString getMessageBytes() {
-      java.lang.Object ref = message_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-        message_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    
+    // required uint32 value = 4;
+    public static final int VALUE_FIELD_NUMBER = 4;
+    private int value_;
+    public boolean hasValue() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public int getValue() {
+      return value_;
     }
     
     private void initFields() {
-      command_ = "";
-      address_ = "";
-      message_ = "";
+      type_ = "";
+      description_ = "";
+      address_ = 0;
+      value_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
       
-      if (!hasCommand()) {
+      if (!hasType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasDescription()) {
         memoizedIsInitialized = 0;
         return false;
       }
       if (!hasAddress()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasValue()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -174,13 +175,16 @@ public final class Command {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getCommandBytes());
+        output.writeBytes(1, getTypeBytes());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, getAddressBytes());
+        output.writeBytes(2, getDescriptionBytes());
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeBytes(3, getMessageBytes());
+        output.writeUInt32(3, address_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeUInt32(4, value_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -193,15 +197,19 @@ public final class Command {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getCommandBytes());
+          .computeBytesSize(1, getTypeBytes());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, getAddressBytes());
+          .computeBytesSize(2, getDescriptionBytes());
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(3, getMessageBytes());
+          .computeUInt32Size(3, address_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(4, value_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -215,41 +223,41 @@ public final class Command {
       return super.writeReplace();
     }
     
-    public static on.hover.android.Command.Protocol parseFrom(
+    public static on.hover.android.Command.SensorData parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static on.hover.android.Command.Protocol parseFrom(
+    public static on.hover.android.Command.SensorData parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static on.hover.android.Command.Protocol parseFrom(byte[] data)
+    public static on.hover.android.Command.SensorData parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static on.hover.android.Command.Protocol parseFrom(
+    public static on.hover.android.Command.SensorData parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static on.hover.android.Command.Protocol parseFrom(java.io.InputStream input)
+    public static on.hover.android.Command.SensorData parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static on.hover.android.Command.Protocol parseFrom(
+    public static on.hover.android.Command.SensorData parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static on.hover.android.Command.Protocol parseDelimitedFrom(java.io.InputStream input)
+    public static on.hover.android.Command.SensorData parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -258,7 +266,7 @@ public final class Command {
         return null;
       }
     }
-    public static on.hover.android.Command.Protocol parseDelimitedFrom(
+    public static on.hover.android.Command.SensorData parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -269,12 +277,12 @@ public final class Command {
         return null;
       }
     }
-    public static on.hover.android.Command.Protocol parseFrom(
+    public static on.hover.android.Command.SensorData parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static on.hover.android.Command.Protocol parseFrom(
+    public static on.hover.android.Command.SensorData parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -284,7 +292,7 @@ public final class Command {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(on.hover.android.Command.Protocol prototype) {
+    public static Builder newBuilder(on.hover.android.Command.SensorData prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -297,18 +305,18 @@ public final class Command {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements on.hover.android.Command.ProtocolOrBuilder {
+       implements on.hover.android.Command.SensorDataOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return on.hover.android.Command.internal_static_on_hover_android_Protocol_descriptor;
+        return on.hover.android.Command.internal_static_on_hover_android_SensorData_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return on.hover.android.Command.internal_static_on_hover_android_Protocol_fieldAccessorTable;
+        return on.hover.android.Command.internal_static_on_hover_android_SensorData_fieldAccessorTable;
       }
       
-      // Construct using on.hover.android.Command.Protocol.newBuilder()
+      // Construct using on.hover.android.Command.SensorData.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -327,12 +335,14 @@ public final class Command {
       
       public Builder clear() {
         super.clear();
-        command_ = "";
+        type_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        address_ = "";
+        description_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
-        message_ = "";
+        address_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
+        value_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
       
@@ -342,24 +352,24 @@ public final class Command {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return on.hover.android.Command.Protocol.getDescriptor();
+        return on.hover.android.Command.SensorData.getDescriptor();
       }
       
-      public on.hover.android.Command.Protocol getDefaultInstanceForType() {
-        return on.hover.android.Command.Protocol.getDefaultInstance();
+      public on.hover.android.Command.SensorData getDefaultInstanceForType() {
+        return on.hover.android.Command.SensorData.getDefaultInstance();
       }
       
-      public on.hover.android.Command.Protocol build() {
-        on.hover.android.Command.Protocol result = buildPartial();
+      public on.hover.android.Command.SensorData build() {
+        on.hover.android.Command.SensorData result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private on.hover.android.Command.Protocol buildParsed()
+      private on.hover.android.Command.SensorData buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        on.hover.android.Command.Protocol result = buildPartial();
+        on.hover.android.Command.SensorData result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -367,57 +377,72 @@ public final class Command {
         return result;
       }
       
-      public on.hover.android.Command.Protocol buildPartial() {
-        on.hover.android.Command.Protocol result = new on.hover.android.Command.Protocol(this);
+      public on.hover.android.Command.SensorData buildPartial() {
+        on.hover.android.Command.SensorData result = new on.hover.android.Command.SensorData(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.command_ = command_;
+        result.type_ = type_;
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.address_ = address_;
+        result.description_ = description_;
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.message_ = message_;
+        result.address_ = address_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.value_ = value_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof on.hover.android.Command.Protocol) {
-          return mergeFrom((on.hover.android.Command.Protocol)other);
+        if (other instanceof on.hover.android.Command.SensorData) {
+          return mergeFrom((on.hover.android.Command.SensorData)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(on.hover.android.Command.Protocol other) {
-        if (other == on.hover.android.Command.Protocol.getDefaultInstance()) return this;
-        if (other.hasCommand()) {
-          setCommand(other.getCommand());
+      public Builder mergeFrom(on.hover.android.Command.SensorData other) {
+        if (other == on.hover.android.Command.SensorData.getDefaultInstance()) return this;
+        if (other.hasType()) {
+          setType(other.getType());
+        }
+        if (other.hasDescription()) {
+          setDescription(other.getDescription());
         }
         if (other.hasAddress()) {
           setAddress(other.getAddress());
         }
-        if (other.hasMessage()) {
-          setMessage(other.getMessage());
+        if (other.hasValue()) {
+          setValue(other.getValue());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
       
       public final boolean isInitialized() {
-        if (!hasCommand()) {
+        if (!hasType()) {
+          
+          return false;
+        }
+        if (!hasDescription()) {
           
           return false;
         }
         if (!hasAddress()) {
+          
+          return false;
+        }
+        if (!hasValue()) {
           
           return false;
         }
@@ -449,17 +474,22 @@ public final class Command {
             }
             case 10: {
               bitField0_ |= 0x00000001;
-              command_ = input.readBytes();
+              type_ = input.readBytes();
               break;
             }
             case 18: {
               bitField0_ |= 0x00000002;
-              address_ = input.readBytes();
+              description_ = input.readBytes();
               break;
             }
-            case 26: {
+            case 24: {
               bitField0_ |= 0x00000004;
-              message_ = input.readBytes();
+              address_ = input.readUInt32();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              value_ = input.readUInt32();
               break;
             }
           }
@@ -468,130 +498,1221 @@ public final class Command {
       
       private int bitField0_;
       
-      // required string command = 1;
-      private java.lang.Object command_ = "";
-      public boolean hasCommand() {
+      // required string type = 1;
+      private java.lang.Object type_ = "";
+      public boolean hasType() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public String getCommand() {
-        java.lang.Object ref = command_;
+      public String getType() {
+        java.lang.Object ref = type_;
         if (!(ref instanceof String)) {
           String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          command_ = s;
+          type_ = s;
           return s;
         } else {
           return (String) ref;
         }
       }
-      public Builder setCommand(String value) {
+      public Builder setType(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000001;
-        command_ = value;
+        type_ = value;
         onChanged();
         return this;
       }
-      public Builder clearCommand() {
+      public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        command_ = getDefaultInstance().getCommand();
+        type_ = getDefaultInstance().getType();
         onChanged();
         return this;
       }
-      void setCommand(com.google.protobuf.ByteString value) {
+      void setType(com.google.protobuf.ByteString value) {
         bitField0_ |= 0x00000001;
-        command_ = value;
+        type_ = value;
         onChanged();
       }
       
-      // required string address = 2;
-      private java.lang.Object address_ = "";
-      public boolean hasAddress() {
+      // required string description = 2;
+      private java.lang.Object description_ = "";
+      public boolean hasDescription() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public String getAddress() {
-        java.lang.Object ref = address_;
+      public String getDescription() {
+        java.lang.Object ref = description_;
         if (!(ref instanceof String)) {
           String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          address_ = s;
+          description_ = s;
           return s;
         } else {
           return (String) ref;
         }
       }
-      public Builder setAddress(String value) {
+      public Builder setDescription(String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000002;
+        description_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearDescription() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        description_ = getDefaultInstance().getDescription();
+        onChanged();
+        return this;
+      }
+      void setDescription(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        description_ = value;
+        onChanged();
+      }
+      
+      // required uint32 address = 3;
+      private int address_ ;
+      public boolean hasAddress() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public int getAddress() {
+        return address_;
+      }
+      public Builder setAddress(int value) {
+        bitField0_ |= 0x00000004;
         address_ = value;
         onChanged();
         return this;
       }
       public Builder clearAddress() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        address_ = getDefaultInstance().getAddress();
-        onChanged();
-        return this;
-      }
-      void setAddress(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000002;
-        address_ = value;
-        onChanged();
-      }
-      
-      // optional string message = 3;
-      private java.lang.Object message_ = "";
-      public boolean hasMessage() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      public String getMessage() {
-        java.lang.Object ref = message_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          message_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-      public Builder setMessage(String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000004;
-        message_ = value;
-        onChanged();
-        return this;
-      }
-      public Builder clearMessage() {
         bitField0_ = (bitField0_ & ~0x00000004);
-        message_ = getDefaultInstance().getMessage();
+        address_ = 0;
         onChanged();
         return this;
       }
-      void setMessage(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000004;
-        message_ = value;
+      
+      // required uint32 value = 4;
+      private int value_ ;
+      public boolean hasValue() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      public int getValue() {
+        return value_;
+      }
+      public Builder setValue(int value) {
+        bitField0_ |= 0x00000008;
+        value_ = value;
         onChanged();
+        return this;
+      }
+      public Builder clearValue() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        value_ = 0;
+        onChanged();
+        return this;
       }
       
-      // @@protoc_insertion_point(builder_scope:on.hover.android.Protocol)
+      // @@protoc_insertion_point(builder_scope:on.hover.android.SensorData)
     }
     
     static {
-      defaultInstance = new Protocol(true);
+      defaultInstance = new SensorData(true);
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:on.hover.android.Protocol)
+    // @@protoc_insertion_point(class_scope:on.hover.android.SensorData)
+  }
+  
+  public interface DriveSignalsOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required bool forward = 1;
+    boolean hasForward();
+    boolean getForward();
+    
+    // required bool enable = 2;
+    boolean hasEnable();
+    boolean getEnable();
+    
+    // required uint32 power = 3;
+    boolean hasPower();
+    int getPower();
+  }
+  public static final class DriveSignals extends
+      com.google.protobuf.GeneratedMessage
+      implements DriveSignalsOrBuilder {
+    // Use DriveSignals.newBuilder() to construct.
+    private DriveSignals(Builder builder) {
+      super(builder);
+    }
+    private DriveSignals(boolean noInit) {}
+    
+    private static final DriveSignals defaultInstance;
+    public static DriveSignals getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public DriveSignals getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return on.hover.android.Command.internal_static_on_hover_android_DriveSignals_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return on.hover.android.Command.internal_static_on_hover_android_DriveSignals_fieldAccessorTable;
+    }
+    
+    private int bitField0_;
+    // required bool forward = 1;
+    public static final int FORWARD_FIELD_NUMBER = 1;
+    private boolean forward_;
+    public boolean hasForward() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public boolean getForward() {
+      return forward_;
+    }
+    
+    // required bool enable = 2;
+    public static final int ENABLE_FIELD_NUMBER = 2;
+    private boolean enable_;
+    public boolean hasEnable() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public boolean getEnable() {
+      return enable_;
+    }
+    
+    // required uint32 power = 3;
+    public static final int POWER_FIELD_NUMBER = 3;
+    private int power_;
+    public boolean hasPower() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public int getPower() {
+      return power_;
+    }
+    
+    private void initFields() {
+      forward_ = false;
+      enable_ = false;
+      power_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasForward()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasEnable()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasPower()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBool(1, forward_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBool(2, enable_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeUInt32(3, power_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, forward_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, enable_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, power_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static on.hover.android.Command.DriveSignals parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static on.hover.android.Command.DriveSignals parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static on.hover.android.Command.DriveSignals parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static on.hover.android.Command.DriveSignals parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static on.hover.android.Command.DriveSignals parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static on.hover.android.Command.DriveSignals parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static on.hover.android.Command.DriveSignals parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static on.hover.android.Command.DriveSignals parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static on.hover.android.Command.DriveSignals parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static on.hover.android.Command.DriveSignals parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(on.hover.android.Command.DriveSignals prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements on.hover.android.Command.DriveSignalsOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return on.hover.android.Command.internal_static_on_hover_android_DriveSignals_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return on.hover.android.Command.internal_static_on_hover_android_DriveSignals_fieldAccessorTable;
+      }
+      
+      // Construct using on.hover.android.Command.DriveSignals.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        forward_ = false;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        enable_ = false;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        power_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return on.hover.android.Command.DriveSignals.getDescriptor();
+      }
+      
+      public on.hover.android.Command.DriveSignals getDefaultInstanceForType() {
+        return on.hover.android.Command.DriveSignals.getDefaultInstance();
+      }
+      
+      public on.hover.android.Command.DriveSignals build() {
+        on.hover.android.Command.DriveSignals result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private on.hover.android.Command.DriveSignals buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        on.hover.android.Command.DriveSignals result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public on.hover.android.Command.DriveSignals buildPartial() {
+        on.hover.android.Command.DriveSignals result = new on.hover.android.Command.DriveSignals(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.forward_ = forward_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.enable_ = enable_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.power_ = power_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof on.hover.android.Command.DriveSignals) {
+          return mergeFrom((on.hover.android.Command.DriveSignals)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(on.hover.android.Command.DriveSignals other) {
+        if (other == on.hover.android.Command.DriveSignals.getDefaultInstance()) return this;
+        if (other.hasForward()) {
+          setForward(other.getForward());
+        }
+        if (other.hasEnable()) {
+          setEnable(other.getEnable());
+        }
+        if (other.hasPower()) {
+          setPower(other.getPower());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        if (!hasForward()) {
+          
+          return false;
+        }
+        if (!hasEnable()) {
+          
+          return false;
+        }
+        if (!hasPower()) {
+          
+          return false;
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              forward_ = input.readBool();
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              enable_ = input.readBool();
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              power_ = input.readUInt32();
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // required bool forward = 1;
+      private boolean forward_ ;
+      public boolean hasForward() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public boolean getForward() {
+        return forward_;
+      }
+      public Builder setForward(boolean value) {
+        bitField0_ |= 0x00000001;
+        forward_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearForward() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        forward_ = false;
+        onChanged();
+        return this;
+      }
+      
+      // required bool enable = 2;
+      private boolean enable_ ;
+      public boolean hasEnable() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public boolean getEnable() {
+        return enable_;
+      }
+      public Builder setEnable(boolean value) {
+        bitField0_ |= 0x00000002;
+        enable_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearEnable() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        enable_ = false;
+        onChanged();
+        return this;
+      }
+      
+      // required uint32 power = 3;
+      private int power_ ;
+      public boolean hasPower() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      public int getPower() {
+        return power_;
+      }
+      public Builder setPower(int value) {
+        bitField0_ |= 0x00000004;
+        power_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearPower() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        power_ = 0;
+        onChanged();
+        return this;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:on.hover.android.DriveSignals)
+    }
+    
+    static {
+      defaultInstance = new DriveSignals(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:on.hover.android.DriveSignals)
+  }
+  
+  public interface EnginesOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required .on.hover.android.DriveSignals right = 1;
+    boolean hasRight();
+    on.hover.android.Command.DriveSignals getRight();
+    on.hover.android.Command.DriveSignalsOrBuilder getRightOrBuilder();
+    
+    // required .on.hover.android.DriveSignals left = 2;
+    boolean hasLeft();
+    on.hover.android.Command.DriveSignals getLeft();
+    on.hover.android.Command.DriveSignalsOrBuilder getLeftOrBuilder();
+  }
+  public static final class Engines extends
+      com.google.protobuf.GeneratedMessage
+      implements EnginesOrBuilder {
+    // Use Engines.newBuilder() to construct.
+    private Engines(Builder builder) {
+      super(builder);
+    }
+    private Engines(boolean noInit) {}
+    
+    private static final Engines defaultInstance;
+    public static Engines getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Engines getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return on.hover.android.Command.internal_static_on_hover_android_Engines_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return on.hover.android.Command.internal_static_on_hover_android_Engines_fieldAccessorTable;
+    }
+    
+    private int bitField0_;
+    // required .on.hover.android.DriveSignals right = 1;
+    public static final int RIGHT_FIELD_NUMBER = 1;
+    private on.hover.android.Command.DriveSignals right_;
+    public boolean hasRight() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public on.hover.android.Command.DriveSignals getRight() {
+      return right_;
+    }
+    public on.hover.android.Command.DriveSignalsOrBuilder getRightOrBuilder() {
+      return right_;
+    }
+    
+    // required .on.hover.android.DriveSignals left = 2;
+    public static final int LEFT_FIELD_NUMBER = 2;
+    private on.hover.android.Command.DriveSignals left_;
+    public boolean hasLeft() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public on.hover.android.Command.DriveSignals getLeft() {
+      return left_;
+    }
+    public on.hover.android.Command.DriveSignalsOrBuilder getLeftOrBuilder() {
+      return left_;
+    }
+    
+    private void initFields() {
+      right_ = on.hover.android.Command.DriveSignals.getDefaultInstance();
+      left_ = on.hover.android.Command.DriveSignals.getDefaultInstance();
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasRight()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasLeft()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!getRight().isInitialized()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!getLeft().isInitialized()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeMessage(1, right_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeMessage(2, left_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, right_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, left_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static on.hover.android.Command.Engines parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static on.hover.android.Command.Engines parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static on.hover.android.Command.Engines parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static on.hover.android.Command.Engines parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static on.hover.android.Command.Engines parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static on.hover.android.Command.Engines parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static on.hover.android.Command.Engines parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static on.hover.android.Command.Engines parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static on.hover.android.Command.Engines parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static on.hover.android.Command.Engines parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(on.hover.android.Command.Engines prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements on.hover.android.Command.EnginesOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return on.hover.android.Command.internal_static_on_hover_android_Engines_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return on.hover.android.Command.internal_static_on_hover_android_Engines_fieldAccessorTable;
+      }
+      
+      // Construct using on.hover.android.Command.Engines.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getRightFieldBuilder();
+          getLeftFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        if (rightBuilder_ == null) {
+          right_ = on.hover.android.Command.DriveSignals.getDefaultInstance();
+        } else {
+          rightBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        if (leftBuilder_ == null) {
+          left_ = on.hover.android.Command.DriveSignals.getDefaultInstance();
+        } else {
+          leftBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return on.hover.android.Command.Engines.getDescriptor();
+      }
+      
+      public on.hover.android.Command.Engines getDefaultInstanceForType() {
+        return on.hover.android.Command.Engines.getDefaultInstance();
+      }
+      
+      public on.hover.android.Command.Engines build() {
+        on.hover.android.Command.Engines result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private on.hover.android.Command.Engines buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        on.hover.android.Command.Engines result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public on.hover.android.Command.Engines buildPartial() {
+        on.hover.android.Command.Engines result = new on.hover.android.Command.Engines(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        if (rightBuilder_ == null) {
+          result.right_ = right_;
+        } else {
+          result.right_ = rightBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        if (leftBuilder_ == null) {
+          result.left_ = left_;
+        } else {
+          result.left_ = leftBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof on.hover.android.Command.Engines) {
+          return mergeFrom((on.hover.android.Command.Engines)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(on.hover.android.Command.Engines other) {
+        if (other == on.hover.android.Command.Engines.getDefaultInstance()) return this;
+        if (other.hasRight()) {
+          mergeRight(other.getRight());
+        }
+        if (other.hasLeft()) {
+          mergeLeft(other.getLeft());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        if (!hasRight()) {
+          
+          return false;
+        }
+        if (!hasLeft()) {
+          
+          return false;
+        }
+        if (!getRight().isInitialized()) {
+          
+          return false;
+        }
+        if (!getLeft().isInitialized()) {
+          
+          return false;
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              on.hover.android.Command.DriveSignals.Builder subBuilder = on.hover.android.Command.DriveSignals.newBuilder();
+              if (hasRight()) {
+                subBuilder.mergeFrom(getRight());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setRight(subBuilder.buildPartial());
+              break;
+            }
+            case 18: {
+              on.hover.android.Command.DriveSignals.Builder subBuilder = on.hover.android.Command.DriveSignals.newBuilder();
+              if (hasLeft()) {
+                subBuilder.mergeFrom(getLeft());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setLeft(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // required .on.hover.android.DriveSignals right = 1;
+      private on.hover.android.Command.DriveSignals right_ = on.hover.android.Command.DriveSignals.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          on.hover.android.Command.DriveSignals, on.hover.android.Command.DriveSignals.Builder, on.hover.android.Command.DriveSignalsOrBuilder> rightBuilder_;
+      public boolean hasRight() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public on.hover.android.Command.DriveSignals getRight() {
+        if (rightBuilder_ == null) {
+          return right_;
+        } else {
+          return rightBuilder_.getMessage();
+        }
+      }
+      public Builder setRight(on.hover.android.Command.DriveSignals value) {
+        if (rightBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          right_ = value;
+          onChanged();
+        } else {
+          rightBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      public Builder setRight(
+          on.hover.android.Command.DriveSignals.Builder builderForValue) {
+        if (rightBuilder_ == null) {
+          right_ = builderForValue.build();
+          onChanged();
+        } else {
+          rightBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      public Builder mergeRight(on.hover.android.Command.DriveSignals value) {
+        if (rightBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
+              right_ != on.hover.android.Command.DriveSignals.getDefaultInstance()) {
+            right_ =
+              on.hover.android.Command.DriveSignals.newBuilder(right_).mergeFrom(value).buildPartial();
+          } else {
+            right_ = value;
+          }
+          onChanged();
+        } else {
+          rightBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000001;
+        return this;
+      }
+      public Builder clearRight() {
+        if (rightBuilder_ == null) {
+          right_ = on.hover.android.Command.DriveSignals.getDefaultInstance();
+          onChanged();
+        } else {
+          rightBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+      public on.hover.android.Command.DriveSignals.Builder getRightBuilder() {
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return getRightFieldBuilder().getBuilder();
+      }
+      public on.hover.android.Command.DriveSignalsOrBuilder getRightOrBuilder() {
+        if (rightBuilder_ != null) {
+          return rightBuilder_.getMessageOrBuilder();
+        } else {
+          return right_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          on.hover.android.Command.DriveSignals, on.hover.android.Command.DriveSignals.Builder, on.hover.android.Command.DriveSignalsOrBuilder> 
+          getRightFieldBuilder() {
+        if (rightBuilder_ == null) {
+          rightBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              on.hover.android.Command.DriveSignals, on.hover.android.Command.DriveSignals.Builder, on.hover.android.Command.DriveSignalsOrBuilder>(
+                  right_,
+                  getParentForChildren(),
+                  isClean());
+          right_ = null;
+        }
+        return rightBuilder_;
+      }
+      
+      // required .on.hover.android.DriveSignals left = 2;
+      private on.hover.android.Command.DriveSignals left_ = on.hover.android.Command.DriveSignals.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          on.hover.android.Command.DriveSignals, on.hover.android.Command.DriveSignals.Builder, on.hover.android.Command.DriveSignalsOrBuilder> leftBuilder_;
+      public boolean hasLeft() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public on.hover.android.Command.DriveSignals getLeft() {
+        if (leftBuilder_ == null) {
+          return left_;
+        } else {
+          return leftBuilder_.getMessage();
+        }
+      }
+      public Builder setLeft(on.hover.android.Command.DriveSignals value) {
+        if (leftBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          left_ = value;
+          onChanged();
+        } else {
+          leftBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder setLeft(
+          on.hover.android.Command.DriveSignals.Builder builderForValue) {
+        if (leftBuilder_ == null) {
+          left_ = builderForValue.build();
+          onChanged();
+        } else {
+          leftBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder mergeLeft(on.hover.android.Command.DriveSignals value) {
+        if (leftBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
+              left_ != on.hover.android.Command.DriveSignals.getDefaultInstance()) {
+            left_ =
+              on.hover.android.Command.DriveSignals.newBuilder(left_).mergeFrom(value).buildPartial();
+          } else {
+            left_ = value;
+          }
+          onChanged();
+        } else {
+          leftBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000002;
+        return this;
+      }
+      public Builder clearLeft() {
+        if (leftBuilder_ == null) {
+          left_ = on.hover.android.Command.DriveSignals.getDefaultInstance();
+          onChanged();
+        } else {
+          leftBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+      public on.hover.android.Command.DriveSignals.Builder getLeftBuilder() {
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return getLeftFieldBuilder().getBuilder();
+      }
+      public on.hover.android.Command.DriveSignalsOrBuilder getLeftOrBuilder() {
+        if (leftBuilder_ != null) {
+          return leftBuilder_.getMessageOrBuilder();
+        } else {
+          return left_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          on.hover.android.Command.DriveSignals, on.hover.android.Command.DriveSignals.Builder, on.hover.android.Command.DriveSignalsOrBuilder> 
+          getLeftFieldBuilder() {
+        if (leftBuilder_ == null) {
+          leftBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              on.hover.android.Command.DriveSignals, on.hover.android.Command.DriveSignals.Builder, on.hover.android.Command.DriveSignalsOrBuilder>(
+                  left_,
+                  getParentForChildren(),
+                  isClean());
+          left_ = null;
+        }
+        return leftBuilder_;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:on.hover.android.Engines)
+    }
+    
+    static {
+      defaultInstance = new Engines(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:on.hover.android.Engines)
   }
   
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_on_hover_android_Protocol_descriptor;
+    internal_static_on_hover_android_SensorData_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_on_hover_android_Protocol_fieldAccessorTable;
+      internal_static_on_hover_android_SensorData_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_on_hover_android_DriveSignals_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_on_hover_android_DriveSignals_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_on_hover_android_Engines_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_on_hover_android_Engines_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -601,23 +1722,44 @@ public final class Command {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rCommand.proto\022\020on.hover.android\"=\n\010Pro" +
-      "tocol\022\017\n\007command\030\001 \002(\t\022\017\n\007address\030\002 \002(\t\022" +
-      "\017\n\007message\030\003 \001(\t"
+      "\n\rCommand.proto\022\020on.hover.android\"O\n\nSen" +
+      "sorData\022\014\n\004type\030\001 \002(\t\022\023\n\013description\030\002 \002" +
+      "(\t\022\017\n\007address\030\003 \002(\r\022\r\n\005value\030\004 \002(\r\">\n\014Dr" +
+      "iveSignals\022\017\n\007forward\030\001 \002(\010\022\016\n\006enable\030\002 " +
+      "\002(\010\022\r\n\005power\030\003 \002(\r\"f\n\007Engines\022-\n\005right\030\001" +
+      " \002(\0132\036.on.hover.android.DriveSignals\022,\n\004" +
+      "left\030\002 \002(\0132\036.on.hover.android.DriveSigna" +
+      "ls"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_on_hover_android_Protocol_descriptor =
+          internal_static_on_hover_android_SensorData_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_on_hover_android_Protocol_fieldAccessorTable = new
+          internal_static_on_hover_android_SensorData_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_on_hover_android_Protocol_descriptor,
-              new java.lang.String[] { "Command", "Address", "Message", },
-              on.hover.android.Command.Protocol.class,
-              on.hover.android.Command.Protocol.Builder.class);
+              internal_static_on_hover_android_SensorData_descriptor,
+              new java.lang.String[] { "Type", "Description", "Address", "Value", },
+              on.hover.android.Command.SensorData.class,
+              on.hover.android.Command.SensorData.Builder.class);
+          internal_static_on_hover_android_DriveSignals_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_on_hover_android_DriveSignals_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_on_hover_android_DriveSignals_descriptor,
+              new java.lang.String[] { "Forward", "Enable", "Power", },
+              on.hover.android.Command.DriveSignals.class,
+              on.hover.android.Command.DriveSignals.Builder.class);
+          internal_static_on_hover_android_Engines_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_on_hover_android_Engines_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_on_hover_android_Engines_descriptor,
+              new java.lang.String[] { "Right", "Left", },
+              on.hover.android.Command.Engines.class,
+              on.hover.android.Command.Engines.Builder.class);
           return null;
         }
       };

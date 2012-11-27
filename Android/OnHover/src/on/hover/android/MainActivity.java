@@ -1,15 +1,10 @@
 package on.hover.android;
 
 import on.hover.android.UsbService.ConnectionState;
-
-import com.android.future.usb.UsbManager;
-
 import on.hover.android.R;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -20,13 +15,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class MainActivity extends Activity
-{
-	private UsbManager usbManager = UsbManager.getInstance(this);
-	
+{	
 	private String TAG = "JMMainActivity";
 	private ImageView mStatusLed;
-	private UsbService intentTestService;
 	
+	private final BroadcastReceiver messageReceiver = new newMessage();
+	  
 	final Context context = this;
 	
 	public class newMessage extends BroadcastReceiver 
@@ -35,10 +29,12 @@ public class MainActivity extends Activity
 		public void onReceive(Context context, Intent intent) 
 		{    
 			String action = intent.getAction();
+			Bundle bundle = intent.getExtras();
 			if(action.equalsIgnoreCase("updateUSBConnectionState"))
 			{
-				Log.d(TAG,"USBconnectionState changed");
-				updateUSBConnectionState();
+				ConnectionState state = (ConnectionState) bundle.get("connectionState");		
+				Log.d(TAG,"Update USBconnectionState: " + state.name());
+				updateUSBConnectionState(state);
 			}
 		}
 	}
@@ -46,6 +42,7 @@ public class MainActivity extends Activity
 	@Override
 	public void onBackPressed()
 	{
+
 	}
 
 	@Override
@@ -53,39 +50,8 @@ public class MainActivity extends Activity
 	{				
 		Log.d(TAG,"onCreate start");
 		super.onCreate(savedInstanceState);
-		
-		//usbManager.getAccessoryList() == null
-		if(false)
-		{
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			 
-			// set title
-			alertDialogBuilder.setTitle("Automatisk start");
- 
-			// set dialog message
-			alertDialogBuilder
-				.setMessage("Denna app startas automatiskt när den monteras på svävaren.")
-				.setCancelable(false)
-				.setPositiveButton("Avsluta app",new DialogInterface.OnClickListener() 
-				{
-					public void onClick(DialogInterface dialog,int id)
-					{
-						// if this button is clicked, close application
-						int pid = android.os.Process.myPid();
-						android.os.Process.killProcess(pid); 
-					}
-				});
- 
-				// create alert dialog
-				AlertDialog alertDialog = alertDialogBuilder.create();
- 
-				// show it
-				alertDialog.show();
-		}
-		
 		setContentView(R.layout.main);
 		setupStatusLed();
-		setupToggleButton();
 		setupTestButton();
 
 		startUsbService();
@@ -98,13 +64,11 @@ public class MainActivity extends Activity
 		Intent intent = new Intent(this, UsbService.class);
 		intent.fillIn(getIntent(), 0);
 		startService(intent);
-		//startService(new Intent(this, UsbService.class));
 	}
 	
 	private void stopUsbService()
 	{
 		stopService(new Intent(this, UsbService.class));
-		//stopService(new Intent(this, UsbService.class));
 	}
 
 	@Override
@@ -112,7 +76,6 @@ public class MainActivity extends Activity
 	{
 		Log.d(TAG,"onResume start");
 		super.onResume();
-		newMessage messageReceiver = new newMessage();
 		registerReceiver(messageReceiver, new IntentFilter("updateUSBConnectionState"));
 		Log.d(TAG,"onResume stop");
 	}
@@ -122,6 +85,7 @@ public class MainActivity extends Activity
 	{
 		Log.d(TAG,"onPause start");
 		super.onPause();
+		unregisterReceiver(messageReceiver);
 		Log.d(TAG,"onPause stop");
 	}
 
@@ -134,22 +98,9 @@ public class MainActivity extends Activity
 		Log.d(TAG,"onDestroy stop");
 	}
 	
-	private void setupStatusLed() {
-		mStatusLed = (ImageView) findViewById(R.id.status_led);
-	}
-
-	private void setupToggleButton()
+	private void setupStatusLed() 
 	{
-		Button button = (Button) findViewById(R.id.toggle_button);
-		button.setOnClickListener(new OnClickListener() 
-		{
-			@Override
-			public void onClick(View arg0) 
-			{
-				Log.d(TAG,"SendCommand Sent not");
-				//sendCommand(TOGGLE_LED_COMMAND);
-			}
-		});
+		mStatusLed = (ImageView) findViewById(R.id.status_led);
 	}
 	
 	private void setupTestButton() 
@@ -159,16 +110,15 @@ public class MainActivity extends Activity
 			@Override
 			public void onClick(View arg0) 
 			{
-				Log.d(TAG,"isConnected: " + UsbService.isActive);
-				intentTestService = UsbService.getInstance();
-				intentTestService.sendString();
+				// Send command
+		    	Intent i = new Intent("sendString");
+		    	sendBroadcast(i);
 			}
 		});
 	}	
 
-	public void updateUSBConnectionState()
+	public void updateUSBConnectionState(ConnectionState state)
 	{
-		ConnectionState state = UsbService.connectionState; 
 		switch(state)
 		{
 			case CONNECTED:

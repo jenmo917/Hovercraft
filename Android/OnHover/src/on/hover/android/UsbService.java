@@ -5,11 +5,11 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import on.hover.android.Command.Protocol;
+import on.hover.android.Command.DriveSignals;
+import on.hover.android.Command.Engines;
 
 import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
-import com.google.protobuf.InvalidProtocolBufferException;
 
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
@@ -35,13 +35,15 @@ public class UsbService extends IntentService
 
     private static String TAG = "JMMainActivity";
     private static UsbService singleton;
-	private static final byte RIGHT_POWER_COMMAND = 0x5;
+	private static final byte MOTOR_CONTROL_COMMAND = 0x3;
+	private static final byte TARGET_ADK = 0x1;
+
+	private final BroadcastReceiver messageReceiver = new newMessage();	
 	
 	private UsbManager mUsbManager = UsbManager.getInstance(this);
 	private UsbAccessory mAccessory;
 	private ParcelFileDescriptor mFileDescriptor;
 	private FileOutputStream mOutputStream;
-	private BroadcastReceiver mReceiver;		
 	
 	public UsbService() 
 	{
@@ -55,8 +57,36 @@ public class UsbService extends IntentService
     
     public void sendString()
     {    	   
-    	sendCommand(RIGHT_POWER_COMMAND);
+		// try to send data to arduino
+    	DriveSignals driveSignalLeft = createDriveSignalProtocol(true,true,20);
+    	DriveSignals driveSignalRight = createDriveSignalProtocol(true,true,190);
+		Engines engine = createEngineProtocol(driveSignalLeft,driveSignalRight); 
+		byte[] message = engine.toByteArray();
+		int byteLength = message.length;
+		for (int x = 0; x < byteLength; x++) 
+		{
+			Log.d(TAG,""+message[x]);
+		}
+    	sendCommand(MOTOR_CONTROL_COMMAND,TARGET_ADK, message);
+    	Log.d(TAG,"Send engine command");
     }
+    
+	static Engines createEngineProtocol(DriveSignals driveSignalRight, DriveSignals driveSignalLeft) 
+	{
+		Engines.Builder engines = Engines.newBuilder();
+		engines.setRight(driveSignalRight);
+		engines.setLeft(driveSignalLeft);		
+		return engines.build();
+	}
+	
+	static DriveSignals createDriveSignalProtocol(boolean forward, boolean enable, int power)
+	{
+		DriveSignals.Builder driveSignal = DriveSignals.newBuilder();		
+		driveSignal.setForward(forward);
+		driveSignal.setEnable(enable);
+		driveSignal.setPower(power);
+		return driveSignal.build();
+	}
     
     @Override
     public void onCreate()
@@ -72,33 +102,19 @@ public class UsbService extends IntentService
     {
         super.onDestroy();
         isActive = false;
+        
+		closeAccessory();
+		unregisterReceiver(messageReceiver);
+		
         Log.d(TAG, "FirstService destroyed");
     }
 
-	private void setupDetachingAccessoryHandler() 
-	{
-		mReceiver = new BroadcastReceiver() 
-		{
-			@Override
-			public void onReceive(Context context, Intent intent) 
-			{
-				String action = intent.getAction();
-				if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action))
-				{
-					closeAccessory();
-				}
-			}
-		};
-		IntentFilter filter = new IntentFilter(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
-		registerReceiver(mReceiver, filter);
-	}
-
 	private void reOpenAccessoryIfNecessary(Intent intent)
 	{
-		connectionState = ConnectionState.WAITING;
+		updateConnectionState(ConnectionState.WAITING);
 		if (mOutputStream != null)
 		{
-			connectionState = ConnectionState.CONNECTED;
+			updateConnectionState(ConnectionState.CONNECTED);
 			return;
 		}
 		
@@ -107,10 +123,9 @@ public class UsbService extends IntentService
 		{
 				mAccessory = UsbManager.getAccessory(intent);
 				openAccessory();
+				return;
 		}
-		// Update connection state in our view	
-    	Intent i = new Intent("updateUSBConnectionState");
-    	sendBroadcast(i);
+		updateConnectionState(ConnectionState.DISCONNECTED);
 	}
 	
 	private void openAccessory()
@@ -125,12 +140,11 @@ public class UsbService extends IntentService
 				Log.d(TAG, "mFileDesc != null");
 				
 				// Update connection state in our view
-				if(connectionState != ConnectionState.CONNECTED)
-				{
-					connectionState = ConnectionState.CONNECTED;
-		    		Intent i = new Intent("updateUSBConnectionState");
-		    		sendBroadcast(i);
-				}
+				updateConnectionState(ConnectionState.CONNECTED);
+			}
+			else
+			{
+				updateConnectionState(ConnectionState.DISCONNECTED);
 			}
 		}
 		catch (IllegalArgumentException ex) 
@@ -152,6 +166,7 @@ public class UsbService extends IntentService
 			{
 				mFileDescriptor.close();
 			}
+			updateConnectionState(ConnectionState.DISCONNECTED);
 		} 
 		catch (IOException e) 
 		{
@@ -162,55 +177,37 @@ public class UsbService extends IntentService
 			mFileDescriptor = null;
 			mAccessory = null;
 		}
-		
-		// Update connection state in our view
-		if(connectionState != ConnectionState.DISCONNECTED)
-		{
-			connectionState = ConnectionState.DISCONNECTED;
-	    	Intent i = new Intent("updateUSBConnectionState");
-	    	sendBroadcast(i);			
-		}
-	}
 
-	static Protocol createProtocol(String command, String address, String message) 
-	{
-		Protocol.Builder right = Protocol.newBuilder();
-		right.setCommand(command);
-		right.setAddress(address);
-		right.setMessage(message);
-		return right.build();
+		updateConnectionState(ConnectionState.DISCONNECTED);
 	}
 	
-	private void sendCommand(byte command)
+	private void updateConnectionState(ConnectionState state)
 	{
-	    int roll = generator.nextInt(256);
-		Protocol right = createProtocol(""+roll, "Motor", "turn 200 degrees to the right"); 
-		byte[] message = right.toByteArray();
-		int byteLength = message.length;
-		
-		try 
+		if(connectionState != state)
 		{
-			Protocol protocol = Protocol.parseFrom(message);
-			Log.d(TAG,"address: "+protocol.getAddress());
-			Log.d(TAG,"command: "+protocol.getCommand());
-			Log.d(TAG,"message: "+protocol.getMessage());
-		} 
-		catch (InvalidProtocolBufferException e1) 
-		{
-			e1.printStackTrace();
+			connectionState = state;
+		    Intent i = new Intent("updateUSBConnectionState");
+		    i.putExtra("connectionState", state);
+		    sendBroadcast(i);
 		}
-		
+	}
+	
+	private void sendCommand(byte command, byte target, byte[] message)
+	{
+		Log.d(TAG,"SendCommand:" + (int) command);
+		int byteLength = message.length;
 		byte[] buffer = new byte[3+byteLength];
 		
-		buffer[0] = 0x5; // command
-		buffer[1] = 0x1; // target
+		buffer[0] = command; // command
+		buffer[1] = target; // target
 		buffer[2] = (byte) byteLength; // length
 
 		for (int x = 0; x < byteLength; x++) 
 		{
 			buffer[3 + x] = message[x]; // message
-			Log.d(TAG, ""+message[x]);
+			//Log.d(TAG,""+message[x]);
 		}
+		
 		Log.d(TAG,"byteLength:"+byteLength);
 		
 		if (mOutputStream != null)
@@ -236,7 +233,7 @@ public class UsbService extends IntentService
         Log.w(TAG,"onHandleIntent entered");
         UsbAccessory accessory = UsbManager.getAccessory(intent);
         
-    	setupDetachingAccessoryHandler();
+        setupBroadcastFilters();
         reOpenAccessoryIfNecessary(intent);
         
         if (accessory != null)
@@ -246,14 +243,12 @@ public class UsbService extends IntentService
         
         while(true) 
         {
+        	// TODO: Not implemented
         	if (accessoryDetached) 
         	{
         		break;
         	}
         	
-			// try to send data to arduino
-        	sendCommand(RIGHT_POWER_COMMAND);
-
         	try
         	{
 				Thread.sleep(2000);
@@ -263,9 +258,36 @@ public class UsbService extends IntentService
 				e.printStackTrace();
 			}  
         }
-        
-		closeAccessory();
-		unregisterReceiver(mReceiver);
-        
+        onDestroy();
 	}
+	
+	private void setupBroadcastFilters() 
+	{
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
+		filter.addAction("lala");
+		filter.addAction("sendString");		
+		registerReceiver(messageReceiver, filter);
+	}
+	
+	public class newMessage extends BroadcastReceiver 
+	{
+		@Override
+		public void onReceive(Context context, Intent intent) 
+		{    
+			String action = intent.getAction();
+			if(action.equalsIgnoreCase("lala"))
+			{
+				Log.d(TAG,"lalalalal");
+			}
+			else if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action))
+			{
+				closeAccessory();
+			}
+			else if (action.equalsIgnoreCase("sendString"))
+			{
+				sendString();
+			}			
+		}
+	}	
 }
