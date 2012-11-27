@@ -1,0 +1,31 @@
+<resources>
+
+    <string name="app_name">bluetoothTest</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_bluetest">Bluetest</string>
+    <string name="btnConnect">Connect</string>
+    <string name="btndevices">Devices</string>
+    <string name="btnDisconnect">Disconnect</string>
+    <string name="testNoTest">No info</string>
+    <string name="testNotWorking">Bluetooth is not working</string>
+    <string name="testWorking">Bluetooth is working</string>
+    <string name="click">Search</string>
+    <string name="bluetoothSwitch">Bluetooth</string>
+    <string name="done">Done</string>
+    <string name="noneFound">None found</string>
+    <string name="allDevices">TOM</string>
+    <string name="btnPair">Pair</string>
+    <string name="btnSend">Send data</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
+    <string name="up">Up</string>
+    <string name="down">Down</string>
+    <string name="btnChoose">Choose</string>
+    <string name="yCoor">Y</string>
+    <string name="xCoor">X</string>
+    <string name="zCoor">Z</string>
+    <string name="btnSendCoorNot">No send</string>
+    <string name="btnSendCoor">Send</string>
+
+</resources>
