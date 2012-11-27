@@ -52,7 +52,8 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		setupStatusLed();
-		setupTestButton();
+		
+		// setupTestButton();
 
 		startUsbService();
 
@@ -102,7 +103,8 @@ public class MainActivity extends Activity
 	{
 		mStatusLed = (ImageView) findViewById(R.id.status_led);
 	}
-	
+
+/*	
 	private void setupTestButton() 
 	{
 		Button button = (Button) findViewById(R.id.test_button);
@@ -116,7 +118,8 @@ public class MainActivity extends Activity
 			}
 		});
 	}	
-
+*/
+	
 	public void updateUSBConnectionState(ConnectionState state)
 	{
 		switch(state)
