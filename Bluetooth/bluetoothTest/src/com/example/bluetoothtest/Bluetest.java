@@ -1,6 +1,7 @@
 package com.example.bluetoothtest;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
@@ -315,11 +317,12 @@ public class Bluetest extends Activity implements SensorEventListener
 			@Override
 			public void onClick(View v) 
 			{
-			//	sendDirection("RIGHT");
+				if(!thread.isAlive())
+				{
+					thread.start();
+				}
 			}
 		});
-		
-		
 		
 		// Register the BroadcastReceiver
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -457,59 +460,8 @@ public class Bluetest extends Activity implements SensorEventListener
 	
     byte[] buffer = new byte[1024];  // buffer store for the stream
     int bytes; // bytes returned from read()
-	
-	
-	/**
-    private void sendData()
-	{
-		try 
-	    {
-			mmOutStream = mmSocket.getOutputStream();
-	    } 
-	    catch (IOException e) 
-	    {
-	      
-	    }
-	 
-	    String message = "WOHO.\n";
-	    byte[] msgBuffer = message.getBytes();
-	    
-	    try 
-	    {
-	    	mmOutStream.write(msgBuffer);
-	    } 
-	    catch (IOException e) 
-	    {
-  
-	    }
-	    
-	    //Read
-	    
-	    try
-	    {
-	    	mmInStream = mmSocket.getInputStream();
-	    }
-	    catch (IOException e)
-	    {
-	    }
-	    
-	    try
-	    {
-	    	bytes = mmInStream.read(buffer);
-	    	
-	    	String str = new String(buffer);
-	    	Test.setText(str);
-	    	
-	    }
-	    catch (IOException e)
-	    {
-	    }
-	    
-	    
-	    
-	}
-	*/
-	
+    
+    
     /* Call this from the main activity to shutdown the connection */
     public void cancel() 
     {
@@ -626,6 +578,69 @@ public class Bluetest extends Activity implements SensorEventListener
 		return coords.build();
 	}
 	
+	//***********************************************
+	
+	//TA EMOT STERÄNGJÄVEL!!
+	
+	String recivedString = null;
+	byte [] recivedData = new byte[1024];
+	
+	private final Handler handler = new Handler();
+	final Runnable r = new Runnable()
+	{
+		public void run() 
+		{
+			Test.setText(recivedString);
+		}
+	};
+
+	Thread thread = new Thread()
+	{
+		@Override
+		public void run() 
+		{
+			while(true) 
+			{
+				try
+				{
+					sleep(50);
+				}
+				catch (InterruptedException e) 
+				{
+					e.printStackTrace();
+				}
+				
+			    
+				readData();
+				
+				handler.post(r);
+			}
+		}
+	};
+	
+	private InputStream mmInStream;
+	void readData()
+	{
+		try
+	    {
+	    	mmInStream = mmSocket.getInputStream();
+	    }
+	    catch (IOException e)
+	    {
+	    }
+	    
+	    try
+	    {
+	    	bytes = mmInStream.read(recivedData);
+	    	recivedString = new String(recivedData);
+	    }
+	    catch (IOException e)
+	    {
+	    }
+	    
+	}
+	
+	//***********************************************
 	
 	
 	@Override
