@@ -45,7 +45,7 @@ public class UsbService extends IntentService
 	private ParcelFileDescriptor mFileDescriptor;
 	private FileOutputStream mOutputStream;
 	
-	public UsbService() 
+	public UsbService()
 	{
 		super("UsbService");
 	}
@@ -266,7 +266,9 @@ public class UsbService extends IntentService
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
 		filter.addAction("lala");
-		filter.addAction("sendString");		
+		filter.addAction("sendString");	
+		filter.addAction("sendBlinkyOnCommand");
+		filter.addAction("sendBlinkyOffCommand");
 		registerReceiver(messageReceiver, filter);
 	}
 	
@@ -287,7 +289,18 @@ public class UsbService extends IntentService
 			else if (action.equalsIgnoreCase("sendString"))
 			{
 				sendString();
-			}			
+			}
+			else if (action.equalsIgnoreCase("sendBlinkyOnCommand"))
+			{
+
+				String test = "message";
+				sendCommand((byte)1, (byte)1, test.getBytes());
+			}
+			else if (action.equalsIgnoreCase("sendBlinkyOffCommand"))
+			{
+				String test = "message";
+				sendCommand((byte)2, (byte)1, test.getBytes());
+			}
 		}
 	}	
 }

@@ -13,11 +13,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity
 {	
 	private String TAG = "JMMainActivity";
 	private ImageView mStatusLed;
+	
+	TextView textInfo;
+	TextView textMessage;
 	
 	private final BroadcastReceiver messageReceiver = new newMessage();
 	  
@@ -36,6 +40,48 @@ public class MainActivity extends Activity
 				Log.d(TAG,"Update USBconnectionState: " + state.name());
 				updateUSBConnectionState(state);
 			}
+			else if(action.equalsIgnoreCase("printMessage"))
+			{
+				
+				if(intent.hasExtra("com.example.BluetoothServer.message"))
+				{
+					String message = intent.getStringExtra("com.example.BluetoothServer.message");
+					textInfo.setText(message);
+				}
+				
+				if(intent.hasExtra("com.example.BluetoothServer.coordinates"))
+				{
+					String coordinates = intent.getStringExtra("com.example.BluetoothServer.coordinates");
+					
+					
+					
+					if( (coordinates.equalsIgnoreCase("up")) )
+					{
+						textMessage.setText("Blinky on");
+						
+				    	Intent i = new Intent("sendBlinkyOnCommand");
+				    	sendBroadcast(i);
+				    	
+						//Call serverUp
+			    		Intent i2 = new Intent("callFunction");
+			    		i2.putExtra("com.example.BtService.sendData", "sendData");
+			    		sendBroadcast(i2);
+					}
+					else if( (coordinates.equalsIgnoreCase("down")) )
+					{
+						textMessage.setText("Blinky off");
+						
+				    	Intent i = new Intent("sendBlinkyOffCommand");
+				    	sendBroadcast(i);
+				    	
+						//Call serverUp
+			    		Intent i2 = new Intent("callFunction");
+			    		i2.putExtra("com.example.BtService.sendData", "sendData");
+			    		sendBroadcast(i2);
+					}
+				}
+				
+			}			
 		}
 	}
 	
@@ -54,9 +100,16 @@ public class MainActivity extends Activity
 		setupStatusLed();
 		
 		// setupTestButton();
-
+		setupBTSetupButton();
+		setupBTListenButton();
+		setupTestButton();
+		
+		textInfo = (TextView) findViewById(R.id.textInfo);
+		textMessage = (TextView) findViewById(R.id.textMessage);
+		
 		startUsbService();
-
+		startBtServerService();
+		
 		Log.d(TAG,"onCreate stop");
 	}
 
@@ -72,12 +125,27 @@ public class MainActivity extends Activity
 		stopService(new Intent(this, UsbService.class));
 	}
 
+	private void startBtServerService()
+	{
+		Intent intent = new Intent(this, BtService.class);
+		intent.fillIn(getIntent(), 0);
+		startService(intent);
+	}
+
+	private void stopBtServerService()
+	{
+		stopService(new Intent(this, BtService.class));
+	}	
+	
 	@Override
 	protected void onResume()
 	{
 		Log.d(TAG,"onResume start");
 		super.onResume();
-		registerReceiver(messageReceiver, new IntentFilter("updateUSBConnectionState"));
+		IntentFilter filter = new IntentFilter();
+		filter.addAction("updateUSBConnectionState");
+		filter.addAction("printMessage");
+		registerReceiver(messageReceiver, filter);
 		Log.d(TAG,"onResume stop");
 	}
 	
@@ -96,6 +164,7 @@ public class MainActivity extends Activity
 		super.onDestroy();
 		Log.d(TAG,"onDestroy start");
 		stopUsbService();
+		stopBtServerService();
 		Log.d(TAG,"onDestroy stop");
 	}
 	
@@ -104,7 +173,7 @@ public class MainActivity extends Activity
 		mStatusLed = (ImageView) findViewById(R.id.status_led);
 	}
 
-/*	
+	
 	private void setupTestButton() 
 	{
 		Button button = (Button) findViewById(R.id.test_button);
@@ -118,7 +187,61 @@ public class MainActivity extends Activity
 			}
 		});
 	}	
-*/
+
+	
+	private void setupBTSetupButton() 
+	{
+		Button setupButton = (Button) findViewById(R.id.bt_setup_button);
+		setupButton.setOnClickListener(new OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) 
+			{
+				Log.d(TAG, "setupBTSetupButton pushed");
+				
+				//TODO: Visible mode turn on by user 
+				
+				//Call serverUp
+	    		Intent i = new Intent("callFunction");
+	    		i.putExtra("com.example.BtService.setupServer", "setupServer");
+	    		sendBroadcast(i);
+	    		
+	    		try 
+	    		{
+					Thread.sleep(1000);
+				} 
+	    		catch (InterruptedException e) 
+	    		{
+					e.printStackTrace();
+				}
+	    		
+	    		textInfo.setText("Waiting for connection...");
+	    		
+	    		Intent i2 = new Intent("callFunction");
+	    		i2.putExtra("com.example.BtService.waitToConnect", "waitToConnnect");
+	    		sendBroadcast(i2);  		
+	    		
+			}
+		});
+	}	
+	
+	private void setupBTListenButton() 
+	{
+		Log.d(TAG, "setupBTListenButton pushed");
+		Button listenButton = (Button) findViewById(R.id.bt_listen_button);
+		listenButton.setOnClickListener(new OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) 
+			{
+				textInfo.setText("Recieving coordinates...");
+				
+	    		Intent i = new Intent("callFunction");
+	    		i.putExtra("com.example.BtService.listen", "listen");
+	    		sendBroadcast(i);
+			}
+		});
+	}	
 	
 	public void updateUSBConnectionState(ConnectionState state)
 	{
