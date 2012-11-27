@@ -1,5 +1,0 @@
-INDEX VERSION 1.126+C:\Users\Johan\GitCode\TNE085\Bluetooth\.metadata\.plugins\org.eclipse.jdt.core
-1799960581.index
-3044148878.index
-630436268.index
-2819622201.index
