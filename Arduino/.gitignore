@@ -1,13 +1,24 @@
 .metadata/*
+
 ArduinoCore/*
+
 USBHost/*
+
 USBHostLib/*
+
 I2C_basic/*
+
 WireLib/*
+
 i2cMaster/*
+
 i2cslave/*
+
 USBControlledLED/*
+
 Cplusplus/*
+
 EventsLib/*
+
 TestProject/*
 
