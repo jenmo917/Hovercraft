@@ -263,7 +263,7 @@ public class Bluetest extends Activity implements SensorEventListener
 			@Override
 			public void onClick(View v) 
 			{
-				String test = "test$";
+				String test = "$up$";
 				
 				//byte[] data = new byte[1024];
 				//data = coords.toByteArray();
@@ -279,7 +279,7 @@ public class Bluetest extends Activity implements SensorEventListener
 			@Override
 			public void onClick(View v) 
 			{
-				String ostkaka = "ostkaka$";			
+				String ostkaka = "$down$";			
 				sendDirection(ostkaka.getBytes());
 			}
 		});
