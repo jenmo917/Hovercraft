@@ -9,6 +9,7 @@
 #include <AndroidAccessory.h>
 #include <UsbHost.h>
 #include <AndroidAccessory.h>
+#include "sensors.h"
 
 // time event handler
 void timeHandler1000(int event, int param)
@@ -19,19 +20,22 @@ void timeHandler1000(int event, int param)
 
 void timeHandler500(int event, int param)
 {
-	//Serial.print("Time elapsed in half seconds: ");
-	//Serial.println(millis() / 500);
-
-	if (blinkyFlag == true)
-	{
-		digitalWrite(LED, !digitalRead(LED));
-	}
+	Serial.print("Time elapsed in half seconds: ");
+	Serial.println(millis() / 500);
 }
 
 void timeHandler100(int event, int param)
 {
 	Serial.print("Time elapsed in 1/10 seconds: ");
 	Serial.println(millis() / 100);
+}
+
+void blinkyHandler(int event, int param)
+{
+	if (blinkyFlag == true)
+	{
+		digitalWrite(LED, !digitalRead(LED));
+	}
 }
 
 // analog event handler
@@ -127,9 +131,16 @@ void USBReadHandler(int event, int param)
 		{
 			decodeMsgType();
 		}
-	}*/
+	}
+	*/
 }
 
+void USBSendSensorDataHandler(int event, int param)
+{
+	encodeSensorMsg(I2CsensorList[0]);
+	sendMessage(SENSOR_DATA, TARGET_PHONE);
+}
+/*
 void usbSoftwareTestHandler(int event, int param)
 {
 	static unsigned long prev = 0;
@@ -188,6 +199,4 @@ void usbSoftwareTestHandler(int event, int param)
 	default:
 		break;
 	}
-
-
-}
+}*/

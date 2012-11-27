@@ -9,13 +9,15 @@
 #include "usb.h"
 #include "Drive.h"
 #include "nanoPB.h"
+#include "print.h"
+#include "command.pb.h"
 
 AndroidAccessory acc("Manufacturer", "Model", "Description","Version", "URI", "Serial");
 
 byte rcvmsg[255];
 byte rcvmsgInfo[3];
 byte rcvPBmsg[252];
-byte sntmsg[3 + ARRAY_SIZE];
+byte sendMsg[252];
 
 bool blinkyFlag = false;
 
@@ -38,8 +40,8 @@ void USBsetup()
 
 void decodeMsgType()
 {
-	int power;
-	if (rcvmsgInfo[1] == TARGET_DEFAULT)
+	Engines motors;
+	if (rcvmsgInfo[1] == TARGET_ADK)
 	{
 		switch(rcvmsgInfo[0])
 		{
@@ -51,35 +53,13 @@ void decodeMsgType()
 			Serial.println("COMMAND: BLINKY_OFF");
 			stopBlinky();
 			break;
-		case RIGHT_DIR_FORWARD:
-			Serial.println("COMMAND: RIGHT_DIR_FORWARD");
-			setRightDir(1);
-			break;
-		case RIGHT_DIR_BACK:
-			Serial.println("COMMAND: RIGHT_DIR_BACK");
-			setRightDir(0);
-			break;
-		case RIGHT_POWER:
-			Serial.println("COMMAND: RIGHT_POWER");
-			Serial.println("Power = ");
-			power = decodePower((int) rcvmsgInfo[2]);
-			//Serial.println((int) rcvmsg[3]);
-			//setRightPower(&rcvmsg[3]);
-			setRightPower(&power);
-			break;
-		case LEFT_DIR_FORWARD:
-			Serial.println("COMMAND: LEFT_DIR_FORWARD");
-			setLeftDir(1);
-			break;
-		case LEFT_DIR_BACK:
-			Serial.println("COMMAND: LEFT_DIR_BACK");
-			setLeftDir(0);
-			break;
-		case LEFT_POWER:
-			Serial.println("COMMAND: LEFT_POWER");
-			Serial.println("Power = ");
-			Serial.println((int) rcvmsgInfo[2]);
-			setLeftPower(&rcvmsgInfo[2]);
+		case MOTOR_CONTROL:
+			Serial.println("COMMAND: MOTOR_CONTROL");
+			motors = decodeEngines();
+			printRightMotorSignal(motors);
+			printLeftMotorSignal(motors);
+			rightMotorControl(motors.right);
+			leftMotorControl(motors.left);
 			break;
 		case MOTOR_STOP:
 			Serial.println("COMMAND: ENGINE_STOP");
@@ -95,4 +75,21 @@ void decodeMsgType()
 			break;
 		}
 	}
+}
+
+
+void sendMessage(int command, int target)
+{
+	byte fullMsg[255];
+	fullMsg[0] = command;
+	fullMsg[1] = target;
+	fullMsg[2] = sizeof(sendMsg);
+
+	for(int i = 0; i < sizeof(sendMsg); i++)
+	{
+		fullMsg[3 + i] = sendMsg[i];
+	}
+
+	int len = acc.write(fullMsg, sizeof(fullMsg));
+	delay(250);
 }

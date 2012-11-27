@@ -20,17 +20,33 @@ Till sist måste AVRnanopb biblioteket länkas in detta finns i AVRnanopb/release
 #include "nanoPB.h"
 #include <UsbHost.h>
 #include <AndroidAccessory.h>
+#include "print.h"
+#include "Drive.h"
+#include "command.pb.h"
+#include "Streaming.h"
+#include "sensors.h"
 
 int incomingByte;              	// for incoming serial data
-byte buffer[64];				// buffer for incoming data
+//byte outBuffer[255];				// buffer for incoming data
 //int count = 0;				//length of buffer
 
-int decodePower(int length)
+Engines decodeEngines()
 {
-	bool test;
-	Protocol protocol;
+	Engines engines;
+	int length = (int) rcvmsgInfo[2];
 	pb_istream_t stream = pb_istream_from_buffer((uint8_t*)rcvPBmsg, length);
-	test = pb_decode(&stream, Protocol_fields, &protocol); //incoming buffer decoded to protocol
+	if(pb_decode(&stream, Engines_fields, &engines)) //incoming buffer decoded to protocol
+	{
+		return engines;
+	}
+	else
+	{
+		Serial << "Failed to decode an Engines object";
+		DriveSignals right = { false, false, 0 };
+		DriveSignals left = { false, false, 0 };
+		Engines protocol1={ right, left };	//skapa protocol1
+		return protocol1;
+	}
 	/*
 	if(test==true)
 	{
@@ -50,14 +66,56 @@ int decodePower(int length)
 		Serial.println((uint8_t) rcvmsg[3+i]);
 
 	}*/
-	//Serial.println("Decode");
-	//Serial.println(length);
-	Serial.println(protocol.command);
-	Serial.println(atoi(protocol.command));
-	Serial.println(protocol.adress);
-	Serial.println(protocol.data);
+	//engines.left.enable
+	return engines;
+}
 
-	return atoi(protocol.command);
+bool encodeEngines()
+{
+		DriveSignals right = { false, true, 10 };
+		DriveSignals left = { true, true, 20 };
+		Engines engine={ right, left };	//skapa protocol1
+
+		pb_ostream_t ostream;		//en utström
+		ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //koppla ihop utströmmen med en buffert
+
+		if (pb_encode(&ostream, Engines_fields, &engine)) //encode protocoll (buffer is now the encoded protocol
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+}
+
+bool encodeSensorMsg(sensor sensorObject)
+{
+	char type[40];
+	char description[40];
+	//&type,40   &description,40
+	SensorData sensorPB;
+	sensorObject.type.toCharArray(sensorPB.type,40);
+	sensorObject.description.toCharArray(sensorPB.description,40);
+	sensorPB.address=sensorObject.address;
+	sensorPB.value=sensorObject.value;
+
+	pb_ostream_t ostream;		//en utström
+	ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //koppla ihop utströmmen med en buffert
+
+	if (pb_encode(&ostream, SensorData_fields, &sensorPB)) //encode protocoll (buffer is now the encoded protocol
+	{
+		/*for(int i = 0; i < ostream.bytes_written; i++)
+		{
+			Serial.print((char) buffer[i]);
+			Serial << " "<< (uint8_t) buffer[i] << endl;
+		}*/
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 /*
 void encodeMsg()

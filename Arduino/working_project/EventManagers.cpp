@@ -85,7 +85,7 @@ void analogManager(EventQueue* q)
 void USBReadManager(EventQueue* q)
 {
 	int len;
-	/*
+
 	if (acc.isConnected())
 	{
 		len = acc.read(rcvmsg,sizeof(rcvmsg),1);
@@ -94,7 +94,7 @@ void USBReadManager(EventQueue* q)
 			q->enqueueEvent(Events::EV_SERIAL, len);
 		}
 	}
-	*/
+
 	/*if (acc.isConnected())
 	{
 		if (acc.peek() != -1)
