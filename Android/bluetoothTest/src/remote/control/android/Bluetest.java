@@ -40,16 +40,16 @@ public class Bluetest extends Activity implements SensorEventListener
 	String Dev;
 	String adress = null;
 	
-	Button buttonConnect;
-	Button buttonDisconnect;
+	Button buttonToggleBT;
+	
 	Button buttonFind;
 	Button buttonPair;
-	Button buttonSend;
+	Button buttonChoose;
 	Button buttonTest;
 	Button buttonUp;
 	Button buttonDown;
-	Button buttonLeft;
-	Button buttonRight;
+	Button buttonTest1;
+	Button buttonTest2;
 	
 	boolean sendCoordinates = false;
 	Button buttonSendCoor;
@@ -57,7 +57,7 @@ public class Bluetest extends Activity implements SensorEventListener
 	TextView xCoordinate;
 	TextView yCoordinate;
 	TextView zCoordinate;
-	TextView Test;
+	TextView infoText;
 	
 	int length = 0;
 	int i = 0;
@@ -78,19 +78,17 @@ public class Bluetest extends Activity implements SensorEventListener
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bluetest);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-		buttonConnect = (Button) findViewById(R.id.btn_connect);
-		buttonDisconnect = (Button) findViewById(R.id.btn_disconnect);
-		buttonTest = (Button) findViewById(R.id.btn_test);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		
+		buttonToggleBT = (Button) findViewById(R.id.btn_toggleBT);
 		buttonFind = (Button) findViewById(R.id.btn_find);
 		buttonPair = (Button) findViewById(R.id.btn_pair);
-		buttonSend = (Button) findViewById(R.id.btn_send);
+		buttonChoose = (Button) findViewById(R.id.btn_choose);
 		
 		buttonUp = (Button) findViewById(R.id.btn_up);
 		buttonDown = (Button) findViewById(R.id.btn_down);
-		buttonLeft = (Button) findViewById(R.id.btn_left);
-		buttonRight = (Button) findViewById(R.id.btn_right);
+		buttonTest1 = (Button) findViewById(R.id.btn_test1);
+		buttonTest2 = (Button) findViewById(R.id.btn_test2);
 		
 		buttonSendCoor = ( Button) findViewById(R.id.btn_sendCoor);
 		
@@ -105,41 +103,34 @@ public class Bluetest extends Activity implements SensorEventListener
 										SensorManager.SENSOR_DELAY_NORMAL);
 		
 		
-		Test = (TextView) findViewById(R.id.text_View);
+		infoText = (TextView) findViewById(R.id.text_View);
 		
 		//Click connect button
-		buttonConnect.setOnClickListener(new OnClickListener() 
+		buttonToggleBT.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
 			{
-				if( bluetooth != null )
+				if( bluetooth != null && bluetooth.getState() != BluetoothAdapter.STATE_ON)
 				{
 				    //bluetooth.enable();
 					Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 				    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+				    buttonToggleBT.setText(R.string.btON);	
 				}
-			}
-		});
-
-
-		//Click disconnect button
-		buttonDisconnect.setOnClickListener(new OnClickListener() 
-		{
-			@Override
-			public void onClick(View v) 
-			{
-				if(bluetooth != null)
+				
+				else if (bluetooth != null && bluetooth.getState() != BluetoothAdapter.STATE_OFF)
 				{
 					bluetooth.disable();
+					buttonToggleBT.setText(R.string.btOFF);	
 				}
 			}
 		});
+
 
 		//Search button
 		buttonFind.setOnClickListener(new OnClickListener() 
 		{
-
 			@Override
 			public void onClick(View v) 
 			{
@@ -148,36 +139,15 @@ public class Bluetest extends Activity implements SensorEventListener
 				
 				if(bluetooth.startDiscovery())	
 				{
-					Test.setText("Starts searching...");
+					infoText.setText("Searching for devices...");
 				}
 				else
 				{
-					Test.setText("FAIL");
+					infoText.setText("Failed to search...");
 				}	
 			}
 		});
 
-		//Click test button
-		buttonTest.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) 
-			
-			{
-				bluetooth.cancelDiscovery();
-				
-				Test.setText("Devices found:" + "\n\n");
-				
-				Iterator<String> it = devicesFound.iterator();
-				
-		        while(it.hasNext())
-		        {
-		        	Test.append((String)it.next() + "\n");
-		        }
-			}
-		});
-		
-		
 		buttonPair.setOnClickListener(new OnClickListener() 
 		{
 			@Override
@@ -200,7 +170,7 @@ public class Bluetest extends Activity implements SensorEventListener
 			@Override
 			public void onClick(View v) 
 			{
-				if(!sendCoordinates)
+				if(!sendCoordinates && mmSocketUp)
 				{
 					sendCoordinates = true;
 					buttonSendCoor.setText(R.string.btnSendCoor);	
@@ -209,17 +179,17 @@ public class Bluetest extends Activity implements SensorEventListener
 				{
 					sendCoordinates = false;
 					buttonSendCoor.setText(R.string.btnSendCoorNot);
+					infoText.setText("Socket not up...");
 				}
 			}
 		});
 		
 
-		buttonSend.setOnClickListener(new OnClickListener() 
+		buttonChoose.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
 			{
-				
 				length = devicesFound.size(); 
 				
 				if( length > 0 )
@@ -230,8 +200,8 @@ public class Bluetest extends Activity implements SensorEventListener
 						//save adress
 						adress = devicesFound.get( 1 + i );
 						
-						Test.setText("Selected device:" + "\n\n" + devicesFound.get(0 +  i ) 
-									 + "\n" + devicesFound.get(1 + i ));
+						infoText.setText("Selected device:" + "\n\n" + devicesFound.get(0 +  i ) 
+									     + "\n" + devicesFound.get(1 + i ));
 						
 						i += 2;
 					}
@@ -240,8 +210,8 @@ public class Bluetest extends Activity implements SensorEventListener
 						//save adress
 						adress = devicesFound.get( 1 + i );
 						
-						Test.setText("Selected device:" + "\n\n" + devicesFound.get(0  + i ) 
-								 + "\n" + devicesFound.get(1 + i ));
+						infoText.setText("Selected device:" + "\n\n" + devicesFound.get(0  + i ) 
+								 		 + "\n" + devicesFound.get(1 + i ));
 						
 						i = 0;
 					}
@@ -251,8 +221,7 @@ public class Bluetest extends Activity implements SensorEventListener
 					}
 				}
 				else
-					Test.setText("No devices found");
-
+					infoText.setText("No devices found");
 			}
 		});
 		
@@ -263,13 +232,8 @@ public class Bluetest extends Activity implements SensorEventListener
 			@Override
 			public void onClick(View v) 
 			{
-				String test = "$up$";
-				
-				//byte[] data = new byte[1024];
-				//data = coords.toByteArray();
-				//sendDirection(coordinates);
-				
-				sendDirection(test.getBytes());
+				String up = "$up$";
+				sendData(up.getBytes());
 			}
 		});
 		
@@ -279,13 +243,13 @@ public class Bluetest extends Activity implements SensorEventListener
 			@Override
 			public void onClick(View v) 
 			{
-				String ostkaka = "$down$";			
-				sendDirection(ostkaka.getBytes());
+				String down = "$down$";			
+				sendData(down.getBytes());
 			}
 		});
 		
 
-		buttonLeft.setOnClickListener(new OnClickListener() 
+		buttonTest1.setOnClickListener(new OnClickListener() 
 		{
 			
 			@Override
@@ -296,31 +260,26 @@ public class Bluetest extends Activity implements SensorEventListener
 				String coordsString = new String(test);
 				coordsString = coordsString + "$";
 				
-				
 				try
 				{
 					Protocol testProt = protocolbufferjava.Test.Protocol.parseFrom(test);
-					Test.setText("Parse from get x: " + testProt.getXCoor() + "\n" + ">" + coordsString + "<");
+					infoText.setText("Parse from get x: " + testProt.getXCoor() + "\n" + ">" + coordsString + "<");
 				}
 				catch (IOException e) 
 				{
 					
 				}
 				if(sendCoordinates)
-					sendDirection(coordsString.getBytes());
+					sendData(coordsString.getBytes());
 			}
 		});
 		
-		buttonRight.setOnClickListener(new OnClickListener() 
+		buttonTest2.setOnClickListener(new OnClickListener() 
 		{
-			
 			@Override
 			public void onClick(View v) 
 			{
-				if(!thread.isAlive())
-				{
-					thread.start();
-				}
+				startReceiveing();
 			}
 		});
 		
@@ -342,14 +301,27 @@ public class Bluetest extends Activity implements SensorEventListener
 	}
 	
 	
+	void printDevicesFound()
+	{
+		//bluetooth.cancelDiscovery();
+		
+		infoText.setText("Devices found:" + "\n\n");
+		
+		Iterator<String> it = devicesFound.iterator();
+		
+        while(it.hasNext())
+        {
+        	infoText.append((String)it.next() + "\n");
+        }
+	}
+	
+	
 	//*********************************ACC**********************************************************
-	
-	
 	
 	
 	Protocol coords = createProtocol("x", "y", "z");
 	
-	public float threashold = (float)0.0;
+	public float threashold = (float)0.5;
 	public boolean first = true;
 	public float magnitude; 
 	
@@ -373,15 +345,15 @@ public class Bluetest extends Activity implements SensorEventListener
 
 			if(first)
 			{
-				oldX = (float)(Math.round(event.values[0] * 100.0) / 100.0);
-				oldY = (float)(Math.round(event.values[1] * 100.0) / 100.0);
-				oldZ = (float)(Math.round(event.values[2] * 100.0) / 100.0);
+				oldX = (float)(Math.round(event.values[0]));
+				oldY = (float)(Math.round(event.values[1]));
+				oldZ = (float)(Math.round(event.values[2]));
 				first = false;
 			}
 			
-			newX  = (float)(Math.round(event.values[0] * 100.0) / 100.0);
-			newY = (float)(Math.round(event.values[1] * 100.0) / 100.0);
-			newZ = (float)(Math.round(event.values[2] * 100.0) / 100.0);
+			newX  = (float)(Math.round(event.values[0]));
+			newY = (float)(Math.round(event.values[1]));
+			newZ = (float)(Math.round(event.values[2]));
 			
 
 			if( ( Math.abs( Math.abs( newX ) - Math.abs( oldX ))) > threashold) 
@@ -400,26 +372,41 @@ public class Bluetest extends Activity implements SensorEventListener
 				oldZ = newZ;
 			}
 			
-			
+			//create protocol
 			coords = createProtocol(String.valueOf(x), String.valueOf(y), String.valueOf(z));
 			
-			//coords = createProtocol("Foo", "0", "0");
-			
-			
-			xCoordinate.setText( "Xp: "+ coords.getXCoor() );
-			yCoordinate.setText( "Yp: "+ coords.getYCoor() );
-			zCoordinate.setText( "Zp: "+ coords.getZCoor() );
-			
-			byte[] test = new byte[1024];
-			test = coords.toByteArray();
-			String coordsString = new String(test);
-			coordsString = coordsString + "$";
-			
-			if(sendCoordinates)
-				sendDirection(coordsString.getBytes());
-			
-			
+			xCoordinate.setText(String.valueOf(x));
+			yCoordinate.setText(String.valueOf(y));
+			zCoordinate.setText(String.valueOf(z));
 		}
+	}
+	
+	void startReceiveing()
+	{
+		if(mmSocketUp)
+		{
+			if(!thread.isAlive())
+			{
+				thread.start();
+			}
+			buttonTest2.setText(R.string.btnReceive);
+		}
+		else
+			infoText.setText("Socket not up...");
+
+		
+	}
+	
+	void sendProtocol()
+	{
+		byte[] test = new byte[1024];
+		test = coords.toByteArray();
+		
+		String coordsString = new String(test);
+		coordsString = coordsString + "$";
+		
+		if(sendCoordinates)
+			sendData(coordsString.getBytes());
 	}
 	
 	
@@ -428,34 +415,33 @@ public class Bluetest extends Activity implements SensorEventListener
 	BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
     private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-    
 	private BluetoothSocket mmSocket;
-	//private InputStream mmInStream;
 	private OutputStream mmOutStream;
 	
-	
-	private void sendDirection(byte[] dir)
+	private void sendData(byte[] data)
 	{			
-		try 
-	    {
-			mmOutStream = mmSocket.getOutputStream();
-	    } 
-	    catch (IOException e) 
-	    {
-	      
-	    }
-	 
-	    //String message = dir + "\n";
-		//byte[] msgBuffer = dir.getBytes();
-	    
-	    try 
-	    {
-	    	mmOutStream.write(dir);
-	    } 
-	    catch (IOException e) 
-	    {
-	
-	    }
+		if(mmSocketUp)
+		{
+			try 
+		    {
+				mmOutStream = mmSocket.getOutputStream();
+		    } 
+		    catch (IOException e) 
+		    {
+		    	infoText.setText("Failed to open stream...");
+		    }
+
+		    try 
+		    {
+		    	mmOutStream.write(data);
+		    } 
+		    catch (IOException e) 
+		    {
+		    	infoText.setText("Failed to send data...");
+		    }
+		}
+		else
+			infoText.setText("Socket not up...");
 	}
 	
     byte[] buffer = new byte[1024];  // buffer store for the stream
@@ -492,7 +478,6 @@ public class Bluetest extends Activity implements SensorEventListener
 				try 
 				{
 					// MY_UUID is the app's UUID string, also used by the server code         	
-
 					temp = device.createInsecureRfcommSocketToServiceRecord(MY_UUID_INSECURE);
 					mmSocket = temp;
 					mmSocketUp = true;
@@ -502,7 +487,7 @@ public class Bluetest extends Activity implements SensorEventListener
 				{ 
 					mmSocket = null;
 					mmSocketUp = false;
-					Test.setText("Failed to create socket...");
+					infoText.setText("Failed to create socket...");
 				}
 
 				if( mmSocketUp )
@@ -511,7 +496,7 @@ public class Bluetest extends Activity implements SensorEventListener
 					{
 						// Connect the device through the socket. This will block until it succeeds or throws an exception
 						mmSocket.connect(); 
-						Test.setText("Connected...");
+						infoText.setText("Connected...");
 					} 
 					catch (IOException connectException) 
 					{
@@ -519,7 +504,7 @@ public class Bluetest extends Activity implements SensorEventListener
 						try 
 						{
 							mmSocket.close();
-							Test.setText("Connection failed...");
+							infoText.setText("Connection failed...");
 						} 
 						catch (IOException closeException) 
 						{ 
@@ -530,7 +515,7 @@ public class Bluetest extends Activity implements SensorEventListener
 			}
 			else
 			{
-				Test.setText("No selected device");
+				infoText.setText("No selected device");
 			}	
 		//}
 	}
@@ -555,19 +540,18 @@ public class Bluetest extends Activity implements SensorEventListener
 					devicesFound.add(device.getName());
 					devicesFound.add(device.getAddress());
 					
-					Test.setText(device.getName() + "\n" + device.getAddress());
+					infoText.setText(device.getName() + "\n" + device.getAddress());
 				}
 			} 
 
 			//When discovery is finished, change the Activity title
 			else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) 
 			{
-				Test.setText("Done seraching...");	
+				printDevicesFound();
 			}
 		}
 	};
 
-	
 	
 	public Protocol createProtocol(String x, String y, String z) 
 	{
@@ -590,7 +574,7 @@ public class Bluetest extends Activity implements SensorEventListener
 	{
 		public void run() 
 		{
-			Test.setText(recivedString);
+			infoText.setText(recivedString);
 		}
 	};
 
@@ -612,7 +596,6 @@ public class Bluetest extends Activity implements SensorEventListener
 				
 			    
 				readData();
-				
 				handler.post(r);
 			}
 		}
@@ -642,13 +625,9 @@ public class Bluetest extends Activity implements SensorEventListener
 	
 	//***********************************************
 	
-	
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
 	}
-	
-	
-	
 }

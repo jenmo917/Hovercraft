@@ -1,10 +1,10 @@
 <resources>
 
-    <string name="app_name">bluetoothTest</string>
+    <string name="app_name">Remote Control</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_bluetest">Bluetest</string>
-    <string name="btnConnect">Connect</string>
+    <string name="title_activity_bluetest">Remote Control</string>
+    <string name="btnConnect">BT ON/OFF</string>
     <string name="btndevices">Devices</string>
     <string name="btnDisconnect">Disconnect</string>
     <string name="testNoTest">No info</string>
@@ -17,8 +17,7 @@
     <string name="allDevices">TOM</string>
     <string name="btnPair">Pair</string>
     <string name="btnSend">Send data</string>
-    <string name="left">Left</string>
-    <string name="right">Right</string>
+    <string name="btnTest1">Parse</string>
     <string name="up">Up</string>
     <string name="down">Down</string>
     <string name="btnChoose">Choose</string>
@@ -27,5 +26,9 @@
     <string name="zCoor">Z</string>
     <string name="btnSendCoorNot">No send</string>
     <string name="btnSendCoor">Send</string>
+    <string name="btON">BT ON</string>
+    <string name="btOFF">BT OFF</string>
+    <string name="btnTest2">No receive</string>
+    <string name="btnReceive">Receive</string>
 
 </resources>
