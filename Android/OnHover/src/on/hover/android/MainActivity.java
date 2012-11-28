@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity
 {	
-	private String TAG = "JMMainActivity";
+	private String TAG = "JM";
 	private ImageView mStatusLed;
 	
 	TextView textInfo;
@@ -43,15 +43,15 @@ public class MainActivity extends Activity
 			else if(action.equalsIgnoreCase("printMessage"))
 			{
 				
-				if(intent.hasExtra("com.example.BluetoothServer.message"))
+				if(intent.hasExtra("message"))
 				{
-					String message = intent.getStringExtra("com.example.BluetoothServer.message");
+					String message = intent.getStringExtra("message");
 					textInfo.setText(message);
 				}
 				
-				if(intent.hasExtra("com.example.BluetoothServer.coordinates"))
+				if(intent.hasExtra("coordinates"))
 				{
-					String coordinates = intent.getStringExtra("com.example.BluetoothServer.coordinates");
+					String coordinates = intent.getStringExtra("coordinates");
 					
 					
 					
@@ -64,7 +64,7 @@ public class MainActivity extends Activity
 				    	
 						//Call serverUp
 			    		Intent i2 = new Intent("callFunction");
-			    		i2.putExtra("com.example.BtService.sendData", "sendData");
+			    		i2.putExtra("sendDataBlinkyOn", "sendDataBlinkyOn");
 			    		sendBroadcast(i2);
 					}
 					else if( (coordinates.equalsIgnoreCase("down")) )
@@ -76,7 +76,7 @@ public class MainActivity extends Activity
 				    	
 						//Call serverUp
 			    		Intent i2 = new Intent("callFunction");
-			    		i2.putExtra("com.example.BtService.sendData", "sendData");
+			    		i2.putExtra("sendDataBlinkyOff", "sendDataBlinkyOff");
 			    		sendBroadcast(i2);
 					}
 				}
@@ -127,6 +127,7 @@ public class MainActivity extends Activity
 
 	private void startBtServerService()
 	{
+		Log.d(TAG,"start BtService");
 		Intent intent = new Intent(this, BtService.class);
 		intent.fillIn(getIntent(), 0);
 		startService(intent);
@@ -201,22 +202,22 @@ public class MainActivity extends Activity
 				
 				//Call serverUp
 	    		Intent i = new Intent("callFunction");
-	    		i.putExtra("com.example.BtService.setupServer", "setupServer");
+	    		i.putExtra("setupServer", "setupServer");
 	    		sendBroadcast(i);
-	    		
-	    		try 
-	    		{
-					Thread.sleep(1000);
-				} 
-	    		catch (InterruptedException e) 
-	    		{
-					e.printStackTrace();
-				}
+//	    		
+//	    		try 
+//	    		{
+//					Thread.sleep(1000);
+//				} 
+//	    		catch (InterruptedException e) 
+//	    		{
+//					e.printStackTrace();
+//				}
 	    		
 	    		textInfo.setText("Waiting for connection...");
 	    		
 	    		Intent i2 = new Intent("callFunction");
-	    		i2.putExtra("com.example.BtService.waitToConnect", "waitToConnnect");
+	    		i2.putExtra("waitToConnect", "waitToConnnect");
 	    		sendBroadcast(i2);  		
 	    		
 			}
@@ -235,7 +236,7 @@ public class MainActivity extends Activity
 				textInfo.setText("Recieving coordinates...");
 				
 	    		Intent i = new Intent("callFunction");
-	    		i.putExtra("com.example.BtService.listen", "listen");
+	    		i.putExtra("listen", "listen");
 	    		sendBroadcast(i);
 			}
 		});

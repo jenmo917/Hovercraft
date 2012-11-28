@@ -24,17 +24,24 @@ import android.util.Log;
 
 public class BtService extends IntentService
 {
-	private static String TAG = "JMMainActivity";
+	private static String TAG = "JM";
 	
 	public BtService() 
 	{
 		super("BtService");
 	}
+	
+	@Override
+	public void onCreate()
+	{
+		super.onCreate();
+		Log.d(TAG,"BtService: start BtService");		
+	}
 
 	@Override
 	protected void onHandleIntent(Intent arg0) 
 	{
-		Log.d(TAG, "Service started");
+		Log.d(TAG, "BTService started");
 		
 		//IMPORTANT!
 		registerReceiver(BtServiceReciever, new IntentFilter("callFunction"));
@@ -68,13 +75,13 @@ public class BtService extends IntentService
 			{
 				mmServerSocket.close();
 				
-				i.putExtra("com.example.BluetoothServer.message", "Server down...");
+				i.putExtra("message", "Server down...");
 				sendBroadcast(i);
 				serverUp = false;
 			} 
 			catch (IOException e) 
 			{
-				i.putExtra("com.example.BluetoothServer.message", "Faild to close server...");
+				i.putExtra("message", "Faild to close server...");
 				sendBroadcast(i);
 			}
 		}
@@ -96,13 +103,13 @@ public class BtService extends IntentService
 			tmp = mBluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord(NAME,  MY_UUID_INSECURE);
 			
 			serverUp = true;
-			i.putExtra("com.example.BluetoothServer.message", "Server up...");
+			i.putExtra("message", "Server up...");
 			sendBroadcast(i);
 		} 
 		catch (IOException e) 
 		{ 
 			serverUp = false;
-			i.putExtra("com.example.BluetoothServer.message", "Fail...");
+			i.putExtra("message", "Fail...");
 			sendBroadcast(i);
 		}
 
@@ -124,13 +131,13 @@ public class BtService extends IntentService
 				mmSocket = mmServerSocket.accept(timeout);
 				
 				socketUp = true;
-				i.putExtra("com.example.BluetoothServer.message", "Socket is up..");
+				i.putExtra("message", "Socket is up..");
 				sendBroadcast(i);
 			} 
 			catch (IOException e) 
 			{
 				socketUp = false;
-				i.putExtra("com.example.BluetoothServer.message", "Failed to establish socket...");
+				i.putExtra("message", "Failed to establish socket...");
 				sendBroadcast(i);
 				
 				closeServerSocket();	
@@ -162,12 +169,12 @@ public class BtService extends IntentService
 			try
 			{
 				mmInStream = mmSocket.getInputStream();
-				i.putExtra("com.example.BluetoothServer.message", "Input stream open...");
+				i.putExtra("message", "Input stream open...");
 				sendBroadcast(i);
 			}
 			catch (IOException e)
 			{
-				i.putExtra("com.example.BluetoothServer.message", "Failed to open input stream...");
+				i.putExtra("message", "Failed to open input stream...");
 				sendBroadcast(i);
 				return;
 			}		
@@ -195,7 +202,7 @@ public class BtService extends IntentService
 				{
 					String coo = ("X: " + coords.getXCoor() + "\nY: " + coords.getYCoor() +  "\nZ: " + coords.getZCoor());
 					Intent i = new Intent("printMessage");
-					i.putExtra("com.example.BluetoothServer.coordinates", coo);
+					i.putExtra("on.hover.BluetoothServer.coordinates", coo);
 					sendBroadcast(i);
 				}
 			}
@@ -298,7 +305,7 @@ public class BtService extends IntentService
 			selectedPart = tempString.substring(1, i);
 			
 			Intent i = new Intent("printMessage");
-			i.putExtra("com.example.BluetoothServer.coordinates", selectedPart);
+			i.putExtra("coordinates", selectedPart);
 			sendBroadcast(i);
 		}
 	}
@@ -342,30 +349,34 @@ public class BtService extends IntentService
 			if(action.equalsIgnoreCase("callFunction"))
 			{
 				//witch function
-				if(intent.hasExtra("com.example.BtService.setupServer"))
+				if(intent.hasExtra("setupServer"))
 				{
 					Log.d(TAG, "BtService: setupServer");
 					setupServer();
 				}	
 				
-				if(intent.hasExtra("com.example.BtService.waitToConnect"))
+				if(intent.hasExtra("waitToConnect"))
 				{
 					waitToConnect();
 				}
 				
-				if(intent.hasExtra("com.example.BtService.listen"))
+				if(intent.hasExtra("listen"))
 				{
 					listen();
 				}
 				
-				if(intent.hasExtra("com.example.BtService.sendData"))
+				if(intent.hasExtra("sendDataBlinkyOn"))
 				{
-					String testString = "Blinky" + String.valueOf(testInt);
+					String testString = "BlinkyOn";
 					byte[] testByte = testString.getBytes();
-					
 					sendData(testByte);
-					testInt++;
 				}
+				if(intent.hasExtra("sendDataBlinkyOff"))
+				{
+					String testString = "BlinkyOff";
+					byte[] testByte = testString.getBytes();
+					sendData(testByte);
+				}				
 			}
 		}
 	};

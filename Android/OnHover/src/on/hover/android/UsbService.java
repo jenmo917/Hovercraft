@@ -9,6 +9,8 @@ import java.io.IOException;
 import on.hover.android.Command.DriveSignals;
 import on.hover.android.Command.Engines;
 
+import on.hover.android.Constants;
+
 import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
 
@@ -34,10 +36,8 @@ public class UsbService extends IntentService
 	
 	public static ConnectionState connectionState = ConnectionState.DISCONNECTED; // USB connection state
 
-    private static String TAG = "JMMainActivity";
+    private static String TAG = "JM";
     private static UsbService singleton;
-	private static final byte MOTOR_CONTROL_COMMAND = 0x3;
-	private static final byte TARGET_ADK = 0x1;
 
 	private final BroadcastReceiver messageReceiver = new newMessage();	
 	
@@ -69,7 +69,7 @@ public class UsbService extends IntentService
 		{
 			Log.d(TAG,""+message[x]);
 		}
-    	sendCommand(MOTOR_CONTROL_COMMAND,TARGET_ADK, message);
+    	sendCommand(Constants.MOTOR_CONTROL_COMMAND,Constants.TARGET_ADK, message);
     	Log.d(TAG,"Send engine command");
     }
     
@@ -94,7 +94,7 @@ public class UsbService extends IntentService
     public void onCreate()
     {
         super.onCreate();
-        Log.d(TAG, "FirstService started");
+        Log.d(TAG, "UsbService started");
         singleton = this;
         isActive = true;
     }
@@ -260,12 +260,10 @@ public class UsbService extends IntentService
 	
 	public void checkInput() 
 	{
-
 		if(mInputStream != null) 
 		{
 			int ret = 0;
 			byte[] buffer = new byte[16384];
-			int i;
 
 			while (ret >= 0) 
 			{
@@ -278,22 +276,32 @@ public class UsbService extends IntentService
 					break;
 				}
 
-				i = 0;
-				while (i < ret) 
+				/*
+				 * buffer[0] = command
+				 * buffer[1] = target
+				 * buffer[2] = message length
+				 * buffer[3] = message
+				 * buffer[4] = message
+				 * buffer[x] = message
+				 */
+				
+				Log.v(TAG, "Command received: " + buffer[0]);
+				
+				// commands from ADK to this device
+				if(Constants.TARGET_BRAIN == buffer[1])
 				{
-					int len = ret - i;
-
-					Log.v(TAG, "Read: " + buffer[i]);
-
-					switch (buffer[i]) 
-					{
+					switch (buffer[0]) 
+					{				
 						default:
-							Log.d(TAG, "unknown msg: " + buffer[i]);
-							sendString();
-							i = len;
+							Log.d(TAG, "unknown command: " + buffer[0]);
 						break;
-					}
+					}				
 				}
+				// commands from ADK to remote control or back to ADK
+				else if(Constants.TARGET_REMOTE == buffer[1] || Constants.TARGET_ADK == buffer[1])
+				{
+					// skicka vidare till remote or ADK
+				}				
 			}
 		}
 	}	
