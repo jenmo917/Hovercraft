@@ -145,7 +145,6 @@ public class BtService extends IntentService
 		return socketUp;      
 	}
 
-	
 	private InputStream mmInStream;
 	private InputStreamReader btReader;
 
