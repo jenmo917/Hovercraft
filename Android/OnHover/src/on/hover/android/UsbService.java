@@ -2,6 +2,7 @@ package on.hover.android;
 
 import java.util.Random;
 import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -44,6 +45,7 @@ public class UsbService extends IntentService
 	private UsbAccessory mAccessory;
 	private ParcelFileDescriptor mFileDescriptor;
 	private FileOutputStream mOutputStream;
+	private FileInputStream mInputStream;
 	
 	public UsbService()
 	{
@@ -137,6 +139,7 @@ public class UsbService extends IntentService
 			{
 				FileDescriptor fd = mFileDescriptor.getFileDescriptor();
 				mOutputStream = new FileOutputStream(fd);
+				mInputStream = new FileInputStream(fd);
 				Log.d(TAG, "mFileDesc != null");
 				
 				// Update connection state in our view
@@ -160,6 +163,7 @@ public class UsbService extends IntentService
 		{
 			if (mOutputStream != null)
 			{
+				mInputStream.close();
 				mOutputStream.close();
 			}
 			if (mFileDescriptor != null) 
@@ -173,6 +177,7 @@ public class UsbService extends IntentService
 		} 
 		finally 
 		{
+			mInputStream = null;
 			mOutputStream = null;
 			mFileDescriptor = null;
 			mAccessory = null;
@@ -249,17 +254,49 @@ public class UsbService extends IntentService
         		break;
         	}
         	
-        	try
-        	{
-				Thread.sleep(2000);
-			} 
-        	catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}  
+        	checkInput();
         }
-        onDestroy();
 	}
+	
+	public void checkInput() 
+	{
+
+		if(mInputStream != null) 
+		{
+			int ret = 0;
+			byte[] buffer = new byte[16384];
+			int i;
+
+			while (ret >= 0) 
+			{
+				try 
+				{
+					ret = (mInputStream.read(buffer));
+				} 
+				catch (IOException e) 
+				{
+					break;
+				}
+
+				i = 0;
+				while (i < ret) 
+				{
+					int len = ret - i;
+
+					Log.v(TAG, "Read: " + buffer[i]);
+
+					switch (buffer[i]) 
+					{
+						default:
+							Log.d(TAG, "unknown msg: " + buffer[i]);
+							sendString();
+							i = len;
+						break;
+					}
+				}
+			}
+		}
+	}	
 	
 	private void setupBroadcastFilters() 
 	{

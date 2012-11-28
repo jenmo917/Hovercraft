@@ -173,7 +173,6 @@ public class MainActivity extends Activity
 		mStatusLed = (ImageView) findViewById(R.id.status_led);
 	}
 
-	
 	private void setupTestButton() 
 	{
 		Button button = (Button) findViewById(R.id.test_button);
@@ -187,7 +186,6 @@ public class MainActivity extends Activity
 			}
 		});
 	}	
-
 	
 	private void setupBTSetupButton() 
 	{
