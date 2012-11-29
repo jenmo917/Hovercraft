@@ -1,6 +1,5 @@
 package on.hover.android;
 
-import java.util.Random;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -8,11 +7,13 @@ import java.io.IOException;
 
 import on.hover.android.Command.DriveSignals;
 import on.hover.android.Command.Engines;
+import on.hover.android.Command.SensorData;
 
 import on.hover.android.Constants;
 
 import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
+import com.google.protobuf.InvalidProtocolBufferException;
 
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
@@ -23,9 +24,7 @@ import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 public class UsbService extends IntentService
-{
-	Random generator = new Random();
-	
+{	
 	public static boolean isActive = false; // this is true if the service is up and running
 	private boolean accessoryDetached = false; // TODO: true if android accessory is detached
 	
@@ -90,6 +89,16 @@ public class UsbService extends IntentService
 		return driveSignal.build();
 	}
     
+	static SensorData createSensorDataProtocol(String type, String desc, int address, int value)
+	{
+		SensorData.Builder sensorData = SensorData.newBuilder();
+		sensorData.setType(type);
+		sensorData.setDescription(desc);
+		sensorData.setAddress(address);
+		sensorData.setValue(value);
+		return sensorData.build();
+	}
+	
     @Override
     public void onCreate()
     {
@@ -108,7 +117,7 @@ public class UsbService extends IntentService
 		closeAccessory();
 		unregisterReceiver(messageReceiver);
 		
-        Log.d(TAG, "FirstService destroyed");
+        Log.d(TAG, "UsbService destroyed");
     }
 
 	private void reOpenAccessoryIfNecessary(Intent intent)
@@ -230,7 +239,28 @@ public class UsbService extends IntentService
 		{
 			closeAccessory();
 		}
-	}    
+	}
+	
+	private void sendByteArray(byte[] byteArray)
+	{
+		Log.d(TAG,"SendByteArray");
+		if (mOutputStream != null)
+		{
+			try
+			{
+				mOutputStream.write(byteArray);
+				Log.d(TAG, "write byteArray to outPutStream");
+			}
+			catch (IOException e) 
+			{
+				Log.e(TAG, "SendByteArray failed", e);
+			}
+		} 
+		else
+		{
+			closeAccessory();
+		}
+	}	
     
 	@Override
 	protected void onHandleIntent(Intent intent) 
@@ -248,12 +278,10 @@ public class UsbService extends IntentService
         
         while(true) 
         {
-        	// TODO: Not implemented
         	if (accessoryDetached) 
         	{
         		break;
         	}
-        	
         	checkInput();
         }
 	}
@@ -263,7 +291,7 @@ public class UsbService extends IntentService
 		if(mInputStream != null) 
 		{
 			int ret = 0;
-			byte[] buffer = new byte[16384];
+			byte[] buffer = new byte[255];
 
 			while (ret >= 0) 
 			{
@@ -275,42 +303,88 @@ public class UsbService extends IntentService
 				{
 					break;
 				}
-
-				/*
-				 * buffer[0] = command
-				 * buffer[1] = target
-				 * buffer[2] = message length
-				 * buffer[3] = message
-				 * buffer[4] = message
-				 * buffer[x] = message
-				 */
 				
-				Log.v(TAG, "Command received: " + buffer[0]);
+				byte[] bufferInfo = new byte[3];
+				int i = 0;
+				while(i < 3)
+				{
+					bufferInfo[i] = buffer[i];
+					i++;
+				}		
 				
-				// commands from ADK to this device
-				if(Constants.TARGET_BRAIN == buffer[1])
+				byte[] bufferPB = new byte[buffer[2]];
+				i = 0;
+				while(i < buffer[2])
 				{
-					switch (buffer[0]) 
-					{				
-						default:
-							Log.d(TAG, "unknown command: " + buffer[0]);
-						break;
-					}				
-				}
-				// commands from ADK to remote control or back to ADK
-				else if(Constants.TARGET_REMOTE == buffer[1] || Constants.TARGET_ADK == buffer[1])
-				{
-					// skicka vidare till remote or ADK
+					bufferPB[i] = buffer[i+3];
+					i++;
 				}				
+				
+				byte[] combinedInfoAndPB = new byte[bufferInfo.length + bufferPB.length];
+				i = 0;
+				while(i < combinedInfoAndPB.length)
+				{
+				    combinedInfoAndPB[i] = i < bufferInfo.length ? bufferInfo[i] : bufferPB[i - bufferInfo.length];
+				    i++;
+				}
+	
+				// commands from ADK to this device
+				if(Constants.TARGET_BRAIN == bufferInfo[1])
+				{
+					handleBrainCommands(bufferInfo, bufferPB, combinedInfoAndPB);
+				}
+				// commands from ADK to remote
+				else if(Constants.TARGET_REMOTE == bufferInfo[1])
+				{
+					broadcastBufferToBTService(combinedInfoAndPB);
+				}
+				// commands from ADK back to ADK. Never used?
+				else if(Constants.TARGET_ADK == bufferInfo[1])
+				{
+					sendByteArray(combinedInfoAndPB);
+				}
 			}
 		}
 	}	
+	
+	private void handleBrainCommands(byte[] bufferInfo, byte[] bufferPB, byte[] combinedInfoAndPB)
+	{
+		switch (bufferInfo[0])
+		{
+			case 5:
+			break;
+			case 6:
+				Log.d(TAG, "brain command received: " + bufferInfo[0]);
+				try
+				{
+					SensorData sensorData = SensorData.parseFrom(bufferPB);
+					Log.d(TAG,"PB parse success");
+					Log.d(TAG,"sensorData desc: "+sensorData.getDescription());
+				}
+				catch (InvalidProtocolBufferException e) 
+				{
+					e.printStackTrace();
+					Log.d(TAG,"PB parse failed");
+					break;
+				}
+			break;
+			default:
+				Log.d(TAG, "unknown command: " + bufferInfo[0]);
+			break;
+		}		
+	}
+	
+	private void broadcastBufferToBTService(byte[] combinedInfoAndPB)
+	{
+		Intent intent = new Intent("callFunction");
+		intent.putExtra("combinedInfoAndPB", combinedInfoAndPB);
+		sendBroadcast(intent);		
+	}
 	
 	private void setupBroadcastFilters() 
 	{
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
-		filter.addAction("lala");
 		filter.addAction("sendString");	
 		filter.addAction("sendBlinkyOnCommand");
 		filter.addAction("sendBlinkyOffCommand");
@@ -323,13 +397,9 @@ public class UsbService extends IntentService
 		public void onReceive(Context context, Intent intent) 
 		{    
 			String action = intent.getAction();
-			if(action.equalsIgnoreCase("lala"))
+			if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action))
 			{
-				Log.d(TAG,"lalalalal");
-			}
-			else if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action))
-			{
-				closeAccessory();
+				accessoryDetached = true;
 			}
 			else if (action.equalsIgnoreCase("sendString"))
 			{

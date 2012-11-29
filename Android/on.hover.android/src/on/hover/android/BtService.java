@@ -15,6 +15,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
@@ -321,7 +322,8 @@ public class BtService extends IntentService
 	    } 
 	    catch (IOException e) 
 	    {
-	      //Do something?
+	    	Log.d(TAG, "BtService: failed to oupenOutputStream");
+	    	return;
 	    }
 	 
 	    try 
@@ -330,7 +332,8 @@ public class BtService extends IntentService
 	    } 
 	    catch (IOException e) 
 	    {
-	    	//Do something?
+	    	Log.d(TAG, "BtService: write failed");
+	    	return;
 	    }
 	}
 	
@@ -347,6 +350,15 @@ public class BtService extends IntentService
 			//function called
 			if(action.equalsIgnoreCase("callFunction"))
 			{
+				Log.d(TAG,"BtService: Callfunction start");
+				if(intent.hasExtra("combinedInfoAndPB"))
+				{
+					Log.d(TAG, "BtService: combinedInfoAndPB received");
+					Bundle bundle = intent.getExtras();
+					byte[] buffer = (byte[]) bundle.get("combinedInfoAndPB");
+					//sendData(buffer);
+				}
+				
 				//witch function
 				if(intent.hasExtra("setupServer"))
 				{

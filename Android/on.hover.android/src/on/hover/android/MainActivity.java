@@ -1,5 +1,7 @@
 package on.hover.android;
 
+import com.android.future.usb.UsbManager;
+
 import on.hover.android.UsbService.ConnectionState;
 import on.hover.android.R;
 import android.app.Activity;
@@ -19,22 +21,36 @@ public class MainActivity extends Activity
 {	
 	private String TAG = "JM";
 	private ImageView mStatusLed;
-	
+
 	TextView textInfo;
 	TextView textMessage;
-	
+
 	private final BroadcastReceiver messageReceiver = new newMessage();
-	  
 	final Context context = this;
 	
-	public class newMessage extends BroadcastReceiver 
+	private void restart()
+	{
+		AppRestart.doRestart(this);		
+	}
+	
+	private class newMessage extends BroadcastReceiver 
 	{
 		@Override
 		public void onReceive(Context context, Intent intent) 
 		{    
 			String action = intent.getAction();
 			Bundle bundle = intent.getExtras();
-			if(action.equalsIgnoreCase("updateUSBConnectionState"))
+			if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action))
+			{
+				Log.d(TAG,"finish!");
+				finish();
+			}
+			else if ("android.intent.action.ACTION_POWER_CONNECTED".equals(action))
+			{
+				Log.d(TAG,"power connected!");
+				restart();
+			}			
+			else if(action.equalsIgnoreCase("updateUSBConnectionState"))
 			{
 				ConnectionState state = (ConnectionState) bundle.get("connectionState");		
 				Log.d(TAG,"Update USBconnectionState: " + state.name());
@@ -96,6 +112,9 @@ public class MainActivity extends Activity
 	{				
 		Log.d(TAG,"onCreate start");
 		super.onCreate(savedInstanceState);
+
+		// check if accessory is connected
+		
 		setContentView(R.layout.main);
 		setupStatusLed();
 		
@@ -146,6 +165,8 @@ public class MainActivity extends Activity
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("updateUSBConnectionState");
 		filter.addAction("printMessage");
+		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
+		filter.addAction("android.intent.action.ACTION_POWER_CONNECTED");
 		registerReceiver(messageReceiver, filter);
 		Log.d(TAG,"onResume stop");
 	}
@@ -226,7 +247,6 @@ public class MainActivity extends Activity
 	
 	private void setupBTListenButton() 
 	{
-		Log.d(TAG, "setupBTListenButton pushed");
 		Button listenButton = (Button) findViewById(R.id.bt_listen_button);
 		listenButton.setOnClickListener(new OnClickListener() 
 		{
