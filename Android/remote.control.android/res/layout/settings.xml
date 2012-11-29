@@ -4,23 +4,23 @@
     android:layout_height="match_parent"
     android:gravity="top"
     android:orientation="vertical" >
-
+
     <TextView
         android:id="@+id/remoteText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1.54"
         android:text="@string/Remotecontrol"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
     <CheckBox
         android:id="@+id/checkbox_accelerometer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:minHeight="48dip"
         android:onClick="onCheckboxClicked"
         android:text="@string/Accelerometer" />
-
+
     <CheckBox
         android:id="@+id/checkbox_proximity"
         android:layout_width="match_parent"
@@ -28,33 +28,32 @@
         android:minHeight="48dip"
         android:onClick="onCheckboxClicked"
         android:text="@string/Proximity" />
-
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-     
+            android:layout_weight="3.85"
             android:text="@string/Brain"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
         <CheckBox
             android:id="@+id/checkBox_BrainAccelerometer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-     
-         
             android:minHeight="48dip"
             android:text="@string/Accelerometer" />
 
-        <TextView
+         <TextView
             android:layout_width="fill_parent"
             android:layout_height="0dip"
             android:layout_weight="1.03" />
-
         <Button
             android:id="@+id/backButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/back" />
+
+       
 
 </LinearLayout>
