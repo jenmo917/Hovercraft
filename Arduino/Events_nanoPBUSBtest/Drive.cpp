@@ -21,11 +21,11 @@ void driveSetup()
 	TCCR3B |= prescaler;
 }
 
-void rightMotorControl(DriveSignals signal)
+void rightMotorControl(DriveSignals *signal)
 {
-	enableRightMotor(signal.enable);
-	setRightDir((int) signal.forward);
-	setRightPower((int) signal.power);
+	enableRightMotor(signal->enable);
+	setRightDir((int) signal->forward);
+	setRightPower((int) signal->power);
 }
 
 // dir = 0 => backward, dir = 1 => forward
@@ -46,11 +46,11 @@ void enableRightMotor(bool enable)
 	digitalWrite( rightEnable , (int) !enable);
 }
 
-void leftMotorControl(DriveSignals signal)
+void leftMotorControl(DriveSignals *signal)
 {
-	enableLeftMotor(signal.enable);
-	setLeftDir((int) signal.forward);
-	setLeftPower((int) signal.power);
+	enableLeftMotor(signal->enable);
+	setLeftDir((int) signal->forward);
+	setLeftPower((int) signal->power);
 }
 
 // dir = 0 => backward, dir = 1 => forward

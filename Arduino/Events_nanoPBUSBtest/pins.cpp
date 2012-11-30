@@ -46,8 +46,13 @@ void leftMotorPinsSetup()
 
 void sensorPinsSetup()
 {
-	pinMode(trigPin1, OUTPUT);
-	pinMode(echoPin1, INPUT);
+	int triggerPins[4] = {trigPin1, trigPin2, trigPin3, trigPin4};
+	int echoPins[4] = {echoPin1, echoPin2, echoPin3, echoPin4};
+	for (int i = 0; i < 4; i++)
+	{
+		pinMode(triggerPins[i], OUTPUT);
+		pinMode(echoPins[i], INPUT);
+	}
 }
 
 void testPins()

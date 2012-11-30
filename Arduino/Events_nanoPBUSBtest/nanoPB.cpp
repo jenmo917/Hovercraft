@@ -42,31 +42,11 @@ Engines decodeEngines()
 	else
 	{
 		Serial << "Failed to decode an Engines object";
-		DriveSignals right = { false, false, 0 };
-		DriveSignals left = { false, false, 0 };
+		DriveSignals right = { false, true, 0 };
+		DriveSignals left = { false, true, 0 };
 		Engines protocol1={ right, left };	//skapa protocol1
 		return protocol1;
 	}
-	/*
-	if(test==true)
-	{
-		Serial.println("success");
-	}
-	else if(test==false)
-	{
-		Serial.println("fail");
-	}
-	else
-	{
-		Serial.println("null");
-	}
-
-	for(int i = 0; i < length; i++)
-	{
-		Serial.println((uint8_t) rcvmsg[3+i]);
-
-	}*/
-	//engines.left.enable
 	return engines;
 }
 
@@ -81,6 +61,7 @@ bool encodeEngines()
 
 		if (pb_encode(&ostream, Engines_fields, &engine)) //encode protocoll (buffer is now the encoded protocol
 		{
+			sendMsgLength = ostream.bytes_written;
 			return true;
 		}
 		else
@@ -89,12 +70,44 @@ bool encodeEngines()
 		}
 }
 
-bool encodeSensorMsg(sensor sensorObject)
+USSensorData decodeUSSensorMsg()
 {
-	char type[40];
-	char description[40];
-	//&type,40   &description,40
-	SensorData sensorPB;
+
+}
+
+bool encodeUSSensorMsg(USSensor sensorObject)
+{
+	USSensorData sensorPB;
+	sensorObject.type.toCharArray(sensorPB.type,40);
+	sensorObject.description.toCharArray(sensorPB.description,40);
+	sensorPB.triggerpin=sensorObject.triggerpin;
+	sensorPB.echopin=sensorObject.echopin;
+	sensorPB.value=sensorObject.value;
+
+	pb_ostream_t ostream;		//en utström
+	ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //koppla ihop utströmmen med en buffert
+
+	if (pb_encode(&ostream, USSensorData_fields, &sensorPB)) //encode protocoll (buffer is now the encoded protocol
+	{
+		/*Serial << "The message encoded: " << endl;
+		for(int i = 0; i < ostream.bytes_written; i++)
+		{
+
+			Serial.print((char) sendMsg[i]);
+			Serial << " "<< (uint8_t) sendMsg[i] << endl;
+		}*/
+		sendMsgLength = ostream.bytes_written;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool encodeI2CSensorMsg(I2CSensor sensorObject)
+{
+	I2CSensorData sensorPB;
 	sensorObject.type.toCharArray(sensorPB.type,40);
 	sensorObject.description.toCharArray(sensorPB.description,40);
 	sensorPB.address=sensorObject.address;
@@ -103,13 +116,16 @@ bool encodeSensorMsg(sensor sensorObject)
 	pb_ostream_t ostream;		//en utström
 	ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //koppla ihop utströmmen med en buffert
 
-	if (pb_encode(&ostream, SensorData_fields, &sensorPB)) //encode protocoll (buffer is now the encoded protocol
+	if (pb_encode(&ostream, I2CSensorData_fields, &sensorPB)) //encode protocoll (buffer is now the encoded protocol
 	{
-		/*for(int i = 0; i < ostream.bytes_written; i++)
+		/*Serial << "The message encoded: " << endl;
+		for(int i = 0; i < ostream.bytes_written; i++)
 		{
-			Serial.print((char) buffer[i]);
-			Serial << " "<< (uint8_t) buffer[i] << endl;
+
+			Serial.print((char) sendMsg[i]);
+			Serial << " "<< (uint8_t) sendMsg[i] << endl;
 		}*/
+		sendMsgLength = ostream.bytes_written;
 		return true;
 	}
 	else

@@ -25,9 +25,10 @@ void blinkyHandler(int event, int param);
 void analogHandler(int event, int param);
 // Handler that gets I2C sensor data
 void I2CSensorDataHandler(int event, int param);
-void IRSensorHandler(int event, int param);
+// Handler that gets Ultra sonic sensor data
+void USSensorHandler(int event, int param);
 void USBReadHandler(int event, int param);
-void usbSoftwareTestHandler(int event, int param);
-void USBSendSensorDataHandler(int event, int param);
+void USBSendUSSensorDataHandler(int event, int param);
+void USBSendI2CSensorDataHandler(int event, int param);
 
 #endif /* EVENTHANDLERS_H_ */

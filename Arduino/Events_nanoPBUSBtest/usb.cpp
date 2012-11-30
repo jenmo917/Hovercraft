@@ -11,6 +11,8 @@
 #include "nanoPB.h"
 #include "print.h"
 #include "command.pb.h"
+#include "Streaming.h"
+#include "Event.h"
 
 AndroidAccessory acc("Manufacturer", "Model", "Description","Version", "URI", "Serial");
 
@@ -18,6 +20,8 @@ byte rcvmsg[255];
 byte rcvmsgInfo[3];
 byte rcvPBmsg[252];
 byte sendMsg[252];
+int sendMsgLength;
+int rcvPBmsgLength;
 
 bool blinkyFlag = false;
 
@@ -41,6 +45,10 @@ void USBsetup()
 void decodeMsgType()
 {
 	Engines motors;
+	Serial << "********************************************************" << endl;
+	Serial << "Command: " << rcvmsgInfo[0] << endl;
+	Serial << "Target: " << rcvmsgInfo[1] << endl;
+	Serial << "Length: " << rcvmsgInfo[2] << endl;
 	if (rcvmsgInfo[1] == TARGET_ADK)
 	{
 		switch(rcvmsgInfo[0])
@@ -58,17 +66,22 @@ void decodeMsgType()
 			motors = decodeEngines();
 			printRightMotorSignal(motors);
 			printLeftMotorSignal(motors);
-			rightMotorControl(motors.right);
-			leftMotorControl(motors.left);
+			rightMotorControl(&motors.right);
+			leftMotorControl(&motors.left);
 			break;
-		case MOTOR_STOP:
-			Serial.println("COMMAND: ENGINE_STOP");
-			setLeftPower(0);
-			setRightPower(0);
+		case PRINT_MESSAGE:
+			Serial << "Message: " << endl;
+			for(int i = 0; i < rcvPBmsgLength; i++)
+			{
+				Serial.print((char) rcvPBmsg[i]);
+				Serial << " "<< (uint8_t) rcvPBmsg[i] << endl;
+			}
 			break;
-		case ENABLE_MOTORS:
-			Serial.println("COMMAND: ENABLE_ENGINES");
-			enableMotors();
+		case I2C_SENSOR_REQ:
+			q.enqueueEvent(Events::EV_I2C_SENSOR_REQ, rcvPBmsg[0]);
+			break;
+		case US_SENSOR_REQ:
+			q.enqueueEvent(Events::EV_US_SENSOR_REQ, rcvPBmsg[0]);
 			break;
 		default:
 			Serial.println("COMMAND: Error, message is of unknown type. No action performed");
@@ -77,19 +90,21 @@ void decodeMsgType()
 	}
 }
 
-
 void sendMessage(int command, int target)
 {
-	byte fullMsg[255];
-	fullMsg[0] = command;
-	fullMsg[1] = target;
-	fullMsg[2] = sizeof(sendMsg);
-
-	for(int i = 0; i < sizeof(sendMsg); i++)
+	if (acc.isConnected())
 	{
-		fullMsg[3 + i] = sendMsg[i];
-	}
+		byte fullMsg[255];
+		int i;
+		fullMsg[0] = command;
+		fullMsg[1] = target;
+		fullMsg[2] = sendMsgLength;
+		//Serial << sendMsgLength;
 
-	int len = acc.write(fullMsg, sizeof(fullMsg));
-	delay(250);
+		for(i = 0; i < sendMsgLength; i++)
+		{
+			fullMsg[3 + i] = sendMsg[i];
+		}
+		acc.write(fullMsg, i+3);
+	}
 }

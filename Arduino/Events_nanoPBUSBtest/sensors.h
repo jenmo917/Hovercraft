@@ -9,14 +9,16 @@
 #define SENSORS_H_
 
 #include <Arduino.h>
+#include "command.pb.h"
+#include "pins.h"
 
 #define I2C_MAX_SENSORS 5
-#define MAX_SENSORS 4
+#define MAX_US_SENSORS 4
 
-extern struct sensor I2CsensorList[I2C_MAX_SENSORS];
-extern struct sensor sensorList[MAX_SENSORS];
+extern struct I2CSensor I2CSensorList[I2C_MAX_SENSORS];
+extern struct USSensor USSensorList[MAX_US_SENSORS];
 
-struct sensor
+struct I2CSensor
 {
 	String type;  //compass = 1
 	String description;
@@ -24,7 +26,17 @@ struct sensor
 	int value;
 };
 
-void sensorSetup();
+struct USSensor
+{
+	String type;  //compass = 1
+	String description;
+	int echopin;
+	int triggerpin;
+	int value;
+};
 
+
+
+void sensorSetup();
 
 #endif /* SENSORS_H_ */

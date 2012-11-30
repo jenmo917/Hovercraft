@@ -27,6 +27,12 @@
 // Pin 21 used for I2C
 #define trigPin1 11
 #define echoPin1 12
+#define trigPin2 22
+#define echoPin2 23
+#define trigPin3 24
+#define echoPin3 25
+#define trigPin4 26
+#define echoPin4 27
 
 void pinSetup();
 void LEDPinsSetup();

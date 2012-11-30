@@ -14,11 +14,11 @@ extern int rightPower;
 extern int leftPower;
 
 void driveSetup();
-void rightMotorControl(DriveSignals signal);
+void rightMotorControl(DriveSignals *signal);
 void setRightDir(int dir);
 void setRightPower(int power);
 void enableRightMotor(bool enable);
-void leftMotorControl(DriveSignals signal);
+void leftMotorControl(DriveSignals *signal);
 void setLeftDir(int dir);
 void setLeftPower(int power);
 void enableLeftMotor(bool enable);

@@ -94,14 +94,6 @@ void USBReadManager(EventQueue* q)
 			q->enqueueEvent(Events::EV_SERIAL, len);
 		}
 	}
-
-	/*if (acc.isConnected())
-	{
-		if (acc.peek() != -1)
-		{
-			q->enqueueEvent(Events::EV_SERIAL, 0);
-		}
-	}*/
 }
 
 
