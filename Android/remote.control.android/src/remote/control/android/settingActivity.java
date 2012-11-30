@@ -2,7 +2,6 @@ package remote.control.android;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,9 +24,8 @@ public class settingActivity extends Activity implements OnClickListener
 		Log.d(TAG,"onCreate Settings");
 		super.onCreate(savedInstanceState);    
         setContentView(R.layout.settings); 
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         initButtons();
-        initOnClickListners();
+        initOnClickListners();        
 	}
 	
 	private void initButtons()

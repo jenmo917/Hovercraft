@@ -17,14 +17,15 @@
 	        android:theme="@android:style/Theme.Holo" >
         <activity
             android:name=".MainActivity"            
-            android:label="@string/title_main_activity" >
+            android:label="@string/title_main_activity" 
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".settingActivity" android:label="Setting Activity" /> 
+        <activity android:name=".settingActivity" android:screenOrientation="landscape"/>
         <service android:name=".LogService" />
     </application>
 </manifest>

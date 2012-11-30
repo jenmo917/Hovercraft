@@ -80,7 +80,8 @@ public class MainActivity extends Activity implements SensorEventListener, OnCli
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bluetest);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		
+		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 		// Start log service
 		startService(new Intent(this, LogService.class));
@@ -666,6 +667,7 @@ public class MainActivity extends Activity implements SensorEventListener, OnCli
 	public void onResume() 
 	{		    	
 		Log.d(TAG,"onResume Main");
+		initReceiver();
 		super.onResume();		
 	}
 	
@@ -673,6 +675,7 @@ public class MainActivity extends Activity implements SensorEventListener, OnCli
 	public void onPause() 
 	{
 		Log.d(TAG,"onPause Main");
+		unregisterReceiver(mReceiver);
 		super.onPause();
 	}
 
