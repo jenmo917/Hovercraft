@@ -1,6 +1,7 @@
 package remote.control.android;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
+
+import remote.control.android.Command.*;
 
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
@@ -24,20 +27,24 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 public class LogService extends IntentService implements SensorEventListener  
 {
 
 	private static final String TAG = "REMOTE";
+	private static final String ADK_TARGET = null;
 	public static Boolean logStarted = false;
 	public static boolean accSensor = false;
-	public static boolean proxSensor = false;	
+	public static boolean proxSensor = false;
+	public static boolean usBrainSensor = false;
 	private int logDelay = 1;
 	Sensor accelerometer;
 	Sensor proximity;
 	SensorManager sm;
-	List<Float> sensorData = new ArrayList<Float>();
-	private File accfile = new File(Environment.getExternalStorageDirectory()+File.separator + "acc_data.txt");
+	List<Float> sensorDataRemote = new ArrayList<Float>();
+	List<Float> usBrain = new ArrayList<Float>();
+	private File accfile = new File(Environment.getExternalStorageDirectory()+File.separator + "remote_acc_data.txt");
 
 	public LogService() 
 	{
@@ -54,9 +61,11 @@ public class LogService extends IntentService implements SensorEventListener
 		intentFilter.addAction("StopLogAction");
 		intentFilter.addAction("AccSensorAction");
 		intentFilter.addAction("ProxSensorAction");
-		intentFilter.addAction("logOnHoverAction");		
+		intentFilter.addAction("UsOnBrainAction");		
 		registerReceiver(broadcastReceiver, intentFilter);
 		initSensors();
+
+
 	}
 	
 	@Override
@@ -97,14 +106,31 @@ public class LogService extends IntentService implements SensorEventListener
     			proxSensor = !proxSensor;
     			Log.d(TAG, Boolean.toString(proxSensor));
     		}
-    		else if(action.equalsIgnoreCase("logOnHoverAction"))
+    		else if(action.equalsIgnoreCase("UsOnBrainAction"))
     		{
-    			Log.d(TAG, "logOnHoverAcc received");
-    			// tillgång till en intent (en väska/behållare) med sensorvärden
-    			// gör en funktion som sparar dessa till minneskortet
-    			// kalla på funktionen här
-    			// onHoverAccToSd(value1, value2, value3);
-    		}    		
+    			Log.d(TAG, "UsOnBrainAction received");
+    			usBrainSensor = !usBrainSensor;
+    			Log.d(TAG, Boolean.toString(usBrainSensor));
+       		} 
+    		else if(action.equalsIgnoreCase("logUs"))
+    		{
+    			Log.d(TAG, "usLog received from Brain");
+        		Bundle bundle = intent.getExtras();
+        		USSensorData uUSensorData = (USSensorData) bundle.get("USSensorData");
+        		
+        		String desc = uUSensorData.getDescription();
+        		int value = uUSensorData.getValue();
+        		
+        		// desc: frontRight, frontLeft, backRight, backLeft
+        		// value: >200 = "-", 120, 55, 10, 0
+        		
+        		// Olle får göra ett PB-objekt som innehåller alla USSensorer. Helst dynamiskt så att man kan ha hur många som helst.
+        		
+        		// spara till fil. Gör en ny funktion för det.
+        		
+        		// saveData(all sensordata i en list eller array eller whaaatevah);
+        		
+    		}
     	}
     };
 	
@@ -117,11 +143,28 @@ public class LogService extends IntentService implements SensorEventListener
 		{
 			if(logStarted==true)
 			{
+				try
+				{
+					accfile.createNewFile();															
+				}
+				catch(IOException e)
+				{
+		    		e.printStackTrace();
+		    	}				
 				// Titta vilka sensorer vi ska logga
     			if(accSensor == true)
     			{
-    				Log.d(TAG, "Logging acc");    				   				 				
-    				accToSd();   				
+    				Log.d(TAG, "Logging acc");    				    				
+    				try 
+    				{
+        				Log.d(TAG, "Logging header to acc");    				    				
+    					accHeaderToSd();
+					} 
+    				catch (IOException e) 
+					{
+						e.printStackTrace();
+					}
+       				accRemoteToSd();   				
     			}
     			if(proxSensor == true)
     			{
@@ -129,10 +172,30 @@ public class LogService extends IntentService implements SensorEventListener
     				// Hämta data från proxsensor
     				// Sparar proxdata till minneskortet   				
     			}
-    			// if sensor == onHoverAcc
-    			// kör funktion som skickar logg-kommando till svävarens telefon eller till adk
-    			// sendCommand(command, target, messageLength, message)
-    			// sendCommand(logOnHoverAcc,0x2,0,0)
+    			if(usBrainSensor == true)
+    			{
+    				Intent logUsIntent = new Intent("LogUs");	
+    		    	logUsIntent.putExtra("Target", ADK_TARGET);
+    		    	sendBroadcast(logUsIntent);
+    		    	
+    		    	Context context2 = getApplicationContext();
+    	    		Toast.makeText(context2, "Log Started", Toast.LENGTH_SHORT).show();
+    	    		
+    	    		Log.d(TAG, "Logging usBrain");    				    				
+    				Log.d(TAG, "Logging header to usBrain");    				    				
+					usHeaderToSd();
+       				usBrainToSd();   	
+    	    		
+
+        			// tillgång till en intent (en väska/behållare) med sensorvärden
+        			// gör en funktion som sparar dessa till minneskortet
+        			// kalla på funktionen här
+        			// onHoverAccToSd(value1, value2, value3);
+    				
+    				// kör funktion som skickar logg-kommando till svävarens telefon eller till adk
+        			// sendCommand(command, target, messageLength, message)
+        			// sendCommand(logOnHoverAcc,0x2,0,0)
+    			}  		
 			}
 
 			// delay med en viss tid t.ex. 5sek.
@@ -164,10 +227,10 @@ public class LogService extends IntentService implements SensorEventListener
 		Sensor sensor = event.sensor;
 		if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) 
 		{
-			sensorData.clear();
-			sensorData.add(event.values[0]);
-		    sensorData.add(event.values[1]);
-		    sensorData.add(event.values[2]);		    
+			sensorDataRemote.clear();
+			sensorDataRemote.add(event.values[0]);
+		    sensorDataRemote.add(event.values[1]);
+		    sensorDataRemote.add(event.values[2]);		    
         }
 		else if (sensor.getType() == Sensor.TYPE_PROXIMITY) 
         {
@@ -175,19 +238,32 @@ public class LogService extends IntentService implements SensorEventListener
         }
 	}
 	
-	public void accToSd()
+	public void accHeaderToSd() throws IOException
+	{		    
+		{
+		    FileInputStream fis = new FileInputStream(accfile);  
+		    int b = fis.read();  
+		    if (b == -1)  
+		    {  
+		    	FileOutputStream fo = new FileOutputStream(accfile, true);
+				PrintWriter oWriter = new PrintWriter(fo);
+				oWriter.println("X,Y,Z,date,time");	
+				fis.close();
+				oWriter.close();
+		    }   
+		}	
+	}
+	public void accRemoteToSd()
 	{
 		try
 		{
-			accfile.createNewFile();
 			FileOutputStream fo = new FileOutputStream(accfile, true);
-			PrintWriter oWriter = new PrintWriter(fo);
-			oWriter.println("X,Y,Z,date,time");							
+			PrintWriter oWriter = new PrintWriter(fo);				
 			DecimalFormat form = new DecimalFormat("#.##");					
 			DecimalFormatSymbols format = new DecimalFormatSymbols();
 			format.setDecimalSeparator('.');
 			form.setDecimalFormatSymbols(format);
-			ListIterator<Float> lI = sensorData.listIterator();				
+			ListIterator<Float> lI = sensorDataRemote.listIterator();				
 			while(lI.hasNext())
 			{
 				oWriter.append(form.format(lI.next()));
@@ -196,7 +272,7 @@ public class LogService extends IntentService implements SensorEventListener
 					oWriter.append(',');
 				}
 			}			
-			SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy,kk:mm:ss:SSS");//dd/MM/yyyy
+			SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy,kk:mm:ss:SSS"); 
 			Date now = new Date();
 			String strDate = sdfDate.format(now);
 			oWriter.append(","+strDate);
@@ -208,9 +284,13 @@ public class LogService extends IntentService implements SensorEventListener
     		e.printStackTrace();
     	}				
 	}
-	
-					
-	
-
+	public void usHeaderToSd()
+	{
+		
+	}
+	public void usBrainToSd()
+	{
+		
+	}
 }
 

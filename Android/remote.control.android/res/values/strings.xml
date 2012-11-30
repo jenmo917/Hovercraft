@@ -42,5 +42,7 @@
 	<string name="Proximitydata">Proximitydata</string>
 	<string name="Remotecontrol">Remote Control</string>
 	<string name="Brain">Brain</string>
+	<string name="ADK">ADK</string>
+	<string name="Ultrasound">Ultrasound</string>
 
 </resources>

@@ -15,7 +15,7 @@ public class settingActivity extends Activity implements OnClickListener
 	
 	CheckBox acc;
 	CheckBox prox;
-	CheckBox brainAcc;
+	CheckBox brainUs;
 	
 	Button btnBack;
 	
@@ -34,7 +34,8 @@ public class settingActivity extends Activity implements OnClickListener
         acc.setChecked(LogService.accSensor);
         prox = (CheckBox) findViewById(R.id.checkbox_proximity);
         prox.setChecked(LogService.proxSensor);
-        brainAcc = (CheckBox) findViewById(R.id.checkBox_BrainAccelerometer);
+        brainUs = (CheckBox) findViewById(R.id.checkBox_BrainUltrasound);
+        brainUs.setChecked(LogService.usBrainSensor);
         btnBack = (Button) findViewById(R.id.backButton);
 	}
 	
@@ -42,7 +43,7 @@ public class settingActivity extends Activity implements OnClickListener
 	{
         acc.setOnClickListener(this);
         prox.setOnClickListener(this);
-        brainAcc.setOnClickListener(this);
+        brainUs.setOnClickListener(this);
         btnBack.setOnClickListener(this);	
 	}	
 	
@@ -59,6 +60,11 @@ public class settingActivity extends Activity implements OnClickListener
 	    		Log.d(TAG,"checkbox prox checked");
 		    	Intent sensorProxActionIntent = new Intent("ProxSensorAction");	
 		    	sendBroadcast(sensorProxActionIntent);	    		
+	    	break;
+	    	case R.id.checkBox_BrainUltrasound:
+	    		Log.d(TAG,"checkbox US checked");
+		    	Intent sensorUsBrainActionIntent = new Intent("UsOnBrainAction");	
+		    	sendBroadcast(sensorUsBrainActionIntent);	    		
 	    	break;
 	    	case R.id.backButton:
 	    		Log.d(TAG,"backButton pushed");
