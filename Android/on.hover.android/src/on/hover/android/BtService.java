@@ -15,7 +15,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Handler;
 import android.util.Log;
 
 //import on.hover.android.Command.DriveSignals;
@@ -24,27 +23,58 @@ import android.util.Log;
 
 public class BtService extends IntentService
 {
-	private static String TAG = "JMMainActivity";
-	
+	private static String TAG = "JM";
+
 	public BtService() 
 	{
 		super("BtService");
 	}
 
 	@Override
+	public void onCreate()
+	{
+		super.onCreate();
+		Log.d(TAG,"BtService: start BtService");		
+	}
+
+
+	boolean listenBT = false;
+
+	@Override
 	protected void onHandleIntent(Intent arg0) 
 	{
-		Log.d(TAG, "Service started");
-		
+		Log.d(TAG, "BTService started");
+
 		//IMPORTANT!
 		registerReceiver(BtServiceReciever, new IntentFilter("callFunction"));
-		
+
 		while ( true )
 		{
-			
+			if(listenBT)
+			{
+				try
+				{
+					Thread.sleep(50);
+				}
+				catch (InterruptedException e) 
+				{
+					e.printStackTrace();
+				}
+				readBuffer();
+			}
 		}
 	}
-	
+
+	private void btConnectionLost()
+	{
+		listenBT = false;
+		closeServerSocket();
+
+		Intent i = new Intent("printMessage");
+		i.putExtra("message", "Lost connection...");
+		sendBroadcast(i);
+	}
+
 	//Protocol coords;
 	BluetoothSocket mmSocket;
 	BluetoothServerSocket mmServerSocket;
@@ -56,25 +86,26 @@ public class BtService extends IntentService
 	int timeout = 30000;
 	boolean serverUp = false;
 	boolean socketUp = false;
-
-
+	
 	private void closeServerSocket()
 	{
 		if(serverUp)
 		{
-			Intent i = new Intent("printMessage");
-			
 			try 
 			{
 				mmServerSocket.close();
-				
-				i.putExtra("com.example.BluetoothServer.message", "Server down...");
+
+				Intent i = new Intent("printMessage");
+				i.putExtra("message", "Server down...");
 				sendBroadcast(i);
 				serverUp = false;
 			} 
 			catch (IOException e) 
-			{
-				i.putExtra("com.example.BluetoothServer.message", "Faild to close server...");
+			{	
+				btConnectionLost();
+
+				Intent i = new Intent("printMessage");
+				i.putExtra("message", "Faild to close server...");
 				sendBroadcast(i);
 			}
 		}
@@ -89,20 +120,22 @@ public class BtService extends IntentService
 
 		BluetoothServerSocket tmp = null;
 		Intent i = new Intent("printMessage");
-		
+
 		try 
 		{
 			// MY_UUID is the app's UUID string, also used by the client code
 			tmp = mBluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord(NAME,  MY_UUID_INSECURE);
-			
+
 			serverUp = true;
-			i.putExtra("com.example.BluetoothServer.message", "Server up...");
+			i.putExtra("message", "Server up...");
 			sendBroadcast(i);
 		} 
 		catch (IOException e) 
 		{ 
+			btConnectionLost();
+
 			serverUp = false;
-			i.putExtra("com.example.BluetoothServer.message", "Fail...");
+			i.putExtra("message", "Fail...");
 			sendBroadcast(i);
 		}
 
@@ -112,40 +145,41 @@ public class BtService extends IntentService
 
 	private boolean waitToConnect()
 	{
-
 		if(serverUp)
 		{
 			mmSocket = null;
-			
+
 			Intent i = new Intent("printMessage");
-			
+
 			try 
 			{
 				mmSocket = mmServerSocket.accept(timeout);
-				
+
 				socketUp = true;
-				i.putExtra("com.example.BluetoothServer.message", "Socket is up..");
+				i.putExtra("message", "Socket is up..");
 				sendBroadcast(i);
+
+				listen();
 			} 
 			catch (IOException e) 
 			{
+				btConnectionLost();
+
 				socketUp = false;
-				i.putExtra("com.example.BluetoothServer.message", "Failed to establish socket...");
+				i.putExtra("message", "Connection timed out...");
 				sendBroadcast(i);
-				
+
 				closeServerSocket();	
 			}
 		}
-
 		else
 		{
 			socketUp = false;
 		}
-		
+
 		return socketUp;      
 	}
 
-	
 	private InputStream mmInStream;
 	private InputStreamReader btReader;
 
@@ -153,95 +187,61 @@ public class BtService extends IntentService
 	int bytes; // bytes returned from read()
 
 	@SuppressLint("HandlerLeak")
+
 	private void listen()
 	{
-
 		if(socketUp)
 		{
 			Intent i = new Intent("printMessage");
 			try
 			{
 				mmInStream = mmSocket.getInputStream();
-				i.putExtra("com.example.BluetoothServer.message", "Input stream open...");
+				i.putExtra("message", "Input stream open...");
 				sendBroadcast(i);
+				listenBT = true;
 			}
 			catch (IOException e)
 			{
-				i.putExtra("com.example.BluetoothServer.message", "Failed to open input stream...");
+				btConnectionLost();
+
+				i.putExtra("message", "Failed to open input stream...");
 				sendBroadcast(i);
+				listenBT = false;
 				return;
 			}		
-			
+
 			btReader = new InputStreamReader(mmInStream);
-		}
-		
-		//Start thread to read bluetooth
-		if(!thread.isAlive())
-		{
-			thread.start();
 		}
 	}
 
-	private final Handler handler = new Handler();
 
-	final Runnable r = new Runnable()
-	{
-		public void run() 
-		{
-			/*
-			if(isProto)
-			{
-				if(coords.hasXCoor())
-				{
-					String coo = ("X: " + coords.getXCoor() + "\nY: " + coords.getYCoor() +  "\nZ: " + coords.getZCoor());
-					Intent i = new Intent("printMessage");
-					i.putExtra("com.example.BluetoothServer.coordinates", coo);
-					sendBroadcast(i);
-				}
-			}
-			*/
-		}
-	};
+	//			if(isProto)
+	//			{
+	//				if(coords.hasXCoor())
+	//				{
+	//					String coo = ("X: " + coords.getXCoor() + "\nY: " + coords.getYCoor() +  "\nZ: " + coords.getZCoor());
+	//					Intent i = new Intent("printMessage");
+	//					i.putExtra("on.hover.BluetoothServer.coordinates", coo);
+	//					sendBroadcast(i);
+	//				}
+	//			}
 
-	String str = "ost";
-	
-	Thread thread = new Thread()
-	{
-		@Override
-		public void run() 
-		{
-			while(true) 
-			{
-				try
-				{
-					sleep(50);
-				}
-				catch (InterruptedException e) 
-				{
-					e.printStackTrace();
-				}
-				
-				readBuffer();
-				handler.post(r);
-			}
-		}
-	};
 
 	int tempInt = 0;
 	int i = 0;
 	boolean firstChar = true;
 	boolean isProto = false;
-	
+
 	char[] tempCharArray = new char[1024];
 	String tempString = null;
 	String selectedPart = null;
-	
+
 	void readBuffer()
 	{
 		firstChar = true;
 		tempInt = 0;
 		i = 0;
-		
+
 		while( true )
 		{
 			try 
@@ -250,16 +250,17 @@ public class BtService extends IntentService
 			} 
 			catch (IOException e1) 
 			{
-				
+				btConnectionLost();
+				break;
 			}
-			
+
 			if(tempInt == 36 && firstChar == false)
 				break;
-			
+
 			if(firstChar)
 			{
 				firstChar = false;
-				
+
 				//First char not \n
 				if(tempInt == 10)
 					isProto = true;
@@ -268,68 +269,68 @@ public class BtService extends IntentService
 				else
 					break;
 			}
-			
-			tempCharArray[i] = (char)tempInt;
 
+			tempCharArray[i] = (char)tempInt;
 			i++;	
 		}
-		
-		if(isProto)
+
+		if(listenBT)
 		{
-			tempString = new String(tempCharArray);
-			selectedPart = tempString.substring(0, i);
-			
-			//byte[] protoByte = selectedPart.getBytes();			
-			/*
-			try
+
+			if(isProto)
 			{
-				coords = protocolbufferjava.Test.Protocol.parseFrom(protoByte);
+				tempString = new String(tempCharArray);
+				selectedPart = tempString.substring(0, i);
+
+				//byte[] protoByte = selectedPart.getBytes();			
+				/*
+					try
+					{
+						coords = protocolbufferjava.Test.Protocol.parseFrom(protoByte);
+					}
+
+					catch (IOException e)
+					{
+						//WHAT TO DO???
+					}	
+				 */
 			}
-			
-			catch (IOException e)
+			else
 			{
-				//WHAT TO DO???
-			}	
-			*/
-		}
-		else
-		{
-			tempString = new String(tempCharArray);
-			selectedPart = tempString.substring(1, i);
-			
-			Intent i = new Intent("printMessage");
-			i.putExtra("com.example.BluetoothServer.coordinates", selectedPart);
-			sendBroadcast(i);
+				tempString = new String(tempCharArray);
+				selectedPart = tempString.substring(1, i);
+
+				Intent i = new Intent("printMessage");
+				i.putExtra("coordinates", selectedPart);
+				sendBroadcast(i);
+			}
 		}
 	}
-	
-	
-	
+
+
 	private OutputStream mmOutStream;
-	
+
 	private void sendData(byte[] data)
-	{			
+	{	
 		try 
-	    {
+		{
 			mmOutStream = mmSocket.getOutputStream();
-	    } 
-	    catch (IOException e) 
-	    {
-	      //Do something?
-	    }
-	 
-	    try 
-	    {
-	    	mmOutStream.write(data);
-	    } 
-	    catch (IOException e) 
-	    {
-	    	//Do something?
-	    }
+		} 
+		catch (IOException e) 
+		{
+			btConnectionLost();
+		}
+
+		try 
+		{
+			mmOutStream.write(data);
+		} 
+		catch (IOException e) 
+		{
+			btConnectionLost();
+		}
 	}
-	
-	int testInt = 0;
-	
+
 	//Broadcast reciever
 	private final BroadcastReceiver BtServiceReciever = new BroadcastReceiver() 
 	{
@@ -337,35 +338,39 @@ public class BtService extends IntentService
 		public void onReceive(Context context, Intent intent) 
 		{
 			String action = intent.getAction();
-			
+
 			//function called
 			if(action.equalsIgnoreCase("callFunction"))
 			{
 				//witch function
-				if(intent.hasExtra("com.example.BtService.setupServer"))
+				if(intent.hasExtra("setupServer"))
 				{
 					Log.d(TAG, "BtService: setupServer");
 					setupServer();
 				}	
-				
-				if(intent.hasExtra("com.example.BtService.waitToConnect"))
+
+				if(intent.hasExtra("waitToConnect"))
 				{
 					waitToConnect();
 				}
-				
-				if(intent.hasExtra("com.example.BtService.listen"))
+
+				if(intent.hasExtra("listen"))
 				{
-					listen();
+					//	listen();
 				}
-				
-				if(intent.hasExtra("com.example.BtService.sendData"))
+
+				if(intent.hasExtra("sendDataBlinkyOn"))
 				{
-					String testString = "Blinky" + String.valueOf(testInt);
+					String testString = "$Blinky On$";
 					byte[] testByte = testString.getBytes();
-					
 					sendData(testByte);
-					testInt++;
 				}
+				if(intent.hasExtra("sendDataBlinkyOff"))
+				{
+					String testString = "$Blinky Off$";
+					byte[] testByte = testString.getBytes();
+					sendData(testByte);
+				}				
 			}
 		}
 	};

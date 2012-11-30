@@ -1,15 +1,19 @@
 package on.hover.android;
 
-import java.util.Random;
 import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import on.hover.android.Command.DriveSignals;
 import on.hover.android.Command.Engines;
+import on.hover.android.Command.SensorData;
+
+import on.hover.android.Constants;
 
 import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
+import com.google.protobuf.InvalidProtocolBufferException;
 
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
@@ -20,9 +24,7 @@ import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 public class UsbService extends IntentService
-{
-	Random generator = new Random();
-	
+{	
 	public static boolean isActive = false; // this is true if the service is up and running
 	private boolean accessoryDetached = false; // TODO: true if android accessory is detached
 	
@@ -33,10 +35,8 @@ public class UsbService extends IntentService
 	
 	public static ConnectionState connectionState = ConnectionState.DISCONNECTED; // USB connection state
 
-    private static String TAG = "JMMainActivity";
+    private static String TAG = "JM";
     private static UsbService singleton;
-	private static final byte MOTOR_CONTROL_COMMAND = 0x3;
-	private static final byte TARGET_ADK = 0x1;
 
 	private final BroadcastReceiver messageReceiver = new newMessage();	
 	
@@ -44,6 +44,7 @@ public class UsbService extends IntentService
 	private UsbAccessory mAccessory;
 	private ParcelFileDescriptor mFileDescriptor;
 	private FileOutputStream mOutputStream;
+	private FileInputStream mInputStream;
 	
 	public UsbService()
 	{
@@ -67,7 +68,7 @@ public class UsbService extends IntentService
 		{
 			Log.d(TAG,""+message[x]);
 		}
-    	sendCommand(MOTOR_CONTROL_COMMAND,TARGET_ADK, message);
+    	sendCommand(Constants.MOTOR_CONTROL_COMMAND,Constants.TARGET_ADK, message);
     	Log.d(TAG,"Send engine command");
     }
     
@@ -88,11 +89,21 @@ public class UsbService extends IntentService
 		return driveSignal.build();
 	}
     
+	static SensorData createSensorDataProtocol(String type, String desc, int address, int value)
+	{
+		SensorData.Builder sensorData = SensorData.newBuilder();
+		sensorData.setType(type);
+		sensorData.setDescription(desc);
+		sensorData.setAddress(address);
+		sensorData.setValue(value);
+		return sensorData.build();
+	}
+	
     @Override
     public void onCreate()
     {
         super.onCreate();
-        Log.d(TAG, "FirstService started");
+        Log.d(TAG, "UsbService started");
         singleton = this;
         isActive = true;
     }
@@ -106,7 +117,7 @@ public class UsbService extends IntentService
 		closeAccessory();
 		unregisterReceiver(messageReceiver);
 		
-        Log.d(TAG, "FirstService destroyed");
+        Log.d(TAG, "UsbService destroyed");
     }
 
 	private void reOpenAccessoryIfNecessary(Intent intent)
@@ -137,6 +148,7 @@ public class UsbService extends IntentService
 			{
 				FileDescriptor fd = mFileDescriptor.getFileDescriptor();
 				mOutputStream = new FileOutputStream(fd);
+				mInputStream = new FileInputStream(fd);
 				Log.d(TAG, "mFileDesc != null");
 				
 				// Update connection state in our view
@@ -160,6 +172,7 @@ public class UsbService extends IntentService
 		{
 			if (mOutputStream != null)
 			{
+				mInputStream.close();
 				mOutputStream.close();
 			}
 			if (mFileDescriptor != null) 
@@ -173,6 +186,7 @@ public class UsbService extends IntentService
 		} 
 		finally 
 		{
+			mInputStream = null;
 			mOutputStream = null;
 			mFileDescriptor = null;
 			mAccessory = null;
@@ -225,7 +239,28 @@ public class UsbService extends IntentService
 		{
 			closeAccessory();
 		}
-	}    
+	}
+	
+	private void sendByteArray(byte[] byteArray)
+	{
+		Log.d(TAG,"SendByteArray");
+		if (mOutputStream != null)
+		{
+			try
+			{
+				mOutputStream.write(byteArray);
+				Log.d(TAG, "write byteArray to outPutStream");
+			}
+			catch (IOException e) 
+			{
+				Log.e(TAG, "SendByteArray failed", e);
+			}
+		} 
+		else
+		{
+			closeAccessory();
+		}
+	}	
     
 	@Override
 	protected void onHandleIntent(Intent intent) 
@@ -243,29 +278,113 @@ public class UsbService extends IntentService
         
         while(true) 
         {
-        	// TODO: Not implemented
         	if (accessoryDetached) 
         	{
         		break;
         	}
-        	
-        	try
-        	{
-				Thread.sleep(2000);
-			} 
-        	catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}  
+        	checkInput();
         }
-        onDestroy();
+	}
+	
+	public void checkInput() 
+	{
+		if(mInputStream != null) 
+		{
+			int ret = 0;
+			byte[] buffer = new byte[255];
+
+			while (ret >= 0) 
+			{
+				try 
+				{
+					ret = (mInputStream.read(buffer));
+				} 
+				catch (IOException e) 
+				{
+					break;
+				}
+				
+				byte[] bufferInfo = new byte[3];
+				int i = 0;
+				while(i < 3)
+				{
+					bufferInfo[i] = buffer[i];
+					i++;
+				}		
+				
+				byte[] bufferPB = new byte[buffer[2]];
+				i = 0;
+				while(i < buffer[2])
+				{
+					bufferPB[i] = buffer[i+3];
+					i++;
+				}				
+				
+				byte[] combinedInfoAndPB = new byte[bufferInfo.length + bufferPB.length];
+				i = 0;
+				while(i < combinedInfoAndPB.length)
+				{
+				    combinedInfoAndPB[i] = i < bufferInfo.length ? bufferInfo[i] : bufferPB[i - bufferInfo.length];
+				    i++;
+				}
+	
+				// commands from ADK to this device
+				if(Constants.TARGET_BRAIN == bufferInfo[1])
+				{
+					handleBrainCommands(bufferInfo, bufferPB, combinedInfoAndPB);
+				}
+				// commands from ADK to remote
+				else if(Constants.TARGET_REMOTE == bufferInfo[1])
+				{
+					broadcastBufferToBTService(combinedInfoAndPB);
+				}
+				// commands from ADK back to ADK. Never used?
+				else if(Constants.TARGET_ADK == bufferInfo[1])
+				{
+					sendByteArray(combinedInfoAndPB);
+				}
+			}
+		}
+	}	
+	
+	private void handleBrainCommands(byte[] bufferInfo, byte[] bufferPB, byte[] combinedInfoAndPB)
+	{
+		switch (bufferInfo[0])
+		{
+			case 5:
+			break;
+			case 6:
+				Log.d(TAG, "brain command received: " + bufferInfo[0]);
+				try
+				{
+					SensorData sensorData = SensorData.parseFrom(bufferPB);
+					Log.d(TAG,"PB parse success");
+					Log.d(TAG,"sensorData desc: "+sensorData.getDescription());
+				}
+				catch (InvalidProtocolBufferException e) 
+				{
+					e.printStackTrace();
+					Log.d(TAG,"PB parse failed");
+					break;
+				}
+			break;
+			default:
+				Log.d(TAG, "unknown command: " + bufferInfo[0]);
+			break;
+		}		
+	}
+	
+	private void broadcastBufferToBTService(byte[] combinedInfoAndPB)
+	{
+		Intent intent = new Intent("callFunction");
+		intent.putExtra("combinedInfoAndPB", combinedInfoAndPB);
+		sendBroadcast(intent);		
 	}
 	
 	private void setupBroadcastFilters() 
 	{
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
-		filter.addAction("lala");
 		filter.addAction("sendString");	
 		filter.addAction("sendBlinkyOnCommand");
 		filter.addAction("sendBlinkyOffCommand");
@@ -278,13 +397,9 @@ public class UsbService extends IntentService
 		public void onReceive(Context context, Intent intent) 
 		{    
 			String action = intent.getAction();
-			if(action.equalsIgnoreCase("lala"))
+			if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action))
 			{
-				Log.d(TAG,"lalalalal");
-			}
-			else if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action))
-			{
-				closeAccessory();
+				accessoryDetached = true;
 			}
 			else if (action.equalsIgnoreCase("sendString"))
 			{

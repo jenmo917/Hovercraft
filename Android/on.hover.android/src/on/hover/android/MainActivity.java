@@ -1,5 +1,7 @@
 package on.hover.android;
 
+import com.android.future.usb.UsbManager;
+
 import on.hover.android.UsbService.ConnectionState;
 import on.hover.android.R;
 import android.app.Activity;
@@ -17,24 +19,38 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity
 {	
-	private String TAG = "JMMainActivity";
+	private String TAG = "JM";
 	private ImageView mStatusLed;
-	
+
 	TextView textInfo;
 	TextView textMessage;
-	
+
 	private final BroadcastReceiver messageReceiver = new newMessage();
-	  
 	final Context context = this;
 	
-	public class newMessage extends BroadcastReceiver 
+	private void restart()
+	{
+		AppRestart.doRestart(this);		
+	}
+	
+	private class newMessage extends BroadcastReceiver 
 	{
 		@Override
 		public void onReceive(Context context, Intent intent) 
 		{    
 			String action = intent.getAction();
 			Bundle bundle = intent.getExtras();
-			if(action.equalsIgnoreCase("updateUSBConnectionState"))
+			if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action))
+			{
+				Log.d(TAG,"finish!");
+				finish();
+			}
+			else if ("android.intent.action.ACTION_POWER_CONNECTED".equals(action))
+			{
+				Log.d(TAG,"power connected!");
+				restart();
+			}			
+			else if(action.equalsIgnoreCase("updateUSBConnectionState"))
 			{
 				ConnectionState state = (ConnectionState) bundle.get("connectionState");		
 				Log.d(TAG,"Update USBconnectionState: " + state.name());
@@ -43,15 +59,15 @@ public class MainActivity extends Activity
 			else if(action.equalsIgnoreCase("printMessage"))
 			{
 				
-				if(intent.hasExtra("com.example.BluetoothServer.message"))
+				if(intent.hasExtra("message"))
 				{
-					String message = intent.getStringExtra("com.example.BluetoothServer.message");
+					String message = intent.getStringExtra("message");
 					textInfo.setText(message);
 				}
 				
-				if(intent.hasExtra("com.example.BluetoothServer.coordinates"))
+				if(intent.hasExtra("coordinates"))
 				{
-					String coordinates = intent.getStringExtra("com.example.BluetoothServer.coordinates");
+					String coordinates = intent.getStringExtra("coordinates");
 					
 					
 					
@@ -64,7 +80,7 @@ public class MainActivity extends Activity
 				    	
 						//Call serverUp
 			    		Intent i2 = new Intent("callFunction");
-			    		i2.putExtra("com.example.BtService.sendData", "sendData");
+			    		i2.putExtra("sendDataBlinkyOn", "sendDataBlinkyOn");
 			    		sendBroadcast(i2);
 					}
 					else if( (coordinates.equalsIgnoreCase("down")) )
@@ -76,7 +92,7 @@ public class MainActivity extends Activity
 				    	
 						//Call serverUp
 			    		Intent i2 = new Intent("callFunction");
-			    		i2.putExtra("com.example.BtService.sendData", "sendData");
+			    		i2.putExtra("sendDataBlinkyOff", "sendDataBlinkyOff");
 			    		sendBroadcast(i2);
 					}
 				}
@@ -96,6 +112,9 @@ public class MainActivity extends Activity
 	{				
 		Log.d(TAG,"onCreate start");
 		super.onCreate(savedInstanceState);
+
+		// check if accessory is connected
+		
 		setContentView(R.layout.main);
 		setupStatusLed();
 		
@@ -127,6 +146,7 @@ public class MainActivity extends Activity
 
 	private void startBtServerService()
 	{
+		Log.d(TAG,"start BtService");
 		Intent intent = new Intent(this, BtService.class);
 		intent.fillIn(getIntent(), 0);
 		startService(intent);
@@ -145,6 +165,8 @@ public class MainActivity extends Activity
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("updateUSBConnectionState");
 		filter.addAction("printMessage");
+		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
+		filter.addAction("android.intent.action.ACTION_POWER_CONNECTED");
 		registerReceiver(messageReceiver, filter);
 		Log.d(TAG,"onResume stop");
 	}
@@ -173,7 +195,6 @@ public class MainActivity extends Activity
 		mStatusLed = (ImageView) findViewById(R.id.status_led);
 	}
 
-	
 	private void setupTestButton() 
 	{
 		Button button = (Button) findViewById(R.id.test_button);
@@ -187,7 +208,6 @@ public class MainActivity extends Activity
 			}
 		});
 	}	
-
 	
 	private void setupBTSetupButton() 
 	{
@@ -203,22 +223,22 @@ public class MainActivity extends Activity
 				
 				//Call serverUp
 	    		Intent i = new Intent("callFunction");
-	    		i.putExtra("com.example.BtService.setupServer", "setupServer");
+	    		i.putExtra("setupServer", "setupServer");
 	    		sendBroadcast(i);
-	    		
-	    		try 
-	    		{
-					Thread.sleep(1000);
-				} 
-	    		catch (InterruptedException e) 
-	    		{
-					e.printStackTrace();
-				}
+//	    		
+//	    		try 
+//	    		{
+//					Thread.sleep(1000);
+//				} 
+//	    		catch (InterruptedException e) 
+//	    		{
+//					e.printStackTrace();
+//				}
 	    		
 	    		textInfo.setText("Waiting for connection...");
 	    		
 	    		Intent i2 = new Intent("callFunction");
-	    		i2.putExtra("com.example.BtService.waitToConnect", "waitToConnnect");
+	    		i2.putExtra("waitToConnect", "waitToConnnect");
 	    		sendBroadcast(i2);  		
 	    		
 			}
@@ -227,7 +247,6 @@ public class MainActivity extends Activity
 	
 	private void setupBTListenButton() 
 	{
-		Log.d(TAG, "setupBTListenButton pushed");
 		Button listenButton = (Button) findViewById(R.id.bt_listen_button);
 		listenButton.setOnClickListener(new OnClickListener() 
 		{
@@ -237,7 +256,7 @@ public class MainActivity extends Activity
 				textInfo.setText("Recieving coordinates...");
 				
 	    		Intent i = new Intent("callFunction");
-	    		i.putExtra("com.example.BtService.listen", "listen");
+	    		i.putExtra("listen", "listen");
 	    		sendBroadcast(i);
 			}
 		});
