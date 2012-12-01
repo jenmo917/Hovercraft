@@ -2,7 +2,7 @@ package on.hovercraft.android;
 
 import com.android.future.usb.UsbManager;
 
-import on.hover.android.R;
+import on.hovercraft.android.R;
 import on.hovercraft.android.Constants.ConnectionState;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
