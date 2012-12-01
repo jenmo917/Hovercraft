@@ -1,4 +1,4 @@
-package on.hover.android;
+package on.hovercraft.android;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +19,6 @@ import android.util.Log;
 
 //import on.hover.android.Command.DriveSignals;
 //import on.hover.android.Command.Engines;
-
 
 public class BtService extends IntentService
 {

@@ -1,4 +1,4 @@
-package on.hover.android;
+package on.hovercraft.android;
 
 import android.app.Activity;
 import android.content.Intent;

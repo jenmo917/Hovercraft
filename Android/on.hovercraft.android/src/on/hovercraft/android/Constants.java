@@ -1,4 +1,4 @@
-package on.hover.android;
+package on.hovercraft.android;
 
 final public class Constants //final to prevent instantiation
 {

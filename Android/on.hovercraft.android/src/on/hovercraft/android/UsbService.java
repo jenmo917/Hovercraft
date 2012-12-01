@@ -1,4 +1,4 @@
-package on.hover.android;
+package on.hovercraft.android;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -6,11 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-import on.hover.android.Constants;
-import on.hover.android.Command.DriveSignals;
-import on.hover.android.Command.Engines;
-import on.hover.android.Command.SensorData;
-import on.hover.android.Constants.ConnectionState;
+import on.hovercraft.android.Constants;
+import on.hovercraft.android.Command.DriveSignals;
+import on.hovercraft.android.Command.Engines;
+import on.hovercraft.android.Command.SensorData;
+import on.hovercraft.android.Constants.ConnectionState;
 
 import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
