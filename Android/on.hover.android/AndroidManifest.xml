@@ -10,9 +10,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <application android:icon="@drawable/icon"
-    			 android:label="ToggleLedApplication">
+    			 android:label="TNE085 Hovercraft Project ">
         <activity android:name="on.hover.android.MainActivity"
-                  android:label="ToggleLedApplication"
+                  android:label="TNE085 Hovercraft Project"
                   android:launchMode="singleInstance">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

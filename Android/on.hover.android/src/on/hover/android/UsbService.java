@@ -5,11 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+
+import on.hover.android.Constants;
 import on.hover.android.Command.DriveSignals;
 import on.hover.android.Command.Engines;
 import on.hover.android.Command.SensorData;
-
-import on.hover.android.Constants;
+import on.hover.android.Constants.ConnectionState;
 
 import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
@@ -28,17 +29,12 @@ public class UsbService extends IntentService
 	public static boolean isActive = false; // this is true if the service is up and running
 	private boolean accessoryDetached = false; // TODO: true if android accessory is detached
 	
-	public static enum ConnectionState 
-	{
-	    CONNECTED, WAITING, DISCONNECTED;
-	}
-	
 	public static ConnectionState connectionState = ConnectionState.DISCONNECTED; // USB connection state
 
     private static String TAG = "JM";
     private static UsbService singleton;
 
-	private final BroadcastReceiver messageReceiver = new newMessage();	
+	private final BroadcastReceiver messageReceiver = new myBroadcastReceiver();	
 	
 	private UsbManager mUsbManager = UsbManager.getInstance(this);
 	private UsbAccessory mAccessory;
@@ -56,21 +52,27 @@ public class UsbService extends IntentService
         return singleton;
     }
     
-    public void sendString()
+    public void sendADKTestCommand()
     {    	   
-		// try to send data to arduino
-    	DriveSignals driveSignalLeft = createDriveSignalProtocol(true,true,20);
-    	DriveSignals driveSignalRight = createDriveSignalProtocol(true,true,190);
-		Engines engine = createEngineProtocol(driveSignalLeft,driveSignalRight); 
-		byte[] message = engine.toByteArray();
-		int byteLength = message.length;
-		for (int x = 0; x < byteLength; x++) 
-		{
-			Log.d(TAG,""+message[x]);
-		}
-    	sendCommand(Constants.MOTOR_CONTROL_COMMAND,Constants.TARGET_ADK, message);
-    	Log.d(TAG,"Send engine command");
+//		// try to send data to arduino
+//    	DriveSignals driveSignalLeft = createDriveSignalProtocol(true,true,20);
+//    	DriveSignals driveSignalRight = createDriveSignalProtocol(true,true,190);
+//		Engines engine = createEngineProtocol(driveSignalLeft,driveSignalRight); 
+//		byte[] message = engine.toByteArray();
+//		int byteLength = message.length;
+//		for (int x = 0; x < byteLength; x++) 
+//		{
+//			Log.d(TAG,""+message[x]);
+//		}
+//    	sendCommand(Constants.MOTOR_CONTROL_COMMAND,Constants.TARGET_ADK, message);
+//    	Log.d(TAG,"Send engine command");
+    	
+    	byte[] message = new byte[1];
+    	message[0] = Constants.TARGET_BRAIN;
+    	sendCommand(Constants.I2C_SENSOR_REQ_COMMAND,Constants.TARGET_ADK, message);
     }
+    
+    
     
 	static Engines createEngineProtocol(DriveSignals driveSignalRight, DriveSignals driveSignalLeft) 
 	{
@@ -283,6 +285,14 @@ public class UsbService extends IntentService
         		break;
         	}
         	checkInput();
+        	try 
+        	{
+				Thread.sleep(10);
+			} 
+        	catch (InterruptedException e) 
+        	{
+				e.printStackTrace();
+			}
         }
 	}
 	
@@ -328,6 +338,10 @@ public class UsbService extends IntentService
 				    i++;
 				}
 	
+				Log.d(TAG, "bufferInfo[0]"+bufferInfo[0]);
+				Log.d(TAG, "bufferInfo[1]"+bufferInfo[1]);
+				Log.d(TAG, "bufferInfo[2]"+bufferInfo[2]);
+				
 				// commands from ADK to this device
 				if(Constants.TARGET_BRAIN == bufferInfo[1])
 				{
@@ -351,6 +365,12 @@ public class UsbService extends IntentService
 	{
 		switch (bufferInfo[0])
 		{
+			case Constants.I2C_SENSOR_COMMAND:
+				Log.d(TAG,"I2C_SENSOR_COMMAND RECEIVED!");
+			break;
+			case Constants.US_SENSOR_COMMAND:
+				Log.d(TAG,"US_SENSOR_COMMAND RECEIVED!");
+			break;
 			case 5:
 			break;
 			case 6:
@@ -391,7 +411,7 @@ public class UsbService extends IntentService
 		registerReceiver(messageReceiver, filter);
 	}
 	
-	public class newMessage extends BroadcastReceiver 
+	public class myBroadcastReceiver extends BroadcastReceiver 
 	{
 		@Override
 		public void onReceive(Context context, Intent intent) 
@@ -401,20 +421,20 @@ public class UsbService extends IntentService
 			{
 				accessoryDetached = true;
 			}
-			else if (action.equalsIgnoreCase("sendString"))
+			else if (action.equalsIgnoreCase("sendADKTestCommand"))
 			{
-				sendString();
+				sendADKTestCommand();
 			}
 			else if (action.equalsIgnoreCase("sendBlinkyOnCommand"))
 			{
 
 				String test = "message";
-				sendCommand((byte)1, (byte)1, test.getBytes());
+				sendCommand(Constants.BLINKY_ON_COMMAND, Constants.TARGET_ADK, test.getBytes());
 			}
 			else if (action.equalsIgnoreCase("sendBlinkyOffCommand"))
 			{
 				String test = "message";
-				sendCommand((byte)2, (byte)1, test.getBytes());
+				sendCommand(Constants.BLINKY_OFF_COMMAND, Constants.TARGET_ADK, test.getBytes());
 			}
 		}
 	}	

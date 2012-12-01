@@ -2,8 +2,8 @@ package on.hover.android;
 
 import com.android.future.usb.UsbManager;
 
-import on.hover.android.UsbService.ConnectionState;
 import on.hover.android.R;
+import on.hover.android.Constants.ConnectionState;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,8 +20,8 @@ import android.widget.TextView;
 public class MainActivity extends Activity
 {	
 	private String TAG = "JM";
-	private ImageView mStatusLed;
-
+	private ImageView mUSBStatusLed;
+	private ImageView mBTStatusLed;
 	TextView textInfo;
 	TextView textMessage;
 
@@ -30,7 +30,7 @@ public class MainActivity extends Activity
 	
 	private void restart()
 	{
-		AppRestart.doRestart(this);		
+		AppRestart.doRestart(this);
 	}
 	
 	private class newMessage extends BroadcastReceiver 
@@ -43,7 +43,6 @@ public class MainActivity extends Activity
 			if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action))
 			{
 				Log.d(TAG,"finish!");
-				finish();
 			}
 			else if ("android.intent.action.ACTION_POWER_CONNECTED".equals(action))
 			{
@@ -55,6 +54,12 @@ public class MainActivity extends Activity
 				ConnectionState state = (ConnectionState) bundle.get("connectionState");		
 				Log.d(TAG,"Update USBconnectionState: " + state.name());
 				updateUSBConnectionState(state);
+			}
+			else if(action.equalsIgnoreCase("updateBTConnectionState"))
+			{
+				ConnectionState state = (ConnectionState) bundle.get("connectionState");		
+				Log.d(TAG,"Update BTconnectionState: " + state.name());
+				updateBTConnectionState(state);
 			}
 			else if(action.equalsIgnoreCase("printMessage"))
 			{
@@ -112,26 +117,35 @@ public class MainActivity extends Activity
 	{				
 		Log.d(TAG,"onCreate start");
 		super.onCreate(savedInstanceState);
-
-		// check if accessory is connected
-		
 		setContentView(R.layout.main);
-		setupStatusLed();
 		
-		// setupTestButton();
-		setupBTSetupButton();
-		setupBTListenButton();
-		setupTestButton();
+		// Setup USB and Bluetooth status LED:s
+		setupStatusLeds();
 		
-		textInfo = (TextView) findViewById(R.id.textInfo);
-		textMessage = (TextView) findViewById(R.id.textMessage);
+		// Setup buttons, onClick etc and init text views
+		setupButtons();
+		initTextViews();
 		
+		// Start USB and Blue service
 		startUsbService();
 		startBtServerService();
 		
 		Log.d(TAG,"onCreate stop");
 	}
+	
+	private void setupButtons()
+	{
+		setupADKTestButton();
+		setupBTSetupButton();
+		setupBTListenButton();
+	}
 
+	private void initTextViews()
+	{
+		textInfo = (TextView) findViewById(R.id.textInfo);
+		textMessage = (TextView) findViewById(R.id.textMessage);		
+	}
+	
 	private void startUsbService()
 	{
 		Intent intent = new Intent(this, UsbService.class);
@@ -157,17 +171,23 @@ public class MainActivity extends Activity
 		stopService(new Intent(this, BtService.class));
 	}	
 	
+	private void initReceiver()
+	{
+		IntentFilter filter = new IntentFilter();
+		filter.addAction("updateUSBConnectionState");
+		filter.addAction("updateBTConnectionState");		
+		filter.addAction("printMessage");
+		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
+		filter.addAction("android.intent.action.ACTION_POWER_CONNECTED");
+		registerReceiver(messageReceiver, filter);		
+	}
+	
 	@Override
 	protected void onResume()
 	{
 		Log.d(TAG,"onResume start");
 		super.onResume();
-		IntentFilter filter = new IntentFilter();
-		filter.addAction("updateUSBConnectionState");
-		filter.addAction("printMessage");
-		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
-		filter.addAction("android.intent.action.ACTION_POWER_CONNECTED");
-		registerReceiver(messageReceiver, filter);
+		initReceiver();
 		Log.d(TAG,"onResume stop");
 	}
 	
@@ -190,20 +210,22 @@ public class MainActivity extends Activity
 		Log.d(TAG,"onDestroy stop");
 	}
 	
-	private void setupStatusLed() 
+	private void setupStatusLeds() 
 	{
-		mStatusLed = (ImageView) findViewById(R.id.status_led);
-	}
+		mUSBStatusLed = (ImageView) findViewById(R.id.usb_connection_status_led);
+		mBTStatusLed = (ImageView) findViewById(R.id.bt_connection_status_led);
+	}	
 
-	private void setupTestButton() 
+	private void setupADKTestButton() 
 	{
-		Button button = (Button) findViewById(R.id.test_button);
-		button.setOnClickListener(new OnClickListener() {
+		Button button = (Button) findViewById(R.id.adk_test_button);
+		button.setOnClickListener(new OnClickListener() 
+		{
 			@Override
 			public void onClick(View arg0) 
 			{
-				// Send command
-		    	Intent i = new Intent("sendString");
+				Log.d(TAG,"setupADKTestButton pushed");
+		    	Intent i = new Intent("sendADKTestCommand");
 		    	sendBroadcast(i);
 			}
 		});
@@ -225,15 +247,6 @@ public class MainActivity extends Activity
 	    		Intent i = new Intent("callFunction");
 	    		i.putExtra("setupServer", "setupServer");
 	    		sendBroadcast(i);
-//	    		
-//	    		try 
-//	    		{
-//					Thread.sleep(1000);
-//				} 
-//	    		catch (InterruptedException e) 
-//	    		{
-//					e.printStackTrace();
-//				}
 	    		
 	    		textInfo.setText("Waiting for connection...");
 	    		
@@ -262,19 +275,35 @@ public class MainActivity extends Activity
 		});
 	}	
 	
-	public void updateUSBConnectionState(ConnectionState state)
+	private void updateUSBConnectionState(ConnectionState state)
 	{
 		switch(state)
 		{
 			case CONNECTED:
-				mStatusLed.setImageResource(R.drawable.green_led);
+				mUSBStatusLed.setImageResource(R.drawable.green_led);
 			break;
 			case WAITING:
-				mStatusLed.setImageResource(R.drawable.yellow_led);
+				mUSBStatusLed.setImageResource(R.drawable.yellow_led);
 			break;
 			case DISCONNECTED:
-				mStatusLed.setImageResource(R.drawable.red_led);
+				mUSBStatusLed.setImageResource(R.drawable.red_led);
 			break;
 		}
 	}
+	
+	private void updateBTConnectionState(ConnectionState state)
+	{
+		switch(state)
+		{
+			case CONNECTED:
+				mBTStatusLed.setImageResource(R.drawable.green_led);
+			break;
+			case WAITING:
+				mBTStatusLed.setImageResource(R.drawable.yellow_led);
+			break;
+			case DISCONNECTED:
+				mBTStatusLed.setImageResource(R.drawable.red_led);
+			break;
+		}
+	}	
 }
