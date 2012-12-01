@@ -50,16 +50,16 @@ public class BtService extends IntentService
 
 		while ( true )
 		{
+			try
+			{
+				Thread.sleep(10);
+			}
+			catch (InterruptedException e) 
+			{
+				e.printStackTrace();
+			}			
 			if(listenBT)
 			{
-				try
-				{
-					Thread.sleep(50);
-				}
-				catch (InterruptedException e) 
-				{
-					e.printStackTrace();
-				}
 				readBuffer();
 			}
 		}
