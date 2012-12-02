@@ -6,17 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
-
-import on.hovercraft.android.Constants;
 import on.hovercraft.android.Command.DriveSignals;
 import on.hovercraft.android.Command.Engines;
 import on.hovercraft.android.Command.SensorData;
-import on.hovercraft.android.Constants.ConnectionState;
-
-import com.android.future.usb.UsbAccessory;
-import com.android.future.usb.UsbManager;
-import com.google.protobuf.InvalidProtocolBufferException;
-
+import common.files.android.Constants;
+import common.files.android.Constants.ConnectionState;
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -173,33 +167,7 @@ public class UsbService extends IntentService
 		}
 	}
 
-	private void closeAccessory() 
-	{
-		try
-		{
-			if (mOutputStream != null)
-			{
-				mInputStream.close();
-				mOutputStream.close();
-			}
-			if (mFileDescriptor != null) 
-			{
-				mFileDescriptor.close();
-			}
-			updateConnectionState(ConnectionState.DISCONNECTED);
-		} 
-		catch (IOException e) 
-		{
-		} 
-		finally 
-		{
-			mInputStream = null;
-			mOutputStream = null;
-			mFileDescriptor = null;
-			mAccessory = null;
-		}
-
-		updateConnectionState(ConnectionState.DISCONNECTED);
+	updateConnectionState(ConnectionState.DISCONNECTED);
 	}
 
 	private void updateConnectionState(ConnectionState state)
@@ -442,5 +410,5 @@ public class UsbService extends IntentService
 				sendCommand(Constants.BLINKY_OFF_COMMAND, Constants.TARGET_ADK, test.getBytes());
 			}
 		}
-	}	
+	}
 }

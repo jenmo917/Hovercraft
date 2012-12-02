@@ -1,0 +1,10 @@
+# No compiled files should be stored in the subversion system.
+bin/*
+
+# No backup files or temporary files
+*~
+*.bak
+
+# Eclipse project files
+.cproject
+.project
