@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
+
+import common.files.android.Constants;
+
 import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.bluetooth.BluetoothAdapter;

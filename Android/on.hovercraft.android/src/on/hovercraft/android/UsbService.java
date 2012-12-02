@@ -6,6 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
+import com.android.future.usb.UsbAccessory;
+import com.android.future.usb.UsbManager;
+import com.google.protobuf.InvalidProtocolBufferException;
+
 import on.hovercraft.android.Command.DriveSignals;
 import on.hovercraft.android.Command.Engines;
 import on.hovercraft.android.Command.SensorData;
@@ -31,8 +35,9 @@ public class UsbService extends IntentService
 
 	private final BroadcastReceiver messageReceiver = new myBroadcastReceiver();	
 
-	private UsbManager mUsbManager = UsbManager.getInstance(this);
-	private UsbAccessory mAccessory;
+    private UsbManager mUsbManager = UsbManager.getInstance(this);
+    private UsbAccessory mAccessory;
+    
 	private ParcelFileDescriptor mFileDescriptor;
 	private FileOutputStream mOutputStream;
 	private FileInputStream mInputStream;
@@ -167,7 +172,33 @@ public class UsbService extends IntentService
 		}
 	}
 
-	updateConnectionState(ConnectionState.DISCONNECTED);
+	private void closeAccessory() 
+	{
+		try 
+		{
+			if (mOutputStream != null) 
+			{
+				mInputStream.close();
+				mOutputStream.close();
+			}
+			if (mFileDescriptor != null)
+			{
+				mFileDescriptor.close();
+			}
+			updateConnectionState(ConnectionState.DISCONNECTED);
+		} 
+		catch (IOException e) 
+		{
+			
+		} 
+		finally 
+		{
+			mInputStream = null;
+			mOutputStream = null;
+			mFileDescriptor = null;
+			mAccessory = null;
+		}
+		updateConnectionState(ConnectionState.DISCONNECTED);
 	}
 
 	private void updateConnectionState(ConnectionState state)
