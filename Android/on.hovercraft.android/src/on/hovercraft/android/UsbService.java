@@ -5,17 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
-import on.hovercraft.android.Constants;
 import on.hovercraft.android.Command.DriveSignals;
 import on.hovercraft.android.Command.Engines;
 import on.hovercraft.android.Command.SensorData;
-import on.hovercraft.android.Constants.ConnectionState;
-
-import com.android.future.usb.UsbAccessory;
-import com.android.future.usb.UsbManager;
-import com.google.protobuf.InvalidProtocolBufferException;
-
+import common.files.android.Constants;
+import common.files.android.Constants.ConnectionState;
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
