@@ -8,6 +8,17 @@
 #include <UsbHost.h>
 #include <AndroidAccessory.h>
 
+/**
+* \brief Creates an event every 5 seconds
+*
+* Creates an event every 5 seconds
+*
+* @param q The eventqueue
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void timeManager5000(EventQueue* q)
 {
 	static unsigned long prevMillis = 0;
@@ -20,6 +31,18 @@ void timeManager5000(EventQueue* q)
 	}
 }
 
+/**
+* \brief Creates an event every second
+*
+* Creates an event every 1 seconds
+* Code from http://arduino.cc/forum/index.php/topic,37650.0.html
+*
+* @param q The eventqueue
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void timeManager1000(EventQueue* q)
 {
 	static unsigned long prevMillis = 0;
@@ -32,6 +55,17 @@ void timeManager1000(EventQueue* q)
 	}
 }
 
+/**
+* \brief Creates an event twice every second
+*
+* Creates an event every 5 seconds
+*
+* @param q The eventqueue
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void timeManager500(EventQueue* q)
 {
 	static unsigned long prevMillis = 0;
@@ -44,6 +78,17 @@ void timeManager500(EventQueue* q)
 	}
 }
 
+/**
+* \brief Creates an event every 100 milliseconds
+*
+* Creates an event every 100 milliseconds
+*
+* @param q The eventqueue
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void timeManager100(EventQueue* q)
 {
 	static unsigned long prevMillis = 0;
@@ -56,8 +101,17 @@ void timeManager100(EventQueue* q)
 	}
 }
 
-// this function generates an EV_TIME event
-// each 1000 ms
+/**
+* \brief Calls all timeManagers
+*
+* Calls all timeManagers
+*
+* @param q The eventqueue
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void timeManager(EventQueue* q)
 {
 	timeManager5000(q);
@@ -66,8 +120,18 @@ void timeManager(EventQueue* q)
     timeManager100(q);
 }
 
-// this function generates an EV_ANALOG event
-// whenever the analog channel AN_CHAN changes
+/**
+* \brief Generates an event when analoginput changes. Not used in current code
+*
+* Generated an EV_ANALOG event when analog channel AN_CHAN changes
+* Code from http://arduino.cc/forum/index.php/topic,37650.0.html
+*
+* @param q The eventqueue
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void analogManager(EventQueue* q)
 {
     static int prevValue = 0;
@@ -82,6 +146,17 @@ void analogManager(EventQueue* q)
     }
 }
 
+/**
+* \brief Reads data from USB-input
+*
+* Reads data from USB and generates an event when there are data in the input buffer
+*
+* @param q The eventqueue
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void USBReadManager(EventQueue* q)
 {
 	int len;

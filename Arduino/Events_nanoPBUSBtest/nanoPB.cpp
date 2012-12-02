@@ -26,10 +26,20 @@ Till sist måste AVRnanopb biblioteket länkas in detta finns i AVRnanopb/release
 #include "Streaming.h"
 #include "sensors.h"
 
-int incomingByte;              	// for incoming serial data
+int incomingByte;					// for incoming serial data
 //byte outBuffer[255];				// buffer for incoming data
-//int count = 0;				//length of buffer
+//int count = 0;					//length of buffer
 
+/**
+* \brief Decodes a Engines Protocol message
+*
+* Decodes a Engines Protocol message
+*
+* @return The decoded Engines object
+*
+* \author Rickard Dahm
+*
+*/
 Engines decodeEngines()
 {
 	Engines engines;
@@ -50,12 +60,25 @@ Engines decodeEngines()
 	return engines;
 }
 
-bool encodeEngines()
+/**
+* \brief Encodes a Engines Protocol message
+*
+* Encodes a Engines Protocol message
+*
+* @param engine The Engines object to be encoded
+*
+* @return true if encoded was sucessful and false if it failed
+*
+* \author Rickard Dahm
+*
+*/
+bool encodeEngines(Engines engine)
 {
+	/*
 		DriveSignals right = { false, true, 10 };
 		DriveSignals left = { true, true, 20 };
 		Engines engine={ right, left };	//skapa protocol1
-
+*/
 		pb_ostream_t ostream;		//en utström
 		ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //koppla ihop utströmmen med en buffert
 
@@ -70,11 +93,41 @@ bool encodeEngines()
 		}
 }
 
+/*
 USSensorData decodeUSSensorMsg()
 {
+	USSensorData sensorData;
+	int length = (int) rcvmsgInfo[2];
+	pb_istream_t stream = pb_istream_from_buffer((uint8_t*)rcvPBmsg, length);
+	if(pb_decode(&stream, USSensorData_fields, &sensorData)) //incoming buffer decoded to protocol
+	{
+		return sensorData;
+	}
+	else
+	{
+		Serial << "Failed to decode an Engines object";
+		sensorData.type.toCharArray("Decode Fail", 40);
+		sensorData.description = "";
+		sensorData.triggerpin = 0;
+		sensorData.echopin = 0;
+		sensorData.value = 0;
+		return sensorData;
+	}
+	return engines;
+}*/
 
-}
-
+/**
+* \brief Encodes a USSensorData Protocol message
+*
+* Encodes a USSensorData Protocol message
+*
+* @param sensorObject The USSensor to be encoded
+*
+* @return true if encoded was sucessful and false if it failed
+*
+* \author Rickard Dahm
+*
+*/
 bool encodeUSSensorMsg(USSensor sensorObject)
 {
 	USSensorData sensorPB;
@@ -105,6 +158,18 @@ bool encodeUSSensorMsg(USSensor sensorObject)
 	}
 }
 
+/**
+* \brief Encodes a I2CSensorData Protocol message
+*
+* Encodes a I2CSensorData Protocol message
+*
+* @param sensorObject The I2CSensor to be encoded
+*
+* @return true if encoded was sucessful and false if it failed
+*
+* \author Rickard Dahm
+*
+*/
 bool encodeI2CSensorMsg(I2CSensor sensorObject)
 {
 	I2CSensorData sensorPB;
