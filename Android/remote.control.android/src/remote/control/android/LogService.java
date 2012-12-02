@@ -177,7 +177,7 @@ public class LogService extends IntentService implements SensorEventListener
 				// Titta vilka sensorer vi ska logga
 				if(accSensor == true)
 				{
-					Log.d(TAG, "Logging acc");    				    				
+					Log.d(TAG, "Logging acc from remote");    				    				
 					accToSd(accfile);			
 				}
 				if(accBrainSensor == true)
@@ -192,10 +192,9 @@ public class LogService extends IntentService implements SensorEventListener
 					sendBroadcast(logUsIntent);
 
 					Context context2 = getApplicationContext();
-					Toast.makeText(context2, "Log Started", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context2, "US Log Started", Toast.LENGTH_SHORT).show();
 
-					Log.d(TAG, "Logging usAdk");		
-					Log.d(TAG, "Logging header to usAdk");    				    									
+					Log.d(TAG, "Logging usAdk");		    				    									
 					//usBrainToSd();   	
 
 					// tillgång till en intent (en väska/behållare) med sensorvärden
@@ -244,21 +243,6 @@ public class LogService extends IntentService implements SensorEventListener
 		}
 	}
 
-	/*public void accHeaderToSd() throws IOException
-	{		    
-		{
-			FileInputStream fis = new FileInputStream(accfile);  
-			int b = fis.read();  
-			if (b == -1)  
-			{  
-				FileOutputStream fo = new FileOutputStream(accfile, true);
-				PrintWriter oWriter = new PrintWriter(fo);
-				oWriter.println("X,Y,Z,date,time");	
-				fis.close();
-				oWriter.close();    				    				
-			}   
-		}	
-	}*/
 	public void accToSd(File file)
 	{
 		try
@@ -306,27 +290,5 @@ public class LogService extends IntentService implements SensorEventListener
 		}
 		oWriter.close();
 	}   
-
-
-	/*
-	public void usHeaderToSd() throws IOException
-	{
-		{
-			FileInputStream fisUs = new FileInputStream(usfile);  
-			int c = fisUs.read();  
-			if (c == -1)  
-			{
-				FileOutputStream fo = new FileOutputStream(usfile, true);
-				PrintWriter oWriter = new PrintWriter(fo);
-				oWriter.println("FrontLeft,FrontRight,BackLeft,BackRight,date,time");	
-				fisUs.close();
-				oWriter.close();
-			}
-		}
-	}
-	public void usBrainToSd()
-	{
-
-	}*/
 }
 
