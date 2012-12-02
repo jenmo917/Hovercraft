@@ -86,7 +86,7 @@ void USBsetup()
 */
 void decodeMsgType()
 {
-	static unsigned int prevPower = 0;
+	static int prevPower = 0;
 	Engines motors;
 	Serial << "********************************************************" << endl;
 	Serial << "Command: " << rcvmsgInfo[0] << endl;
@@ -108,12 +108,20 @@ void decodeMsgType()
 			Serial.println("COMMAND: MOTOR_CONTROL");
 			connectionCounter = 0;
 			motors = decodeEngines();
+			printMotorSignal(&motors);
+			motorControl(&motors);
+			break;
+		case MOTOR_CONTROL_TEST:
+			Serial.println("COMMAND: MOTOR_CONTROL_TEST");
+			connectionCounter = 0;
+			motors = decodeEngines();
 			prevPower = prevPower+10;
 			if(prevPower > 255)
 			{
 				prevPower = 0;
 			}
 			motors.right.power = prevPower;
+			motors.left.power = prevPower;
 			printMotorSignal(&motors);
 			motorControl(&motors);
 			break;

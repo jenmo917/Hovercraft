@@ -257,22 +257,16 @@ void USBReadHandler(int event, int param)
 */
 void USBSendUSSensorDataHandler(int event, int target)
 {
-	Serial << "USBSendUSSensorDataHandler" << endl;
+	//Serial << "USBSendUSSensorDataHandler" << endl;
 	if (acc.isConnected())
 	{
-		for(int i = 0; i < MAX_US_SENSORS; i++)
+		if(encodeUSSensorListMsg())
 		{
-			if(USSensorList[i].type != "Empty")
-			{
-				if(encodeUSSensorMsg(USSensorList[i]))
-				{
-					sendMessage(US_SENSOR_COMMAND, target);
-				}
-				else
-				{
-					Serial << "Failed to encode sensor " << i << " in function: " << endl << "USBSendSensorDataHandler";
-				}
-			}
+			sendMessage(US_SENSOR_COMMAND, target);
+		}
+		else
+		{
+			Serial << "Failed to encode sensors in function: USBSendSensorDataHandler";
 		}
 	}
 }
@@ -295,19 +289,13 @@ void USBSendI2CSensorDataHandler(int event, int target)
 	Serial << "USBSendI2CSensorDataHandler" << endl;
 	if (acc.isConnected())
 	{
-		for(int i = 0; i < I2C_MAX_SENSORS; i++)
+		if(encodeI2CSensorListMsg())
 		{
-			if(I2CSensorList[i].type != "Empty")
-			{
-				if(encodeI2CSensorMsg(I2CSensorList[i]))
-				{
-					sendMessage(I2C_SENSOR_COMMAND, target);
-				}
-				else
-				{
-					Serial << "Failed to encode sensor " << i << " in function: " << endl << "USBSendSensorDataHandler";
-				}
-			}
+			sendMessage(I2C_SENSOR_COMMAND, target);
+		}
+		else
+		{
+			Serial << "Failed to encode sensor in function: USBSendI2CSensorDataHandler";
 		}
 	}
 }
