@@ -12,9 +12,13 @@
 
 Engines decodeEngines();
 void encodeMsg();
-bool encodeEngines();
-USSensorData decodeUSSensorMsg();
+bool encodeEngines(Engines engineSignals);
+//USSensorData decodeUSSensorMsg();
 bool encodeUSSensorMsg(USSensor sensorObject);
 bool encodeI2CSensorMsg(I2CSensor sensorObject);
+bool encodeI2CSensorListMsg();
+void fillI2CSensorFields(I2CSensorData* sensorToBeFilled, int number);
+bool encodeUSSensorListMsg();
+void fillUSSensorFields(USSensorData* sensorToBeFilled, int number);
 
 #endif /* NANOPB_H_ */

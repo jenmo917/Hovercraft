@@ -1,14 +1,14 @@
-/* Program som visar hur nanopb skall användas
+/* Program som visar hur nanopb skall anvï¿½ndas
 
-I ditt programm så måste du inkludera ha följande filer i din src map:
+I ditt programm sï¿½ mï¿½ste du inkludera ha fï¿½ljande filer i din src map:
 	command.pb.c
 	command.pb.h
-Följande filer som ligger i mappen nanopb måste finnas med under includepath
+Fï¿½ljande filer som ligger i mappen nanopb mï¿½ste finnas med under includepath
 	 <pb.h>
 	<pb_encode.h>
 	<pb_decode.h>
 	
-Till sist måste AVRnanopb biblioteket länkas in detta finns i AVRnanopb/release
+Till sist mï¿½ste AVRnanopb biblioteket lï¿½nkas in detta finns i AVRnanopb/release
 */
 
 #include <Arduino.h>
@@ -26,10 +26,20 @@ Till sist måste AVRnanopb biblioteket länkas in detta finns i AVRnanopb/release
 #include "Streaming.h"
 #include "sensors.h"
 
-int incomingByte;              	// for incoming serial data
+int incomingByte;					// for incoming serial data
 //byte outBuffer[255];				// buffer for incoming data
-//int count = 0;				//length of buffer
+//int count = 0;					//length of buffer
 
+/**
+* \brief Decodes a Engines Protocol message
+*
+* Decodes a Engines Protocol message
+*
+* @return The decoded Engines object
+*
+* \author Rickard Dahm
+*
+*/
 Engines decodeEngines()
 {
 	Engines engines;
@@ -50,14 +60,27 @@ Engines decodeEngines()
 	return engines;
 }
 
-bool encodeEngines()
+/**
+* \brief Encodes a Engines Protocol message
+*
+* Encodes a Engines Protocol message
+*
+* @param engine The Engines object to be encoded
+*
+* @return true if encoded was sucessful and false if it failed
+*
+* \author Rickard Dahm
+*
+*/
+bool encodeEngines(Engines engine)
 {
+	/*
 		DriveSignals right = { false, true, 10 };
 		DriveSignals left = { true, true, 20 };
 		Engines engine={ right, left };	//skapa protocol1
-
-		pb_ostream_t ostream;		//en utström
-		ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //koppla ihop utströmmen med en buffert
+*/
+		pb_ostream_t ostream;
+		ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //Connect the outstream with a buffer
 
 		if (pb_encode(&ostream, Engines_fields, &engine)) //encode protocoll (buffer is now the encoded protocol
 		{
@@ -70,11 +93,41 @@ bool encodeEngines()
 		}
 }
 
+/*
 USSensorData decodeUSSensorMsg()
 {
+	USSensorData sensorData;
+	int length = (int) rcvmsgInfo[2];
+	pb_istream_t stream = pb_istream_from_buffer((uint8_t*)rcvPBmsg, length);
+	if(pb_decode(&stream, USSensorData_fields, &sensorData)) //incoming buffer decoded to protocol
+	{
+		return sensorData;
+	}
+	else
+	{
+		Serial << "Failed to decode an Engines object";
+		sensorData.type.toCharArray("Decode Fail", 40);
+		sensorData.description = "";
+		sensorData.triggerpin = 0;
+		sensorData.echopin = 0;
+		sensorData.value = 0;
+		return sensorData;
+	}
+	return engines;
+}*/
 
-}
-
+/**
+* \brief Encodes a USSensorData Protocol message
+*
+* Encodes a USSensorData Protocol message
+*
+* @param sensorObject The USSensor to be encoded
+*
+* @return true if encoded was sucessful and false if it failed
+*
+* \author Rickard Dahm
+*
+*/
 bool encodeUSSensorMsg(USSensor sensorObject)
 {
 	USSensorData sensorPB;
@@ -84,8 +137,8 @@ bool encodeUSSensorMsg(USSensor sensorObject)
 	sensorPB.echopin=sensorObject.echopin;
 	sensorPB.value=sensorObject.value;
 
-	pb_ostream_t ostream;		//en utström
-	ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //koppla ihop utströmmen med en buffert
+	pb_ostream_t ostream;
+	ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //Connect the outstream with a buffer
 
 	if (pb_encode(&ostream, USSensorData_fields, &sensorPB)) //encode protocoll (buffer is now the encoded protocol
 	{
@@ -105,6 +158,18 @@ bool encodeUSSensorMsg(USSensor sensorObject)
 	}
 }
 
+/**
+* \brief Encodes a I2CSensorData Protocol message
+*
+* Encodes a I2CSensorData Protocol message
+*
+* @param sensorObject The I2CSensor to be encoded
+*
+* @return true if encoded was sucessful and false if it failed
+*
+* \author Rickard Dahm
+*
+*/
 bool encodeI2CSensorMsg(I2CSensor sensorObject)
 {
 	I2CSensorData sensorPB;
@@ -113,8 +178,8 @@ bool encodeI2CSensorMsg(I2CSensor sensorObject)
 	sensorPB.address=sensorObject.address;
 	sensorPB.value=sensorObject.value;
 
-	pb_ostream_t ostream;		//en utström
-	ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //koppla ihop utströmmen med en buffert
+	pb_ostream_t ostream;
+	ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //Connect the outstream with a buffer
 
 	if (pb_encode(&ostream, I2CSensorData_fields, &sensorPB)) //encode protocoll (buffer is now the encoded protocol
 	{
@@ -133,6 +198,83 @@ bool encodeI2CSensorMsg(I2CSensor sensorObject)
 		return false;
 	}
 }
+
+bool encodeI2CSensorListMsg()
+{
+	I2CSensors sensorPB;
+
+	fillI2CSensorFields(&sensorPB.i2CSensorData1, 0);
+	fillI2CSensorFields(&sensorPB.i2CSensorData2, 1);
+	fillI2CSensorFields(&sensorPB.i2CSensorData3, 2);
+	fillI2CSensorFields(&sensorPB.i2CSensorData4, 3);
+	fillI2CSensorFields(&sensorPB.i2CSensorData5, 4);
+
+	pb_ostream_t ostream;
+	ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //Connect the outstream with a buffer
+	if (pb_encode(&ostream, I2CSensors_fields, &sensorPB)) //encode protocoll (buffer is now the encoded protocol
+	{
+		/*Serial << "The message encoded: " << endl;
+		for(int i = 0; i < ostream.bytes_written; i++)
+		{
+
+			Serial.print((char) sendMsg[i]);
+			Serial << " "<< (uint8_t) sendMsg[i] << endl;
+		}*/
+		sendMsgLength = ostream.bytes_written;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void fillI2CSensorFields(I2CSensorData* sensorToBeFilled, int number)
+{
+	I2CSensorList[number].type.toCharArray(sensorToBeFilled->type, 40);
+	I2CSensorList[number].description.toCharArray(sensorToBeFilled->description,40);
+	sensorToBeFilled->address =I2CSensorList[number].address;
+	sensorToBeFilled->value=I2CSensorList[number].value;
+}
+
+bool encodeUSSensorListMsg()
+{
+	USSensors sensorPB;
+
+	fillUSSensorFields(&sensorPB.uSSensorData1, 0);
+	fillUSSensorFields(&sensorPB.uSSensorData2, 1);
+	fillUSSensorFields(&sensorPB.uSSensorData3, 2);
+	fillUSSensorFields(&sensorPB.uSSensorData4, 3);
+
+	pb_ostream_t ostream;
+	ostream = pb_ostream_from_buffer(sendMsg, sizeof(sendMsg)); //Connect the outstream with a buffer
+	if (pb_encode(&ostream, USSensors_fields, &sensorPB)) //encode protocoll (buffer is now the encoded protocol
+	{
+		/*Serial << "The message encoded: " << endl;
+		for(int i = 0; i < ostream.bytes_written; i++)
+		{
+
+			Serial.print((char) sendMsg[i]);
+			Serial << " "<< (uint8_t) sendMsg[i] << endl;
+		}*/
+		sendMsgLength = ostream.bytes_written;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void fillUSSensorFields(USSensorData* sensorToBeFilled, int number)
+{
+	USSensorList[number].type.toCharArray(sensorToBeFilled->type, 40);
+	USSensorList[number].description.toCharArray(sensorToBeFilled->description,40);
+	sensorToBeFilled->echopin = USSensorList[number].echopin;
+	sensorToBeFilled->triggerpin = USSensorList[number].triggerpin;
+	sensorToBeFilled->value=USSensorList[number].value;
+}
+
 /*
 void encodeMsg()
 {
@@ -140,8 +282,8 @@ void encodeMsg()
 	Protocol protocol;
 	Protocol protocol1={"steer", "Motor", true, "turn 200 degrees to the right"};	//skapa protocol1
 
-	pb_ostream_t ostream;		//en utström
-	ostream = pb_ostream_from_buffer(buffer, sizeof(buffer)); //koppla ihop utströmmen med en buffert
+	pb_ostream_t ostream;		//en utstrï¿½m
+	ostream = pb_ostream_from_buffer(buffer, sizeof(buffer)); //koppla ihop utstrï¿½mmen med en buffert
 
 	if (pb_encode(&ostream, Protocol_fields, &protocol1)) //encode protocoll (buffer is now the encoded protocol
 	{

@@ -12,6 +12,16 @@ int compassAddress = 0x42 >> 1; // From datasheet compass address is 0x42
 struct I2CSensor I2CSensorList[I2C_MAX_SENSORS];
 struct USSensor USSensorList[MAX_US_SENSORS];
 
+/**
+* \brief Setup for sensors
+*
+* Setup for sensors
+*
+* @return No return
+*
+* \author Rickard Dahm
+*
+*/
 void sensorSetup()
 {
 	for (int i = 0; i < I2C_MAX_SENSORS; i++)
