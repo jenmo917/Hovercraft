@@ -7,11 +7,41 @@
 #include "print.h"
 #include "Streaming.h"
 
-void printRightMotorSignal(Engines engines)
+/**
+* \brief Prints info from an Engines object
+*
+* Prints info from an Engines object
+*
+* @param motors A pointer to a Engines object
+*
+* @return No return
+*
+* \author Rickard Dahm
+*
+*/
+void printMotorSignal(Engines *motors)
+{
+	printRightMotorSignal(&motors->right);
+	printLeftMotorSignal(&motors->left);
+}
+
+/**
+* \brief Prints info from the right driveSignal
+*
+* Prints info from the right driveSignal
+*
+* @param right A pointer to a DriveSignals object
+*
+* @return No return
+*
+* \author Rickard Dahm
+*
+*/
+void printRightMotorSignal(DriveSignals* right)
 {
 	Serial << "Right Motor:" << endl;
 
-	if(engines.right.enable)
+	if(right->enable)
 	{
 		Serial << "Enable: True" << endl;
 	}
@@ -19,7 +49,7 @@ void printRightMotorSignal(Engines engines)
 	{
 		Serial << "Enable: False" << endl;
 	}
-	if(engines.right.forward)
+	if(right->forward)
 	{
 		Serial << "Direction: Forward" << endl;
 	}
@@ -27,14 +57,26 @@ void printRightMotorSignal(Engines engines)
 	{
 		Serial << "Direction: Backward" << endl;
 	}
-	Serial << "Power: " << (int) engines.right.power <<  endl;
+	Serial << "Power: " << (int) right->power <<  endl;
 }
 
-void printLeftMotorSignal(Engines engines)
+/**
+* \brief Prints info from the left driveSignal
+*
+* Prints info from the left driveSignal
+*
+* @param left A pointer to a DriveSignals object
+*
+* @return No return
+*
+* \author Rickard Dahm
+*
+*/
+void printLeftMotorSignal(DriveSignals* left)
 {
 	Serial << "Left Motor:" << endl;
 
-	if(engines.left.enable)
+	if(left->enable)
 	{
 		Serial << "Enable: True" << endl;
 	}
@@ -42,7 +84,7 @@ void printLeftMotorSignal(Engines engines)
 	{
 		Serial << "Enable: False" << endl;
 	}
-	if(engines.left.forward)
+	if(left->forward)
 	{
 		Serial << "Direction: Forward" << endl;
 	}
@@ -50,6 +92,6 @@ void printLeftMotorSignal(Engines engines)
 	{
 		Serial << "Direction: Backward" << endl;
 	}
-	Serial << "Power: " << (int) engines.left.power <<  endl;
+	Serial << "Power: " << (int) left->power <<  endl;
 }
 

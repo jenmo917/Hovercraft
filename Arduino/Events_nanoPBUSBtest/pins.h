@@ -16,11 +16,11 @@
 // Pins used for motor control
 #define rightPWM 2
 #define rightDir 4
-#define rightEnable 24
+#define rightEnable 6
 
 #define leftPWM 3
 #define leftDir 5
-#define leftEnable 25
+#define leftEnable 7
 
 // Pins used for sensors
 // Pin 20 used for I2C
