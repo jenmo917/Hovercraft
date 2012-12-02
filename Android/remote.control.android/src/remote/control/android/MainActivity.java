@@ -194,7 +194,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		case R.id.startButton:
 			Log.d(TAG, "startButton pushed");
-			if (LogService.accSensor == false && LogService.proxSensor == false) {
+			if (LogService.accSensor == false && LogService.accBrainSensor == false) {
 				Context context = getApplicationContext();
 				Toast.makeText(context, "No Sensors Chosen", Toast.LENGTH_SHORT)
 						.show();

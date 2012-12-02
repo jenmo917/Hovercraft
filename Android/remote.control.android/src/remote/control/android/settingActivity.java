@@ -14,8 +14,8 @@ public class settingActivity extends Activity implements OnClickListener
 	private static final String TAG = "REMOTE";
 	
 	CheckBox acc;
-	CheckBox prox;
-	CheckBox brainUs;
+	CheckBox accBrain;
+	CheckBox adkUs;
 	
 	Button btnBack;
 	
@@ -32,18 +32,18 @@ public class settingActivity extends Activity implements OnClickListener
 	{
         acc = (CheckBox) findViewById(R.id.checkbox_accelerometer);
         acc.setChecked(LogService.accSensor);
-        prox = (CheckBox) findViewById(R.id.checkbox_proximity);
-        prox.setChecked(LogService.proxSensor);
-        brainUs = (CheckBox) findViewById(R.id.checkBox_BrainUltrasound);
-        brainUs.setChecked(LogService.usBrainSensor);
+        accBrain = (CheckBox) findViewById(R.id.checkBox_BrainAccelerometer);
+        accBrain.setChecked(LogService.accBrainSensor);
+        adkUs = (CheckBox) findViewById(R.id.checkBox_AdkUltrasound);
+        adkUs.setChecked(LogService.usAdkSensor);
         btnBack = (Button) findViewById(R.id.backButton);
 	}
 	
 	private void initOnClickListners()
 	{
         acc.setOnClickListener(this);
-        prox.setOnClickListener(this);
-        brainUs.setOnClickListener(this);
+        accBrain.setOnClickListener(this);
+        adkUs.setOnClickListener(this);
         btnBack.setOnClickListener(this);	
 	}	
 	
@@ -52,18 +52,18 @@ public class settingActivity extends Activity implements OnClickListener
     	switch (src.getId()) 
     	{
 	    	case R.id.checkbox_accelerometer:
-	    		Log.d(TAG,"checkbox acc checked");
-		    	Intent sensorAccActionIntent = new Intent("AccSensorAction");	
+	    		Log.d(TAG,"checkbox acc remote checked");
+		    	Intent sensorAccActionIntent = new Intent("CheckboxAccRemoteAction");	
 		    	sendBroadcast(sensorAccActionIntent);	    		
 	    	break;
-	    	case R.id.checkbox_proximity:
-	    		Log.d(TAG,"checkbox prox checked");
-		    	Intent sensorProxActionIntent = new Intent("ProxSensorAction");	
-		    	sendBroadcast(sensorProxActionIntent);	    		
+	    	case R.id.checkBox_BrainAccelerometer:
+	    		Log.d(TAG,"checkbox acc brain checked");
+		    	Intent sensorAccBrainActionIntent = new Intent("CheckboxAccBrainAction");	
+		    	sendBroadcast(sensorAccBrainActionIntent);	    		
 	    	break;
-	    	case R.id.checkBox_BrainUltrasound:
-	    		Log.d(TAG,"checkbox US checked");
-		    	Intent sensorUsBrainActionIntent = new Intent("UsOnBrainAction");	
+	    	case R.id.checkBox_AdkUltrasound:
+	    		Log.d(TAG,"checkbox US adk checked");
+		    	Intent sensorUsBrainActionIntent = new Intent("CheckboxUsOnAdkAction");	
 		    	sendBroadcast(sensorUsBrainActionIntent);	    		
 	    	break;
 	    	case R.id.backButton:

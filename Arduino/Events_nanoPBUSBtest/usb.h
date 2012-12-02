@@ -11,7 +11,7 @@
  * ADK = 1-70
  * Brain = 71-141
  * Remote = 142-211
- * Shared: 211-255
+ * Shared: 212-255
  */
 #ifndef USB_H_
 #define USB_H_
@@ -36,12 +36,13 @@
 #define ALL_SENSOR_REQ 10
 
 // Shared Commands
-#define I2C_SENSOR_COMMAND 211
-#define US_SENSOR_COMMAND 212
+#define I2C_SENSOR_COMMAND 212
+#define US_SENSOR_COMMAND 213
+#define ENGINES_REQ_COMMAND 214
 // Targets
 #define TARGET_ADK 1
-#define TARGET_PHONE 2
-#define TARGET_CONTROLLER 3
+#define TARGET_BRAIN 2
+#define TARGET_REMOTE 3
 
 extern AndroidAccessory acc;
 extern byte rcvmsg[255];
@@ -51,7 +52,7 @@ extern byte sendMsg[252];
 extern int rcvPBmsgLength;
 extern int sendMsgLength;
 extern bool blinkyFlag;
-
+extern int connectionCounter;
 
 void startBlinky();
 void stopBlinky();

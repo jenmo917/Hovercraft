@@ -14,6 +14,7 @@ extern int rightPower;
 extern int leftPower;
 
 void driveSetup();
+void motorControl(Engines *motors);
 void rightMotorControl(DriveSignals *signal);
 void setRightDir(int dir);
 void setRightPower(int power);
@@ -22,6 +23,6 @@ void leftMotorControl(DriveSignals *signal);
 void setLeftDir(int dir);
 void setLeftPower(int power);
 void enableLeftMotor(bool enable);
-void enableMotors();
+Engines getMotorSignals();
 
 #endif /* DRIVE_H_ */

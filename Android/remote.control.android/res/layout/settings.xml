@@ -32,14 +32,6 @@
         android:onClick="onCheckboxClicked"
         android:text="@string/Accelerometer" />
 
-    <CheckBox
-        android:id="@+id/checkbox_proximity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dip"
-        android:onClick="onCheckboxClicked"
-        android:text="@string/Proximity" />
-
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
@@ -62,7 +54,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
         
         <CheckBox
-            android:id="@+id/checkBox_BrainUltrasound"
+            android:id="@+id/checkBox_AdkUltrasound"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dip"

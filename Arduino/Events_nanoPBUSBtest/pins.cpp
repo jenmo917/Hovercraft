@@ -7,6 +7,16 @@
 
 #include "pins.h"
 
+/**
+* \brief Setup all pins
+*
+* Setup all pins
+*
+* @return No return
+*
+* \author Rickard Dahm
+*
+*/
 void pinSetup()
 {
 	//LED
@@ -18,12 +28,31 @@ void pinSetup()
 	sensorPinsSetup();
 }
 
+/**
+* \brief Setup LED pins
+*
+* Setup LED pins
+*
+* @return No return
+*
+* \author Rickard Dahm
+*
+*/
 void LEDPinsSetup()
 {
 	pinMode(LED, OUTPUT);
 	digitalWrite( LED , 0 );
 }
 
+/**
+* \brief Setup right motors pins
+*
+* Setup right motors pins
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void rightMotorPinsSetup()
 {
 	pinMode( rightEnable, OUTPUT );
@@ -34,6 +63,15 @@ void rightMotorPinsSetup()
 	digitalWrite( rightDir , 1 );
 }
 
+/**
+* \brief Setup left motors pins
+*
+* Setup left motors pins
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void leftMotorPinsSetup()
 {
 	pinMode( leftEnable, OUTPUT );
@@ -44,6 +82,15 @@ void leftMotorPinsSetup()
 	digitalWrite( leftDir , 1 );
 }
 
+/**
+* \brief Setup pins for sensors
+*
+* Setup pins for sensors
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void sensorPinsSetup()
 {
 	int triggerPins[4] = {trigPin1, trigPin2, trigPin3, trigPin4};
@@ -55,6 +102,15 @@ void sensorPinsSetup()
 	}
 }
 
+/**
+* \brief Setup pins for software testing
+*
+* Setup pins for software testing
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void testPins()
 {
 	pinMode(22, OUTPUT);

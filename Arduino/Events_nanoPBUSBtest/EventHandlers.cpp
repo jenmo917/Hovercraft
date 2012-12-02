@@ -12,26 +12,82 @@
 #include "sensors.h"
 #include "Streaming.h"
 #include "Event.h"
+#include "Drive.h"
 
-// time event handler
+/**
+* \brief Prints the number of seconds since reset
+*
+* Prints the number of seconds since reset
+*
+*
+* @param event Not used
+*
+* @param param Not used
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void timeHandler1000(int event, int param)
 {
 	Serial.print("Time elapsed in seconds: ");
 	Serial.println(millis() / 1000);
 }
 
+/**
+* \brief Prints the number of half seconds since reset
+*
+* Prints the number of half seconds since reset
+*
+*
+* @param event Not used
+*
+* @param param Not used
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void timeHandler500(int event, int param)
 {
 	Serial.print("Time elapsed in half seconds: ");
 	Serial.println(millis() / 500);
 }
 
+/**
+* \brief Prints the number of times 100 milliseconds have passed since reset
+*
+* Prints the number of times 100 milliseconds have passed since reset
+*
+*
+* @param event Not used
+*
+* @param param Not used
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void timeHandler100(int event, int param)
 {
 	Serial.print("Time elapsed in 1/10 seconds: ");
 	Serial.println(millis() / 100);
 }
 
+/**
+* \brief Change the output on the LED pin
+*
+* Inverts the output on LEDpin. Used together with a timeManager to obtain blinky
+*
+*
+* @param event Not used
+*
+* @param param Not used
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void blinkyHandler(int event, int param)
 {
 	if (blinkyFlag == true)
@@ -40,13 +96,39 @@ void blinkyHandler(int event, int param)
 	}
 }
 
-// analog event handler
+/**
+* \brief Prints the value of param
+*
+* Prints the value of param
+*
+*
+* @param event Not used
+*
+* @param param Value to be printed. Printed as an integer
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void analogHandler(int event, int param)
 {
 	Serial.print("Analog value: ");
 	Serial.println(param);
 }
 
+/**
+* \brief Reads I2C data and starts an event to send it to target
+*
+* Reads I2C data and starts an event to send it to target
+*
+* @param event Not used
+*
+* @param target Used when adding a EV_I2C_SENSOR_FINISHED event to queue.
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void I2CSensorDataHandler(int event, int target)
 {
 	Serial << "********************************************************" << endl;
@@ -89,6 +171,19 @@ void I2CSensorDataHandler(int event, int target)
 	q.enqueueEvent(Events::EV_I2C_SENSOR_FINISHED, target);
 }
 
+/**
+* \brief Reads Ultrasonic sensor data and starts an event to send it to target
+*
+* Reads Ultrasonic sensor data and starts an event to send it to target
+*
+* @param event Not used
+*
+* @param target Used when adding a EV_US_SENSOR_FINISHED event to queue.
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void USSensorHandler(int event, int target)
 {
 	Serial << "********************************************************" << endl;
@@ -118,6 +213,19 @@ void USSensorHandler(int event, int target)
 	q.enqueueEvent(Events::EV_US_SENSOR_FINISHED, target);
 }
 
+/**
+* \brief Sorts the read USBdata to their correct buffer
+*
+* Sorts the read USBdata to their correct buffer
+*
+* @param event Not used
+*
+* @param param Not used
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void USBReadHandler(int event, int param)
 {
 	int i = 0;
@@ -134,6 +242,19 @@ void USBReadHandler(int event, int param)
 	decodeMsgType();
 }
 
+/**
+* \brief Sends the ultrasonic sensors data saved in USSensorList via the USB
+*
+* Sends the ultrasonic sensors data saved in USSensorList via the USB
+*
+* @param event Not used
+*
+* @param target Describes which target to send to.
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void USBSendUSSensorDataHandler(int event, int target)
 {
 	Serial << "USBSendUSSensorDataHandler" << endl;
@@ -149,13 +270,26 @@ void USBSendUSSensorDataHandler(int event, int target)
 				}
 				else
 				{
-					Serial << "Failed to encode sensor " << i << " in function:" << endl << "USBSendSensorDataHandler";
+					Serial << "Failed to encode sensor " << i << " in function: " << endl << "USBSendSensorDataHandler";
 				}
 			}
 		}
 	}
 }
 
+/**
+* \brief Sends the I2C sensors data saved in I2CSensorList via the USB
+*
+* Sends the I2C sensors data saved in I2CSensorList via the USB
+*
+* @param event Not used
+*
+* @param target Describes which target to send to.
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
 void USBSendI2CSensorDataHandler(int event, int target)
 {
 	Serial << "USBSendI2CSensorDataHandler" << endl;
@@ -171,9 +305,69 @@ void USBSendI2CSensorDataHandler(int event, int target)
 				}
 				else
 				{
-					Serial << "Failed to encode sensor " << i << " in function:" << endl << "USBSendSensorDataHandler";
+					Serial << "Failed to encode sensor " << i << " in function: " << endl << "USBSendSensorDataHandler";
 				}
 			}
 		}
+	}
+}
+
+/**
+* \brief Sends the current drivesignals via the USB
+*
+* Sends the current drivesignals via the USB
+*
+* @param event Not used
+*
+* @param target Describes which target to send to.
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
+void USBSendEnginesObject(int event, int target)
+{
+	Engines engineSignals = getMotorSignals();
+	if(encodeEngines(engineSignals))
+	{
+		if ( target == 0 )
+		{
+			sendMessage(MOTOR_CONTROL, 3);
+		}
+		else
+		{
+			sendMessage(MOTOR_CONTROL, target);
+		}
+	}
+	else
+	{
+		Serial << "Failed to encode Engines object in function: " << endl << "USBSendEnginesObject";
+	}
+}
+
+/**
+* \brief Increases a counter and checks if the counter is 10. If 10 stops motors.
+*
+* Increases a counter and checks if the counter is 10. If 10 stops motors.
+*
+* @param event Not used
+*
+* @param param Not used
+*
+* @return No return
+*
+* \author Rickard Dahm
+*/
+void connectionCheckEngines(int event, int param)
+{
+	connectionCounter++;
+	if(connectionCounter == 10)
+	{
+		Serial << "Connection lost? No enginesignals recieved" << endl;
+		Serial << "Hovercraft will now stop!" << endl;
+
+		DriveSignals stop = { false, true, 0 };
+		rightMotorControl(&stop);
+		leftMotorControl(&stop);
 	}
 }
