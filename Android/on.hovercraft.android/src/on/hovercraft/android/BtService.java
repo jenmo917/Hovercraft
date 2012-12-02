@@ -2,9 +2,10 @@ package on.hovercraft.android;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.UUID;
+
+import common.files.android.Constants;
 
 import android.annotation.SuppressLint;
 import android.app.IntentService;
@@ -15,13 +16,35 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.util.Log;
 
-//import on.hover.android.Command.DriveSignals;
-//import on.hover.android.Command.Engines;
-
-public class BtService extends IntentService
+public class BtService extends IntentService implements SensorEventListener
 {
+	private InputStream mInputStream;
+	private OutputStream mmOutStream;
+	
+	private static final UUID  MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+	private static final String NAME = "Bluetooth SPP";	
+	
+	private boolean listenBT = false;	
+	
+	private BluetoothSocket mmSocket;
+	private BluetoothServerSocket mmServerSocket;
+	private BluetoothAdapter mBluetoothAdapter;
+	
+	private SensorManager sensorManager;
+	private double accX;
+	private double accY;
+	private double accZ;
+	 
+	private int timeout = 30000;
+	private boolean serverUp = false;
+	private boolean socketUp = false;	
+	
 	private static String TAG = "JM";
 
 	public BtService() 
@@ -33,11 +56,29 @@ public class BtService extends IntentService
 	public void onCreate()
 	{
 		super.onCreate();
-		Log.d(TAG,"BtService: start BtService");		
+		Log.d(TAG,"BtService: start BtService");
+		
+        sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+	}
+	
+
+	@Override
+	public void onAccuracyChanged(Sensor arg0, int arg1) 
+	{
+
 	}
 
-
-	boolean listenBT = false;
+	@Override
+	public void onSensorChanged(SensorEvent event) 
+	{
+		if (event.sensor.getType()==Sensor.TYPE_ACCELEROMETER)
+		{
+			accX = event.values[0];
+			accY = event.values[1];
+			accZ = event.values[2];
+		}		
+	}	
 
 	@Override
 	protected void onHandleIntent(Intent arg0) 
@@ -59,7 +100,7 @@ public class BtService extends IntentService
 			}			
 			if(listenBT)
 			{
-				readBuffer();
+				checkInput();
 			}
 		}
 	}
@@ -73,18 +114,6 @@ public class BtService extends IntentService
 		i.putExtra("message", "Lost connection...");
 		sendBroadcast(i);
 	}
-
-	//Protocol coords;
-	BluetoothSocket mmSocket;
-	BluetoothServerSocket mmServerSocket;
-	BluetoothAdapter mBluetoothAdapter;
-
-	private static final UUID  MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-	private static final String NAME = "Bluetooth SPP";
-
-	int timeout = 30000;
-	boolean serverUp = false;
-	boolean socketUp = false;
 	
 	private void closeServerSocket()
 	{
@@ -179,12 +208,6 @@ public class BtService extends IntentService
 		return socketUp;      
 	}
 
-	private InputStream mmInStream;
-	private InputStreamReader btReader;
-
-	byte[] buffer = new byte[2048]; // buffer store for the stream
-	int bytes; // bytes returned from read()
-
 	@SuppressLint("HandlerLeak")
 
 	private void listen()
@@ -194,7 +217,7 @@ public class BtService extends IntentService
 			Intent i = new Intent("printMessage");
 			try
 			{
-				mmInStream = mmSocket.getInputStream();
+				mInputStream = mmSocket.getInputStream();
 				i.putExtra("message", "Input stream open...");
 				sendBroadcast(i);
 				listenBT = true;
@@ -207,107 +230,78 @@ public class BtService extends IntentService
 				sendBroadcast(i);
 				listenBT = false;
 				return;
-			}		
-
-			btReader = new InputStreamReader(mmInStream);
+			}
 		}
 	}
 
-
-	//			if(isProto)
-	//			{
-	//				if(coords.hasXCoor())
-	//				{
-	//					String coo = ("X: " + coords.getXCoor() + "\nY: " + coords.getYCoor() +  "\nZ: " + coords.getZCoor());
-	//					Intent i = new Intent("printMessage");
-	//					i.putExtra("on.hover.BluetoothServer.coordinates", coo);
-	//					sendBroadcast(i);
-	//				}
-	//			}
-
-
-	int tempInt = 0;
-	int i = 0;
-	boolean firstChar = true;
-	boolean isProto = false;
-
-	char[] tempCharArray = new char[1024];
-	String tempString = null;
-	String selectedPart = null;
-
-	void readBuffer()
+	void checkInput()
 	{
-		firstChar = true;
-		tempInt = 0;
-		i = 0;
-
-		while( true )
+		byte[] bufferInfo = new byte[3];		
+		try
 		{
-			try 
-			{
-				tempInt = btReader.read();
-			} 
-			catch (IOException e1) 
-			{
-				btConnectionLost();
-				break;
-			}
-
-			if(tempInt == 36 && firstChar == false)
-				break;
-
-			if(firstChar)
-			{
-				firstChar = false;
-
-				//First char not \n
-				if(tempInt == 10)
-					isProto = true;
-				else if(tempInt == 36)
-					isProto = false;
-				else
-					break;
-			}
-
-			tempCharArray[i] = (char)tempInt;
-			i++;	
+			bufferInfo[0] = (byte) mInputStream.read(); // Command
+			bufferInfo[1] = (byte) mInputStream.read(); // Target
+			bufferInfo[2] = (byte) mInputStream.read(); // Message length
+		} 
+		catch (IOException e1) 
+		{
+			btConnectionLost();
+			Log.d(TAG,"BtService: BufferInfo read failed");
+			return;
+		}
+		
+		byte[] bufferMessage = new byte[(int) bufferInfo[2]];
+		try
+		{			
+			mInputStream.read(bufferMessage, 0, (int) bufferInfo[2]);
+		} 
+		catch (IOException e1) 
+		{
+			btConnectionLost();
+			Log.d(TAG,"BtService: BufferMessage read failed");
+			return;
 		}
 
-		if(listenBT)
+		Log.d(TAG, "bufferInfo[0]"+bufferInfo[0]);
+		Log.d(TAG, "bufferInfo[1]"+bufferInfo[1]);
+		Log.d(TAG, "bufferInfo[2]"+bufferInfo[2]);
+
+		// commands from ADK to this device
+		if(Constants.TARGET_BRAIN == bufferInfo[1])
 		{
-
-			if(isProto)
-			{
-				tempString = new String(tempCharArray);
-				selectedPart = tempString.substring(0, i);
-
-				//byte[] protoByte = selectedPart.getBytes();			
-				/*
-					try
-					{
-						coords = protocolbufferjava.Test.Protocol.parseFrom(protoByte);
-					}
-
-					catch (IOException e)
-					{
-						//WHAT TO DO???
-					}	
-				 */
-			}
-			else
-			{
-				tempString = new String(tempCharArray);
-				selectedPart = tempString.substring(1, i);
-
-				Intent i = new Intent("printMessage");
-				i.putExtra("coordinates", selectedPart);
-				sendBroadcast(i);
-			}
+			handleBrainCommands(bufferInfo, bufferMessage);
+		}
+		// commands from remote to remote. Never used?
+		else if(Constants.TARGET_REMOTE == bufferInfo[1])
+		{
+			sendCommand(bufferInfo[0], bufferInfo[1], bufferMessage);
+		}
+		// commands from remote to ADK.
+		else if(Constants.TARGET_ADK == bufferInfo[1])
+		{
+			broadcastBufferToUSBService(bufferInfo, bufferMessage);
 		}
 	}
+	
+	private void broadcastBufferToUSBService(byte[] bufferInfo, byte[] bufferMessage)
+	{
+		Log.d(TAG,"BtService: broadcast command to USB Service");
+		Intent intent = new Intent("handleBTCommands");
+		intent.putExtra("bufferInfo", bufferInfo);
+		intent.putExtra("bufferMessage", bufferMessage);
+		sendBroadcast(intent);
+	}
 
-
-	private OutputStream mmOutStream;
+	private void handleBrainCommands(byte[] bufferInfo, byte[] bufferMessage)
+	{
+		Log.d(TAG,"BtService: handleBrainCommand");
+		switch (bufferInfo[0])
+		{
+			default:
+			Log.d(TAG, "unknown command: " + bufferInfo[0]);
+			break;
+		}	
+	}
 
 	private void sendData(byte[] data)
 	{	
@@ -330,7 +324,47 @@ public class BtService extends IntentService
 		}
 	}
 
-	//Broadcast reciever
+	private void sendCommand(byte command, byte target, byte[] message)
+	{
+		Log.d(TAG,"BtService: SendCommand:" + (int) command);
+		int byteLength = message.length;
+		byte[] buffer = new byte[3+byteLength];
+
+		buffer[0] = command; // command
+		buffer[1] = target; // target
+		buffer[2] = (byte) byteLength; // length
+
+		for (int x = 0; x < byteLength; x++) 
+		{
+			buffer[3 + x] = message[x]; // message
+		}
+
+		Log.d(TAG,"byteLength:"+byteLength);
+		
+		try 
+		{
+			mmOutStream = mmSocket.getOutputStream();
+		} 
+		catch (IOException e) 
+		{
+			btConnectionLost();
+		}		
+		
+		if (mmOutStream != null)
+		{
+			
+			try 
+			{
+				mmOutStream.write(buffer);
+			} 
+			catch (IOException e) 
+			{
+				btConnectionLost();
+				Log.e(TAG, "write failed", e);
+			}
+		}
+	}	
+
 	private final BroadcastReceiver BtServiceReciever = new BroadcastReceiver() 
 	{
 		@Override
