@@ -35,11 +35,11 @@ public class BtService extends IntentService
 	public void onCreate()
 	{
 		super.onCreate();
-		Log.d(TAG,"BtService: start BtService");		
+		Log.d(TAG,"BtService: start BtService");
 	}
 
 	@Override
-	protected void onHandleIntent(Intent arg0) 
+	protected void onHandleIntent(Intent arg0)
 	{
 		Log.d(TAG, "BTService started");
 		initReceiver();
@@ -53,7 +53,7 @@ public class BtService extends IntentService
 			catch (InterruptedException e) 
 			{
 				e.printStackTrace();
-			}			
+			}
 			if(listenBT)
 			{
 				readBuffer();
@@ -61,13 +61,11 @@ public class BtService extends IntentService
 		}
 	}
 
-
-	
 	private void initReceiver()
 	{
 
 //		Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//	    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);	
+//		startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);	
 		
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(BluetoothDevice.ACTION_FOUND);
@@ -75,8 +73,7 @@ public class BtService extends IntentService
 		filter.addAction("callFunction");
 		registerReceiver(BtRemoteServiceReciever, filter);
 	}
-	
-	
+
 	protected static final int REQUEST_ENABLE_BT = 1;
 	
 	public List<String> devicesFound = new ArrayList<String>();
@@ -84,11 +81,11 @@ public class BtService extends IntentService
 
 	String Dev;
 	String adress = null;
-	
+
 	int length = 0;
 	
 	BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
-    private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+	private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
 	private BluetoothSocket mmSocket;
 	private OutputStream mmOutStream;
@@ -97,18 +94,17 @@ public class BtService extends IntentService
 	private InputStreamReader btReader;
 
 	boolean mmSocketUp = false;
-	
+
 	byte[] buffer = new byte[2048]; // buffer store for the stream
 	int bytes; // bytes returned from read()
 
 	boolean listenBT = false;
 	
-	
-    private void findDevices()
-    {				
-    	//Clear list of devices
+	private void findDevices()
+	{
+		//Clear list of devices
 		devicesFound.clear();
-	
+
 		if(bluetooth.startDiscovery())	
 		{
 			Intent i = new Intent("printMessage");
@@ -120,9 +116,9 @@ public class BtService extends IntentService
 			Intent i = new Intent("printMessage");
 			i.putExtra("message", "Failed to start search...");
 			sendBroadcast(i);
-		}	
-    }
-	
+		}
+	}
+
 	private void printDevicesFound()
 	{
 		Intent i = new Intent("printMessage");
@@ -131,22 +127,21 @@ public class BtService extends IntentService
 		
 		//TODO infoText.setText("Devices found:" + "\n\n");
 		
-		//GÖR SOM STRÄNG OCH BROADCASTA!!!
+		//Gï¿½R SOM STRï¿½NG OCH BROADCASTA!!!
 		
 		Iterator<String> it = devicesFound.iterator();
 		String devs = "";
 		
 		while(it.hasNext())
-        {
+		{
 			devs += (String)it.next() + "\n";
-			
-        }
-		
+		}
+
 		Intent i2 = new Intent("printMessage");
 		i2.putExtra("message", devs);
 		sendBroadcast(i2);
 	}
-	
+
 	private void chooseDevice()
 	{
 		bluetooth.cancelDiscovery();
@@ -162,7 +157,7 @@ public class BtService extends IntentService
 				
 				Intent dev = new Intent("printMessage");
 				dev.putExtra("message", "Selected device:" + "\n\n" + devicesFound.get(0  + i )
-							  + "\n" + devicesFound.get(1 + i ));
+								+ "\n" + devicesFound.get(1 + i ));
 				
 				sendBroadcast(dev);
 				
@@ -175,7 +170,7 @@ public class BtService extends IntentService
 				
 				Intent dev = new Intent("printMessage");
 				dev.putExtra("message", "Selected device:" + "\n\n" + devicesFound.get(0  + i )
-							  + "\n" + devicesFound.get(1 + i ));
+								+ "\n" + devicesFound.get(1 + i ));
 				sendBroadcast(dev);
 				
 				i = 0;
@@ -213,7 +208,7 @@ public class BtService extends IntentService
 				sendBroadcast(i);
 				listenBT = false;
 				return;
-			}		
+			}
 
 			btReader = new InputStreamReader(mmInStream);
 		}
@@ -239,7 +234,7 @@ public class BtService extends IntentService
 			try 
 			{
 				tempInt = btReader.read();
-			} 
+			}
 			catch (IOException e1) 
 			{
 				btConnectionLost();
@@ -307,7 +302,7 @@ public class BtService extends IntentService
 		}
 	}
 
-    /* Call this from the main activity to shutdown the connection */
+	/* Call this from the main activity to shutdown the connection */
 
 	private void connectDevice() throws IOException 
 	{
@@ -323,16 +318,16 @@ public class BtService extends IntentService
 			{
 				device = bluetooth.getRemoteDevice(adress);
 
-				try 
+				try
 				{
-					// MY_UUID is the app's UUID string, also used by the server code         	
+					// MY_UUID is the app's UUID string, also used by the server code
 					temp = device.createInsecureRfcommSocketToServiceRecord(MY_UUID_INSECURE);
 					mmSocket = temp;
 					mmSocketUp = true;
 
-				} 
+				}
 				catch (IOException e) 
-				{ 
+				{
 					mmSocket = null;
 					mmSocketUp = false;
 					
@@ -343,23 +338,23 @@ public class BtService extends IntentService
 
 				if( mmSocketUp )
 				{
-					try 
+					try
 					{
 						// Connect the device through the socket. This will block until it succeeds or throws an exception
-						mmSocket.connect(); 
+						mmSocket.connect();
 						//TODOinfoText.setText("Connected...");
 						listen();
-					} 
-					catch (IOException connectException) 
+					}
+					catch (IOException connectException)  
 					{
 						// Unable to connect; close the socket and get out
-						try 
+						try
 						{
 							mmSocket.close();
 							//TODOinfoText.setText("Connection failed...");
-						} 
-						catch (IOException closeException) 
-						{ 
+						}
+						catch (IOException closeException)
+						{
 
 						}
 					}
@@ -370,7 +365,7 @@ public class BtService extends IntentService
 				Intent i = new Intent("printMessage");
 				i.putExtra("message", "No selected device...");
 				sendBroadcast(i);
-			}	
+			}
 		//}
 	}
 	
@@ -378,12 +373,12 @@ public class BtService extends IntentService
 	{
 		listenBT = false;
 		
-        try 
-        {
-            mmSocket.close();
-        } 
-        catch (IOException e)
-        { }
+		try
+		{
+			mmSocket.close();
+		}
+		catch (IOException e)
+		{ }
 		
 		Intent i = new Intent("printMessage");
 		i.putExtra("message", "Lost connection...");
@@ -391,10 +386,10 @@ public class BtService extends IntentService
 	}
 	
 	//Broadcast reciever
-	private final BroadcastReceiver BtRemoteServiceReciever = new BroadcastReceiver() 
+	private final BroadcastReceiver BtRemoteServiceReciever = new BroadcastReceiver()
 	{
 		@Override
-		public void onReceive(Context context, Intent intent) 
+		public void onReceive(Context context, Intent intent)
 		{
 			String action = intent.getAction();
 
@@ -413,10 +408,10 @@ public class BtService extends IntentService
 					i.putExtra("message", device.getName() + "\n" + device.getAddress());
 					sendBroadcast(i);
 				}
-			} 
+			}
 
 			//When discovery is finished, change the Activity title
-			if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) 
+			if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))
 			{
 				printDevicesFound();
 			}
@@ -442,10 +437,10 @@ public class BtService extends IntentService
 				
 				if(intent.hasExtra("connectDevice"))
 				{
-					try 
+					try
 					{
 						connectDevice();
-					} 
+					}
 					catch (IOException e) 
 					{
 						Intent i = new Intent("printMessage");
