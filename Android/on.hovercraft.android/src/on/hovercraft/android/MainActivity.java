@@ -3,7 +3,8 @@ package on.hovercraft.android;
 import com.android.future.usb.UsbManager;
 
 import on.hovercraft.android.R;
-import on.hovercraft.android.Constants.ConnectionState;
+import common.files.android.Constants;
+import common.files.android.Constants.ConnectionState;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -37,31 +38,35 @@ public class MainActivity extends Activity
 	{
 		@Override
 		public void onReceive(Context context, Intent intent) 
-		{    
+		{
 			String action = intent.getAction();
 			Bundle bundle = intent.getExtras();
 			if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action))
 			{
 				Log.d(TAG,"finish!");
 			}
-			else if ("android.intent.action.ACTION_POWER_CONNECTED".equals(action))
+			else if (Constants.Broadcast.System.POWER_CONNECTED.equals(action))
 			{
 				Log.d(TAG,"power connected!");
 				restart();
 			}			
-			else if(action.equalsIgnoreCase("updateUSBConnectionState"))
+			else if(action.equalsIgnoreCase(
+						Constants.Broadcast.UsbService.UPDATE_CONNECTION_STATE))
 			{
-				ConnectionState state = (ConnectionState) bundle.get("connectionState");		
+				ConnectionState state = (ConnectionState) bundle.get(
+						Constants.Broadcast.ConnectionStates.CONNECTION_STATE);
 				Log.d(TAG,"Update USBconnectionState: " + state.name());
 				updateUSBConnectionState(state);
 			}
-			else if(action.equalsIgnoreCase("updateBTConnectionState"))
+			else if(action.equalsIgnoreCase(
+				Constants.Broadcast.BluetoothService.UPDATE_CONNECTION_STATE))
 			{
-				ConnectionState state = (ConnectionState) bundle.get("connectionState");		
+				ConnectionState state = (ConnectionState)bundle.get(
+						Constants.Broadcast.ConnectionStates.CONNECTION_STATE);
 				Log.d(TAG,"Update BTconnectionState: " + state.name());
 				updateBTConnectionState(state);
 			}
-			else if(action.equalsIgnoreCase("printMessage"))
+			else if(action.equalsIgnoreCase("printMessage")) //TODO: Fix to Constants
 			{
 				
 				if(intent.hasExtra("message"))
