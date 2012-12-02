@@ -12,9 +12,8 @@
         android:layout_centerHorizontal="true"
         android:orientation="vertical" >
     </LinearLayout>
-    
-    
-	<!-- 	Buttons     -->
+
+    <!-- Buttons -->
 
     <Button
         android:id="@+id/bt_setup_button"
@@ -34,39 +33,12 @@
         android:layout_marginTop="20dp"
         android:text="@string/adk_test_button" />
 
-    <Button
-        android:id="@+id/bt_listen_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bt_setup_button"
-        android:layout_alignRight="@+id/bt_setup_button"
-        android:layout_below="@+id/bt_setup_button"
-        android:layout_marginTop="14dp"
-        android:text="@string/bt_listen_button" />
+    <!-- Info och message -->
 
-    
-    
-	<!-- 	Info och message     -->
-    
-    <TextView
-        android:id="@+id/textInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bt_listen_button"
-        android:layout_centerVertical="true"
-        android:text="@string/Info" />
+
+    <!-- Bluetooth and USB connection state -->
 
     <TextView
-        android:id="@+id/textMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textInfo"
-        android:layout_alignLeft="@+id/textInfo"
-        android:text="@string/Message" />   
-        
-    <!-- 	Bluetooth and USB connection state     -->
-
-	<TextView
         android:id="@+id/bt_connection_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,18 +47,18 @@
         android:gravity="center"
         android:text="@string/bt_connection"
         android:textSize="15sp" />
-	    
+
     <ImageView
         android:id="@+id/bt_connection_status_led"
-        android:contentDescription="@string/bt_connection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/usb_connection_status"
-        android:layout_marginBottom="20dp"
         android:layout_alignLeft="@+id/usb_connection_status_led"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/bt_connection"
         android:src="@drawable/red_led" />
-      
-	<TextView
+
+    <TextView
         android:id="@+id/usb_connection_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,14 +67,34 @@
         android:gravity="center"
         android:text="@string/usb_connection"
         android:textSize="15sp" />
-    
+
     <ImageView
         android:id="@+id/usb_connection_status_led"
-        android:contentDescription="@string/usb_connection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
+        android:contentDescription="@string/usb_connection"
         android:src="@drawable/red_led" />
+
+    <TextView
+        android:id="@+id/textMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bt_setup_button"
+        android:layout_marginTop="21dp"
+        android:layout_toLeftOf="@+id/bt_connection_status_led"
+        android:text="@string/Message" />
+
+    <TextView
+        android:id="@+id/textInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textMessage"
+        android:layout_alignRight="@+id/bt_connection_status"
+        android:layout_below="@+id/textMessage"
+        android:layout_marginTop="20dp"
+        android:text="@string/Info" />
+
 </RelativeLayout>
