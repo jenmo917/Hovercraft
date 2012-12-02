@@ -1,4 +1,4 @@
-package on.hover.android;
+package on.hovercraft.android;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +19,6 @@ import android.util.Log;
 
 //import on.hover.android.Command.DriveSignals;
 //import on.hover.android.Command.Engines;
-
 
 public class BtService extends IntentService
 {
@@ -50,16 +49,16 @@ public class BtService extends IntentService
 
 		while ( true )
 		{
+			try
+			{
+				Thread.sleep(10);
+			}
+			catch (InterruptedException e) 
+			{
+				e.printStackTrace();
+			}			
 			if(listenBT)
 			{
-				try
-				{
-					Thread.sleep(50);
-				}
-				catch (InterruptedException e) 
-				{
-					e.printStackTrace();
-				}
 				readBuffer();
 			}
 		}

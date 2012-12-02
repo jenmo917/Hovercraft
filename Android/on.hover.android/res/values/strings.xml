@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="hello">Hello World, AndroidApkTakeTwoActivity!</string>
-    <string name="app_name">AndroidApkTakeTwo</string>
-    <string name="Info">Info...</string>
-    <string name="Message">No messages...</string>
-</resources>

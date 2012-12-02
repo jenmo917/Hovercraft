@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" >
+    </LinearLayout>
+    
+    
+	<!-- 	Buttons     -->
+
+    <Button
+        android:id="@+id/bt_setup_button"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="82dp"
+        android:text="@string/bt_setup_button" />
+
+    <Button
+        android:id="@+id/adk_test_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt_setup_button"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/bt_setup_button"
+        android:layout_marginTop="20dp"
+        android:text="@string/adk_test_button" />
+
+    <Button
+        android:id="@+id/bt_listen_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt_setup_button"
+        android:layout_alignRight="@+id/bt_setup_button"
+        android:layout_below="@+id/bt_setup_button"
+        android:layout_marginTop="14dp"
+        android:text="@string/bt_listen_button" />
+
+    
+    
+	<!-- 	Info och message     -->
+    
+    <TextView
+        android:id="@+id/textInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt_listen_button"
+        android:layout_centerVertical="true"
+        android:text="@string/Info" />
+
+    <TextView
+        android:id="@+id/textMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textInfo"
+        android:layout_alignLeft="@+id/textInfo"
+        android:text="@string/Message" />   
+        
+    <!-- 	Bluetooth and USB connection state     -->
+
+	<TextView
+        android:id="@+id/bt_connection_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bt_connection_status_led"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/bt_connection"
+        android:textSize="15sp" />
+	    
+    <ImageView
+        android:id="@+id/bt_connection_status_led"
+        android:contentDescription="@string/bt_connection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/usb_connection_status"
+        android:layout_marginBottom="20dp"
+        android:layout_alignLeft="@+id/usb_connection_status_led"
+        android:src="@drawable/red_led" />
+      
+	<TextView
+        android:id="@+id/usb_connection_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/usb_connection_status_led"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/usb_connection"
+        android:textSize="15sp" />
+    
+    <ImageView
+        android:id="@+id/usb_connection_status_led"
+        android:contentDescription="@string/usb_connection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/red_led" />
+</RelativeLayout>
