@@ -27,6 +27,7 @@
 // Test signals
 #define BLINKY_ON 1
 #define BLINKY_OFF 2
+#define MOTOR_CONTROL_TEST 11
 // Drive control signals
 #define MOTOR_CONTROL 3
 #define PRINT_MESSAGE 4
