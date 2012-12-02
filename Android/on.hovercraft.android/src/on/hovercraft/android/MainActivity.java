@@ -229,8 +229,8 @@ public class MainActivity extends Activity
 		    	sendBroadcast(i);
 			}
 		});
-	}	
-	
+	}
+
 	private void setupBTSetupButton() 
 	{
 		Button setupButton = (Button) findViewById(R.id.bt_setup_button);
@@ -252,8 +252,7 @@ public class MainActivity extends Activity
 	    		
 	    		Intent i2 = new Intent("callFunction");
 	    		i2.putExtra("waitToConnect", "waitToConnnect");
-	    		sendBroadcast(i2);  		
-	    		
+	    		sendBroadcast(i2);
 			}
 		});
 	}	
