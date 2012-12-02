@@ -28,7 +28,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
-public class LogService extends IntentService implements SensorEventListener  
+public class LogService extends IntentService implements SensorEventListener
 {
 
 	private static final String TAG = "REMOTE";
@@ -62,7 +62,7 @@ public class LogService extends IntentService implements SensorEventListener
 		intentFilter.addAction("StopLogAction");
 		intentFilter.addAction("CheckboxAccRemoteAction");
 		intentFilter.addAction("CheckboxAccBrainAction");
-		intentFilter.addAction("CheckboxUsOnAdkAction");		
+		intentFilter.addAction("CheckboxUsOnAdkAction");
 		registerReceiver(broadcastReceiver, intentFilter);
 		initSensors();
 	}
@@ -71,13 +71,13 @@ public class LogService extends IntentService implements SensorEventListener
 	public void onDestroy()
 	{
 		Log.d(TAG, "IntentService onDestroy");
-		unregisterReceiver(broadcastReceiver); 		
+		unregisterReceiver(broadcastReceiver);
 	}
 
-	private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() 
+	private BroadcastReceiver broadcastReceiver = new BroadcastReceiver()
 	{
 		@Override
-		public void onReceive(Context context, Intent intent) 
+		public void onReceive(Context context, Intent intent)
 		{
 			String action = intent.getAction();
 			if(action.equalsIgnoreCase("StartLogAction"))
@@ -106,7 +106,7 @@ public class LogService extends IntentService implements SensorEventListener
 						headerToSd(accfile);
 					}
 				} 
-				catch (IOException e) 
+				catch (IOException e)
 				{
 					e.printStackTrace();
 				}							
@@ -120,7 +120,7 @@ public class LogService extends IntentService implements SensorEventListener
 				{
 					if(accbrainfile.createNewFile())
 					{
-						headerToSd(accbrainfile);						
+						headerToSd(accbrainfile);
 					}
 				} 
 				catch (IOException e) 
@@ -140,7 +140,7 @@ public class LogService extends IntentService implements SensorEventListener
 						headerToSd(usfile);
 					}
 				} 
-				catch (IOException e) 
+				catch (IOException e)
 				{
 					e.printStackTrace();
 				}	
@@ -157,9 +157,9 @@ public class LogService extends IntentService implements SensorEventListener
 				// desc: frontRight, frontLeft, backRight, backLeft
 				// value: >200 = "-", 120, 55, 10, 0
 
-				// Olle får göra ett PB-objekt som innehåller alla USSensorer. Helst dynamiskt så att man kan ha hur många som helst.
+				// Olle fï¿½r gï¿½ra ett PB-objekt som innehï¿½ller alla USSensorer. Helst dynamiskt sï¿½ att man kan ha hur mï¿½nga som helst.
 
-				// spara till fil. Gör en ny funktion för det.
+				// spara till fil. Gï¿½r en ny funktion fï¿½r det.
 
 				// saveData(all sensordata i en list eller array eller whaaatevah);
 
@@ -168,16 +168,16 @@ public class LogService extends IntentService implements SensorEventListener
 	};
 
 	@Override
-	protected void onHandleIntent(Intent intent) 
+	protected void onHandleIntent(Intent intent)
 	{
 		while(true)
 		{
 			if(logStarted==true)
-			{						
+			{
 				// Titta vilka sensorer vi ska logga
 				if(accSensor == true)
 				{
-					Log.d(TAG, "Logging acc from remote");    				    				
+					Log.d(TAG, "Logging acc from remote");
 					accToSd(accfile);			
 				}
 				if(accBrainSensor == true)
@@ -187,22 +187,22 @@ public class LogService extends IntentService implements SensorEventListener
 				}
 				if(usAdkSensor == true)
 				{
-					Intent logUsIntent = new Intent("LogUs");	
+					Intent logUsIntent = new Intent("LogUs");
 					logUsIntent.putExtra("Target", ADK_TARGET);
 					sendBroadcast(logUsIntent);
 
 					Context context2 = getApplicationContext();
 					Toast.makeText(context2, "US Log Started", Toast.LENGTH_SHORT).show();
 
-					Log.d(TAG, "Logging usAdk");		    				    									
-					//usBrainToSd();   	
+					Log.d(TAG, "Logging usAdk");
+					//usBrainToSd();
 
-					// tillgång till en intent (en väska/behållare) med sensorvärden
-					// gör en funktion som sparar dessa till minneskortet
-					// kalla på funktionen här
+					// tillgï¿½ng till en intent (en vï¿½ska/behï¿½llare) med sensorvï¿½rden
+					// gï¿½r en funktion som sparar dessa till minneskortet
+					// kalla pï¿½ funktionen hï¿½r
 					// onHoverAccToSd(value1, value2, value3);
 
-					// kör funktion som skickar logg-kommando till svävarens telefon eller till adk
+					// kï¿½r funktion som skickar logg-kommando till svï¿½varens telefon eller till adk
 					// sendCommand(command, target, messageLength, message)
 					// sendCommand(logOnHoverAcc,0x2,0,0)
 				}  		
@@ -213,7 +213,7 @@ public class LogService extends IntentService implements SensorEventListener
 			{
 				Thread.sleep(logDelay);
 			} 
-			catch (InterruptedException e) 
+			catch (InterruptedException e)
 			{
 				e.printStackTrace();
 			}
@@ -226,7 +226,7 @@ public class LogService extends IntentService implements SensorEventListener
 		sm.registerListener((SensorEventListener) this, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
 	}
 
-	public void onAccuracyChanged(Sensor sensor, int accuracy) 
+	public void onAccuracyChanged(Sensor sensor, int accuracy)
 	{		
 
 	}
@@ -234,12 +234,12 @@ public class LogService extends IntentService implements SensorEventListener
 	public void onSensorChanged(SensorEvent event)
 	{
 		Sensor sensor = event.sensor;
-		if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) 
+		if (sensor.getType() == Sensor.TYPE_ACCELEROMETER)
 		{
 			sensorDataRemote.clear();
 			sensorDataRemote.add(event.values[0]);
 			sensorDataRemote.add(event.values[1]);
-			sensorDataRemote.add(event.values[2]);		    
+			sensorDataRemote.add(event.values[2]);
 		}
 	}
 
@@ -248,12 +248,12 @@ public class LogService extends IntentService implements SensorEventListener
 		try
 		{
 			FileOutputStream fo = new FileOutputStream(file, true);
-			PrintWriter oWriter = new PrintWriter(fo);				
-			DecimalFormat form = new DecimalFormat("#.##");					
+			PrintWriter oWriter = new PrintWriter(fo);
+			DecimalFormat form = new DecimalFormat("#.##");
 			DecimalFormatSymbols format = new DecimalFormatSymbols();
 			format.setDecimalSeparator('.');
 			form.setDecimalFormatSymbols(format);
-			ListIterator<Float> lI = sensorDataRemote.listIterator();				
+			ListIterator<Float> lI = sensorDataRemote.listIterator();
 			while(lI.hasNext())
 			{
 				oWriter.append(form.format(lI.next()));
@@ -262,12 +262,12 @@ public class LogService extends IntentService implements SensorEventListener
 					oWriter.append(',');
 				}
 			}			
-			SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy,kk:mm:ss:SSS"); 
+			SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy,kk:mm:ss:SSS");
 			Date now = new Date();
 			String strDate = sdfDate.format(now);
 			oWriter.append(","+strDate);
 			oWriter.append("\r\n");
-			oWriter.close();			
+			oWriter.close();
 		}
 		catch(IOException e)
 		{
@@ -279,14 +279,14 @@ public class LogService extends IntentService implements SensorEventListener
 	{
 		FileOutputStream fo = new FileOutputStream(file, true);
 		PrintWriter oWriter = new PrintWriter(fo);
-		Log.d(TAG, "SKRIVER HEADER MED headerToSd");    				    				
+		Log.d(TAG, "SKRIVER HEADER MED headerToSd");
 		if(file == accfile || file == accbrainfile)
 		{
 			oWriter.println("X,Y,Z,date,time");	
 		}
 		else if(file == usfile)
 		{
-			oWriter.println("FrontLeft,FrontRight,BackLeft,BackRight,date,time");	
+			oWriter.println("FrontLeft,FrontRight,BackLeft,BackRight,date,time");
 		}
 		oWriter.close();
 	}   
