@@ -1,0 +1,48 @@
+<resources>
+
+    <string name="app_name">Remote Control</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_main_activity">Remote Control</string>
+    <string name="btnConnect">BT ON/OFF</string>
+    <string name="btndevices">Devices</string>
+    <string name="btnDisconnect">Disconnect</string>
+    <string name="testNoTest">No info</string>
+    <string name="testNotWorking">Bluetooth is not working</string>
+    <string name="testWorking">Bluetooth is working</string>
+    <string name="click">Search</string>
+    <string name="bluetoothSwitch">Bluetooth</string>
+    <string name="done">Done</string>
+    <string name="noneFound">None found</string>
+    <string name="allDevices">TOM</string>
+    <string name="btnPair">Pair</string>
+    <string name="btnSend">Send data</string>
+    <string name="btnTest1">Parse</string>
+    <string name="up">Up</string>
+    <string name="down">Down</string>
+    <string name="btnChoose">Choose</string>
+    <string name="yCoor">Y</string>
+    <string name="xCoor">X</string>
+    <string name="zCoor">Z</string>
+    <string name="btnSendCoorNot">No send</string>
+    <string name="btnSendCoor">Send</string>
+    <string name="btON">BT ON</string>
+    <string name="btOFF">BT OFF</string>
+    <string name="btnTest2">No receive</string>
+    <string name="btnReceive">Receive</string>
+     
+    <string name="title_activity_main">MainActivity</string>
+	<string name="Start">Start</string>
+	<string name="Stop">Stop</string>
+	<string name="Settings">Settings</string>
+	<string name="Accelerometer">Accelerometer</string>
+	<string name="Proximity">Proximity</string>
+	<string name="back">Back to Main Menu</string>
+	<string name="Accelerometerdata">Accelerometerdata</string>
+	<string name="Proximitydata">Proximitydata</string>
+	<string name="Remotecontrol">Remote Control</string>
+	<string name="Brain">Brain</string>
+	<string name="ADK">ADK</string>
+	<string name="Ultrasound">Ultrasound</string>
+
+</resources>
