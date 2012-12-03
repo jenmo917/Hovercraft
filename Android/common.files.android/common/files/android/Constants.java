@@ -52,6 +52,8 @@ final public class Constants // final to prevent instantiation
 	 */
 	public static final byte	US_SENSOR_REQ_COMMAND	= (byte) 6;
 
+	public static final byte MOTOR_SIGNAL_COMMAND = (byte) 7;
+
 	/*
 	 * Brain Commands (71-141)
 	 */
@@ -103,7 +105,17 @@ final public class Constants // final to prevent instantiation
 
 			public static class Actions
 			{
-				public static String	SEND_COMMAND	= "btActionSendCommand";
+				public static class SendCommand
+				{
+					public static String	ACTION	= "btActionSendCommand";
+
+					public static class Intent
+					{
+						public static String	COMMAND	= "btActionSendCommandItentCommand";
+						public static String	TARGET	= "btActionSendCommandItentTarget";
+						public static String	BYTES	= "btActionSendCommandItentBytes";
+					}
+				}
 			}
 		}
 
