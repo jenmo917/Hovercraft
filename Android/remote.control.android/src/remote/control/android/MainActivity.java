@@ -15,32 +15,34 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnClickListener
-{
-	private static final String	TAG					= "REMOTE";
-	protected static final int	REQUEST_ENABLE_BT	= 1;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.Sensor;
 
-	Button						buttonToggleBT;
-	Button						buttonFind;
-	Button						buttonPair;
-	Button						buttonChoose;
-	Button						buttonTest;
-	Button						buttonUp;
-	Button						buttonDown;
-	Button						buttonTest1;
-	Button						buttonTest2;
-	Button						start;
-	Button						stop;
-	Button						settings;
-	Button						buttonSendCoor;
+public class MainActivity extends Activity implements OnClickListener {
+	private static final String TAG = "REMOTE";
+	protected static final int REQUEST_ENABLE_BT = 1;
 
-	TextView					xCoordinate;
-	TextView					yCoordinate;
-	TextView					zCoordinate;
-	TextView					infoText;
+	Button buttonToggleBT;
+	Button buttonFind;
+	Button buttonPair;
+	Button buttonChoose;
+	Button buttonUp;
+	Button buttonDown;
+	Button start;
+	Button stop;
+	Button settings;
 
-	int							length				= 0;
-	int							i					= 0;
+	TextView xCoordinate;
+	TextView yCoordinate;
+	TextView zCoordinate;
+	TextView infoText;
+	TextView messageText;
+
+	int length = 0;
+	int i = 0;
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy)
 	{
@@ -88,7 +90,8 @@ public class MainActivity extends Activity implements OnClickListener
 		xCoordinate = (TextView) findViewById(R.id.textX);
 		yCoordinate = (TextView) findViewById(R.id.textY);
 		zCoordinate = (TextView) findViewById(R.id.textZ);
-		infoText = (TextView) findViewById(R.id.text_View);
+		infoText = (TextView) findViewById(R.id.text_info);
+		messageText = (TextView) findViewById(R.id.text_message);
 	}
 
 	private void initReceiver()
@@ -114,10 +117,6 @@ public class MainActivity extends Activity implements OnClickListener
 		// other buttons
 		buttonUp = (Button) findViewById(R.id.btn_up);
 		buttonDown = (Button) findViewById(R.id.btn_down);
-		buttonTest1 = (Button) findViewById(R.id.btn_test1);
-		buttonTest2 = (Button) findViewById(R.id.btn_test2);
-
-		buttonSendCoor = (Button) findViewById(R.id.btn_sendCoor);
 	}
 
 	private void initOnClickListners()
@@ -127,9 +126,6 @@ public class MainActivity extends Activity implements OnClickListener
 		settings.setOnClickListener(this);
 		buttonUp.setOnClickListener(this);
 		buttonDown.setOnClickListener(this);
-		buttonTest1.setOnClickListener(this);
-		buttonTest2.setOnClickListener(this);
-		buttonSendCoor.setOnClickListener(this);
 		buttonChoose.setOnClickListener(this);
 		buttonPair.setOnClickListener(this);
 		buttonFind.setOnClickListener(this);
@@ -137,134 +133,101 @@ public class MainActivity extends Activity implements OnClickListener
 	}
 
 	@Override
-	public void onClick(View src)
-	{
-		switch (src.getId())
-		{
-			case R.id.btn_sendCoor:
+	public void onClick(View src) {
+		switch (src.getId()) {
+		case R.id.btn_toggleBT:
 
-				// TODO
+			// TODO
 
-				break;
+			break;
 
-			case R.id.btn_toggleBT:
+		case R.id.btn_find:
 
-				// TODO
+			Intent find = new Intent("callFunction");
+			find.putExtra("findDevices", "findDevices");
+			sendBroadcast(find);
 
-				break;
+			break;
 
-			case R.id.btn_find:
+		case R.id.btn_pair:
 
-				Intent find = new Intent("callFunction");
-				find.putExtra("findDevices", "findDevices");
-				sendBroadcast(find);
+			Intent pair = new Intent("callFunction");
+			pair.putExtra("connectDevice", "connectDevice");
+			sendBroadcast(pair);
 
-				break;
+			break;
 
-			case R.id.btn_pair:
+		case R.id.btn_choose:
 
-				Intent pair = new Intent("callFunction");
-				pair.putExtra("connectDevice", "connectDevice");
-				sendBroadcast(pair);
+			Intent choose = new Intent("callFunction");
+			choose.putExtra("chooseDevice", "chooseDevice");
+			sendBroadcast(choose);
 
-				break;
+			break;
 
-			case R.id.btn_choose:
+		case R.id.btn_up:
 
-				Intent choose = new Intent("callFunction");
-				choose.putExtra("chooseDevice", "chooseDevice");
-				sendBroadcast(choose);
+			Intent send1 = new Intent("callFunction");
+			send1.putExtra("sendData", "sendData");
+			sendBroadcast(send1);
 
-				break;
+			break;
 
-			case R.id.btn_up:
+		case R.id.btn_down:
 
-				Intent send1 = new Intent("callFunction");
-				send1.putExtra("sendData", "sendData");
-				sendBroadcast(send1);
+			Intent send2 = new Intent("callFunction");
+			send2.putExtra("sendProto", "sendProto");
+			sendBroadcast(send2);
 
-				break;
+			break;
 
-			case R.id.btn_down:
-
-				Intent send2 = new Intent("callFunction");
-				send2.putExtra("sendProto", "sendProto");
-				sendBroadcast(send2);
-
-				break;
-
-			case R.id.btn_test1:
-
-				// TODO
-
-				break;
-
-			case R.id.btn_test2:
-
-				// TODO
-
-				break;
-
-			case R.id.startButton:
-				Log.d(TAG, "startButton pushed");
-				if (LogService.accSensor == false
-						&& LogService.accBrainSensor == false)
-				{
-					Context context = getApplicationContext();
-					Toast.makeText(context, "No Sensors Chosen",
-							Toast.LENGTH_SHORT).show();
-				}
-				else if (LogService.logStarted == true)
-				{
-					Context context = getApplicationContext();
-					Toast.makeText(context, "Log Already Started",
-							Toast.LENGTH_SHORT).show();
-				}
-				else
-				{
-					// Skicka broadcast till service och s�ga start log
-					Intent startLogIntent = new Intent("StartLogAction");
-					startLogIntent.putExtra("logDelay", 5000);
-					sendBroadcast(startLogIntent);
-					Context context = getApplicationContext();
-					Toast.makeText(context, "Log Started", Toast.LENGTH_SHORT)
-							.show();
-				}
-				break;
-			case R.id.stopButton:
-				if (LogService.logStarted == false)
-				{
-					Context context = getApplicationContext();
-					Toast.makeText(context, "No Log Started",
-							Toast.LENGTH_SHORT).show();
-				}
-				else
-				{
-					Log.d(TAG, "stopButton pushed");
-					// Skicka broadcast till service och s�ga stop log
-					Intent stopLogIntent = new Intent("StopLogAction");
-					sendBroadcast(stopLogIntent);
-					Context context = getApplicationContext();
-					Toast.makeText(context, "Log Stopped", Toast.LENGTH_SHORT)
-							.show();
-				}
-				break;
-			case R.id.settingsButton:
-				if (LogService.logStarted == true)
-				{
-					Context context = getApplicationContext();
-					Toast.makeText(context,
-							"Settings not available when log is started",
-							Toast.LENGTH_SHORT).show();
-				}
-				else if (LogService.logStarted == false)
-				{
-					Log.d(TAG, "Settings button pushed");
-					Intent settingIntent = new Intent(this,
-							settingActivity.class);
-					startActivity(settingIntent);
-				}
-				break;
+		case R.id.startButton:
+			Log.d(TAG, "startButton pushed");
+			if (LogService.accSensor == false && LogService.accBrainSensor == false) {
+				Context context = getApplicationContext();
+				Toast.makeText(context, "No Sensors Chosen", Toast.LENGTH_SHORT)
+						.show();
+			} else if (LogService.logStarted == true) {
+				Context context = getApplicationContext();
+				Toast.makeText(context, "Log Already Started",
+						Toast.LENGTH_SHORT).show();
+			} else {
+				// Skicka broadcast till service och s�ga start log
+				Intent startLogIntent = new Intent("StartLogAction");
+				startLogIntent.putExtra("logDelay", 5000);
+				sendBroadcast(startLogIntent);
+				Context context = getApplicationContext();
+				Toast.makeText(context, "Log Started", Toast.LENGTH_SHORT)
+						.show();
+			}
+			break;
+		case R.id.stopButton:
+			if (LogService.logStarted == false) {
+				Context context = getApplicationContext();
+				Toast.makeText(context, "No Log Started", Toast.LENGTH_SHORT)
+						.show();
+			} else {
+				Log.d(TAG, "stopButton pushed");
+				// Skicka broadcast till service och s�ga stop log
+				Intent stopLogIntent = new Intent("StopLogAction");
+				sendBroadcast(stopLogIntent);
+				Context context = getApplicationContext();
+				Toast.makeText(context, "Log Stopped", Toast.LENGTH_SHORT)
+						.show();
+			}
+			break;
+		case R.id.settingsButton:
+			if (LogService.logStarted == true) {
+				Context context = getApplicationContext();
+				Toast.makeText(context,
+						"Settings not available when log is started",
+						Toast.LENGTH_SHORT).show();
+			} else if (LogService.logStarted == false) {
+				Log.d(TAG, "Settings button pushed");
+				Intent settingIntent = new Intent(this, settingActivity.class);
+				startActivity(settingIntent);
+			}
+			break;
 		}
 	}
 
@@ -277,37 +240,24 @@ public class MainActivity extends Activity implements OnClickListener
 
 	// The BroadcastReceiver that listens for discovered devices and
 	// changes the title when discovery is finished
-	private final BroadcastReceiver	mReceiver	= new BroadcastReceiver()
-												{
-													@Override
-													public void onReceive(
-															Context context,
-															Intent intent)
-													{
-														String action = intent
-																.getAction();
+	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
 
-														if (action
-																.equalsIgnoreCase("printMessage"))
-														{
-															if (intent
-																	.hasExtra("message"))
-															{
-																String message = intent
-																		.getStringExtra("message");
-																infoText.setText(message);
-															}
+			if (action.equalsIgnoreCase("printMessage")) {
+				if (intent.hasExtra("message")) {
+					String message = intent.getStringExtra("message");
+					infoText.setText(message);
+				}
 
-															if (intent
-																	.hasExtra("coordinates"))
-															{
-																String coordinates = intent
-																		.getStringExtra("coordinates");
-																infoText.setText(coordinates);
-															}
-														}
-													}
-												};
+				if (intent.hasExtra("coordinates")) {
+					String coordinates = intent.getStringExtra("coordinates");
+					messageText.setText(coordinates);
+				}
+			}
+		}
+	};
 
 	@Override
 	public void onResume()
