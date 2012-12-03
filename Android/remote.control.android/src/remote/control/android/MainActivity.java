@@ -1,7 +1,12 @@
 package remote.control.android;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.Sensor;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -39,12 +44,14 @@ public class MainActivity extends Activity implements OnClickListener {
 	int length = 0;
 	int i = 0;
 
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	public void onAccuracyChanged(Sensor sensor, int accuracy)
+	{
 
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bluetest);
 
@@ -56,24 +63,30 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Start BTRemoteService
 		startRemoteBtServerService();
 
+		// Start MotorSignalsService
+		startService(new Intent(this, MotorSignalsService.class));
+
 		initButtons();
 		initTextViews();
 		initOnClickListners();
 		initReceiver();
 	}
 
-	private void startRemoteBtServerService() {
+	private void startRemoteBtServerService()
+	{
 		Log.d(TAG, "start BtService");
 		Intent intent = new Intent(this, BtService.class);
 		intent.fillIn(getIntent(), 0);
 		startService(intent);
 	}
 
-	private void stopRemoteBtServerService() {
+	private void stopRemoteBtServerService()
+	{
 		stopService(new Intent(this, BtService.class));
 	}
 
-	private void initTextViews() {
+	private void initTextViews()
+	{
 		xCoordinate = (TextView) findViewById(R.id.textX);
 		yCoordinate = (TextView) findViewById(R.id.textY);
 		zCoordinate = (TextView) findViewById(R.id.textZ);
@@ -81,13 +94,15 @@ public class MainActivity extends Activity implements OnClickListener {
 		messageText = (TextView) findViewById(R.id.text_message);
 	}
 
-	private void initReceiver() {
+	private void initReceiver()
+	{
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("printMessage");
 		registerReceiver(mReceiver, filter);
 	}
 
-	private void initButtons() {
+	private void initButtons()
+	{
 		// log buttons
 		start = (Button) findViewById(R.id.startButton);
 		stop = (Button) findViewById(R.id.stopButton);
@@ -104,7 +119,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		buttonDown = (Button) findViewById(R.id.btn_down);
 	}
 
-	private void initOnClickListners() {
+	private void initOnClickListners()
+	{
 		start.setOnClickListener(this);
 		stop.setOnClickListener(this);
 		settings.setOnClickListener(this);
@@ -216,7 +232,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
 		getMenuInflater().inflate(R.menu.activity_bluetest, menu);
 		return true;
 	}
@@ -243,24 +260,29 @@ public class MainActivity extends Activity implements OnClickListener {
 	};
 
 	@Override
-	public void onResume() {
+	public void onResume()
+	{
 		Log.d(TAG, "onResume Main");
 		initReceiver();
 		super.onResume();
 	}
 
 	@Override
-	public void onPause() {
+	public void onPause()
+	{
 		Log.d(TAG, "onPause Main");
 		unregisterReceiver(mReceiver);
 		super.onPause();
 	}
 
 	@Override
-	public void onDestroy() {
+	public void onDestroy()
+	{
 		Log.d(TAG, "onDestroy Main");
 		super.onDestroy();
 		stopService(new Intent(this, LogService.class));
+		// Must be called before ending of BT service.
+		stopService(new Intent(this, MotorSignalsService.class));
 
 		// StopremoteBTService
 		stopRemoteBtServerService();

@@ -20,6 +20,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import common.files.android.Constants;
+
 //import on.hover.android.Command.DriveSignals;
 //import on.hover.android.Command.Engines;
 
@@ -92,10 +94,12 @@ public class BtService extends IntentService
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(BluetoothDevice.ACTION_FOUND);
 		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+		filter
+			.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.ACTION);
 		filter.addAction("callFunction");
 		registerReceiver(BtRemoteServiceReciever, filter);
 	}
-
+	
 	private void findDevices()
 	{
 		//Clear list of devices
@@ -207,10 +211,8 @@ public class BtService extends IntentService
 			btReader = new InputStreamReader(mmInStream);
 		}
 	}
-
-
-
-	//*******change to Jens checkInput********************
+	
+	//TODO change to Jens checkInput
 
 	int tempInt = 0;
 	int i = 0;
@@ -456,6 +458,32 @@ public class BtService extends IntentService
 					sendData(up.getBytes());
 				}
 			}
+			if(action.equals(Constants.Broadcast.BluetoothService.Actions.SendCommand.ACTION))
+			{
+				byte command = intent
+					.getByteExtra(
+						Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.COMMAND,
+						(byte) 0);
+				byte target = intent
+					.getByteExtra(
+						Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET,
+						(byte) 0);
+				byte[] bytes = intent
+					.getByteArrayExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.BYTES);
+				sendProtocol(command, target, bytes);
+			}
 		}
 	};
+
+	// TODO: Should it give any status as return?
+	public void sendProtocol(byte command, byte target, byte[] message)
+	{
+		int messageLength = message.length;
+		byte[] dataTransmitt = new byte[3 + messageLength];
+		dataTransmitt[0] = command;
+		dataTransmitt[1] = target;
+		dataTransmitt[2] = (byte) messageLength;
+		System.arraycopy(message, 0, dataTransmitt, 3, messageLength);
+		sendData(dataTransmitt);
+	}
 }
