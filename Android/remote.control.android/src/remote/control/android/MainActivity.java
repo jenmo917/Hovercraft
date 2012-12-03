@@ -1,5 +1,7 @@
 package remote.control.android;
 
+import common.files.android.Constants;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -160,18 +162,16 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 
 		case R.id.btn_up:
-
-			Intent send1 = new Intent("callFunction");
-			send1.putExtra("sendData", "sendData");
-			sendBroadcast(send1);
-
-			break;
+			
+			Intent enableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.ENABLE_TRANSMISSION);
+			sendBroadcast(enableMS);
+			
+		break;
 
 		case R.id.btn_down:
 
-			Intent send2 = new Intent("callFunction");
-			send2.putExtra("sendProto", "sendProto");
-			sendBroadcast(send2);
+			Intent disableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.DISABLE_TRANSMISSION);
+			sendBroadcast(disableMS);
 
 			break;
 

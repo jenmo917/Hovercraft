@@ -118,7 +118,7 @@ public class BtService extends IntentService implements SensorEventListener
 		}
 	}
 
-	private void btConnectionLost()
+	private void btConnectionLost(String message)
 	{
 		listenBT = false;
 		closeServerSocket();
@@ -134,10 +134,8 @@ public class BtService extends IntentService implements SensorEventListener
 				e.printStackTrace();
 			}
 		}
-		Intent i = new Intent("printMessage");
-		i.putExtra("message", "Lost connection...");
-		sendBroadcast(i);
 		
+		broadcastMessage(message);
 		updateConnectionState(ConnectionState.DISCONNECTED);
 	}
 	
@@ -148,17 +146,12 @@ public class BtService extends IntentService implements SensorEventListener
 			try 
 			{
 				mmServerSocket.close();
-
-				Intent i = new Intent("printMessage");
-				i.putExtra("message", "Server down...");
-				sendBroadcast(i);
+				broadcastMessage("Server down...");
 				serverUp = false;
 			} 
 			catch (IOException e) 
 			{	
-				Intent i = new Intent("printMessage");
-				i.putExtra("message", "Faild to close server...");
-				sendBroadcast(i);
+				broadcastMessage("Faild to close server...");
 			}
 		}
 	}
@@ -171,23 +164,19 @@ public class BtService extends IntentService implements SensorEventListener
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 		BluetoothServerSocket tmp = null;
-		Intent i = new Intent("printMessage");
+
 		try 
 		{
 			// MY_UUID is the app's UUID string, also used by the client code
 			tmp = mBluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord(NAME,  MY_UUID_INSECURE);
-
+			broadcastMessage("Server up...");
 			serverUp = true;
-			i.putExtra("message", "Server up...");
-			sendBroadcast(i);
+			
 		} 
 		catch (IOException e) 
 		{ 
-			btConnectionLost();
-
+			btConnectionLost("Failed to create setup server...");
 			serverUp = false;
-			i.putExtra("message", "Fail...");
-			sendBroadcast(i);
 		}
 
 		mmServerSocket = tmp;
@@ -200,27 +189,19 @@ public class BtService extends IntentService implements SensorEventListener
 		if(serverUp)
 		{
 			mmSocket = null;
-			Intent i = new Intent("printMessage");
-
 			try 
 			{
 				mmSocket = mmServerSocket.accept(timeout);
 				
-//				socketUp = true;
-//				
-//				i.putExtra("message", "Socket is up..");
-//				sendBroadcast(i);
-//				updateConnectionState(ConnectionState.CONNECTED);
-//				
-//				listen();
+				socketUp = true;
+				broadcastMessage("Socket is up..");
+				updateConnectionState(ConnectionState.CONNECTED);
+				
+				listen();
 			} 
 			catch (IOException e) 
 			{
-				btConnectionLost();
-
-//				socketUp = false;
-//				i.putExtra("message", "Connection timed out...");
-//				sendBroadcast(i);
+				btConnectionLost("Failed to connect...");
 			}
 		}
 		else
@@ -237,20 +218,15 @@ public class BtService extends IntentService implements SensorEventListener
 	{
 		if(socketUp)
 		{
-			Intent i = new Intent("printMessage");
 			try
 			{
 				mInputStream = mmSocket.getInputStream();
-				i.putExtra("message", "Input stream open...");
-				sendBroadcast(i);
+				broadcastMessage("Input stream open...");
 				listenBT = true;
 			}
 			catch (IOException e)
 			{
-				btConnectionLost();
-
-				i.putExtra("message", "Failed to open input stream...");
-				sendBroadcast(i);
+				btConnectionLost("Failed to open input stream...");
 				listenBT = false;
 				return;
 			}
@@ -268,7 +244,7 @@ public class BtService extends IntentService implements SensorEventListener
 		} 
 		catch (IOException e1) 
 		{
-			btConnectionLost();
+			btConnectionLost("Lost connection...");
 			Log.d(TAG,"BtService: BufferInfo read failed");
 			return;
 		}
@@ -280,7 +256,7 @@ public class BtService extends IntentService implements SensorEventListener
 		} 
 		catch (IOException e1) 
 		{
-			btConnectionLost();
+			btConnectionLost("Lost connection...");
 			Log.d(TAG,"BtService: BufferMessage read failed");
 			return;
 		}
@@ -315,17 +291,33 @@ public class BtService extends IntentService implements SensorEventListener
 		sendBroadcast(intent);
 	}
 
+	int  test = 0;
 	private void handleBrainCommands(byte[] bufferInfo, byte[] bufferMessage)
 	{
 		Log.d(TAG,"BtService: handleBrainCommand");
 		switch (bufferInfo[0])
 		{
+			case Constants.MOTOR_SIGNAL_COMMAND:
+				
+				tempTestSend(bufferInfo[0]);
+								
+				break;
+				
 			default:
 			Log.d(TAG, "unknown command: " + bufferInfo[0]);
 			break;
 		}	
 	}
 
+	void tempTestSend(byte bufferInfo)
+	{
+		String received = "$recevied: " + String.valueOf(bufferInfo) + "\n" 
+							+ String.valueOf(test) + " times$";
+		sendData(received.getBytes());
+		test++;
+	}
+	
+	
 	private void sendData(byte[] data)
 	{	
 		try 
@@ -334,7 +326,7 @@ public class BtService extends IntentService implements SensorEventListener
 		} 
 		catch (IOException e) 
 		{
-			btConnectionLost();
+			btConnectionLost("Lost connection...");
 		}
 
 		try 
@@ -343,7 +335,7 @@ public class BtService extends IntentService implements SensorEventListener
 		} 
 		catch (IOException e) 
 		{
-			btConnectionLost();
+			btConnectionLost("Lost connection...");
 		}
 	}
 
@@ -370,7 +362,7 @@ public class BtService extends IntentService implements SensorEventListener
 		} 
 		catch (IOException e) 
 		{
-			btConnectionLost();
+			btConnectionLost("Lost connection...");
 		}		
 		
 		if (mmOutStream != null)
@@ -382,12 +374,19 @@ public class BtService extends IntentService implements SensorEventListener
 			} 
 			catch (IOException e) 
 			{
-				btConnectionLost();
+				btConnectionLost("Lost connection...");
 				Log.e(TAG, "write failed", e);
 			}
 		}
 	}	
 
+	private void broadcastMessage(String message)
+	{
+		Intent i = new Intent("printMessage");
+		i.putExtra("message", message);
+		sendBroadcast(i);
+	}
+	
 	private final BroadcastReceiver BtServiceReciever = new BroadcastReceiver() 
 	{
 		@Override
