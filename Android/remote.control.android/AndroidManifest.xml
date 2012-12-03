@@ -28,5 +28,6 @@
         <activity android:name=".settingActivity" android:screenOrientation="landscape"/>
         <service android:name=".LogService" />
         <service android:name=".BtService" />
+        <service android:name=".MotorSignalsService" />
     </application>
 </manifest>
