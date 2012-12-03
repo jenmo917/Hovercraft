@@ -172,10 +172,21 @@ public class MotorSignalsService extends IntentService implements
 				createDriveSignalProtocol(true, true, motorValues[0]));
 		byte[] message = engineValues.toByteArray();
 		Log.d(TAG, message.toString());
-		/*
-		 * sendCommand(Constants.MOTOR_CONTROL_COMMAND, Constants.TARGET_BRAIN,
-		 * message);
-		 */
+		Intent intent = new Intent(
+			Constants.Broadcast.BluetoothService.Actions.SendCommand.ACTION);
+		intent
+			.putExtra(
+				Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.COMMAND,
+				Constants.MOTOR_SIGNAL_COMMAND);
+		intent
+			.putExtra(
+				Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET,
+				Constants.TARGET_BRAIN);
+		intent
+			.putExtra(
+				Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.BYTES,
+				message);
+		sendBroadcast(intent);
 	}
 
 	public float[] normalise(float[] arr)

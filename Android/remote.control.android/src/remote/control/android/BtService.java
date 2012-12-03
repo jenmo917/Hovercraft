@@ -19,6 +19,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import common.files.android.Constants;
+
 //import on.hover.android.Command.DriveSignals;
 //import on.hover.android.Command.Engines;
 
@@ -64,18 +66,21 @@ public class BtService extends IntentService
 	private void initReceiver()
 	{
 
-//		Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//		startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);	
-		
+		// Intent enableBtIntent = new
+		// Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		// startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(BluetoothDevice.ACTION_FOUND);
 		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+		filter
+			.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.ACTION);
 		filter.addAction("callFunction");
 		registerReceiver(BtRemoteServiceReciever, filter);
 	}
 
 	protected static final int REQUEST_ENABLE_BT = 1;
-	
+
 	public List<String> devicesFound = new ArrayList<String>();
 	boolean sendCoordinates = false;
 
@@ -83,7 +88,7 @@ public class BtService extends IntentService
 	String adress = null;
 
 	int length = 0;
-	
+
 	BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
 	private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -99,7 +104,7 @@ public class BtService extends IntentService
 	int bytes; // bytes returned from read()
 
 	boolean listenBT = false;
-	
+
 	private void findDevices()
 	{
 		//Clear list of devices
@@ -461,6 +466,32 @@ public class BtService extends IntentService
 					sendData(up.getBytes());
 				}
 			}
+			if(action.equals(Constants.Broadcast.BluetoothService.Actions.SendCommand.ACTION))
+			{
+				byte command = intent
+					.getByteExtra(
+						Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.COMMAND,
+						(byte) 0);
+				byte target = intent
+					.getByteExtra(
+						Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET,
+						(byte) 0);
+				byte[] bytes = intent
+					.getByteArrayExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.BYTES);
+				sendProtocol(command, target, bytes);
+			}
 		}
 	};
+
+	// TODO: Should it give any status as return?
+	public void sendProtocol(byte command, byte target, byte[] message)
+	{
+		int messageLength = message.length;
+		byte[] dataTransmitt = new byte[3 + messageLength];
+		dataTransmitt[0] = command;
+		dataTransmitt[1] = target;
+		dataTransmitt[2] = (byte) messageLength;
+		System.arraycopy(message, 0, dataTransmitt, 3, messageLength);
+		sendData(dataTransmitt);
+	}
 }
