@@ -44,5 +44,7 @@
 	<string name="Brain">Brain</string>
 	<string name="ADK">ADK</string>
 	<string name="Ultrasound">Ultrasound</string>
+	<string name="labelInfo">Info:</string>
+	<string name="lableMessage">Received messages:</string>
 
 </resources>

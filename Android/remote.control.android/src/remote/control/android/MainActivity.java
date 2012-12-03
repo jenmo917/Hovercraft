@@ -24,20 +24,17 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button buttonFind;
 	Button buttonPair;
 	Button buttonChoose;
-	Button buttonTest;
 	Button buttonUp;
 	Button buttonDown;
-	Button buttonTest1;
-	Button buttonTest2;
 	Button start;
 	Button stop;
 	Button settings;
-	Button buttonSendCoor;
 
 	TextView xCoordinate;
 	TextView yCoordinate;
 	TextView zCoordinate;
 	TextView infoText;
+	TextView messageText;
 
 	int length = 0;
 	int i = 0;
@@ -80,7 +77,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		xCoordinate = (TextView) findViewById(R.id.textX);
 		yCoordinate = (TextView) findViewById(R.id.textY);
 		zCoordinate = (TextView) findViewById(R.id.textZ);
-		infoText = (TextView) findViewById(R.id.text_View);
+		infoText = (TextView) findViewById(R.id.text_info);
+		messageText = (TextView) findViewById(R.id.text_message);
 	}
 
 	private void initReceiver() {
@@ -104,10 +102,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		// other buttons
 		buttonUp = (Button) findViewById(R.id.btn_up);
 		buttonDown = (Button) findViewById(R.id.btn_down);
-		buttonTest1 = (Button) findViewById(R.id.btn_test1);
-		buttonTest2 = (Button) findViewById(R.id.btn_test2);
-
-		buttonSendCoor = (Button) findViewById(R.id.btn_sendCoor);
 	}
 
 	private void initOnClickListners() {
@@ -116,9 +110,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		settings.setOnClickListener(this);
 		buttonUp.setOnClickListener(this);
 		buttonDown.setOnClickListener(this);
-		buttonTest1.setOnClickListener(this);
-		buttonTest2.setOnClickListener(this);
-		buttonSendCoor.setOnClickListener(this);
 		buttonChoose.setOnClickListener(this);
 		buttonPair.setOnClickListener(this);
 		buttonFind.setOnClickListener(this);
@@ -128,12 +119,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View src) {
 		switch (src.getId()) {
-		case R.id.btn_sendCoor:
-
-			// TODO
-
-			break;
-
 		case R.id.btn_toggleBT:
 
 			// TODO
@@ -177,18 +162,6 @@ public class MainActivity extends Activity implements OnClickListener {
 			Intent send2 = new Intent("callFunction");
 			send2.putExtra("sendProto", "sendProto");
 			sendBroadcast(send2);
-
-			break;
-
-		case R.id.btn_test1:
-
-			// TODO
-
-			break;
-
-		case R.id.btn_test2:
-
-			// TODO
 
 			break;
 
@@ -263,7 +236,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 				if (intent.hasExtra("coordinates")) {
 					String coordinates = intent.getStringExtra("coordinates");
-					infoText.setText(coordinates);
+					messageText.setText(coordinates);
 				}
 			}
 		}
