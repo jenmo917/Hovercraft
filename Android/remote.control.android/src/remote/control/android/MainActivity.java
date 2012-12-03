@@ -15,12 +15,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.hardware.Sensor;
-
 public class MainActivity extends Activity implements OnClickListener {
 	private static final String TAG = "REMOTE";
 	protected static final int REQUEST_ENABLE_BT = 1;
