@@ -410,6 +410,7 @@ public class UsbService extends IntentService
 	{
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
+		filter.addAction(Constants.Broadcast.MotorSignals.CONTROL_SYSTEM);
 		filter.addAction("sendADKTestCommand");	
 		filter.addAction("handleBTCommands");	
 		registerReceiver(messageReceiver, filter);
@@ -434,11 +435,17 @@ public class UsbService extends IntentService
 				// Skicka vidare till USB
 				byte[] bufferInfo = intent.getByteArrayExtra("bufferInfo");
 				byte[] bufferMessage = intent.getByteArrayExtra("bufferMessage");
-				
 				sendCommand(bufferInfo[0], Constants.TARGET_ADK, bufferMessage);
 				
 				//String blinky = "blinky";
 				//sendCommand(Constants.BLINKY_ON_COMMAND, Constants.TARGET_ADK, blinky.getBytes());
+			}
+			else if ((Constants.Broadcast.MotorSignals.CONTROL_SYSTEM).equals(action))
+			{
+				byte bufferCommand = intent.getByteExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.COMMAND, (byte)0);
+				byte[] bufferMessage = intent.getByteArrayExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.BYTES);
+				byte target = intent.getByteExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET, (byte)0x0);
+				sendCommand(bufferCommand, target, bufferMessage);
 			}
 		}
 	}

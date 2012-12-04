@@ -292,9 +292,11 @@ public class BtService extends IntentService implements SensorEventListener
 		{
 			case Constants.MOTOR_SIGNAL_COMMAND:
 				
-				broadcastBufferToUSBService(bufferInfo, bufferMessage);
-				sendCommand(bufferInfo[0], (byte)0x3, bufferMessage);
-				
+				Intent intent = new Intent(Constants.Broadcast.MotorSignals.REMOTE);
+				intent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.COMMAND, bufferInfo[0]);
+				intent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.BYTES, bufferMessage);
+				intent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET, bufferInfo[1]);
+				sendBroadcast(intent);
 				break;
 				
 			default:
