@@ -35,17 +35,48 @@ public class BtService extends IntentService
 	private int bluetoothConnectionTimeout = 5000;				/**< */
 	private boolean bluetoothServerUp = false;					/**< */
 	private boolean bluetoothSocketUp = false;					/**< */
-	
-	private static String TAG = "JM";
+	private static String TAG = "JM";							/**< */
 
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	* @return Description
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	public BtService() 
 	{
 		super("BtService");
 	}
 
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	* @return Description
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private void updateBtConnectionState(ConnectionState state)
 	{
-		if(connectionState != state)
+		if( connectionState != state )
 		{
 			connectionState = state;
 			Intent i = new Intent(Constants.Broadcast.BluetoothService.UPDATE_CONNECTION_STATE);
@@ -54,6 +85,22 @@ public class BtService extends IntentService
 		}
 	}	
 
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	* @return Description
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	@Override
 	protected void onHandleIntent(Intent arg0) 
 	{
@@ -77,12 +124,28 @@ public class BtService extends IntentService
 		}
 	}
 	
-	private void btConnectionLost(String message)
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	* @return Description
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
+	private void btConnectionLost( String message )
 	{
 		listenOnBtInputstream = false;
 		closeServerSocket();
 
-		if(btInputStream != null)
+		if( btInputStream != null )
 		{
 			try 
 			{
@@ -98,6 +161,22 @@ public class BtService extends IntentService
 		updateBtConnectionState(ConnectionState.DISCONNECTED);
 	}
 	
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	* @return Description
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private void closeServerSocket()
 	{
 		if( bluetoothServerUp )
@@ -116,6 +195,22 @@ public class BtService extends IntentService
 		}
 	}
 
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	* @return Description
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private boolean setupServer()
 	{
 		// Use a temporary object that is later assigned to mmServerSocket,
@@ -141,6 +236,22 @@ public class BtService extends IntentService
 		return bluetoothServerUp;
 	}
 
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	* @return Description
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private boolean waitToConnect()
 	{
 		if(bluetoothServerUp)
@@ -168,6 +279,22 @@ public class BtService extends IntentService
 		return bluetoothSocketUp;      
 	}
 
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	* @return Description
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	@SuppressLint("HandlerLeak")
 	private void listenOnBtInputStream()
 	{
@@ -188,6 +315,22 @@ public class BtService extends IntentService
 		}
 	}
 
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	* @return Description
+	*
+	*
+	* \author Jens Moser
+	*
+	*/
 	void checkInput()
 	{
 		byte[] bufferInfo = new byte[3];		
@@ -237,6 +380,22 @@ public class BtService extends IntentService
 		}
 	}
 	
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	* @return Description
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private void broadcastBufferToUSBService(byte[] bufferInfo, byte[] bufferMessage)
 	{
 		Log.d(TAG,"BtService: broadcast command to USB Service");
@@ -246,6 +405,20 @@ public class BtService extends IntentService
 		sendBroadcast(intent);
 	}
 
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private void handleBrainCommands(byte[] bufferInfo, byte[] bufferMessage)
 	{
 		Log.d(TAG,"BtService: handleBrainCommand");
@@ -266,6 +439,22 @@ public class BtService extends IntentService
 		}	
 	}
 
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param 
+	*
+	* @param 
+	*
+	* @return Description
+	*
+	*
+	* \author Jens Moser
+	*
+	*/
 	private void sendCommand(byte command, byte target, byte[] message)
 	{
 		Log.d(TAG,"BtService: SendCommand:" + (int) command);
@@ -307,6 +496,18 @@ public class BtService extends IntentService
 		}
 	}	
 
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param String message
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private void broadcastMessage(String message)
 	{
 		Intent i = new Intent("printMessage");
@@ -314,6 +515,19 @@ public class BtService extends IntentService
 		sendBroadcast(i);
 	}
 	
+	/**
+	* \brief BtService BroadcastReceiver
+	*
+	* 
+	*
+	*
+	* @param Context 
+	*
+	* @param Intent
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private final BroadcastReceiver BtServiceReciever = new BroadcastReceiver() 
 	{
 		@Override
