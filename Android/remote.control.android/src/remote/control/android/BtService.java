@@ -375,6 +375,12 @@ public class BtService extends IntentService
 				{
 					chooseFoundBluetoothDevice();
 				}
+				
+				if(intent.hasExtra("disconnectDevice"))
+				{
+					if( bluetoothSocketUp )
+						btConnectionLost("Connection lost...");
+				}
 
 				if(intent.hasExtra("connectDevice"))
 				{

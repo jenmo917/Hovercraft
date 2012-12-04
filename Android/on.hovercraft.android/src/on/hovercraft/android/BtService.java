@@ -112,7 +112,7 @@ public class BtService extends IntentService implements SensorEventListener
 			}
 		}
 	}
-
+	
 	private void btConnectionLost(String message)
 	{
 		listenOnBtInputstream = false;
@@ -157,10 +157,8 @@ public class BtService extends IntentService implements SensorEventListener
 		// Use a temporary object that is later assigned to mmServerSocket,
 		// because mmServerSocket is final
 		mBluetoothAdapter = null;
-		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
 		BluetoothServerSocket tmp = null;
-
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		try 
 		{
 			// MY_UUID is the app's UUID string, also used by the client code
@@ -191,7 +189,7 @@ public class BtService extends IntentService implements SensorEventListener
 				broadcastMessage("Socket is up..");
 				updateBtConnectionState(ConnectionState.CONNECTED);
 				
-				listen();
+				listenOnBtInputStream();
 			} 
 			catch (IOException e) 
 			{
@@ -207,8 +205,7 @@ public class BtService extends IntentService implements SensorEventListener
 	}
 
 	@SuppressLint("HandlerLeak")
-
-	private void listen()
+	private void listenOnBtInputStream()
 	{
 		if( bluetoothSocketUp )
 		{

@@ -225,8 +225,6 @@ public class MainActivity extends Activity
 			{
 				Log.d(TAG, "setupBTSetupButton pushed");
 
-				//TODO: Visible mode turn on by user 
-
 				//Call serverUp
 				Intent i = new Intent("callFunction");
 				i.putExtra("setupServer", "setupServer");

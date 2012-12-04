@@ -96,7 +96,23 @@ final public class Constants // final to prevent instantiation
 
 		public static class ControlSystem
 		{
-
+			public static class Status
+			{
+				public static String	TRANSMISSION	= "controlSystemStatusTransmission";
+				
+				public static class Query
+				{
+					public static String ACTION = "controlSystemStatusQueryAction";
+					public static String TYPE = "controlSystemStatusQueryType";
+				}
+				public static class Response
+				{
+					public static String ACTION = "controlSystemStatusResponseAction";
+					public static String TYPE = "controlSystemStatusResponseType";
+					public static String STATUS = "controlSystemStatusResponseStatus";
+				}
+				
+			}
 		}
 
 		public static class BluetoothService

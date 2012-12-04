@@ -107,6 +107,7 @@ public class MotorSignalsService extends IntentService implements
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Constants.Broadcast.MotorSignals.Remote.DISABLE_TRANSMISSION);
 		filter.addAction(Constants.Broadcast.MotorSignals.Remote.ENABLE_TRANSMISSION);
+		filter.addAction(Constants.Broadcast.ControlSystem.Status.Query.ACTION);
 		registerReceiver(messageReceiver, filter);
 	}
 
@@ -131,6 +132,19 @@ public class MotorSignalsService extends IntentService implements
 						MotorSignalsService.this, accel);
 				MotorSignalsService.this.enabled = false;
 				// TODO: Send command to Brain
+			}
+			else if (action.equals(Constants.Broadcast.ControlSystem.Status.Query.ACTION))
+			{
+				String type = intent.getStringExtra(Constants.Broadcast.ControlSystem.Status.Query.TYPE);
+				
+				if(type.equals(Constants.Broadcast.ControlSystem.Status.TRANSMISSION))
+				{
+					Intent responseIntent = new Intent(Constants.Broadcast.ControlSystem.Status.Response.ACTION);
+					responseIntent.putExtra(Constants.Broadcast.ControlSystem.Status.Response.TYPE, 
+											Constants.Broadcast.ControlSystem.Status.TRANSMISSION);
+					responseIntent.putExtra(Constants.Broadcast.ControlSystem.Status.Response.STATUS, enabled);
+					sendBroadcast(responseIntent);
+				}
 			}
 		}
 	}

@@ -105,9 +105,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal" >
-
+
         <Button
-            android:id="@+id/btn_toggleBT"
+            android:id="@+id/toggleBluetoothOnOff"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
@@ -143,22 +143,14 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
         android:orientation="horizontal" >
-
+
         <Button
-            android:id="@+id/btn_up"
+            android:id="@+id/toggleTransmissionButton"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="80dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:text="@string/btnSendMS" />
-
-        <Button
-            android:id="@+id/btn_down"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:text="@string/btnStopMS" />
 
         <Button
             android:id="@+id/startButton"
