@@ -3,7 +3,8 @@ package on.hovercraft.android;
 import com.android.future.usb.UsbManager;
 
 import on.hovercraft.android.R;
-import on.hovercraft.android.Constants.ConnectionState;
+import common.files.android.Constants;
+import common.files.android.Constants.ConnectionState;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity
-{	
+{
 	private String TAG = "JM";
 	private ImageView mUSBStatusLed;
 	private ImageView mBTStatusLed;
@@ -27,82 +28,52 @@ public class MainActivity extends Activity
 
 	private final BroadcastReceiver messageReceiver = new newMessage();
 	final Context context = this;
-	
+
 	private void restart()
 	{
 		AppRestart.doRestart(this);
 	}
-	
-	private class newMessage extends BroadcastReceiver 
+
+	private class newMessage extends BroadcastReceiver
 	{
 		@Override
-		public void onReceive(Context context, Intent intent) 
-		{    
+		public void onReceive(Context context, Intent intent)
+		{
 			String action = intent.getAction();
 			Bundle bundle = intent.getExtras();
 			if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action))
 			{
 				Log.d(TAG,"finish!");
 			}
-			else if ("android.intent.action.ACTION_POWER_CONNECTED".equals(action))
+			else if (Constants.Broadcast.System.POWER_CONNECTED.equals(action))
 			{
 				Log.d(TAG,"power connected!");
 				restart();
-			}			
-			else if(action.equalsIgnoreCase("updateUSBConnectionState"))
+			}
+			else if(action.equalsIgnoreCase(
+						Constants.Broadcast.UsbService.UPDATE_CONNECTION_STATE))
 			{
-				ConnectionState state = (ConnectionState) bundle.get("connectionState");		
+				ConnectionState state = (ConnectionState) bundle.get(
+						Constants.Broadcast.ConnectionStates.CONNECTION_STATE);
 				Log.d(TAG,"Update USBconnectionState: " + state.name());
 				updateUSBConnectionState(state);
 			}
-			else if(action.equalsIgnoreCase("updateBTConnectionState"))
+			else if(action.equalsIgnoreCase(
+				Constants.Broadcast.BluetoothService.UPDATE_CONNECTION_STATE))
 			{
-				ConnectionState state = (ConnectionState) bundle.get("connectionState");		
+				ConnectionState state = (ConnectionState)bundle.get(
+						Constants.Broadcast.ConnectionStates.CONNECTION_STATE);
 				Log.d(TAG,"Update BTconnectionState: " + state.name());
 				updateBTConnectionState(state);
 			}
-			else if(action.equalsIgnoreCase("printMessage"))
+			else if(action.equalsIgnoreCase("printMessage")) //TODO: Fix to Constants
 			{
-				
 				if(intent.hasExtra("message"))
 				{
 					String message = intent.getStringExtra("message");
 					textInfo.setText(message);
 				}
-				
-				if(intent.hasExtra("coordinates"))
-				{
-					String coordinates = intent.getStringExtra("coordinates");
-					
-					
-					
-					if( (coordinates.equalsIgnoreCase("up")) )
-					{
-						textMessage.setText("Blinky on");
-						
-				    	Intent i = new Intent("sendBlinkyOnCommand");
-				    	sendBroadcast(i);
-				    	
-						//Call serverUp
-			    		Intent i2 = new Intent("callFunction");
-			    		i2.putExtra("sendDataBlinkyOn", "sendDataBlinkyOn");
-			    		sendBroadcast(i2);
-					}
-					else if( (coordinates.equalsIgnoreCase("down")) )
-					{
-						textMessage.setText("Blinky off");
-						
-				    	Intent i = new Intent("sendBlinkyOffCommand");
-				    	sendBroadcast(i);
-				    	
-						//Call serverUp
-			    		Intent i2 = new Intent("callFunction");
-			    		i2.putExtra("sendDataBlinkyOff", "sendDataBlinkyOff");
-			    		sendBroadcast(i2);
-					}
-				}
-				
-			}			
+			}
 		}
 	}
 	
@@ -118,34 +89,34 @@ public class MainActivity extends Activity
 		Log.d(TAG,"onCreate start");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+
 		// Setup USB and Bluetooth status LED:s
 		setupStatusLeds();
-		
+
 		// Setup buttons, onClick etc and init text views
 		setupButtons();
 		initTextViews();
-		
+
 		// Start USB and Blue service
 		startUsbService();
 		startBtServerService();
-		
+		startControlSystemService();
+
 		Log.d(TAG,"onCreate stop");
 	}
-	
+
 	private void setupButtons()
 	{
 		setupADKTestButton();
 		setupBTSetupButton();
-		setupBTListenButton();
 	}
 
 	private void initTextViews()
 	{
 		textInfo = (TextView) findViewById(R.id.textInfo);
-		textMessage = (TextView) findViewById(R.id.textMessage);		
+		textMessage = (TextView) findViewById(R.id.textMessage);
 	}
-	
+
 	private void startUsbService()
 	{
 		Intent intent = new Intent(this, UsbService.class);
@@ -156,6 +127,18 @@ public class MainActivity extends Activity
 	private void stopUsbService()
 	{
 		stopService(new Intent(this, UsbService.class));
+	}
+
+	private void startControlSystemService()
+	{
+		Intent intent = new Intent(this, ControlSystemService.class);
+		intent.fillIn(getIntent(), 0);
+		startService(intent);
+	}
+	
+	private void stopControlSystemService()
+	{
+		stopService(new Intent(this, ControlSystemService.class));
 	}
 
 	private void startBtServerService()
@@ -169,19 +152,19 @@ public class MainActivity extends Activity
 	private void stopBtServerService()
 	{
 		stopService(new Intent(this, BtService.class));
-	}	
-	
+	}
+
 	private void initReceiver()
 	{
 		IntentFilter filter = new IntentFilter();
-		filter.addAction("updateUSBConnectionState");
-		filter.addAction("updateBTConnectionState");		
+		filter.addAction(Constants.Broadcast.UsbService.UPDATE_CONNECTION_STATE);
+		filter.addAction(Constants.Broadcast.BluetoothService.UPDATE_CONNECTION_STATE);
 		filter.addAction("printMessage");
 		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
 		filter.addAction("android.intent.action.ACTION_POWER_CONNECTED");
 		registerReceiver(messageReceiver, filter);		
 	}
-	
+
 	@Override
 	protected void onResume()
 	{
@@ -190,7 +173,7 @@ public class MainActivity extends Activity
 		initReceiver();
 		Log.d(TAG,"onResume stop");
 	}
-	
+
 	@Override
 	public void onPause()
 	{
@@ -206,15 +189,16 @@ public class MainActivity extends Activity
 		super.onDestroy();
 		Log.d(TAG,"onDestroy start");
 		stopUsbService();
+		stopControlSystemService();
 		stopBtServerService();
 		Log.d(TAG,"onDestroy stop");
 	}
-	
-	private void setupStatusLeds() 
+
+	private void setupStatusLeds()
 	{
 		mUSBStatusLed = (ImageView) findViewById(R.id.usb_connection_status_led);
 		mBTStatusLed = (ImageView) findViewById(R.id.bt_connection_status_led);
-	}	
+	}
 
 	private void setupADKTestButton() 
 	{
@@ -225,56 +209,39 @@ public class MainActivity extends Activity
 			public void onClick(View arg0) 
 			{
 				Log.d(TAG,"setupADKTestButton pushed");
-		    	Intent i = new Intent("sendADKTestCommand");
-		    	sendBroadcast(i);
+				Intent i = new Intent("sendADKTestCommand");
+				sendBroadcast(i);
 			}
 		});
-	}	
-	
-	private void setupBTSetupButton() 
+	}
+
+	private void setupBTSetupButton()
 	{
 		Button setupButton = (Button) findViewById(R.id.bt_setup_button);
 		setupButton.setOnClickListener(new OnClickListener() 
 		{
 			@Override
-			public void onClick(View v) 
+			public void onClick(View v)
 			{
 				Log.d(TAG, "setupBTSetupButton pushed");
-				
+
 				//TODO: Visible mode turn on by user 
-				
+
 				//Call serverUp
-	    		Intent i = new Intent("callFunction");
-	    		i.putExtra("setupServer", "setupServer");
-	    		sendBroadcast(i);
-	    		
-	    		textInfo.setText("Waiting for connection...");
-	    		
-	    		Intent i2 = new Intent("callFunction");
-	    		i2.putExtra("waitToConnect", "waitToConnnect");
-	    		sendBroadcast(i2);  		
-	    		
+				Intent i = new Intent("callFunction");
+				i.putExtra("setupServer", "setupServer");
+				sendBroadcast(i);
+
+				//TODO move to BTservice so not printed when already connected
+				textInfo.setText("Waiting for connection...");
+
+				Intent i2 = new Intent("callFunction");
+				i2.putExtra("waitToConnect", "waitToConnnect");
+				sendBroadcast(i2);
 			}
 		});
-	}	
-	
-	private void setupBTListenButton() 
-	{
-		Button listenButton = (Button) findViewById(R.id.bt_listen_button);
-		listenButton.setOnClickListener(new OnClickListener() 
-		{
-			@Override
-			public void onClick(View v) 
-			{
-				textInfo.setText("Recieving coordinates...");
-				
-	    		Intent i = new Intent("callFunction");
-	    		i.putExtra("listen", "listen");
-	    		sendBroadcast(i);
-			}
-		});
-	}	
-	
+	}
+
 	private void updateUSBConnectionState(ConnectionState state)
 	{
 		switch(state)
@@ -290,7 +257,7 @@ public class MainActivity extends Activity
 			break;
 		}
 	}
-	
+
 	private void updateBTConnectionState(ConnectionState state)
 	{
 		switch(state)
@@ -305,5 +272,5 @@ public class MainActivity extends Activity
 				mBTStatusLed.setImageResource(R.drawable.red_led);
 			break;
 		}
-	}	
+	}
 }

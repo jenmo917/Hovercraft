@@ -27,7 +27,8 @@
         <activity android:name="on.hovercraft.android.AppRestart"/>
 		<uses-library android:name="com.android.future.usb.accessory" />
 		<service android:name=".UsbService" ></service>
-		<service android:name=".BtService" ></service>		
+		<service android:name=".BtService" ></service>
+		<service android:name=".ControlSystemService" ></service>		
     </application>
     
 </manifest>

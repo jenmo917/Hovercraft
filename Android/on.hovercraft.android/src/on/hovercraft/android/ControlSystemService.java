@@ -82,6 +82,8 @@ public class ControlSystemService extends IntentService
 				// Only loop through to ADK, but change action
 				intent.setAction(
 						Constants.Broadcast.MotorSignals.CONTROL_SYSTEM);
+				intent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.COMMAND, Constants.MOTOR_CONTROL_COMMAND);
+				intent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET, Constants.TARGET_ADK);
 				sendBroadcast(intent);
 			}
 		}

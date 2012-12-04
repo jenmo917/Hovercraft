@@ -1,7 +1,14 @@
 package remote.control.android;
 
-import android.os.Bundle;
+import common.files.android.Constants;
+
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.Sensor;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -10,44 +17,37 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.hardware.Sensor;
-
 public class MainActivity extends Activity implements OnClickListener {
 	private static final String TAG = "REMOTE";
 	protected static final int REQUEST_ENABLE_BT = 1;
 
 	Button buttonToggleBT;
-	Button buttonFind;
-	Button buttonPair;
-	Button buttonChoose;
-	Button buttonTest;
+	Button buttonFindBtDevice;
+	Button buttonPairBtDevice;
+	Button buttonChooseBtDevice;
 	Button buttonUp;
 	Button buttonDown;
-	Button buttonTest1;
-	Button buttonTest2;
 	Button start;
 	Button stop;
 	Button settings;
-	Button buttonSendCoor;
 
 	TextView xCoordinate;
 	TextView yCoordinate;
 	TextView zCoordinate;
 	TextView infoText;
+	TextView messageText;
 
 	int length = 0;
 	int i = 0;
 
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	public void onAccuracyChanged(Sensor sensor, int accuracy)
+	{
 
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bluetest);
 
@@ -59,37 +59,46 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Start BTRemoteService
 		startRemoteBtServerService();
 
+		// Start MotorSignalsService
+		startService(new Intent(this, MotorSignalsService.class));
+
 		initButtons();
 		initTextViews();
 		initOnClickListners();
 		initReceiver();
 	}
 
-	private void startRemoteBtServerService() {
+	private void startRemoteBtServerService()
+	{
 		Log.d(TAG, "start BtService");
 		Intent intent = new Intent(this, BtService.class);
 		intent.fillIn(getIntent(), 0);
 		startService(intent);
 	}
 
-	private void stopRemoteBtServerService() {
+	private void stopRemoteBtServerService()
+	{
 		stopService(new Intent(this, BtService.class));
 	}
 
-	private void initTextViews() {
+	private void initTextViews()
+	{
 		xCoordinate = (TextView) findViewById(R.id.textX);
 		yCoordinate = (TextView) findViewById(R.id.textY);
 		zCoordinate = (TextView) findViewById(R.id.textZ);
-		infoText = (TextView) findViewById(R.id.text_View);
+		infoText = (TextView) findViewById(R.id.text_info);
+		messageText = (TextView) findViewById(R.id.text_message);
 	}
 
-	private void initReceiver() {
+	private void initReceiver()
+	{
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("printMessage");
 		registerReceiver(mReceiver, filter);
 	}
 
-	private void initButtons() {
+	private void initButtons()
+	{
 		// log buttons
 		start = (Button) findViewById(R.id.startButton);
 		stop = (Button) findViewById(R.id.stopButton);
@@ -97,50 +106,38 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// bluetooth buttons
 		buttonToggleBT = (Button) findViewById(R.id.btn_toggleBT);
-		buttonFind = (Button) findViewById(R.id.btn_find);
-		buttonPair = (Button) findViewById(R.id.btn_pair);
-		buttonChoose = (Button) findViewById(R.id.btn_choose);
+		buttonFindBtDevice = (Button) findViewById(R.id.findBtDevicesButton);
+		buttonPairBtDevice = (Button) findViewById(R.id.pairBtDeviceButton);
+		buttonChooseBtDevice = (Button) findViewById(R.id.chooseBtDeviceButton);
 
 		// other buttons
 		buttonUp = (Button) findViewById(R.id.btn_up);
 		buttonDown = (Button) findViewById(R.id.btn_down);
-		buttonTest1 = (Button) findViewById(R.id.btn_test1);
-		buttonTest2 = (Button) findViewById(R.id.btn_test2);
-
-		buttonSendCoor = (Button) findViewById(R.id.btn_sendCoor);
 	}
 
-	private void initOnClickListners() {
+	private void initOnClickListners()
+	{
 		start.setOnClickListener(this);
 		stop.setOnClickListener(this);
 		settings.setOnClickListener(this);
 		buttonUp.setOnClickListener(this);
 		buttonDown.setOnClickListener(this);
-		buttonTest1.setOnClickListener(this);
-		buttonTest2.setOnClickListener(this);
-		buttonSendCoor.setOnClickListener(this);
-		buttonChoose.setOnClickListener(this);
-		buttonPair.setOnClickListener(this);
-		buttonFind.setOnClickListener(this);
+		buttonChooseBtDevice.setOnClickListener(this);
+		buttonPairBtDevice.setOnClickListener(this);
+		buttonFindBtDevice.setOnClickListener(this);
 		buttonToggleBT.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View src) {
 		switch (src.getId()) {
-		case R.id.btn_sendCoor:
-
-			// TODO
-
-			break;
-
 		case R.id.btn_toggleBT:
-
-			// TODO
+			
+			
 
 			break;
 
-		case R.id.btn_find:
+		case R.id.findBtDevicesButton:
 
 			Intent find = new Intent("callFunction");
 			find.putExtra("findDevices", "findDevices");
@@ -148,7 +145,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			break;
 
-		case R.id.btn_pair:
+		case R.id.pairBtDeviceButton:
 
 			Intent pair = new Intent("callFunction");
 			pair.putExtra("connectDevice", "connectDevice");
@@ -156,7 +153,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			break;
 
-		case R.id.btn_choose:
+		case R.id.chooseBtDeviceButton:
 
 			Intent choose = new Intent("callFunction");
 			choose.putExtra("chooseDevice", "chooseDevice");
@@ -165,30 +162,16 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 
 		case R.id.btn_up:
-
-			Intent send1 = new Intent("callFunction");
-			send1.putExtra("sendData", "sendData");
-			sendBroadcast(send1);
-
-			break;
+			
+			Intent enableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.ENABLE_TRANSMISSION);
+			sendBroadcast(enableMS);
+			
+		break;
 
 		case R.id.btn_down:
 
-			Intent send2 = new Intent("callFunction");
-			send2.putExtra("sendProto", "sendProto");
-			sendBroadcast(send2);
-
-			break;
-
-		case R.id.btn_test1:
-
-			// TODO
-
-			break;
-
-		case R.id.btn_test2:
-
-			// TODO
+			Intent disableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.DISABLE_TRANSMISSION);
+			sendBroadcast(disableMS);
 
 			break;
 
@@ -243,7 +226,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
 		getMenuInflater().inflate(R.menu.activity_bluetest, menu);
 		return true;
 	}
@@ -263,31 +247,36 @@ public class MainActivity extends Activity implements OnClickListener {
 
 				if (intent.hasExtra("coordinates")) {
 					String coordinates = intent.getStringExtra("coordinates");
-					infoText.setText(coordinates);
+					messageText.setText(coordinates);
 				}
 			}
 		}
 	};
 
 	@Override
-	public void onResume() {
+	public void onResume()
+	{
 		Log.d(TAG, "onResume Main");
 		initReceiver();
 		super.onResume();
 	}
 
 	@Override
-	public void onPause() {
+	public void onPause()
+	{
 		Log.d(TAG, "onPause Main");
 		unregisterReceiver(mReceiver);
 		super.onPause();
 	}
 
 	@Override
-	public void onDestroy() {
+	public void onDestroy()
+	{
 		Log.d(TAG, "onDestroy Main");
 		super.onDestroy();
 		stopService(new Intent(this, LogService.class));
+		// Must be called before ending of BT service.
+		stopService(new Intent(this, MotorSignalsService.class));
 
 		// StopremoteBTService
 		stopRemoteBtServerService();
