@@ -17,33 +17,24 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.util.Log;
 
-public class BtService extends IntentService implements SensorEventListener
+public class BtService extends IntentService
 {
 	private static final UUID  MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 	private static final String NAME = "Bluetooth SPP";	
 	
 	public static ConnectionState connectionState = ConnectionState.DISCONNECTED; // BT connection state	
 	
-	private boolean listenOnBtInputstream = false;	
-	private BluetoothSocket bluetoothSocket;
-	private BluetoothServerSocket bluetoothServerSocket;
-	private BluetoothAdapter mBluetoothAdapter;
-	private InputStream btInputStream;
-	private OutputStream btOutStream;
-	private int bluetoothConnectionTimeout = 5000;
-	private boolean bluetoothServerUp = false;
-	private boolean bluetoothSocketUp = false;	
-	
-	private SensorManager sensorManager;
-	private double accX;
-	private double accY;
-	private double accZ;
+	private boolean listenOnBtInputstream = false;				/**< */
+	private BluetoothSocket bluetoothSocket;					/**< */
+	private BluetoothServerSocket bluetoothServerSocket;		/**< */
+	private BluetoothAdapter mBluetoothAdapter;					/**< */
+	private InputStream btInputStream;							/**< */
+	private OutputStream btOutStream;							/**< */
+	private int bluetoothConnectionTimeout = 5000;				/**< */
+	private boolean bluetoothServerUp = false;					/**< */
+	private boolean bluetoothSocketUp = false;					/**< */
 	
 	private static String TAG = "JM";
 
@@ -52,16 +43,6 @@ public class BtService extends IntentService implements SensorEventListener
 		super("BtService");
 	}
 
-	@Override
-	public void onCreate()
-	{
-		super.onCreate();
-		Log.d(TAG,"BtService: start BtService");
-		
-        sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-	}
-	
 	private void updateBtConnectionState(ConnectionState state)
 	{
 		if(connectionState != state)
@@ -71,23 +52,6 @@ public class BtService extends IntentService implements SensorEventListener
 			i.putExtra("connectionState", state);
 			sendBroadcast(i);
 		}
-	}	
-
-	@Override
-	public void onAccuracyChanged(Sensor arg0, int arg1) 
-	{
-
-	}
-
-	@Override
-	public void onSensorChanged(SensorEvent event) 
-	{
-		if (event.sensor.getType()==Sensor.TYPE_ACCELEROMETER)
-		{
-			accX = event.values[0];
-			accY = event.values[1];
-			accZ = event.values[2];
-		}		
 	}	
 
 	@Override
