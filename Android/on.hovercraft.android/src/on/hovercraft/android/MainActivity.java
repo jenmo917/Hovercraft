@@ -73,36 +73,6 @@ public class MainActivity extends Activity
 					String message = intent.getStringExtra("message");
 					textInfo.setText(message);
 				}
-
-				if(intent.hasExtra("coordinates"))
-				{
-					String coordinates = intent.getStringExtra("coordinates");
-
-					if( (coordinates.equalsIgnoreCase("up")) )
-					{
-						textMessage.setText("Blinky on");
-						
-						Intent i = new Intent("sendBlinkyOnCommand");
-						sendBroadcast(i);
-
-						//Call serverUp
-						Intent i2 = new Intent("callFunction");
-						i2.putExtra("sendDataBlinkyOn", "sendDataBlinkyOn");
-						sendBroadcast(i2);
-					}
-					else if( (coordinates.equalsIgnoreCase("down")) )
-					{
-						textMessage.setText("Blinky off");
-
-						Intent i = new Intent("sendBlinkyOffCommand");
-						sendBroadcast(i);
-
-						//Call serverUp
-						Intent i2 = new Intent("callFunction");
-						i2.putExtra("sendDataBlinkyOff", "sendDataBlinkyOff");
-						sendBroadcast(i2);
-					}
-				}
 			}
 		}
 	}
@@ -248,6 +218,7 @@ public class MainActivity extends Activity
 				i.putExtra("setupServer", "setupServer");
 				sendBroadcast(i);
 
+				//TODO move to BTservice so not printed when already connected
 				textInfo.setText("Waiting for connection...");
 
 				Intent i2 = new Intent("callFunction");

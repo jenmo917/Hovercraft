@@ -22,9 +22,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected static final int REQUEST_ENABLE_BT = 1;
 
 	Button buttonToggleBT;
-	Button buttonFind;
-	Button buttonPair;
-	Button buttonChoose;
+	Button buttonFindBtDevice;
+	Button buttonPairBtDevice;
+	Button buttonChooseBtDevice;
 	Button buttonUp;
 	Button buttonDown;
 	Button start;
@@ -106,9 +106,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// bluetooth buttons
 		buttonToggleBT = (Button) findViewById(R.id.btn_toggleBT);
-		buttonFind = (Button) findViewById(R.id.btn_find);
-		buttonPair = (Button) findViewById(R.id.btn_pair);
-		buttonChoose = (Button) findViewById(R.id.btn_choose);
+		buttonFindBtDevice = (Button) findViewById(R.id.findBtDevicesButton);
+		buttonPairBtDevice = (Button) findViewById(R.id.pairBtDeviceButton);
+		buttonChooseBtDevice = (Button) findViewById(R.id.chooseBtDeviceButton);
 
 		// other buttons
 		buttonUp = (Button) findViewById(R.id.btn_up);
@@ -122,9 +122,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		settings.setOnClickListener(this);
 		buttonUp.setOnClickListener(this);
 		buttonDown.setOnClickListener(this);
-		buttonChoose.setOnClickListener(this);
-		buttonPair.setOnClickListener(this);
-		buttonFind.setOnClickListener(this);
+		buttonChooseBtDevice.setOnClickListener(this);
+		buttonPairBtDevice.setOnClickListener(this);
+		buttonFindBtDevice.setOnClickListener(this);
 		buttonToggleBT.setOnClickListener(this);
 	}
 
@@ -132,12 +132,12 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View src) {
 		switch (src.getId()) {
 		case R.id.btn_toggleBT:
-
-			// TODO
+			
+			
 
 			break;
 
-		case R.id.btn_find:
+		case R.id.findBtDevicesButton:
 
 			Intent find = new Intent("callFunction");
 			find.putExtra("findDevices", "findDevices");
@@ -145,7 +145,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			break;
 
-		case R.id.btn_pair:
+		case R.id.pairBtDeviceButton:
 
 			Intent pair = new Intent("callFunction");
 			pair.putExtra("connectDevice", "connectDevice");
@@ -153,7 +153,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			break;
 
-		case R.id.btn_choose:
+		case R.id.chooseBtDeviceButton:
 
 			Intent choose = new Intent("callFunction");
 			choose.putExtra("chooseDevice", "chooseDevice");

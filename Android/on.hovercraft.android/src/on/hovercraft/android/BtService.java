@@ -25,28 +25,25 @@ import android.util.Log;
 
 public class BtService extends IntentService implements SensorEventListener
 {
-	private InputStream mInputStream;
-	private OutputStream mmOutStream;
-	
 	private static final UUID  MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 	private static final String NAME = "Bluetooth SPP";	
 	
 	public static ConnectionState connectionState = ConnectionState.DISCONNECTED; // BT connection state	
 	
-	private boolean listenBT = false;	
-	
-	private BluetoothSocket mmSocket;
-	private BluetoothServerSocket mmServerSocket;
+	private boolean listenOnBtInputstream = false;	
+	private BluetoothSocket bluetoothSocket;
+	private BluetoothServerSocket bluetoothServerSocket;
 	private BluetoothAdapter mBluetoothAdapter;
+	private InputStream btInputStream;
+	private OutputStream btOutStream;
+	private int bluetoothConnectionTimeout = 5000;
+	private boolean bluetoothServerUp = false;
+	private boolean bluetoothSocketUp = false;	
 	
 	private SensorManager sensorManager;
 	private double accX;
 	private double accY;
 	private double accZ;
-	 
-	private int timeout = 5000;
-	private boolean serverUp = false;
-	private boolean socketUp = false;	
 	
 	private static String TAG = "JM";
 
@@ -65,12 +62,12 @@ public class BtService extends IntentService implements SensorEventListener
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 	}
 	
-	private void updateConnectionState(ConnectionState state)
+	private void updateBtConnectionState(ConnectionState state)
 	{
 		if(connectionState != state)
 		{
 			connectionState = state;
-			Intent i = new Intent(Constants.Broadcast.UsbService.UPDATE_CONNECTION_STATE);
+			Intent i = new Intent(Constants.Broadcast.BluetoothService.UPDATE_CONNECTION_STATE);
 			i.putExtra("connectionState", state);
 			sendBroadcast(i);
 		}
@@ -97,8 +94,6 @@ public class BtService extends IntentService implements SensorEventListener
 	protected void onHandleIntent(Intent arg0) 
 	{
 		Log.d(TAG, "BTService started");
-
-		//IMPORTANT!
 		registerReceiver(BtServiceReciever, new IntentFilter("callFunction"));
 
 		while ( true )
@@ -111,7 +106,7 @@ public class BtService extends IntentService implements SensorEventListener
 			{
 				e.printStackTrace();
 			}			
-			if(listenBT)
+			if( listenOnBtInputstream )
 			{
 				checkInput();
 			}
@@ -120,14 +115,14 @@ public class BtService extends IntentService implements SensorEventListener
 
 	private void btConnectionLost(String message)
 	{
-		listenBT = false;
+		listenOnBtInputstream = false;
 		closeServerSocket();
 
-		if(mInputStream != null)
+		if(btInputStream != null)
 		{
 			try 
 			{
-				mInputStream.close();
+				btInputStream.close();
 			} 
 			catch (IOException e) 
 			{
@@ -136,18 +131,19 @@ public class BtService extends IntentService implements SensorEventListener
 		}
 		
 		broadcastMessage(message);
-		updateConnectionState(ConnectionState.DISCONNECTED);
+		updateBtConnectionState(ConnectionState.DISCONNECTED);
 	}
 	
 	private void closeServerSocket()
 	{
-		if(serverUp)
+		if( bluetoothServerUp )
 		{
 			try 
 			{
-				mmServerSocket.close();
+				bluetoothServerSocket.close();
 				broadcastMessage("Server down...");
-				serverUp = false;
+				bluetoothServerUp = false;
+				bluetoothSocketUp = false;
 			} 
 			catch (IOException e) 
 			{	
@@ -170,32 +166,30 @@ public class BtService extends IntentService implements SensorEventListener
 			// MY_UUID is the app's UUID string, also used by the client code
 			tmp = mBluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord(NAME,  MY_UUID_INSECURE);
 			broadcastMessage("Server up...");
-			serverUp = true;
-			
+			bluetoothServerUp = true;
+			updateBtConnectionState(ConnectionState.WAITING);
 		} 
 		catch (IOException e) 
 		{ 
 			btConnectionLost("Failed to create setup server...");
-			serverUp = false;
+			bluetoothServerUp = false;
 		}
 
-		mmServerSocket = tmp;
-		return serverUp;
+		bluetoothServerSocket = tmp;
+		return bluetoothServerUp;
 	}
 
 	private boolean waitToConnect()
 	{
-		updateConnectionState(ConnectionState.WAITING);
-		if(serverUp)
+		if(bluetoothServerUp)
 		{
-			mmSocket = null;
+			bluetoothSocket = null;
 			try 
 			{
-				mmSocket = mmServerSocket.accept(timeout);
-				
-				socketUp = true;
+				bluetoothSocket = bluetoothServerSocket.accept(bluetoothConnectionTimeout);
+				bluetoothSocketUp = true;
 				broadcastMessage("Socket is up..");
-				updateConnectionState(ConnectionState.CONNECTED);
+				updateBtConnectionState(ConnectionState.CONNECTED);
 				
 				listen();
 			} 
@@ -206,28 +200,28 @@ public class BtService extends IntentService implements SensorEventListener
 		}
 		else
 		{
-			socketUp = false;
+			bluetoothSocketUp = false;
 		}
 
-		return socketUp;      
+		return bluetoothSocketUp;      
 	}
 
 	@SuppressLint("HandlerLeak")
 
 	private void listen()
 	{
-		if(socketUp)
+		if( bluetoothSocketUp )
 		{
 			try
 			{
-				mInputStream = mmSocket.getInputStream();
+				btInputStream = bluetoothSocket.getInputStream();
 				broadcastMessage("Input stream open...");
-				listenBT = true;
+				listenOnBtInputstream = true;
 			}
 			catch (IOException e)
 			{
 				btConnectionLost("Failed to open input stream...");
-				listenBT = false;
+				listenOnBtInputstream = false;
 				return;
 			}
 		}
@@ -238,9 +232,9 @@ public class BtService extends IntentService implements SensorEventListener
 		byte[] bufferInfo = new byte[3];		
 		try
 		{
-			bufferInfo[0] = (byte) mInputStream.read(); // Command
-			bufferInfo[1] = (byte) mInputStream.read(); // Target
-			bufferInfo[2] = (byte) mInputStream.read(); // Message length
+			bufferInfo[0] = (byte) btInputStream.read(); // Command
+			bufferInfo[1] = (byte) btInputStream.read(); // Target
+			bufferInfo[2] = (byte) btInputStream.read(); // Message length
 		} 
 		catch (IOException e1) 
 		{
@@ -252,7 +246,7 @@ public class BtService extends IntentService implements SensorEventListener
 		byte[] bufferMessage = new byte[(int) bufferInfo[2]];
 		try
 		{			
-			mInputStream.read(bufferMessage, 0, (int) bufferInfo[2]);
+			btInputStream.read(bufferMessage, 0, (int) bufferInfo[2]);
 		} 
 		catch (IOException e1) 
 		{
@@ -291,7 +285,6 @@ public class BtService extends IntentService implements SensorEventListener
 		sendBroadcast(intent);
 	}
 
-	int  test = 0;
 	private void handleBrainCommands(byte[] bufferInfo, byte[] bufferMessage)
 	{
 		Log.d(TAG,"BtService: handleBrainCommand");
@@ -299,8 +292,9 @@ public class BtService extends IntentService implements SensorEventListener
 		{
 			case Constants.MOTOR_SIGNAL_COMMAND:
 				
-				tempTestSend(bufferInfo[0]);
-								
+				broadcastBufferToUSBService(bufferInfo, bufferMessage);
+				sendCommand(bufferInfo[0], (byte)0x3, bufferMessage);
+				
 				break;
 				
 			default:
@@ -309,20 +303,11 @@ public class BtService extends IntentService implements SensorEventListener
 		}	
 	}
 
-	void tempTestSend(byte bufferInfo)
-	{
-		String received = "$recevied: " + String.valueOf(bufferInfo) + "\n" 
-							+ String.valueOf(test) + " times$";
-		sendData(received.getBytes());
-		test++;
-	}
-	
-	
 	private void sendData(byte[] data)
 	{	
 		try 
 		{
-			mmOutStream = mmSocket.getOutputStream();
+			btOutStream = bluetoothSocket.getOutputStream();
 		} 
 		catch (IOException e) 
 		{
@@ -331,7 +316,7 @@ public class BtService extends IntentService implements SensorEventListener
 
 		try 
 		{
-			mmOutStream.write(data);
+			btOutStream.write(data);
 		} 
 		catch (IOException e) 
 		{
@@ -358,19 +343,19 @@ public class BtService extends IntentService implements SensorEventListener
 		
 		try 
 		{
-			mmOutStream = mmSocket.getOutputStream();
+			btOutStream = bluetoothSocket.getOutputStream();
 		} 
 		catch (IOException e) 
 		{
 			btConnectionLost("Lost connection...");
 		}		
 		
-		if (mmOutStream != null)
+		if (btOutStream != null)
 		{
-			
+
 			try 
 			{
-				mmOutStream.write(buffer);
+				btOutStream.write(buffer);
 			} 
 			catch (IOException e) 
 			{
@@ -401,31 +386,15 @@ public class BtService extends IntentService implements SensorEventListener
 				if(intent.hasExtra("setupServer"))
 				{
 					Log.d(TAG, "BtService: setupServer");
-					setupServer();
+					if( !bluetoothServerUp )
+						setupServer();
 				}	
 
 				if(intent.hasExtra("waitToConnect"))
 				{
-					waitToConnect();
-				}
-
-				if(intent.hasExtra("listen"))
-				{
-					//	listen();
-				}
-
-				if(intent.hasExtra("sendDataBlinkyOn"))
-				{
-					String testString = "$Blinky On$";
-					byte[] testByte = testString.getBytes();
-					sendData(testByte);
-				}
-				if(intent.hasExtra("sendDataBlinkyOff"))
-				{
-					String testString = "$Blinky Off$";
-					byte[] testByte = testString.getBytes();
-					sendData(testByte);
-				}				
+					if( !bluetoothSocketUp )
+						waitToConnect();
+				}		
 			}
 		}
 	};

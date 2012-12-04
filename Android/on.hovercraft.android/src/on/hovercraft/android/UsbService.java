@@ -411,8 +411,7 @@ public class UsbService extends IntentService
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
 		filter.addAction("sendADKTestCommand");	
-		filter.addAction("sendBlinkyOnCommand");
-		filter.addAction("sendBlinkyOffCommand");
+		filter.addAction("handleBTCommands");	
 		registerReceiver(messageReceiver, filter);
 	}
 
@@ -430,16 +429,16 @@ public class UsbService extends IntentService
 			{
 				sendADKTestCommand();
 			}
-			else if (action.equalsIgnoreCase("sendBlinkyOnCommand"))
+			else if (action.equalsIgnoreCase("handleBTCommands"))
 			{
-
-				String test = "message";
-				sendCommand(Constants.BLINKY_ON_COMMAND, Constants.TARGET_ADK, test.getBytes());
-			}
-			else if (action.equalsIgnoreCase("sendBlinkyOffCommand"))
-			{
-				String test = "message";
-				sendCommand(Constants.BLINKY_OFF_COMMAND, Constants.TARGET_ADK, test.getBytes());
+				// Skicka vidare till USB
+				byte[] bufferInfo = intent.getByteArrayExtra("bufferInfo");
+				byte[] bufferMessage = intent.getByteArrayExtra("bufferMessage");
+				
+				sendCommand(bufferInfo[0], Constants.TARGET_ADK, bufferMessage);
+				
+				//String blinky = "blinky";
+				//sendCommand(Constants.BLINKY_ON_COMMAND, Constants.TARGET_ADK, blinky.getBytes());
 			}
 		}
 	}
