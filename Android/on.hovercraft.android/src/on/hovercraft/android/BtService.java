@@ -266,27 +266,6 @@ public class BtService extends IntentService
 		}	
 	}
 
-	private void sendData(byte[] data)
-	{	
-		try 
-		{
-			btOutStream = bluetoothSocket.getOutputStream();
-		} 
-		catch (IOException e) 
-		{
-			btConnectionLost("Lost connection...");
-		}
-
-		try 
-		{
-			btOutStream.write(data);
-		} 
-		catch (IOException e) 
-		{
-			btConnectionLost("Lost connection...");
-		}
-	}
-
 	private void sendCommand(byte command, byte target, byte[] message)
 	{
 		Log.d(TAG,"BtService: SendCommand:" + (int) command);
