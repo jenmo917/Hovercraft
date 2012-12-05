@@ -4,7 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_main_activity">Remote Control</string>
-    <string name="btnConnect">BT ON/OFF</string>
+    <string name="btnConnect">Connect</string>
     <string name="textInfoInit">No info</string>
     <string name="click">Search</string>
     <string name="bluetoothSwitch">Bluetooth</string>
@@ -37,5 +37,7 @@
 	<string name="labelInfo">Info:</string>
 	<string name="lableMessage">Received messages:</string>
 	<string name="textMessageInit">No messages</string>
+	<string name="btnToggleBtON">BT ON</string>
+	<string name="btnToggleBtOFF">BT OFF</string>
 
 </resources>

@@ -105,13 +105,13 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal" >
-
+
         <Button
             android:id="@+id/toggleBluetoothOnOff"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="@string/btnConnect" />
+            android:text="@string/btnToggleBtOFF" />
 
         <Button
             android:id="@+id/findBtDevicesButton"
@@ -126,13 +126,13 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="@string/btnChoose" />
-
+
         <Button
-            android:id="@+id/pairBtDeviceButton"
+            android:id="@+id/connectBtDeviceButton"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="@string/btnPair" />
+            android:text="@string/btnConnect" />
 
     </LinearLayout>
 

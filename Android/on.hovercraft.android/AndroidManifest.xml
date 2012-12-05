@@ -30,5 +30,4 @@
 		<service android:name=".BtService" ></service>
 		<service android:name=".ControlSystemService" ></service>		
     </application>
-    
 </manifest>

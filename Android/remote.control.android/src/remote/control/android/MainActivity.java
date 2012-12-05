@@ -3,6 +3,7 @@ package remote.control.android;
 import common.files.android.Constants;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,9 +22,17 @@ public class MainActivity extends Activity implements OnClickListener {
 	private static final String TAG = "REMOTE";
 	protected static final int REQUEST_ENABLE_BT = 1;
 
+	String TOGGLE_BLUETOOTH_STATE = "toggleBluetooth";
+	String FIND_BLUETOOTH_DEVICES = "findDevices";
+	String CHOOSE_BLUETOOTH_DEVICE = "chooseDevice";
+	String CONNECT_WITH_BLUETOOTH_DEVICE = "connectDevice";
+	String DISCONNECT_BLUETOOTH_DEVICE = "disconnectDevice";
+	String TOGGLE_BT_BUTTON_TEXT = "toggleBtButtonText";
+	String BT_STATUS = "btStatus";
+	
 	Button buttonToggleBT;
 	Button buttonFindBtDevice;
-	Button buttonPairBtDevice;
+	Button buttonConnectBtDevice;
 	Button buttonChooseBtDevice;
 	Button buttonToggleTransmission;
 	Button buttonStartLog;
@@ -99,6 +108,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("printMessage");
 		filter.addAction(Constants.Broadcast.ControlSystem.Status.Response.ACTION);
+		filter.addAction(TOGGLE_BT_BUTTON_TEXT);
 		registerReceiver(mReceiver, filter);
 	}
 
@@ -112,7 +122,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		// bluetooth buttons
 		buttonToggleBT = (Button) findViewById(R.id.toggleBluetoothOnOff);
 		buttonFindBtDevice = (Button) findViewById(R.id.findBtDevicesButton);
-		buttonPairBtDevice = (Button) findViewById(R.id.pairBtDeviceButton);
+		buttonConnectBtDevice = (Button) findViewById(R.id.connectBtDeviceButton);
 		buttonChooseBtDevice = (Button) findViewById(R.id.chooseBtDeviceButton);
 
 		// other buttons
@@ -126,43 +136,43 @@ public class MainActivity extends Activity implements OnClickListener {
 		buttonLogSettings.setOnClickListener(this);
 		buttonToggleTransmission.setOnClickListener(this);
 		buttonChooseBtDevice.setOnClickListener(this);
-		buttonPairBtDevice.setOnClickListener(this);
+		buttonConnectBtDevice.setOnClickListener(this);
 		buttonFindBtDevice.setOnClickListener(this);
 		buttonToggleBT.setOnClickListener(this);
 	}
-
+	
+	public void callBtFunction(String function)
+	{
+		Intent callFunc = new Intent("callFunction");
+		callFunc.putExtra(function, function);
+		sendBroadcast(callFunc);
+	}
+	
 	@Override
 	public void onClick(View src) {
 		switch (src.getId()) {
 		case R.id.toggleBluetoothOnOff:
 			
+			callBtFunction(TOGGLE_BLUETOOTH_STATE);
 
-			
-
+			//Semigood but may work on the server
+			Intent testIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+		    startActivity(testIntent);
 			break;
 
 		case R.id.findBtDevicesButton:
 
-			Intent find = new Intent("callFunction");
-			find.putExtra("findDevices", "findDevices");
-			sendBroadcast(find);
-
+			callBtFunction(FIND_BLUETOOTH_DEVICES);
 			break;
 
-		case R.id.pairBtDeviceButton:
+		case R.id.connectBtDeviceButton:
 
-			Intent pair = new Intent("callFunction");
-			pair.putExtra("connectDevice", "connectDevice");
-			sendBroadcast(pair);
-
+			callBtFunction(CONNECT_WITH_BLUETOOTH_DEVICE);
 			break;
 
 		case R.id.chooseBtDeviceButton:
 
-			Intent choose = new Intent("callFunction");
-			choose.putExtra("chooseDevice", "chooseDevice");
-			sendBroadcast(choose);
-
+			callBtFunction(CHOOSE_BLUETOOTH_DEVICE);
 			break;
 
 		case R.id.toggleTransmissionButton:
@@ -259,6 +269,14 @@ public class MainActivity extends Activity implements OnClickListener {
 					messageText.setText(coordinates);
 				}
 			}
+			else if(action.equalsIgnoreCase(TOGGLE_BT_BUTTON_TEXT))
+			{
+				boolean state = intent.getBooleanExtra(BT_STATUS, false);
+				if(state)
+					buttonToggleBT.setText(R.string.btnToggleBtON);
+				else
+					buttonToggleBT.setText(R.string.btnToggleBtOFF);	
+			}
 			else if(Constants.Broadcast.ControlSystem.Status.Response.ACTION.equals(action))
 			{
 				if(intent.getStringExtra(Constants.Broadcast.ControlSystem.Status.Response.TYPE).equals(Constants.Broadcast.ControlSystem.Status.TRANSMISSION))
@@ -287,7 +305,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	{
 		Log.d(TAG, "onPause Main");
 		unregisterReceiver(mReceiver);
-		
 		super.onPause();
 	}
 
