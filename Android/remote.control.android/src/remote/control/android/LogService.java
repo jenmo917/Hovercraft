@@ -170,20 +170,20 @@ public class LogService extends IntentService implements SensorEventListener
 				float us3Value = (float)us3.getValue();
 				float us4Value = (float)us4.getValue();
 				
+				sensorDataAdk.clear();
 				sensorDataAdk.add(us1Value);
 				sensorDataAdk.add(us2Value);
 				sensorDataAdk.add(us3Value);
 				sensorDataAdk.add(us4Value);
 				
-				// desc: frontRight, frontLeft, backRight, backLeft
-				// value: >200 = "-", 120, 55, 10, 0
-
-				// Olle f�r g�ra ett PB-objekt som inneh�ller alla USSensorer. Helst dynamiskt s� att man kan ha hur m�nga som helst.
-
-				// spara till fil. G�r en ny funktion f�r det.
-
-				// saveData(all sensordata i en list eller array eller whaaatevah);
-
+				try 
+				{
+					headerToSd(usfile);
+				}
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
 			}
 		}
 	};
@@ -214,19 +214,9 @@ public class LogService extends IntentService implements SensorEventListener
 
 					Context context2 = getApplicationContext();
 					Toast.makeText(context2, "US Log Started", Toast.LENGTH_SHORT).show();
-
 					Log.d(TAG, "Logging usAdk");
-					//usBrainToSd();
-
-					// tillg�ng till en intent (en v�ska/beh�llare) med sensorv�rden
-					// g�r en funktion som sparar dessa till minneskortet
-					// kalla p� funktionen h�r
-					// onHoverAccToSd(value1, value2, value3);
-
-					// k�r funktion som skickar logg-kommando till sv�varens telefon eller till adk
-					// sendCommand(command, target, messageLength, message)
-					// sendCommand(logOnHoverAcc,0x2,0,0)
-				}  		
+					accToSd(sensorDataAdk,usfile);
+				} 
 			}
 
 			// delay med en viss tid t.ex. 5sek.
