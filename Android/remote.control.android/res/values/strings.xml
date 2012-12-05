@@ -24,7 +24,7 @@
     <string name="title_activity_main">MainActivity</string>
 	<string name="btnStartLog">Start Log</string>
 	<string name="btnStopLog">Stop Log</string>
-	<string name="Settings">Settings</string>
+	<string name="Settings">Log Settings</string>
 	<string name="Accelerometer">Accelerometer</string>
 	<string name="Proximity">Proximity</string>
 	<string name="back">Back to Main Menu</string>

@@ -214,7 +214,7 @@ public class MainActivity extends Activity
 			}
 		});
 	}
-
+	
 	private void setupBTSetupButton()
 	{
 		Button setupButton = (Button) findViewById(R.id.bt_setup_button);

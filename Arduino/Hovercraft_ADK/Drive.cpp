@@ -45,10 +45,10 @@ void driveSetup()
 * \author Rickard Dahm
 *
 */
-void motorControl(Engines *motors)
+void motorControl( Engines *motors )
 {
-	rightMotorControl(&motors->right);
-	leftMotorControl(&motors->left);
+	rightMotorControl( &motors->right );
+	leftMotorControl( &motors->left );
 }
 
 /**
@@ -63,19 +63,19 @@ void motorControl(Engines *motors)
 * \author Rickard Dahm
 *
 */
-void rightMotorControl(DriveSignals *signal)
+void rightMotorControl( DriveSignals *signal )
 {
-	setRightDir((int) signal->forward);
-	if(signal->enable != true)
+	setRightDir( (int) signal->forward );
+	if( signal->enable != true )
 	{
-		setRightPower(0);
+		setRightPower( 0 );
 	}
 	else
 	{
-		setRightPower((int) signal->power);
+		setRightPower( (int) signal->power );
 		//Serial << "Power: " << (int) signal->power << endl;
  	}
-	enableRightMotor(signal->enable);
+	enableRightMotor( signal->enable );
 }
 
 /**
@@ -90,9 +90,9 @@ void rightMotorControl(DriveSignals *signal)
 * \author Rickard Dahm
 *
 */
-void setRightDir(int dir)
+void setRightDir( int dir )
 {
-	digitalWrite(rightDir, dir);
+	digitalWrite( rightDir, dir );
 }
 
 /**
@@ -107,7 +107,7 @@ void setRightDir(int dir)
 * \author Rickard Dahm
 *
 */
-void setRightPower(int power)
+void setRightPower( int power )
 {
 	if( power > 255 )
 	{
@@ -137,9 +137,9 @@ void setRightPower(int power)
 * \author Rickard Dahm
 *
 */
-void enableRightMotor(bool enable)
+void enableRightMotor( bool enable )
 {
-	digitalWrite( rightEnable , (int) !enable);
+	digitalWrite( rightEnable , (int) !enable );
 	//setRightPower(0);
 }
 
@@ -155,18 +155,18 @@ void enableRightMotor(bool enable)
 * \author Rickard Dahm
 *
 */
-void leftMotorControl(DriveSignals *signal)
+void leftMotorControl( DriveSignals *signal )
 {
-	setLeftDir((int) signal->forward);
-	if(signal->enable != true)
+	setLeftDir( (int) signal->forward );
+	if( signal->enable != true )
 	{
-		setLeftPower(0);
+		setLeftPower( 0 );
 	}
 	else
 	{
-		setLeftPower((int) signal->power);
+		setLeftPower( (int) signal->power );
 	}
-	enableLeftMotor(signal->enable);
+	enableLeftMotor( signal->enable );
 }
 
 /**
@@ -182,9 +182,9 @@ void leftMotorControl(DriveSignals *signal)
 * \author Rickard Dahm
 *
 */
-void setLeftDir(int dir)
+void setLeftDir( int dir )
 {
-	digitalWrite(leftDir, dir);
+	digitalWrite( leftDir, dir );
 }
 
 /**
@@ -199,7 +199,7 @@ void setLeftDir(int dir)
 * \author Rickard Dahm
 *
 */
-void setLeftPower(int power)
+void setLeftPower( int power )
 {
 
 	if( power > 255 )
@@ -231,9 +231,9 @@ void setLeftPower(int power)
 * \author Rickard Dahm
 *
 */
-void enableLeftMotor(bool enable)
+void enableLeftMotor( bool enable )
 {
-	digitalWrite( leftEnable , (int) !enable);
+	digitalWrite( leftEnable , (int) !enable );
 	//setLeftPower(0);
 }
 
@@ -249,9 +249,9 @@ void enableLeftMotor(bool enable)
 */
 Engines getMotorSignals()
 {
-	digitalWrite(LED, !digitalRead(LED));
-	DriveSignals right = { (bool) digitalRead(rightDir), (bool) !digitalRead(rightEnable), rightPower };
-	DriveSignals left = { (bool) digitalRead(leftDir), (bool) !digitalRead(leftEnable), leftPower };
+	digitalWrite( LED, !digitalRead( LED ) );
+	DriveSignals right = { (bool) digitalRead( rightDir ), (bool) !digitalRead( rightEnable ), rightPower };
+	DriveSignals left = { (bool) digitalRead( leftDir ), (bool) !digitalRead( leftEnable ), leftPower };
 	Engines engines={ right, left };
 	return engines;
 }

@@ -124,6 +124,7 @@ final public class Constants // final to prevent instantiation
 				public static class SendCommand
 				{
 					public static String	ACTION	= "btActionSendCommand";
+					public static String	REQUEST_US_DATA = "btActionRequestUsData";
 
 					public static class Intent
 					{
@@ -151,7 +152,16 @@ final public class Constants // final to prevent instantiation
 
 		public static class LogService
 		{
-
+			public static class Actions
+			{
+				public static String	ADK_US_RESPONSE	= "logServiceActionAdkUsResponse";
+				public static class Intent
+				{
+					public static String	COMMAND	= "logActionSendCommandItentCommand";
+					public static String	TARGET	= "logActionSendCommandItentTarget";
+					public static String	BYTES	= "logActionSendCommandItentBytes";
+				}
+			}
 		}
 
 		public static class ConnectionStates

@@ -25,21 +25,22 @@
 
 // ADK COMMANDS
 // Test signals
-#define BLINKY_ON 1
-#define BLINKY_OFF 2
-#define MOTOR_CONTROL_TEST 11
+#define BLINKY_ON_COMMAND 1
+#define BLINKY_OFF_COMMAND 2
+#define MOTOR_CONTROL_TEST_COMMAND 11
 // Drive control signals
-#define MOTOR_CONTROL 3
-#define PRINT_MESSAGE 4
+#define MOTOR_CONTROL_COMMAND 3
+#define PRINT_MESSAGE_COMMAND 4
 // Requests
-#define I2C_SENSOR_REQ 5
-#define US_SENSOR_REQ 6
-#define ALL_SENSOR_REQ 10
+#define I2C_SENSOR_REQ_COMMAND 5
+#define US_SENSOR_REQ_COMMAND 6
+#define ALL_SENSOR_REQ_COMMAND 10
 
 // Shared Commands
 #define I2C_SENSOR_COMMAND 212
-#define US_SENSOR_COMMAND 213
+#define US_SENSOR_COMMAND 142
 #define ENGINES_REQ_COMMAND 214
+#define US_SENSOR_WARNING_COMMAND 215
 // Targets
 #define TARGET_ADK 1
 #define TARGET_BRAIN 2
@@ -59,6 +60,6 @@ void startBlinky();
 void stopBlinky();
 void USBsetup();
 void decodeMsgType();
-void sendMessage(int command, int target);
+void sendMessage( int command, int target );
 
 #endif /* USB_H_ */

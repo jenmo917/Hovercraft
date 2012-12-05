@@ -40,7 +40,7 @@ void pinSetup()
 */
 void LEDPinsSetup()
 {
-	pinMode(LED, OUTPUT);
+	pinMode( LED, OUTPUT );
 	digitalWrite( LED , 0 );
 }
 
@@ -93,12 +93,12 @@ void leftMotorPinsSetup()
 */
 void sensorPinsSetup()
 {
-	int triggerPins[4] = {trigPin1, trigPin2, trigPin3, trigPin4};
-	int echoPins[4] = {echoPin1, echoPin2, echoPin3, echoPin4};
+	int triggerPins[4] = { trigPin1, trigPin2, trigPin3, trigPin4 };
+	int echoPins[4] = { echoPin1, echoPin2, echoPin3, echoPin4 };
 	for (int i = 0; i < 4; i++)
 	{
-		pinMode(triggerPins[i], OUTPUT);
-		pinMode(echoPins[i], INPUT);
+		pinMode( triggerPins[i], OUTPUT );
+		pinMode( echoPins[i], INPUT );
 	}
 }
 
@@ -113,5 +113,5 @@ void sensorPinsSetup()
 */
 void testPins()
 {
-	pinMode(22, OUTPUT);
+	pinMode( 22, OUTPUT );
 }

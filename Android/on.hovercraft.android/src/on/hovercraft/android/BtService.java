@@ -17,54 +17,50 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.util.Log;
 
-public class BtService extends IntentService implements SensorEventListener
+public class BtService extends IntentService
 {
 	private static final UUID  MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 	private static final String NAME = "Bluetooth SPP";	
 	
 	public static ConnectionState connectionState = ConnectionState.DISCONNECTED; // BT connection state	
 	
-	private boolean listenOnBtInputstream = false;	
-	private BluetoothSocket bluetoothSocket;
-	private BluetoothServerSocket bluetoothServerSocket;
-	private BluetoothAdapter mBluetoothAdapter;
-	private InputStream btInputStream;
-	private OutputStream btOutStream;
-	private int bluetoothConnectionTimeout = 5000;
-	private boolean bluetoothServerUp = false;
-	private boolean bluetoothSocketUp = false;	
-	
-	private SensorManager sensorManager;
-	private double accX;
-	private double accY;
-	private double accZ;
-	
-	private static String TAG = "JM";
+	private boolean listenOnBtInputstream = false;				/**< */
+	private BluetoothSocket bluetoothSocket;					/**< */
+	private BluetoothServerSocket bluetoothServerSocket;		/**< */
+	private BluetoothAdapter mBluetoothAdapter;					/**< */
+	private InputStream btInputStream;							/**< */
+	private OutputStream btOutStream;							/**< */
+	private int bluetoothConnectionTimeout = 5000;				/**< */
+	private boolean bluetoothServerUp = false;					/**< */
+	private boolean bluetoothSocketUp = false;					/**< */
+	private static String TAG = "JM";							/**< */
 
+	/**
+	* \brief 
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	public BtService() 
 	{
 		super("BtService");
 	}
 
-	@Override
-	public void onCreate()
+	/**
+	* \brief Update the Bluetooth connection state
+	*
+	* Description
+	*
+	* @param state 
+	*
+	* \author Johan Gustafsson
+	*
+	*/
+	private void updateBtConnectionState( ConnectionState state )
 	{
-		super.onCreate();
-		Log.d(TAG,"BtService: start BtService");
-		
-        sensorManager=(SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-	}
-	
-	private void updateBtConnectionState(ConnectionState state)
-	{
-		if(connectionState != state)
+		if( connectionState != state )
 		{
 			connectionState = state;
 			Intent i = new Intent(Constants.Broadcast.BluetoothService.UPDATE_CONNECTION_STATE);
@@ -73,25 +69,20 @@ public class BtService extends IntentService implements SensorEventListener
 		}
 	}	
 
+	/**
+	* \brief 
+	*
+	* Description
+	*
+	*
+	* @param arg0
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	@Override
-	public void onAccuracyChanged(Sensor arg0, int arg1) 
-	{
-
-	}
-
-	@Override
-	public void onSensorChanged(SensorEvent event) 
-	{
-		if (event.sensor.getType()==Sensor.TYPE_ACCELEROMETER)
-		{
-			accX = event.values[0];
-			accY = event.values[1];
-			accZ = event.values[2];
-		}		
-	}	
-
-	@Override
-	protected void onHandleIntent(Intent arg0) 
+	protected void onHandleIntent( Intent arg0 ) 
 	{
 		Log.d(TAG, "BTService started");
 		registerReceiver(BtServiceReciever, new IntentFilter("callFunction"));
@@ -113,12 +104,24 @@ public class BtService extends IntentService implements SensorEventListener
 		}
 	}
 	
-	private void btConnectionLost(String message)
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param message
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
+	private void btConnectionLost( String message )
 	{
 		listenOnBtInputstream = false;
 		closeServerSocket();
 
-		if(btInputStream != null)
+		if( btInputStream != null )
 		{
 			try 
 			{
@@ -134,6 +137,14 @@ public class BtService extends IntentService implements SensorEventListener
 		updateBtConnectionState(ConnectionState.DISCONNECTED);
 	}
 	
+	/**
+	* \brief 
+	*
+	* Desription
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private void closeServerSocket()
 	{
 		if( bluetoothServerUp )
@@ -152,6 +163,19 @@ public class BtService extends IntentService implements SensorEventListener
 		}
 	}
 
+	/**
+	* \brief 
+	*
+	* Description
+	*
+	*
+	*
+	* @return bluetoothServerUp
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private boolean setupServer()
 	{
 		// Use a temporary object that is later assigned to mmServerSocket,
@@ -177,6 +201,19 @@ public class BtService extends IntentService implements SensorEventListener
 		return bluetoothServerUp;
 	}
 
+	/**
+	* \brief 
+	*
+	* Description
+	*
+	*
+	*
+	* @return bluetoothSocketUp
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private boolean waitToConnect()
 	{
 		if(bluetoothServerUp)
@@ -204,6 +241,15 @@ public class BtService extends IntentService implements SensorEventListener
 		return bluetoothSocketUp;      
 	}
 
+	/**
+	* \brief 
+	*
+	* Description
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	@SuppressLint("HandlerLeak")
 	private void listenOnBtInputStream()
 	{
@@ -224,6 +270,17 @@ public class BtService extends IntentService implements SensorEventListener
 		}
 	}
 
+	/**
+	* \brief Read the bluetooth input stream
+	*
+	* Description
+	*
+	*
+	*
+	*
+	* \author Jens Moser
+	*
+	*/
 	void checkInput()
 	{
 		byte[] bufferInfo = new byte[3];		
@@ -273,7 +330,23 @@ public class BtService extends IntentService implements SensorEventListener
 		}
 	}
 	
-	private void broadcastBufferToUSBService(byte[] bufferInfo, byte[] bufferMessage)
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param bufferInfo
+	*
+	* @param bufferMessage
+	*
+	* @return Description
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
+	private void broadcastBufferToUSBService( byte[] bufferInfo, byte[] bufferMessage )
 	{
 		Log.d(TAG,"BtService: broadcast command to USB Service");
 		Intent intent = new Intent("handleBTCommands");
@@ -282,7 +355,21 @@ public class BtService extends IntentService implements SensorEventListener
 		sendBroadcast(intent);
 	}
 
-	private void handleBrainCommands(byte[] bufferInfo, byte[] bufferMessage)
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param bufferInfo
+	*
+	* @param bufferMessage
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
+	private void handleBrainCommands( byte[] bufferInfo, byte[] bufferMessage )
 	{
 		Log.d(TAG,"BtService: handleBrainCommand");
 		switch (bufferInfo[0])
@@ -302,27 +389,22 @@ public class BtService extends IntentService implements SensorEventListener
 		}	
 	}
 
-	private void sendData(byte[] data)
-	{	
-		try 
-		{
-			btOutStream = bluetoothSocket.getOutputStream();
-		} 
-		catch (IOException e) 
-		{
-			btConnectionLost("Lost connection...");
-		}
-
-		try 
-		{
-			btOutStream.write(data);
-		} 
-		catch (IOException e) 
-		{
-			btConnectionLost("Lost connection...");
-		}
-	}
-
+	/**
+	* \brief 
+	*
+	* Description
+	*
+	*
+	* @param command
+	*
+	* @param target
+	* 
+	* @param message
+	*
+	*
+	* \author Jens Moser
+	*
+	*/
 	private void sendCommand(byte command, byte target, byte[] message)
 	{
 		Log.d(TAG,"BtService: SendCommand:" + (int) command);
@@ -349,9 +431,8 @@ public class BtService extends IntentService implements SensorEventListener
 			btConnectionLost("Lost connection...");
 		}		
 		
-		if (btOutStream != null)
+		if ( btOutStream != null )
 		{
-
 			try 
 			{
 				btOutStream.write(buffer);
@@ -364,6 +445,18 @@ public class BtService extends IntentService implements SensorEventListener
 		}
 	}	
 
+	/**
+	* \brief 
+	*
+	* 
+	*
+	*
+	* @param message
+	*
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private void broadcastMessage(String message)
 	{
 		Intent i = new Intent("printMessage");
@@ -371,6 +464,19 @@ public class BtService extends IntentService implements SensorEventListener
 		sendBroadcast(i);
 	}
 	
+	/**
+	* \brief BtService BroadcastReceiver
+	*
+	* 
+	*
+	*
+	* @param context 
+	*
+	* @param intent
+	*
+	* \author Johan Gustafsson
+	*
+	*/
 	private final BroadcastReceiver BtServiceReciever = new BroadcastReceiver() 
 	{
 		@Override
@@ -393,7 +499,24 @@ public class BtService extends IntentService implements SensorEventListener
 				{
 					if( !bluetoothSocketUp )
 						waitToConnect();
-				}		
+				}
+				if(intent.hasExtra("sendToRemote"))
+				{
+					byte[] infoAndPB = intent.getByteArrayExtra("combinedInfoAndPB");
+					byte command = infoAndPB[0];
+					byte target = infoAndPB[1];
+					
+					int messageLength = (int)infoAndPB[2];
+					byte[] message = new byte[messageLength];
+					
+					for(int i = 0; i < messageLength - 3; i++)
+					{
+						message[i] = infoAndPB[3 + i];
+					}
+					
+					if( bluetoothSocketUp )
+						sendCommand(command, target, message);
+				}
 			}
 		}
 	};

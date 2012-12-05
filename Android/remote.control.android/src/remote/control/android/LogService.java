@@ -12,6 +12,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+
+import common.files.android.Constants;
+
 import remote.control.android.Command.*;
 
 import android.app.IntentService;
@@ -32,16 +36,16 @@ public class LogService extends IntentService implements SensorEventListener
 {
 
 	private static final String TAG = "REMOTE";
-	private static final String ADK_TARGET = null;
-	public static Boolean logStarted = false;
+	public static boolean logStarted = false;
 	public static boolean accSensor = false;
 	public static boolean accBrainSensor = false;
 	public static boolean usAdkSensor = false;
-	private int logDelay = 1;
+	private int logDelay = 5000;
 	Sensor accelerometer;
 	SensorManager sm;
 	List<Float> sensorDataRemote = new ArrayList<Float>();
-	List<Float> usAdk = new ArrayList<Float>();
+	List<Float> sensorDataAdk = new ArrayList<Float>();
+
 	private File accfile = new File(Environment.getExternalStorageDirectory()+File.separator + "remote_acc_data.txt");
 	private File accbrainfile = new File(Environment.getExternalStorageDirectory()+File.separator + "brain_acc_data.txt");
 	private File usfile = new File(Environment.getExternalStorageDirectory()+File.separator + "adk_us_data.txt");
@@ -63,6 +67,7 @@ public class LogService extends IntentService implements SensorEventListener
 		intentFilter.addAction("CheckboxAccRemoteAction");
 		intentFilter.addAction("CheckboxAccBrainAction");
 		intentFilter.addAction("CheckboxUsOnAdkAction");
+		intentFilter.addAction(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE);
 		registerReceiver(broadcastReceiver, intentFilter);
 		initSensors();
 	}
@@ -143,26 +148,56 @@ public class LogService extends IntentService implements SensorEventListener
 				catch (IOException e)
 				{
 					e.printStackTrace();
-				}	
+				}
 			} 
-			else if(action.equalsIgnoreCase("logUs"))
+			else if(action.equalsIgnoreCase(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE))
 			{
 				Log.d(TAG, "usLog received from ADK");
-				Bundle bundle = intent.getExtras();
-				USSensorData uUSensorData = (USSensorData) bundle.get("USSensorData");
-
-				String desc = uUSensorData.getDescription();
-				int value = uUSensorData.getValue();
-
-				// desc: frontRight, frontLeft, backRight, backLeft
-				// value: >200 = "-", 120, 55, 10, 0
-
-				// Olle f�r g�ra ett PB-objekt som inneh�ller alla USSensorer. Helst dynamiskt s� att man kan ha hur m�nga som helst.
-
-				// spara till fil. G�r en ny funktion f�r det.
-
-				// saveData(all sensordata i en list eller array eller whaaatevah);
-
+				USSensors usSensorDataToLog = null;
+				
+				try 
+				{
+					usSensorDataToLog = USSensors.parseFrom(intent.getByteArrayExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES));
+				} 
+				catch (InvalidProtocolBufferException e) 
+				{
+					e.printStackTrace();
+				}
+				
+				USSensorData us1 = usSensorDataToLog.getUSSensorData1();
+				USSensorData us2 = usSensorDataToLog.getUSSensorData2();
+				USSensorData us3 = usSensorDataToLog.getUSSensorData3();
+				USSensorData us4 = usSensorDataToLog.getUSSensorData4();
+				
+				float us1Value = (float)us1.getValue();
+				float us2Value = (float)us2.getValue();
+				float us3Value = (float)us3.getValue();
+				float us4Value = (float)us4.getValue();
+				
+				Intent i = new Intent("printMessage");
+				i.putExtra("coordinates", "Sensor data: \n Senor 1: " + String.valueOf(us1Value) + "\n Sensor 2: " + String.valueOf(us2Value));
+				sendBroadcast(i);
+				
+				
+				sensorDataAdk.clear();
+				
+				sensorDataAdk.add(us1Value);
+				sensorDataAdk.add(us2Value);
+				sensorDataAdk.add(us3Value);
+				sensorDataAdk.add(us4Value);
+				
+				try 
+				{
+					if(accfile.createNewFile())
+						headerToSd(usfile);
+				}
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+				
+				Log.d(TAG, "Logging usAdk");
+				accToSd(sensorDataAdk,usfile);
 			}
 		}
 	};
@@ -178,34 +213,26 @@ public class LogService extends IntentService implements SensorEventListener
 				if(accSensor == true)
 				{
 					Log.d(TAG, "Logging acc from remote");
-					accToSd(accfile);			
+					accToSd(sensorDataRemote,accfile);
 				}
 				if(accBrainSensor == true)
 				{
 					Log.d(TAG, "Logging acc from brain");
-					accToSd(accbrainfile);
+					//accToSd(accbrainfile);
 				}
 				if(usAdkSensor == true)
 				{
-					Intent logUsIntent = new Intent("LogUs");
-					logUsIntent.putExtra("Target", ADK_TARGET);
+					byte[] test = new byte[1];
+					test[0] = (byte)3;
+					
+					Intent logUsIntent = new Intent(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_US_DATA);
+					logUsIntent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET,Constants.TARGET_ADK);
+					logUsIntent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.BYTES, test);
 					sendBroadcast(logUsIntent);
 
 					Context context2 = getApplicationContext();
 					Toast.makeText(context2, "US Log Started", Toast.LENGTH_SHORT).show();
-
-					Log.d(TAG, "Logging usAdk");
-					//usBrainToSd();
-
-					// tillg�ng till en intent (en v�ska/beh�llare) med sensorv�rden
-					// g�r en funktion som sparar dessa till minneskortet
-					// kalla p� funktionen h�r
-					// onHoverAccToSd(value1, value2, value3);
-
-					// k�r funktion som skickar logg-kommando till sv�varens telefon eller till adk
-					// sendCommand(command, target, messageLength, message)
-					// sendCommand(logOnHoverAcc,0x2,0,0)
-				}  		
+				} 
 			}
 
 			// delay med en viss tid t.ex. 5sek.
@@ -243,7 +270,7 @@ public class LogService extends IntentService implements SensorEventListener
 		}
 	}
 
-	public void accToSd(File file)
+	public void accToSd(List<Float> sensorList, File file)
 	{
 		try
 		{
@@ -253,7 +280,7 @@ public class LogService extends IntentService implements SensorEventListener
 			DecimalFormatSymbols format = new DecimalFormatSymbols();
 			format.setDecimalSeparator('.');
 			form.setDecimalFormatSymbols(format);
-			ListIterator<Float> lI = sensorDataRemote.listIterator();
+			ListIterator<Float> lI = sensorList.listIterator();
 			while(lI.hasNext())
 			{
 				oWriter.append(form.format(lI.next()));

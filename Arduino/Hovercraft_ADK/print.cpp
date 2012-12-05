@@ -19,10 +19,10 @@
 * \author Rickard Dahm
 *
 */
-void printMotorSignal(Engines *motors)
+void printMotorSignal( Engines *motors )
 {
-	printRightMotorSignal(&motors->right);
-	printLeftMotorSignal(&motors->left);
+	printRightMotorSignal( &motors->right );
+	printLeftMotorSignal( &motors->left );
 }
 
 /**
@@ -37,11 +37,11 @@ void printMotorSignal(Engines *motors)
 * \author Rickard Dahm
 *
 */
-void printRightMotorSignal(DriveSignals* right)
+void printRightMotorSignal( DriveSignals* right )
 {
 	Serial << "Right Motor:" << endl;
 
-	if(right->enable)
+	if( right->enable )
 	{
 		Serial << "Enable: True" << endl;
 	}
@@ -49,7 +49,7 @@ void printRightMotorSignal(DriveSignals* right)
 	{
 		Serial << "Enable: False" << endl;
 	}
-	if(right->forward)
+	if( right->forward )
 	{
 		Serial << "Direction: Forward" << endl;
 	}
@@ -72,11 +72,11 @@ void printRightMotorSignal(DriveSignals* right)
 * \author Rickard Dahm
 *
 */
-void printLeftMotorSignal(DriveSignals* left)
+void printLeftMotorSignal( DriveSignals* left )
 {
 	Serial << "Left Motor:" << endl;
 
-	if(left->enable)
+	if( left->enable )
 	{
 		Serial << "Enable: True" << endl;
 	}
@@ -84,7 +84,7 @@ void printLeftMotorSignal(DriveSignals* left)
 	{
 		Serial << "Enable: False" << endl;
 	}
-	if(left->forward)
+	if( left->forward )
 	{
 		Serial << "Direction: Forward" << endl;
 	}
