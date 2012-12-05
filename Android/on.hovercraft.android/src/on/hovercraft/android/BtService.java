@@ -40,16 +40,6 @@ public class BtService extends IntentService
 	/**
 	* \brief 
 	*
-	* 
-	*
-	*
-	* @param 
-	*
-	* @param 
-	*
-	* @return Description
-	*
-	*
 	* \author Johan Gustafsson
 	*
 	*/
@@ -59,17 +49,11 @@ public class BtService extends IntentService
 	}
 
 	/**
-	* \brief 
+	* \brief Update the Bluetooth connection state
 	*
-	* 
+	* Description
 	*
-	*
-	* @param 
-	*
-	* @param 
-	*
-	* @return Description
-	*
+	* @param state 
 	*
 	* \author Johan Gustafsson
 	*
@@ -88,21 +72,17 @@ public class BtService extends IntentService
 	/**
 	* \brief 
 	*
-	* 
+	* Description
 	*
 	*
-	* @param 
-	*
-	* @param 
-	*
-	* @return Description
+	* @param arg0
 	*
 	*
 	* \author Johan Gustafsson
 	*
 	*/
 	@Override
-	protected void onHandleIntent(Intent arg0) 
+	protected void onHandleIntent( Intent arg0 ) 
 	{
 		Log.d(TAG, "BTService started");
 		registerReceiver(BtServiceReciever, new IntentFilter("callFunction"));
@@ -130,11 +110,7 @@ public class BtService extends IntentService
 	* 
 	*
 	*
-	* @param 
-	*
-	* @param 
-	*
-	* @return Description
+	* @param message
 	*
 	*
 	* \author Johan Gustafsson
@@ -164,15 +140,7 @@ public class BtService extends IntentService
 	/**
 	* \brief 
 	*
-	* 
-	*
-	*
-	* @param 
-	*
-	* @param 
-	*
-	* @return Description
-	*
+	* Desription
 	*
 	* \author Johan Gustafsson
 	*
@@ -198,14 +166,11 @@ public class BtService extends IntentService
 	/**
 	* \brief 
 	*
-	* 
+	* Description
 	*
 	*
-	* @param 
 	*
-	* @param 
-	*
-	* @return Description
+	* @return bluetoothServerUp
 	*
 	*
 	* \author Johan Gustafsson
@@ -239,14 +204,11 @@ public class BtService extends IntentService
 	/**
 	* \brief 
 	*
-	* 
+	* Description
 	*
 	*
-	* @param 
 	*
-	* @param 
-	*
-	* @return Description
+	* @return bluetoothSocketUp
 	*
 	*
 	* \author Johan Gustafsson
@@ -282,14 +244,7 @@ public class BtService extends IntentService
 	/**
 	* \brief 
 	*
-	* 
-	*
-	*
-	* @param 
-	*
-	* @param 
-	*
-	* @return Description
+	* Description
 	*
 	*
 	* \author Johan Gustafsson
@@ -316,7 +271,7 @@ public class BtService extends IntentService
 	}
 
 	/**
-	* \brief 
+	* \brief Read the bluetooth input stream
 	*
 	* 
 	*
@@ -386,9 +341,9 @@ public class BtService extends IntentService
 	* 
 	*
 	*
-	* @param 
+	* @param bufferInfo
 	*
-	* @param 
+	* @param bufferMessage
 	*
 	* @return Description
 	*
@@ -411,9 +366,9 @@ public class BtService extends IntentService
 	* 
 	*
 	*
-	* @param 
+	* @param bufferInfo
 	*
-	* @param 
+	* @param bufferMessage
 	*
 	*
 	* \author Johan Gustafsson
