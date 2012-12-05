@@ -262,7 +262,15 @@ void USBSendUSSensorDataHandler( int event, int target )
 	{
 		if( encodeUSSensorListMsg() )
 		{
-			sendMessage( US_SENSOR_COMMAND, target );
+			Serial << "USSensor sent to target: " << target << endl;
+			if ( target == 0 )
+			{
+				sendMessage( US_SENSOR_COMMAND, TARGET_REMOTE );
+			}
+			else
+			{
+				sendMessage( US_SENSOR_COMMAND, target );
+			}
 		}
 		else
 		{
@@ -320,11 +328,11 @@ void USBSendEnginesObject( int event, int target )
 	{
 		if ( target == 0 )
 		{
-			sendMessage( MOTOR_CONTROL, 3 );
+			sendMessage( MOTOR_CONTROL_COMMAND, 3 );
 		}
 		else
 		{
-			sendMessage( MOTOR_CONTROL, target );
+			sendMessage( MOTOR_CONTROL_COMMAND, target );
 		}
 	}
 	else
@@ -357,5 +365,21 @@ void connectionCheckEngines( int event, int param )
 		DriveSignals stop = { false, true, 0 };
 		rightMotorControl( &stop );
 		leftMotorControl( &stop );
+	}
+}
+
+void USBSendUSWarningHandler( int event, int target )
+{
+	//Serial << "USBSendUSSensorDataHandler" << endl;
+	if ( acc.isConnected() )
+	{
+		if( encodeUSSensorListMsg() )
+		{
+			sendMessage( US_SENSOR_WARNING_COMMAND, 3 );
+		}
+		else
+		{
+			Serial << "Failed to encode sensors in function: USBSendSensorDataHandler";
+		}
 	}
 }

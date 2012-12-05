@@ -27,5 +27,6 @@ void timeManager100( EventQueue* q );
 void timeManager( EventQueue* q );
 void analogManager( EventQueue* q );
 void USBReadManager( EventQueue* q );
+void USSensorManager( EventQueue* q );
 
 #endif /* EVENTMANAGERS_H_ */

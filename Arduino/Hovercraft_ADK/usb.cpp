@@ -14,12 +14,13 @@
 #include "Streaming.h"
 #include "Event.h"
 
+#define USB_BUFFER_LENGTH 255
 AndroidAccessory acc("Manufacturer", "Model", "Description","Version", "URI", "Serial");
 
-byte rcvmsg[255];
+byte rcvmsg[USB_BUFFER_LENGTH];
 byte rcvmsgInfo[3];
-byte rcvPBmsg[252];
-byte sendMsg[252];
+byte rcvPBmsg[USB_BUFFER_LENGTH-3];
+byte sendMsg[USB_BUFFER_LENGTH-3];
 int sendMsgLength;
 int rcvPBmsgLength;
 int connectionCounter;
@@ -96,22 +97,22 @@ void decodeMsgType()
 	{
 		switch( rcvmsgInfo[0] )
 		{
-		case BLINKY_ON:
+		case BLINKY_ON_COMMAND:
 			Serial.println( "COMMAND: BLINKY_ON" );
 			startBlinky();
 			break;
-		case BLINKY_OFF:
+		case BLINKY_OFF_COMMAND:
 			Serial.println( "COMMAND: BLINKY_OFF" );
 			stopBlinky();
 			break;
-		case MOTOR_CONTROL:
+		case MOTOR_CONTROL_COMMAND:
 			Serial.println( "COMMAND: MOTOR_CONTROL" );
 			connectionCounter = 0;
 			motors = decodeEngines();
 			printMotorSignal(&motors);
 			motorControl(&motors);
 			break;
-		case MOTOR_CONTROL_TEST:
+		case MOTOR_CONTROL_TEST_COMMAND:
 			Serial.println( "COMMAND: MOTOR_CONTROL_TEST" );
 			connectionCounter = 0;
 			motors = decodeEngines();
@@ -125,7 +126,7 @@ void decodeMsgType()
 			printMotorSignal( &motors );
 			motorControl( &motors );
 			break;
-		case PRINT_MESSAGE:
+		case PRINT_MESSAGE_COMMAND:
 			Serial << "Message: " << endl;
 			for(int i = 0; i < rcvPBmsgLength; i++)
 			{
@@ -133,10 +134,10 @@ void decodeMsgType()
 				Serial << " "<< (uint8_t) rcvPBmsg[i] << endl;
 			}
 			break;
-		case I2C_SENSOR_REQ:
+		case I2C_SENSOR_REQ_COMMAND:
 			q.enqueueEvent( Events::EV_I2C_SENSOR_REQ, rcvPBmsg[0] );
 			break;
-		case US_SENSOR_REQ:
+		case US_SENSOR_REQ_COMMAND:
 			q.enqueueEvent( Events::EV_US_SENSOR_REQ, rcvPBmsg[0] );
 			break;
 		case ENGINES_REQ_COMMAND:
@@ -167,7 +168,6 @@ void sendMessage( int command, int target )
 	if( acc.isConnected() )
 	{
 		//Serial << "SendMessage" << endl;
-		//Serial << sendMsgLength;
 		//Serial << command << " " << target << " " << sendMsgLength << endl;
 		byte fullMsg[255];
 		int i;
@@ -178,7 +178,9 @@ void sendMessage( int command, int target )
 		for( i = 0; i < sendMsgLength; i++ )
 		{
 			fullMsg[ 3 + i ] = sendMsg[i];
+			//Serial << fullMsg[ 3 + i ] << " ";
 		}
+		//Serial << endl;
 		acc.write( fullMsg, i + 3 );
 	}
 }

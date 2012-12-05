@@ -7,6 +7,8 @@
 #include "EventManagers.h"
 #include <UsbHost.h>
 #include <AndroidAccessory.h>
+#include "sensors.h"
+#include "Event.h"
 
 /**
 * \brief Creates an event every 5 seconds
@@ -172,5 +174,32 @@ void USBReadManager( EventQueue* q )
 		{
 			q->enqueueEvent( Events::EV_SERIAL, len );
 		}
+	}
+}
+
+void USSensorManager( EventQueue* q )
+{
+	int duration;
+	int distance;
+	int warningFlag = 0;
+
+	for( int i = 0; i < MAX_US_SENSORS; i++ )
+	{
+		if( USSensorList[i].type != "Empty" )
+		{
+			digitalWrite( USSensorList[i].triggerpin, HIGH );
+			delayMicroseconds( 1000 );
+			digitalWrite( USSensorList[i].triggerpin, LOW );
+			duration = pulseIn( USSensorList[i].echopin, HIGH );
+			distance = ( duration / 2 ) / 29.1;
+		}
+		if ( distance <= 200 && distance >= 0 )
+		{
+			warningFlag = 1;
+		}
+	}
+	if( warningFlag == 1 )
+	{
+		q->enqueueEvent( Events::EV_US_SENSOR_WARNING, 0 );
 	}
 }

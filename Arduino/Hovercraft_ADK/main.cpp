@@ -42,6 +42,7 @@ void setup()
 	disp.addEventListener( Events::EV_I2C_SENSOR_REQ, I2CSensorDataHandler );
 	disp.addEventListener( Events::EV_US_SENSOR_FINISHED, USBSendUSSensorDataHandler );
 	disp.addEventListener( Events::EV_I2C_SENSOR_FINISHED, USBSendI2CSensorDataHandler );
+	//disp.addEventListener( Events::EV_US_SENSOR_WARNING, USBSendUSWarningHandler );
 	disp.addEventListener( Events::EV_TIME_500, blinkyHandler );
 	disp.addEventListener( Events::EV_TIME_5000, USBSendEnginesObject );
 	disp.addEventListener( Events::EV_ENGINES_REQ, USBSendEnginesObject );
@@ -72,6 +73,7 @@ void loop()
 		ErrorMsgSent = false;
 		timeManager( &q );
 		USBReadManager( &q );
+		//USSensorManager( &q );
 		//analogManager( &q );<
 
 		// get events from the queue and call the
