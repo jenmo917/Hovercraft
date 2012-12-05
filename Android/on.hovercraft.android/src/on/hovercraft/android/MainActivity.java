@@ -214,7 +214,7 @@ public class MainActivity extends Activity
 			}
 		});
 	}
-
+	
 	private void setupBTSetupButton()
 	{
 		Button setupButton = (Button) findViewById(R.id.bt_setup_button);
@@ -224,8 +224,6 @@ public class MainActivity extends Activity
 			public void onClick(View v)
 			{
 				Log.d(TAG, "setupBTSetupButton pushed");
-
-				//TODO: Visible mode turn on by user 
 
 				//Call serverUp
 				Intent i = new Intent("callFunction");

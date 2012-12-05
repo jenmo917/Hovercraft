@@ -25,18 +25,18 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button buttonFindBtDevice;
 	Button buttonPairBtDevice;
 	Button buttonChooseBtDevice;
-	Button buttonUp;
-	Button buttonDown;
-	Button start;
-	Button stop;
-	Button settings;
+	Button buttonToggleTransmission;
+	Button buttonStartLog;
+	Button buttonStopLog;
+	Button buttonLogSettings;
 
 	TextView xCoordinate;
 	TextView yCoordinate;
 	TextView zCoordinate;
 	TextView infoText;
 	TextView messageText;
-
+	
+	boolean transmittingMotorSignals = false;
 	int length = 0;
 	int i = 0;
 
@@ -66,6 +66,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		initTextViews();
 		initOnClickListners();
 		initReceiver();
+		
+		Intent checkTransmissionSatus = new Intent(Constants.Broadcast.ControlSystem.Status.Query.ACTION);
+		checkTransmissionSatus.putExtra(Constants.Broadcast.ControlSystem.Status.Query.TYPE, Constants.Broadcast.ControlSystem.Status.TRANSMISSION);
+		sendBroadcast(checkTransmissionSatus);
 	}
 
 	private void startRemoteBtServerService()
@@ -94,34 +98,33 @@ public class MainActivity extends Activity implements OnClickListener {
 	{
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("printMessage");
+		filter.addAction(Constants.Broadcast.ControlSystem.Status.Response.ACTION);
 		registerReceiver(mReceiver, filter);
 	}
 
 	private void initButtons()
 	{
 		// log buttons
-		start = (Button) findViewById(R.id.startButton);
-		stop = (Button) findViewById(R.id.stopButton);
-		settings = (Button) findViewById(R.id.settingsButton);
+		buttonStartLog = (Button) findViewById(R.id.startButton);
+		buttonStopLog = (Button) findViewById(R.id.stopButton);
+		buttonLogSettings = (Button) findViewById(R.id.settingsButton);
 
 		// bluetooth buttons
-		buttonToggleBT = (Button) findViewById(R.id.btn_toggleBT);
+		buttonToggleBT = (Button) findViewById(R.id.toggleBluetoothOnOff);
 		buttonFindBtDevice = (Button) findViewById(R.id.findBtDevicesButton);
 		buttonPairBtDevice = (Button) findViewById(R.id.pairBtDeviceButton);
 		buttonChooseBtDevice = (Button) findViewById(R.id.chooseBtDeviceButton);
 
 		// other buttons
-		buttonUp = (Button) findViewById(R.id.btn_up);
-		buttonDown = (Button) findViewById(R.id.btn_down);
+		buttonToggleTransmission = (Button) findViewById(R.id.toggleTransmissionButton);
 	}
 
 	private void initOnClickListners()
 	{
-		start.setOnClickListener(this);
-		stop.setOnClickListener(this);
-		settings.setOnClickListener(this);
-		buttonUp.setOnClickListener(this);
-		buttonDown.setOnClickListener(this);
+		buttonStartLog.setOnClickListener(this);
+		buttonStopLog.setOnClickListener(this);
+		buttonLogSettings.setOnClickListener(this);
+		buttonToggleTransmission.setOnClickListener(this);
 		buttonChooseBtDevice.setOnClickListener(this);
 		buttonPairBtDevice.setOnClickListener(this);
 		buttonFindBtDevice.setOnClickListener(this);
@@ -131,8 +134,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View src) {
 		switch (src.getId()) {
-		case R.id.btn_toggleBT:
+		case R.id.toggleBluetoothOnOff:
 			
+
 			
 
 			break;
@@ -161,18 +165,23 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			break;
 
-		case R.id.btn_up:
+		case R.id.toggleTransmissionButton:
 			
-			Intent enableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.ENABLE_TRANSMISSION);
-			sendBroadcast(enableMS);
+			if(transmittingMotorSignals)
+			{
+				Intent disableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.DISABLE_TRANSMISSION);
+				sendBroadcast(disableMS);
+			}
+			else
+			{
+				Intent enableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.ENABLE_TRANSMISSION);
+				sendBroadcast(enableMS);
+			}
 			
-		break;
-
-		case R.id.btn_down:
-
-			Intent disableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.DISABLE_TRANSMISSION);
-			sendBroadcast(disableMS);
-
+			Intent checkTransmissionSatus = new Intent(Constants.Broadcast.ControlSystem.Status.Query.ACTION);
+			checkTransmissionSatus.putExtra(Constants.Broadcast.ControlSystem.Status.Query.TYPE, Constants.Broadcast.ControlSystem.Status.TRANSMISSION);
+			sendBroadcast(checkTransmissionSatus);
+			
 			break;
 
 		case R.id.startButton:
@@ -250,6 +259,18 @@ public class MainActivity extends Activity implements OnClickListener {
 					messageText.setText(coordinates);
 				}
 			}
+			else if(Constants.Broadcast.ControlSystem.Status.Response.ACTION.equals(action))
+			{
+				if(intent.getStringExtra(Constants.Broadcast.ControlSystem.Status.Response.TYPE).equals(Constants.Broadcast.ControlSystem.Status.TRANSMISSION))
+				{
+					transmittingMotorSignals = intent.getBooleanExtra(Constants.Broadcast.ControlSystem.Status.Response.STATUS, false);
+					
+					if(transmittingMotorSignals)
+						buttonToggleTransmission.setText(R.string.btnStopMS);
+					else
+						buttonToggleTransmission.setText(R.string.btnSendMS);
+				}
+			}
 		}
 	};
 
@@ -266,6 +287,11 @@ public class MainActivity extends Activity implements OnClickListener {
 	{
 		Log.d(TAG, "onPause Main");
 		unregisterReceiver(mReceiver);
+		
+		Intent pair = new Intent("callFunction");
+		pair.putExtra("disconnectDevice", "disconnectDevice");
+		sendBroadcast(pair);
+		
 		super.onPause();
 	}
 

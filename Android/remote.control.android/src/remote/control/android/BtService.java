@@ -27,7 +27,7 @@ public class BtService extends IntentService
 {
 	private static String TAG = "JM";
 	protected static final int REQUEST_ENABLE_BT = 1;
-
+	
 	public List<String> devicesFound = new ArrayList<String>();
 	
 	boolean bluetoothSocketUp = false;
@@ -88,6 +88,7 @@ public class BtService extends IntentService
 		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.ACTION);
 		filter.addAction("callFunction");
+		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_US_DATA);
 		registerReceiver(BtRemoteServiceReciever, filter);
 	}
 	
@@ -233,14 +234,14 @@ public class BtService extends IntentService
 	
 	void checkInput()
 	{
-		byte[] bufferInfo = new byte[3];		
+		byte[] bufferInfo = new byte[3];
 		try
 		{
 			bufferInfo[0] = (byte) mInputStream.read(); // Command
 			bufferInfo[1] = (byte) mInputStream.read(); // Target
 			bufferInfo[2] = (byte) mInputStream.read(); // Message length
 		} 
-		catch (IOException e1) 
+		catch (IOException e1)
 		{
 			btConnectionLost("Lost connection...");
 			Log.d(TAG,"BtService: BufferInfo read failed");
@@ -249,7 +250,7 @@ public class BtService extends IntentService
 		
 		byte[] bufferMessage = new byte[(int) bufferInfo[2]];
 		try
-		{			
+		{
 			mInputStream.read(bufferMessage, 0, (int) bufferInfo[2]);
 		} 
 		catch (IOException e1) 
@@ -271,6 +272,12 @@ public class BtService extends IntentService
 		// commands from remote to remote. Never used?
 		else if(Constants.TARGET_REMOTE == bufferInfo[1])
 		{
+			if(Constants.US_SENSOR_COMMAND == bufferInfo[0])
+			{
+				Intent usSensors = new Intent(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE);
+				usSensors.putExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES, bufferMessage);
+				sendBroadcast(usSensors);
+			}
 			sendBroadcastMessage("Message received:\n" + String.valueOf(bufferInfo[0]));			
 			//sendCommand(bufferInfo[0], bufferInfo[1], bufferMessage);
 		}
@@ -375,6 +382,12 @@ public class BtService extends IntentService
 				{
 					chooseFoundBluetoothDevice();
 				}
+				
+				if(intent.hasExtra("disconnectDevice"))
+				{
+					if( bluetoothSocketUp )
+						btConnectionLost("Connection lost...");
+				}
 
 				if(intent.hasExtra("connectDevice"))
 				{
@@ -405,6 +418,12 @@ public class BtService extends IntentService
 				byte[] bytes = intent
 					.getByteArrayExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.BYTES);
 				sendProtocol(command, target, bytes);
+			}
+			if(action.equals(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_US_DATA))
+			{
+				byte[] requestUsAdk = new byte[1];
+				requestUsAdk[0] = Constants.TARGET_REMOTE;
+				sendProtocol(Constants.LOG_US_SENSOR_COMMAND,Constants.TARGET_ADK,requestUsAdk);
 			}
 		}
 	};
