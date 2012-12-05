@@ -12,6 +12,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+
+import common.files.android.Constants;
+
 import remote.control.android.Command.*;
 
 import android.app.IntentService;
@@ -32,8 +36,7 @@ public class LogService extends IntentService implements SensorEventListener
 {
 
 	private static final String TAG = "REMOTE";
-	private static final String ADK_TARGET = null;
-	public static Boolean logStarted = false;
+	public static boolean logStarted = false;
 	public static boolean accSensor = false;
 	public static boolean accBrainSensor = false;
 	public static boolean usAdkSensor = false;
@@ -41,7 +44,8 @@ public class LogService extends IntentService implements SensorEventListener
 	Sensor accelerometer;
 	SensorManager sm;
 	List<Float> sensorDataRemote = new ArrayList<Float>();
-	List<Float> usAdk = new ArrayList<Float>();
+	List<Float> sensorDataAdk = new ArrayList<Float>();
+
 	private File accfile = new File(Environment.getExternalStorageDirectory()+File.separator + "remote_acc_data.txt");
 	private File accbrainfile = new File(Environment.getExternalStorageDirectory()+File.separator + "brain_acc_data.txt");
 	private File usfile = new File(Environment.getExternalStorageDirectory()+File.separator + "adk_us_data.txt");
@@ -145,15 +149,32 @@ public class LogService extends IntentService implements SensorEventListener
 					e.printStackTrace();
 				}	
 			} 
-			else if(action.equalsIgnoreCase("logUs"))
+			else if(action.equalsIgnoreCase(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE))
 			{
 				Log.d(TAG, "usLog received from ADK");
-				Bundle bundle = intent.getExtras();
-				USSensorData uUSensorData = (USSensorData) bundle.get("USSensorData");
-
-				String desc = uUSensorData.getDescription();
-				int value = uUSensorData.getValue();
-
+				USSensors usSensorDataToLog = null;
+				
+				try {
+					usSensorDataToLog = USSensors.parseFrom(intent.getByteArrayExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES));
+				} catch (InvalidProtocolBufferException e) 
+				{
+					e.printStackTrace();
+				}
+				USSensorData us1 = usSensorDataToLog.getUSSensorData1();
+				USSensorData us2 = usSensorDataToLog.getUSSensorData2();
+				USSensorData us3 = usSensorDataToLog.getUSSensorData3();
+				USSensorData us4 = usSensorDataToLog.getUSSensorData4();
+				
+				float us1Value = (float)us1.getValue();
+				float us2Value = (float)us2.getValue();
+				float us3Value = (float)us3.getValue();
+				float us4Value = (float)us4.getValue();
+				
+				sensorDataAdk.add(us1Value);
+				sensorDataAdk.add(us2Value);
+				sensorDataAdk.add(us3Value);
+				sensorDataAdk.add(us4Value);
+				
 				// desc: frontRight, frontLeft, backRight, backLeft
 				// value: >200 = "-", 120, 55, 10, 0
 
@@ -178,17 +199,17 @@ public class LogService extends IntentService implements SensorEventListener
 				if(accSensor == true)
 				{
 					Log.d(TAG, "Logging acc from remote");
-					accToSd(accfile);			
+					accToSd(sensorDataRemote,accfile);
 				}
 				if(accBrainSensor == true)
 				{
 					Log.d(TAG, "Logging acc from brain");
-					accToSd(accbrainfile);
+					//accToSd(accbrainfile);
 				}
 				if(usAdkSensor == true)
 				{
-					Intent logUsIntent = new Intent("LogUs");
-					logUsIntent.putExtra("Target", ADK_TARGET);
+					Intent logUsIntent = new Intent(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_US_DATA);
+					logUsIntent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET,Constants.TARGET_ADK);
 					sendBroadcast(logUsIntent);
 
 					Context context2 = getApplicationContext();
@@ -243,7 +264,7 @@ public class LogService extends IntentService implements SensorEventListener
 		}
 	}
 
-	public void accToSd(File file)
+	public void accToSd(List<Float> sensorList, File file)
 	{
 		try
 		{
@@ -253,7 +274,7 @@ public class LogService extends IntentService implements SensorEventListener
 			DecimalFormatSymbols format = new DecimalFormatSymbols();
 			format.setDecimalSeparator('.');
 			form.setDecimalFormatSymbols(format);
-			ListIterator<Float> lI = sensorDataRemote.listIterator();
+			ListIterator<Float> lI = sensorList.listIterator();
 			while(lI.hasNext())
 			{
 				oWriter.append(form.format(lI.next()));
