@@ -423,7 +423,9 @@ public class BtService extends IntentService
 			{
 				byte[] requestUsAdk = new byte[1];
 				requestUsAdk[0] = Constants.TARGET_REMOTE;
-				sendProtocol(Constants.LOG_US_SENSOR_COMMAND,Constants.TARGET_ADK,requestUsAdk);
+				
+				if( bluetoothSocketUp )
+					sendProtocol(Constants.LOG_US_SENSOR_COMMAND,Constants.TARGET_ADK,requestUsAdk);
 			}
 		}
 	};

@@ -154,12 +154,15 @@ public class LogService extends IntentService implements SensorEventListener
 				Log.d(TAG, "usLog received from ADK");
 				USSensors usSensorDataToLog = null;
 				
-				try {
+				try 
+				{
 					usSensorDataToLog = USSensors.parseFrom(intent.getByteArrayExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES));
-				} catch (InvalidProtocolBufferException e) 
+				} 
+				catch (InvalidProtocolBufferException e) 
 				{
 					e.printStackTrace();
 				}
+				
 				USSensorData us1 = usSensorDataToLog.getUSSensorData1();
 				USSensorData us2 = usSensorDataToLog.getUSSensorData2();
 				USSensorData us3 = usSensorDataToLog.getUSSensorData3();
@@ -171,6 +174,7 @@ public class LogService extends IntentService implements SensorEventListener
 				float us4Value = (float)us4.getValue();
 				
 				sensorDataAdk.clear();
+				
 				sensorDataAdk.add(us1Value);
 				sensorDataAdk.add(us2Value);
 				sensorDataAdk.add(us3Value);
@@ -184,6 +188,8 @@ public class LogService extends IntentService implements SensorEventListener
 				{
 					e.printStackTrace();
 				}
+				Log.d(TAG, "Logging usAdk");
+				accToSd(sensorDataAdk,usfile);
 			}
 		}
 	};
@@ -214,8 +220,6 @@ public class LogService extends IntentService implements SensorEventListener
 
 					Context context2 = getApplicationContext();
 					Toast.makeText(context2, "US Log Started", Toast.LENGTH_SHORT).show();
-					Log.d(TAG, "Logging usAdk");
-					accToSd(sensorDataAdk,usfile);
 				} 
 			}
 
