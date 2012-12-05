@@ -20,12 +20,12 @@
 // increase value for noisy sources
 #define AN_DELTA 5
 
-void timeManager5000(EventQueue* q);
-void timeManager1000(EventQueue* q);
-void timeManager500(EventQueue* q);
-void timeManager100(EventQueue* q);
-void timeManager(EventQueue* q);
-void analogManager(EventQueue* q);
-void USBReadManager(EventQueue* q);
+void timeManager5000( EventQueue* q );
+void timeManager1000( EventQueue* q );
+void timeManager500( EventQueue* q );
+void timeManager100( EventQueue* q );
+void timeManager( EventQueue* q );
+void analogManager( EventQueue* q );
+void USBReadManager( EventQueue* q );
 
 #endif /* EVENTMANAGERS_H_ */

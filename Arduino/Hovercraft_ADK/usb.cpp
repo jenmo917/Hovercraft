@@ -56,7 +56,7 @@ void startBlinky()
 void stopBlinky()
 {
 	blinkyFlag = false;
-	digitalWrite(LED, LOW);
+	digitalWrite( LED, LOW );
 }
 
 /**
@@ -71,7 +71,7 @@ void stopBlinky()
 */
 void USBsetup()
 {
-	delay(100);
+	delay( 100 );
 	acc.powerOn();
 }
 
@@ -92,58 +92,58 @@ void decodeMsgType()
 	Serial << "Command: " << rcvmsgInfo[0] << endl;
 	Serial << "Target: " << rcvmsgInfo[1] << endl;
 	Serial << "Length: " << rcvmsgInfo[2] << endl;
-	if (rcvmsgInfo[1] == TARGET_ADK)
+	if ( rcvmsgInfo[1] == TARGET_ADK )
 	{
-		switch(rcvmsgInfo[0])
+		switch( rcvmsgInfo[0] )
 		{
 		case BLINKY_ON:
-			Serial.println("COMMAND: BLINKY_ON");
+			Serial.println( "COMMAND: BLINKY_ON" );
 			startBlinky();
 			break;
 		case BLINKY_OFF:
-			Serial.println("COMMAND: BLINKY_OFF");
+			Serial.println( "COMMAND: BLINKY_OFF" );
 			stopBlinky();
 			break;
 		case MOTOR_CONTROL:
-			Serial.println("COMMAND: MOTOR_CONTROL");
+			Serial.println( "COMMAND: MOTOR_CONTROL" );
 			connectionCounter = 0;
 			motors = decodeEngines();
 			printMotorSignal(&motors);
 			motorControl(&motors);
 			break;
 		case MOTOR_CONTROL_TEST:
-			Serial.println("COMMAND: MOTOR_CONTROL_TEST");
+			Serial.println( "COMMAND: MOTOR_CONTROL_TEST" );
 			connectionCounter = 0;
 			motors = decodeEngines();
 			prevPower = prevPower+10;
-			if(prevPower > 255)
+			if( prevPower > 255 )
 			{
 				prevPower = 0;
 			}
 			motors.right.power = prevPower;
 			motors.left.power = prevPower;
-			printMotorSignal(&motors);
-			motorControl(&motors);
+			printMotorSignal( &motors );
+			motorControl( &motors );
 			break;
 		case PRINT_MESSAGE:
 			Serial << "Message: " << endl;
 			for(int i = 0; i < rcvPBmsgLength; i++)
 			{
-				Serial.print((char) rcvPBmsg[i]);
+				Serial.print( (char) rcvPBmsg[i] );
 				Serial << " "<< (uint8_t) rcvPBmsg[i] << endl;
 			}
 			break;
 		case I2C_SENSOR_REQ:
-			q.enqueueEvent(Events::EV_I2C_SENSOR_REQ, rcvPBmsg[0]);
+			q.enqueueEvent( Events::EV_I2C_SENSOR_REQ, rcvPBmsg[0] );
 			break;
 		case US_SENSOR_REQ:
-			q.enqueueEvent(Events::EV_US_SENSOR_REQ, rcvPBmsg[0]);
+			q.enqueueEvent( Events::EV_US_SENSOR_REQ, rcvPBmsg[0] );
 			break;
 		case ENGINES_REQ_COMMAND:
-			q.enqueueEvent(Events::EV_ENGINES_REQ, rcvPBmsg[0]);
+			q.enqueueEvent( Events::EV_ENGINES_REQ, rcvPBmsg[0] );
 			break;
 		default:
-			Serial.println("COMMAND: Error, message is of unknown type. No action performed");
+			Serial.println( "COMMAND: Error, message is of unknown type. No action performed" );
 			break;
 		}
 	}
@@ -162,9 +162,9 @@ void decodeMsgType()
 *
 * \author Rickard Dahm
 */
-void sendMessage(int command, int target)
+void sendMessage( int command, int target )
 {
-	if (acc.isConnected())
+	if( acc.isConnected() )
 	{
 		//Serial << "SendMessage" << endl;
 		//Serial << sendMsgLength;
@@ -175,10 +175,10 @@ void sendMessage(int command, int target)
 		fullMsg[1] = target;
 		fullMsg[2] = sendMsgLength;
 
-		for(i = 0; i < sendMsgLength; i++)
+		for( i = 0; i < sendMsgLength; i++ )
 		{
-			fullMsg[3 + i] = sendMsg[i];
+			fullMsg[ 3 + i ] = sendMsg[i];
 		}
-		acc.write(fullMsg, i+3);
+		acc.write( fullMsg, i + 3 );
 	}
 }

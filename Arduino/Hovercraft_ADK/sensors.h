@@ -15,8 +15,8 @@
 #define I2C_MAX_SENSORS 5
 #define MAX_US_SENSORS 4
 
-extern struct I2CSensor I2CSensorList[I2C_MAX_SENSORS];
-extern struct USSensor USSensorList[MAX_US_SENSORS];
+extern struct I2CSensor I2CSensorList[ I2C_MAX_SENSORS ];
+extern struct USSensor USSensorList[ MAX_US_SENSORS ];
 
 struct I2CSensor
 {

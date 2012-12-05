@@ -90,9 +90,9 @@ void rightMotorControl(DriveSignals *signal)
 * \author Rickard Dahm
 *
 */
-void setRightDir(int dir)
+void setRightDir( int dir)
 {
-	digitalWrite(rightDir, dir);
+	digitalWrite( rightDir, dir );
 }
 
 /**

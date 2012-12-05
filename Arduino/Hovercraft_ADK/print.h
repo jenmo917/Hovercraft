@@ -11,8 +11,8 @@
 #include <Arduino.h>
 #include "command.pb.h"
 
-void printRightMotorSignal(DriveSignals* engines);
-void printLeftMotorSignal(DriveSignals* engines);
-void printMotorSignal(Engines* engines);
+void printRightMotorSignal( DriveSignals* engines );
+void printLeftMotorSignal( DriveSignals* engines );
+void printMotorSignal( Engines* engines );
 
 #endif /* PRINT_H_ */

@@ -59,6 +59,6 @@ void startBlinky();
 void stopBlinky();
 void USBsetup();
 void decodeMsgType();
-void sendMessage(int command, int target);
+void sendMessage( int command, int target );
 
 #endif /* USB_H_ */
