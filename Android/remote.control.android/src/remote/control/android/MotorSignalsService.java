@@ -36,15 +36,15 @@ public class MotorSignalsService extends IntentService implements
 	private boolean					enabled						= false;
 
 	private float[]					accVals						= new float[3];
-	final float						CONTROLLER_ROLL_MIN			= -45;
-	final float						CONTROLLER_ROLL_MAX			= 45;
-	final float						CONTROLLER_ROLL_MEAN		= 0;
-	final float						CONTROLLER_ROLL_DEAD_ZONE	= 3;
-	final float						CONTROLLER_PITCH_MIN		= 0;
-	final float						CONTROLLER_PITCH_MAX		= 128;
-	final float						CONTROLLER_PITCH_MEAN		= 64;
-	final float						CONTROLLER_PITCH_DEAD_ZONE	= 3;
-	float							lpf							= 0.8f;
+	final float CONTROLLER_ROLL_MIN = -0.65f;
+	final float CONTROLLER_ROLL_MAX = 0.65f;
+	final float CONTROLLER_ROLL_MEAN = 0f;
+	final float CONTROLLER_ROLL_DEAD_ZONE = 0.02f;
+	final float CONTROLLER_PITCH_MIN = 0f;
+	final float CONTROLLER_PITCH_MAX = 1;
+	final float CONTROLLER_PITCH_MEAN = 0f;
+	final float CONTROLLER_PITCH_DEAD_ZONE = 0.03f;
+	float lpf = 0.8f;
 	private MotorSignals			motorSignals;
 	private AbstractSignalAlgorithm	pitch;
 	private AbstractSignalAlgorithm	roll;
@@ -173,19 +173,28 @@ public class MotorSignalsService extends IntentService implements
 		{
 			return;
 		}
-		accVals[0] = lpf * accVals[0] + (1 - lpf) * tempValues[0];
-		accVals[1] = lpf * accVals[1] + (1 - lpf) * tempValues[1];
-		accVals[2] = lpf * accVals[2] + (1 - lpf) * tempValues[2];
-		int[] apr = new int[3];
-		apr[0] = Math.round(Math.scalb(accVals[0], 7));
-		apr[1] = Math.round(Math.scalb(accVals[1], 7));
-		apr[2] = Math.round(Math.scalb(accVals[2], 7));
-		int[] motorValues = motorSignals.convert(apr[2], apr[1]);
+		float alpha = (float) 0.8;
+		accVals[0] = alpha * accVals[0] + (1 - alpha) * tempValues[0];
+		accVals[1] = alpha * accVals[1] + (1 - alpha) * tempValues[1];
+		accVals[2] = alpha * accVals[2] + (1 - alpha) * tempValues[2];
+		int[] motorValues = motorSignals.convert(accVals[2], accVals[1], 8);
+		boolean leftMotorForward = false, rightMotorForward = false;
+		if (1 == motorValues[1])
+		{
+			leftMotorForward = true;
+		}
+		if (1 == motorValues[3])
+		{
+			rightMotorForward = true;
+		}
+		Log.d(TAG, "LeftMotor; D: "
+			+ String.format("%d", motorValues[0])
+			+ " RightMotor: "
+			+ String.format("%d", motorValues[2]));
 		Engines engineValues = createEngineProtocol(
-				createDriveSignalProtocol(true, true, motorValues[1]),
-				createDriveSignalProtocol(true, true, motorValues[0]));
+			createDriveSignalProtocol(rightMotorForward, true, motorValues[2]),
+			createDriveSignalProtocol(leftMotorForward, true, motorValues[0]));
 		byte[] message = engineValues.toByteArray();
-		Log.d(TAG, message.toString());
 		Intent intent = new Intent(
 			Constants.Broadcast.BluetoothService.Actions.SendCommand.ACTION);
 		intent

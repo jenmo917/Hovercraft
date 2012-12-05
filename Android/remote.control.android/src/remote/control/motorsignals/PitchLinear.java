@@ -11,12 +11,20 @@ public class PitchLinear extends AbstractSignalAlgorithm
 	public float[] convert(float pitch)
 	{
 		float cutPitch = this.cut(pitch) - this.mean;
-		if (this.deadZone < cutPitch && cutPitch < +this.deadZone)
+		if (this.deadZone < cutPitch && cutPitch < this.deadZone)
 		{
 			cutPitch = 0f;
 		}
-		float forward = cutPitch / (this.maxValue - this.mean);
-		return new float[] { forward, forward };
+		float power;
+		if (0f <= cutPitch)
+		{
+			power = cutPitch / (this.maxValue - this.mean);
+		}
+		else
+		{
+			power = cutPitch / (this.mean - this.minValue);
+		}
+		return new float[] { power, power };
 	}
 
 }

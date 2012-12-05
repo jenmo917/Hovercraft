@@ -1,8 +1,7 @@
 package remote.control.motorsignals;
 
-
 public abstract class AbstractSignalAlgorithm implements
-		SignalAlgorithmInterface
+	SignalAlgorithmInterface
 {
 	protected float		maxValue;
 	protected float		minValue;
