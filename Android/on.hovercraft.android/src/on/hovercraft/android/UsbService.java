@@ -402,6 +402,7 @@ public class UsbService extends IntentService
 	private void broadcastBufferToBTService(byte[] combinedInfoAndPB)
 	{
 		Intent intent = new Intent("callFunction");
+		intent.putExtra("sendToRemote", "sendToRemote");
 		intent.putExtra("combinedInfoAndPB", combinedInfoAndPB);
 		sendBroadcast(intent);		
 	}

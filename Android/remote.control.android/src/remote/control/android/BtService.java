@@ -272,13 +272,14 @@ public class BtService extends IntentService
 		// commands from remote to remote. Never used?
 		else if(Constants.TARGET_REMOTE == bufferInfo[1])
 		{
-			if(Constants.US_SENSOR_COMMAND == bufferInfo[0])
+			if(Constants.LOG_US_SENSOR_COMMAND == bufferInfo[0])
 			{
+				sendBroadcastMessage("Message received:\n" + String.valueOf(bufferInfo[0]));
 				Intent usSensors = new Intent(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE);
 				usSensors.putExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES, bufferMessage);
 				sendBroadcast(usSensors);
 			}
-			sendBroadcastMessage("Message received:\n" + String.valueOf(bufferInfo[0]));			
+						
 			//sendCommand(bufferInfo[0], bufferInfo[1], bufferMessage);
 		}
 		// commands from remote to ADK.
@@ -423,7 +424,9 @@ public class BtService extends IntentService
 			{
 				byte[] requestUsAdk = new byte[1];
 				requestUsAdk[0] = Constants.TARGET_REMOTE;
-				sendProtocol(Constants.LOG_US_SENSOR_COMMAND,Constants.TARGET_ADK,requestUsAdk);
+				
+				if( bluetoothSocketUp )
+					sendProtocol(Constants.US_SENSOR_REQ_COMMAND,Constants.TARGET_ADK,requestUsAdk);
 			}
 		}
 	};

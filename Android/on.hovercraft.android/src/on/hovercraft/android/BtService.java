@@ -58,7 +58,7 @@ public class BtService extends IntentService
 	* \author Johan Gustafsson
 	*
 	*/
-	private void updateBtConnectionState(ConnectionState state)
+	private void updateBtConnectionState( ConnectionState state )
 	{
 		if( connectionState != state )
 		{
@@ -273,14 +273,9 @@ public class BtService extends IntentService
 	/**
 	* \brief Read the bluetooth input stream
 	*
-	* 
+	* Description
 	*
 	*
-	* @param 
-	*
-	* @param 
-	*
-	* @return Description
 	*
 	*
 	* \author Jens Moser
@@ -351,7 +346,7 @@ public class BtService extends IntentService
 	* \author Johan Gustafsson
 	*
 	*/
-	private void broadcastBufferToUSBService(byte[] bufferInfo, byte[] bufferMessage)
+	private void broadcastBufferToUSBService( byte[] bufferInfo, byte[] bufferMessage )
 	{
 		Log.d(TAG,"BtService: broadcast command to USB Service");
 		Intent intent = new Intent("handleBTCommands");
@@ -374,7 +369,7 @@ public class BtService extends IntentService
 	* \author Johan Gustafsson
 	*
 	*/
-	private void handleBrainCommands(byte[] bufferInfo, byte[] bufferMessage)
+	private void handleBrainCommands( byte[] bufferInfo, byte[] bufferMessage )
 	{
 		Log.d(TAG,"BtService: handleBrainCommand");
 		switch (bufferInfo[0])
@@ -397,14 +392,14 @@ public class BtService extends IntentService
 	/**
 	* \brief 
 	*
+	* Description
+	*
+	*
+	* @param command
+	*
+	* @param target
 	* 
-	*
-	*
-	* @param 
-	*
-	* @param 
-	*
-	* @return Description
+	* @param message
 	*
 	*
 	* \author Jens Moser
@@ -436,9 +431,8 @@ public class BtService extends IntentService
 			btConnectionLost("Lost connection...");
 		}		
 		
-		if (btOutStream != null)
+		if ( btOutStream != null )
 		{
-
 			try 
 			{
 				btOutStream.write(buffer);
@@ -457,7 +451,7 @@ public class BtService extends IntentService
 	* 
 	*
 	*
-	* @param String message
+	* @param message
 	*
 	*
 	* \author Johan Gustafsson
@@ -476,9 +470,9 @@ public class BtService extends IntentService
 	* 
 	*
 	*
-	* @param Context 
+	* @param context 
 	*
-	* @param Intent
+	* @param intent
 	*
 	* \author Johan Gustafsson
 	*
@@ -505,7 +499,24 @@ public class BtService extends IntentService
 				{
 					if( !bluetoothSocketUp )
 						waitToConnect();
-				}		
+				}
+				if(intent.hasExtra("sendToRemote"))
+				{
+					byte[] infoAndPB = intent.getByteArrayExtra("combinedInfoAndPB");
+					byte command = infoAndPB[0];
+					byte target = infoAndPB[1];
+					
+					int messageLength = (int)infoAndPB[2];
+					byte[] message = new byte[messageLength];
+					
+					for(int i = 0; i < messageLength - 3; i++)
+					{
+						message[i] = infoAndPB[3 + i];
+					}
+					
+					if( bluetoothSocketUp )
+						sendCommand(command, target, message);
+				}
 			}
 		}
 	};

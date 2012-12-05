@@ -186,7 +186,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		case R.id.startButton:
 			Log.d(TAG, "startButton pushed");
-			if (LogService.accSensor == false && LogService.accBrainSensor == false) {
+			if (LogService.accSensor == false && LogService.accBrainSensor == false && LogService.usAdkSensor == false) {
 				Context context = getApplicationContext();
 				Toast.makeText(context, "No Sensors Chosen", Toast.LENGTH_SHORT)
 						.show();
@@ -287,10 +287,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	{
 		Log.d(TAG, "onPause Main");
 		unregisterReceiver(mReceiver);
-		
-		Intent pair = new Intent("callFunction");
-		pair.putExtra("disconnectDevice", "disconnectDevice");
-		sendBroadcast(pair);
 		
 		super.onPause();
 	}

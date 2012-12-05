@@ -40,7 +40,7 @@ public class LogService extends IntentService implements SensorEventListener
 	public static boolean accSensor = false;
 	public static boolean accBrainSensor = false;
 	public static boolean usAdkSensor = false;
-	private int logDelay = 1;
+	private int logDelay = 5000;
 	Sensor accelerometer;
 	SensorManager sm;
 	List<Float> sensorDataRemote = new ArrayList<Float>();
@@ -67,6 +67,7 @@ public class LogService extends IntentService implements SensorEventListener
 		intentFilter.addAction("CheckboxAccRemoteAction");
 		intentFilter.addAction("CheckboxAccBrainAction");
 		intentFilter.addAction("CheckboxUsOnAdkAction");
+		intentFilter.addAction(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE);
 		registerReceiver(broadcastReceiver, intentFilter);
 		initSensors();
 	}
@@ -147,19 +148,22 @@ public class LogService extends IntentService implements SensorEventListener
 				catch (IOException e)
 				{
 					e.printStackTrace();
-				}	
+				}
 			} 
 			else if(action.equalsIgnoreCase(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE))
 			{
 				Log.d(TAG, "usLog received from ADK");
 				USSensors usSensorDataToLog = null;
 				
-				try {
+				try 
+				{
 					usSensorDataToLog = USSensors.parseFrom(intent.getByteArrayExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES));
-				} catch (InvalidProtocolBufferException e) 
+				} 
+				catch (InvalidProtocolBufferException e) 
 				{
 					e.printStackTrace();
 				}
+				
 				USSensorData us1 = usSensorDataToLog.getUSSensorData1();
 				USSensorData us2 = usSensorDataToLog.getUSSensorData2();
 				USSensorData us3 = usSensorDataToLog.getUSSensorData3();
@@ -170,7 +174,13 @@ public class LogService extends IntentService implements SensorEventListener
 				float us3Value = (float)us3.getValue();
 				float us4Value = (float)us4.getValue();
 				
+				Intent i = new Intent("printMessage");
+				i.putExtra("coordinates", "Sensor data: \n Senor 1: " + String.valueOf(us1Value) + "\n Sensor 2: " + String.valueOf(us2Value));
+				sendBroadcast(i);
+				
+				
 				sensorDataAdk.clear();
+				
 				sensorDataAdk.add(us1Value);
 				sensorDataAdk.add(us2Value);
 				sensorDataAdk.add(us3Value);
@@ -178,12 +188,16 @@ public class LogService extends IntentService implements SensorEventListener
 				
 				try 
 				{
-					headerToSd(usfile);
+					if(accfile.createNewFile())
+						headerToSd(usfile);
 				}
 				catch (IOException e) 
 				{
 					e.printStackTrace();
 				}
+				
+				Log.d(TAG, "Logging usAdk");
+				accToSd(sensorDataAdk,usfile);
 			}
 		}
 	};
@@ -208,14 +222,16 @@ public class LogService extends IntentService implements SensorEventListener
 				}
 				if(usAdkSensor == true)
 				{
+					byte[] test = new byte[1];
+					test[0] = (byte)3;
+					
 					Intent logUsIntent = new Intent(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_US_DATA);
 					logUsIntent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET,Constants.TARGET_ADK);
+					logUsIntent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.BYTES, test);
 					sendBroadcast(logUsIntent);
 
 					Context context2 = getApplicationContext();
 					Toast.makeText(context2, "US Log Started", Toast.LENGTH_SHORT).show();
-					Log.d(TAG, "Logging usAdk");
-					accToSd(sensorDataAdk,usfile);
 				} 
 			}
 
