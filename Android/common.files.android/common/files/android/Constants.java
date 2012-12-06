@@ -47,11 +47,12 @@ final public class Constants // final to prevent instantiation
 	public static final byte	I2C_SENSOR_REQ_COMMAND	= (byte) 5;
 
 	/*
-	 * Desc: Sensor request for ultrasonic sensor. Args: Put receiver target in
+	 * Desc: Sensor request for ultrasonic/acc sensor. Args: Put receiver target in
 	 * message byte.
 	 */
 	public static final byte	US_SENSOR_REQ_COMMAND			= (byte) 6;
 	public static final byte	ACC_BRAIN_SENSOR_REQ_COMMAND	= (byte) 8;
+	public static final byte	ACC_BRAIN_SENSOR_STOP_REQ_COMMAND	= (byte) 9;
 
 	public static final byte MOTOR_SIGNAL_COMMAND 				= (byte) 7;
 

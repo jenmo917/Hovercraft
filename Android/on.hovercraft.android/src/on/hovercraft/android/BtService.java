@@ -382,12 +382,25 @@ public class BtService extends IntentService
 				intent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET, bufferInfo[1]);
 				sendBroadcast(intent);
 				break;
-				
-			default:
-			Log.d(TAG, "unknown command: " + bufferInfo[0]);
-			break;
+			
 			case Constants.ACC_BRAIN_SENSOR_REQ_COMMAND:
 				Log.d(TAG, "READY TO GET ACC BRAIN DATA");
+				
+				Intent accBrainIntent = new Intent("accBrainReq");
+				accBrainIntent.putExtra("send", true);
+				sendBroadcast(accBrainIntent);
+				break;
+			
+			case Constants.ACC_BRAIN_SENSOR_STOP_REQ_COMMAND:
+				Log.d(TAG, "READY TO STOP ACC BRAIN DATA");
+				
+				Intent accBrainStopIntent = new Intent("accBrainReq");
+				accBrainStopIntent.putExtra("send", false);
+				sendBroadcast(accBrainStopIntent);
+				break;
+				
+			default:
+				Log.d(TAG, "unknown command: " + bufferInfo[0]);
 				break;
 		}	
 	}

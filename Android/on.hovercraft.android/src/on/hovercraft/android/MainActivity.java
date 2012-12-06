@@ -99,8 +99,8 @@ public class MainActivity extends Activity
 		// Start USB and Blue service
 		startBtServerService();
 		startControlSystemService();
-		
 		startUsbService();
+		startLogServiceBrain();
 		
 		Log.d(TAG,"onCreate stop");
 	}
@@ -128,6 +128,18 @@ public class MainActivity extends Activity
 	private void stopUsbService()
 	{
 		stopService(new Intent(this, UsbService.class));
+	}
+	private void startLogServiceBrain()
+	{
+		Log.d(TAG,"start LogServiceBrain");
+		Intent intent = new Intent(this, LogServiceBrain.class);
+		intent.fillIn(getIntent(), 0);
+		startService(intent);
+	}
+	
+	private void stopLogServiceBrain()
+	{
+		stopService(new Intent(this, LogServiceBrain.class));
 	}
 
 	private void startControlSystemService()
@@ -193,6 +205,7 @@ public class MainActivity extends Activity
 		stopUsbService();
 		stopControlSystemService();
 		stopBtServerService();
+		stopLogServiceBrain();
 		Log.d(TAG,"onDestroy stop");
 	}
 
