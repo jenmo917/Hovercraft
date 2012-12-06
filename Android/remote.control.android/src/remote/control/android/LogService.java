@@ -12,12 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-
 import common.files.android.Constants;
-
-import remote.control.android.Command.*;
-
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -45,6 +40,7 @@ public class LogService extends IntentService implements SensorEventListener
 	SensorManager sm;
 	List<Float> sensorDataRemote = new ArrayList<Float>();
 	List<Float> sensorDataAdk = new ArrayList<Float>();
+	List<Float> sensorDataBrain = new ArrayList<Float>();
 
 	private File accfile = new File(Environment.getExternalStorageDirectory()+File.separator + "remote_acc_data.txt");
 	private File accbrainfile = new File(Environment.getExternalStorageDirectory()+File.separator + "brain_acc_data.txt");
@@ -67,6 +63,7 @@ public class LogService extends IntentService implements SensorEventListener
 		intentFilter.addAction("CheckboxAccRemoteAction");
 		intentFilter.addAction("CheckboxAccBrainAction");
 		intentFilter.addAction("CheckboxUsOnAdkAction");
+		intentFilter.addAction("brainAccResponse");
 		intentFilter.addAction(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE);
 		registerReceiver(broadcastReceiver, intentFilter);
 		initSensors();
@@ -150,6 +147,19 @@ public class LogService extends IntentService implements SensorEventListener
 					e.printStackTrace();
 				}
 			} 
+			else if(action.equalsIgnoreCase("brainAccResponse"))
+			{
+				String coords = intent.getStringExtra("coords");
+				String[] splitCoords;
+				splitCoords = coords.split(":");
+				
+				sensorDataBrain.clear();
+				sensorDataBrain.add(Float.parseFloat(splitCoords[0]));
+				sensorDataBrain.add(Float.parseFloat(splitCoords[1]));
+				sensorDataBrain.add(Float.parseFloat(splitCoords[2]));
+				
+				accToSd(sensorDataBrain, accbrainfile);
+			}
 			else if(action.equalsIgnoreCase(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE))
 			{
 //				Log.d(TAG, "usLog received from ADK");

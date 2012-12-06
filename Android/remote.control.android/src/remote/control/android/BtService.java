@@ -321,7 +321,16 @@ public class BtService extends IntentService
 			}
 			else if(Constants.LOG_ACC_BRAIN_SENSOR_COMMAND == bufferInfo[0])
 			{
-				sendBroadcastMessage("Message received:\n" + String.valueOf(bufferInfo[0]));
+				String coords = new String(bufferMessage);
+				
+				String str = coords;
+				String[] splitCoords;
+				splitCoords = str.split(":");
+				sendBroadcastMessage("Message received: " + String.valueOf(bufferInfo[0]) + "\n" + splitCoords[0] + "\n" + splitCoords[1] + "\n" + splitCoords[2]);
+				
+				Intent sendToLog = new Intent("brainAccResponse");
+				sendToLog.putExtra("coords", coords);
+				sendBroadcast(sendToLog);
 			}
 						
 			//sendCommand(bufferInfo[0], bufferInfo[1], bufferMessage);
