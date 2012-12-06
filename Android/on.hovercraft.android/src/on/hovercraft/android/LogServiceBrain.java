@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import common.files.android.Constants;
+import common.files.android.Constants.Broadcast.BluetoothService.Actions.SendCommand;
 
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
@@ -90,8 +91,18 @@ public class LogServiceBrain extends IntentService implements SensorEventListene
 			
 			if(sendAccBrainData)
 			{
-				int test = 0;
-				test = 2;
+				// send accDataBrain
+				String x = accDataBrain.get(0).toString();
+				String y = accDataBrain.get(1).toString();
+				String z = accDataBrain.get(2).toString();
+				
+				String data = x + ":" + y + ":" + z;
+				byte[] message = data.getBytes();
+				
+				Intent sendDataIntent = new Intent("callFunction");
+				sendDataIntent.putExtra("sendToRemote", "sendToRemote");
+				sendDataIntent.putExtra("onlyMessage", message);
+				sendBroadcast(sendDataIntent);	
 				
 			}
 			try 

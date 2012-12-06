@@ -518,20 +518,32 @@ public class BtService extends IntentService
 				}
 				if(intent.hasExtra("sendToRemote"))
 				{
-					byte[] infoAndPB = intent.getByteArrayExtra("combinedInfoAndPB");
-					byte command = infoAndPB[0];
-					byte target = infoAndPB[1];
-					
-					int messageLength = (int)infoAndPB[2];
-					byte[] message = new byte[messageLength];
-					
-					for(int i = 0; i < messageLength - 3; i++)
+					if(intent.hasExtra("combinedInfoAndPB"))
 					{
-						message[i] = infoAndPB[3 + i];
+						byte[] infoAndPB = intent.getByteArrayExtra("combinedInfoAndPB");
+						byte command = infoAndPB[0];
+						byte target = infoAndPB[1];
+						
+						int messageLength = (int)infoAndPB[2];
+						byte[] message = new byte[messageLength];
+						
+						for(int i = 0; i < messageLength - 3; i++)
+						{
+							message[i] = infoAndPB[3 + i];
+						}
+						
+						if( bluetoothSocketUp )
+							sendCommand(command, target, message);
 					}
-					
-					if( bluetoothSocketUp )
-						sendCommand(command, target, message);
+					else if(intent.hasExtra("onlyMessage"))
+					{
+						byte[] message = intent.getByteArrayExtra("onlyMessage");
+						byte command = Constants.LOG_ACC_BRAIN_SENSOR_COMMAND;
+						byte target = Constants.TARGET_REMOTE;
+						
+						if( bluetoothSocketUp )
+							sendCommand(command, target, message);
+					}
 				}
 			}
 		}
