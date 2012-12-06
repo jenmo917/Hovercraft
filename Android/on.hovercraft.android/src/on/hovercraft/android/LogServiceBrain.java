@@ -91,6 +91,7 @@ public class LogServiceBrain extends IntentService implements SensorEventListene
 			if(sendAccBrainData)
 			{
 				int test = 0;
+				test = 2;
 				
 			}
 			try 

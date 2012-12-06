@@ -129,6 +129,8 @@ final public class Constants // final to prevent instantiation
 					public static String	ACTION	= "btActionSendCommand";
 					public static String	REQUEST_US_DATA = "btActionRequestUsData";
 					public static String	REQUEST_ACC_BRAIN_DATA = "btActionRequestAccBrainData";
+					public static String	REQUEST_STOP_ACC_BRAIN_DATA = "btActionRequestStopAccBrainData";
+
 
 					public static class Intent
 					{
