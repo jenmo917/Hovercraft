@@ -386,6 +386,9 @@ public class BtService extends IntentService
 			default:
 			Log.d(TAG, "unknown command: " + bufferInfo[0]);
 			break;
+			case Constants.ACC_BRAIN_SENSOR_REQ_COMMAND:
+				Log.d(TAG, "READY TO GET ACC BRAIN DATA");
+				break;
 		}	
 	}
 

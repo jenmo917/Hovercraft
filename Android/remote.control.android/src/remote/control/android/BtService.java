@@ -126,6 +126,7 @@ public class BtService extends IntentService
 		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.ACTION);
 		filter.addAction("callFunction");
 		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_US_DATA);
+		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_ACC_BRAIN_DATA);
 		registerReceiver(BtRemoteServiceReciever, filter);
 	}
 	
@@ -473,6 +474,14 @@ public class BtService extends IntentService
 				
 				if( bluetoothSocketUp )
 					sendProtocol(Constants.US_SENSOR_REQ_COMMAND,Constants.TARGET_ADK,requestUsAdk);
+			}
+			if(action.equals(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_ACC_BRAIN_DATA))
+			{
+				byte[] requestAccBrain = new byte[1];
+				requestAccBrain[0] = Constants.TARGET_REMOTE;
+				
+				if( bluetoothSocketUp )
+					sendProtocol(Constants.ACC_BRAIN_SENSOR_REQ_COMMAND,Constants.TARGET_BRAIN,requestAccBrain);
 			}
 		}
 	};

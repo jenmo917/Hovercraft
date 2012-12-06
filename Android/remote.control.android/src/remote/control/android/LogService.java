@@ -216,8 +216,14 @@ public class LogService extends IntentService implements SensorEventListener
 					accToSd(sensorDataRemote,accfile);
 				}
 				if(accBrainSensor == true)
-				{
-					Log.d(TAG, "Logging acc from brain");
+				{				
+					Intent logAccBrainIntent = new Intent(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_ACC_BRAIN_DATA);
+					logAccBrainIntent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET,Constants.TARGET_BRAIN);
+					
+					sendBroadcast(logAccBrainIntent);
+
+					Context context2 = getApplicationContext();
+					Toast.makeText(context2, "ACC BRAIN Log Started", Toast.LENGTH_SHORT).show();
 					//accToSd(accbrainfile);
 				}
 				if(usAdkSensor == true)

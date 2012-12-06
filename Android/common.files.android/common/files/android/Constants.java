@@ -51,6 +51,7 @@ final public class Constants // final to prevent instantiation
 	 * message byte.
 	 */
 	public static final byte	US_SENSOR_REQ_COMMAND	= (byte) 6;
+	public static final byte	ACC_BRAIN_SENSOR_REQ_COMMAND	= (byte) 8;
 
 	public static final byte MOTOR_SIGNAL_COMMAND = (byte) 7;
 
@@ -125,6 +126,7 @@ final public class Constants // final to prevent instantiation
 				{
 					public static String	ACTION	= "btActionSendCommand";
 					public static String	REQUEST_US_DATA = "btActionRequestUsData";
+					public static String	REQUEST_ACC_BRAIN_DATA = "btActionRequestAccBrainData";
 
 					public static class Intent
 					{
