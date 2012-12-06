@@ -127,6 +127,7 @@ public class BtService extends IntentService
 		filter.addAction("callFunction");
 		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_US_DATA);
 		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_ACC_BRAIN_DATA);
+		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_STOP_ACC_BRAIN_DATA);
 		registerReceiver(BtRemoteServiceReciever, filter);
 	}
 	
@@ -318,6 +319,10 @@ public class BtService extends IntentService
 				usSensors.putExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES, bufferMessage);
 				sendBroadcast(usSensors);
 			}
+			else if(Constants.LOG_ACC_BRAIN_SENSOR_COMMAND == bufferInfo[0])
+			{
+				sendBroadcastMessage("Message received:\n" + String.valueOf(bufferInfo[0]));
+			}
 						
 			//sendCommand(bufferInfo[0], bufferInfo[1], bufferMessage);
 		}
@@ -482,6 +487,14 @@ public class BtService extends IntentService
 				
 				if( bluetoothSocketUp )
 					sendProtocol(Constants.ACC_BRAIN_SENSOR_REQ_COMMAND,Constants.TARGET_BRAIN,requestAccBrain);
+			}
+			if(action.equals(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_STOP_ACC_BRAIN_DATA))
+			{
+				byte[] requestAccBrain = new byte[1];
+				requestAccBrain[0] = Constants.TARGET_REMOTE;
+				
+				if( bluetoothSocketUp )
+					sendProtocol(Constants.ACC_BRAIN_SENSOR_STOP_REQ_COMMAND,Constants.TARGET_BRAIN, requestAccBrain);
 			}
 		}
 	};

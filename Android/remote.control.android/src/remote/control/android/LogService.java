@@ -240,6 +240,12 @@ public class LogService extends IntentService implements SensorEventListener
 					Toast.makeText(context2, "US Log Started", Toast.LENGTH_SHORT).show();
 				} 
 			}
+			else
+			{
+				Intent logAccBrainIntent = new Intent(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_STOP_ACC_BRAIN_DATA);
+				logAccBrainIntent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET,Constants.TARGET_BRAIN);
+				sendBroadcast(logAccBrainIntent);
+			}
 
 			// delay med en viss tid t.ex. 5sek.
 			try 
