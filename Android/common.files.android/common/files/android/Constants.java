@@ -50,10 +50,10 @@ final public class Constants // final to prevent instantiation
 	 * Desc: Sensor request for ultrasonic sensor. Args: Put receiver target in
 	 * message byte.
 	 */
-	public static final byte	US_SENSOR_REQ_COMMAND	= (byte) 6;
+	public static final byte	US_SENSOR_REQ_COMMAND			= (byte) 6;
 	public static final byte	ACC_BRAIN_SENSOR_REQ_COMMAND	= (byte) 8;
 
-	public static final byte MOTOR_SIGNAL_COMMAND = (byte) 7;
+	public static final byte MOTOR_SIGNAL_COMMAND 				= (byte) 7;
 
 	/*
 	 * Brain Commands (71-141)
@@ -66,7 +66,8 @@ final public class Constants // final to prevent instantiation
 	 * Desc: Remote will log US sensor data when this command is received Args:
 	 * Protocol Buffer USSensorData
 	 */
-	public static final byte	LOG_US_SENSOR_COMMAND	= (byte) 142;
+	public static final byte	LOG_US_SENSOR_COMMAND			= (byte) 142;
+	public static final byte	LOG_ACC_BRAIN_SENSOR_COMMAND 	= (byte) 143;
 
 	/*
 	 * Shared Commands (212-255)
