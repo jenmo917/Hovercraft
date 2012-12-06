@@ -106,14 +106,14 @@ public class UsbService extends IntentService
 		return sensorData.build();
 	}
 
-	@Override
-	public void onCreate()
-	{
-		super.onCreate();
-		Log.d(TAG, "UsbService started");
-		singleton = this;
-		isActive = true;
-	}
+//	@Override
+//	public void onCreate()
+//	{
+//		//super.onCreate();
+//		Log.d(TAG, "UsbService started");
+//		singleton = this;
+//		isActive = true;
+//	}
 
 	@Override
 	public void onDestroy()
@@ -272,7 +272,11 @@ public class UsbService extends IntentService
 	@Override
 	protected void onHandleIntent(Intent intent) 
 	{
-		Log.w(TAG,"onHandleIntent entered");
+		Log.d(TAG,"UsbService started");
+		
+		singleton = this;
+		isActive = true;
+		
 		UsbAccessory accessory = UsbManager.getAccessory(intent);
 
 		setupBroadcastFilters();

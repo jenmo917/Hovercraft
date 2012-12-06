@@ -114,7 +114,6 @@ public class BtService extends IntentService
 			{
 				//TODO implement checkInput here
 				checkInput();
-				//readBuffer();
 			}
 		}
 	}
@@ -313,6 +312,7 @@ public class BtService extends IntentService
 			if(Constants.LOG_US_SENSOR_COMMAND == bufferInfo[0])
 			{
 				sendBroadcastMessage("Message received:\n" + String.valueOf(bufferInfo[0]));
+				
 				Intent usSensors = new Intent(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE);
 				usSensors.putExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES, bufferMessage);
 				sendBroadcast(usSensors);

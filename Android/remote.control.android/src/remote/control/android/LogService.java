@@ -152,52 +152,52 @@ public class LogService extends IntentService implements SensorEventListener
 			} 
 			else if(action.equalsIgnoreCase(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE))
 			{
-				Log.d(TAG, "usLog received from ADK");
-				USSensors usSensorDataToLog = null;
-				
-				try 
-				{
-					usSensorDataToLog = USSensors.parseFrom(intent.getByteArrayExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES));
-				} 
-				catch (InvalidProtocolBufferException e) 
-				{
-					e.printStackTrace();
-				}
-				
-				USSensorData us1 = usSensorDataToLog.getUSSensorData1();
-				USSensorData us2 = usSensorDataToLog.getUSSensorData2();
-				USSensorData us3 = usSensorDataToLog.getUSSensorData3();
-				USSensorData us4 = usSensorDataToLog.getUSSensorData4();
-				
-				float us1Value = (float)us1.getValue();
-				float us2Value = (float)us2.getValue();
-				float us3Value = (float)us3.getValue();
-				float us4Value = (float)us4.getValue();
-				
-				Intent i = new Intent("printMessage");
-				i.putExtra("coordinates", "Sensor data: \n Senor 1: " + String.valueOf(us1Value) + "\n Sensor 2: " + String.valueOf(us2Value));
-				sendBroadcast(i);
-				
-				
-				sensorDataAdk.clear();
-				
-				sensorDataAdk.add(us1Value);
-				sensorDataAdk.add(us2Value);
-				sensorDataAdk.add(us3Value);
-				sensorDataAdk.add(us4Value);
-				
-				try 
-				{
-					if(accfile.createNewFile())
-						headerToSd(usfile);
-				}
-				catch (IOException e) 
-				{
-					e.printStackTrace();
-				}
-				
-				Log.d(TAG, "Logging usAdk");
-				accToSd(sensorDataAdk,usfile);
+//				Log.d(TAG, "usLog received from ADK");
+//				USSensors usSensorDataToLog = null;
+//				
+//				try 
+//				{
+//					usSensorDataToLog = USSensors.parseFrom(intent.getByteArrayExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES));
+//				} 
+//				catch (InvalidProtocolBufferException e) 
+//				{
+//					e.printStackTrace();
+//				}
+//				
+//				USSensorData us1 = usSensorDataToLog.getUSSensorData1();
+//				USSensorData us2 = usSensorDataToLog.getUSSensorData2();
+//				USSensorData us3 = usSensorDataToLog.getUSSensorData3();
+//				USSensorData us4 = usSensorDataToLog.getUSSensorData4();
+//				
+//				float us1Value = (float)us1.getValue();
+//				float us2Value = (float)us2.getValue();
+//				float us3Value = (float)us3.getValue();
+//				float us4Value = (float)us4.getValue();
+//				
+//				Intent i = new Intent("printMessage");
+//				i.putExtra("coordinates", "Sensor data: \n Senor 1: " + String.valueOf(us1Value) + "\n Sensor 2: " + String.valueOf(us2Value));
+//				sendBroadcast(i);
+//				
+//				
+//				sensorDataAdk.clear();
+//				
+//				sensorDataAdk.add(us1Value);
+//				sensorDataAdk.add(us2Value);
+//				sensorDataAdk.add(us3Value);
+//				sensorDataAdk.add(us4Value);
+//				
+//				try 
+//				{
+//					if(accfile.createNewFile())
+//						headerToSd(usfile);
+//				}
+//				catch (IOException e) 
+//				{
+//					e.printStackTrace();
+//				}
+//				
+//				Log.d(TAG, "Logging usAdk");
+//				accToSd(sensorDataAdk,usfile);
 			}
 		}
 	};
