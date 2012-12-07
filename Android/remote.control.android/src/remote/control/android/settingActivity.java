@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 public class settingActivity extends Activity implements OnClickListener 
 {
@@ -17,15 +19,37 @@ public class settingActivity extends Activity implements OnClickListener
 	CheckBox accBrain;
 	CheckBox adkUs;
 	
+	private RadioGroup radioAlgorithmGroup;
+	private RadioButton radioLinear;
+	private RadioButton radioExponential;
+	private RadioButton radioLogarithmic;
+
 	Button btnBack;
 	
 	public void onCreate(Bundle savedInstanceState) 
 	{         
 		Log.d(TAG,"onCreate Settings");
 		super.onCreate(savedInstanceState);    
-        setContentView(R.layout.settings); 
+        
+		getCurrentAlgorithm();
+		setContentView(R.layout.settings); 
         initButtons();
         initOnClickListners();        
+	}
+	
+	//TODO implement function - get information about current alogrithm usedS
+	void getCurrentAlgorithm()
+	{
+		//Send broadcast
+		//update radio buttons
+		
+	}
+	
+	//TODO implement function - set new algorithm according to checked radio button
+	void radioButtonClicked()
+	{
+		//Send broadcast etc...
+		
 	}
 	
 	private void initButtons()
@@ -37,6 +61,12 @@ public class settingActivity extends Activity implements OnClickListener
         adkUs = (CheckBox) findViewById(R.id.checkBox_AdkUltrasound);
         adkUs.setChecked(LogService.usAdkSensor);
         btnBack = (Button) findViewById(R.id.backButton);
+        
+        //radio buttons
+        radioLinear = (RadioButton) findViewById(R.id.radioLinear);
+        radioExponential = (RadioButton) findViewById(R.id.radioExponential);
+        radioLogarithmic = (RadioButton) findViewById(R.id.radioLogarithmic);
+        radioAlgorithmGroup = (RadioGroup) findViewById(R.id.radioAlgorithmGroup);
 	}
 	
 	private void initOnClickListners()
@@ -44,9 +74,12 @@ public class settingActivity extends Activity implements OnClickListener
         acc.setOnClickListener(this);
         accBrain.setOnClickListener(this);
         adkUs.setOnClickListener(this);
-        btnBack.setOnClickListener(this);	
+        btnBack.setOnClickListener(this);
+        radioLinear.setOnClickListener(this);
+        radioExponential.setOnClickListener(this);
+        radioLogarithmic.setOnClickListener(this);
 	}	
-	
+
 	public void onClick(View src) 
     {
     	switch (src.getId()) 
@@ -70,6 +103,21 @@ public class settingActivity extends Activity implements OnClickListener
 	    		Log.d(TAG,"backButton pushed");
 	   		 	finish();
 	    	break;
+	    	
+	    	case R.id.radioLinear:
+	    		
+	    		radioButtonClicked();
+	    		break;
+	    	
+	    	case R.id.radioExponential:
+	    		
+	    		radioButtonClicked();
+	    		break;
+	    	
+	    	case R.id.radioLogarithmic:
+	    		
+	    		radioButtonClicked();
+	    		break;
     	}    	   	
     }
 	

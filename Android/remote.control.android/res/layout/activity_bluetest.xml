@@ -3,99 +3,110 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:gravity="top" >
-
+
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
-<!--
+        android:orientation="horizontal" >
+
+        <!--
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
--->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
+            android:orientation="vertical" >
+        -->
+        <!-- </LinearLayout> -->
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="10.40" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
                 <TextView
                     android:id="@+id/text_lableMessages"
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="70dp"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/lableMessage"
                     android:textSize="16sp" />
-
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/text_message"
+                    android:layout_width="182dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="10.40"
+                    android:text="@string/textMessageInit"
+                    android:textSize="12sp" />
+            </TableRow>
+        </TableLayout>
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="10.40" >
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
                 <TextView
                     android:id="@+id/text_lableInfo"
                     android:layout_width="53dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="70dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="10.40"
                     android:text="@string/labelInfo"
                     android:textSize="16sp" />
+            </TableRow>
 
-            </LinearLayout><!--
-        </LinearLayout>-->
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 
-        <LinearLayout
+                <TextView
+                    android:id="@+id/text_info"
+                    android:layout_width="182dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/textInfoInit"
+                    android:textSize="12sp" />
+            </TableRow>
+        </TableLayout>
+
+        <TableLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_height="match_parent"
+            android:layout_weight="10.40" >
 
-            <LinearLayout
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/textX"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="40dp"
-                    android:text="@string/xCoor"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/textY"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/yCoor"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/textZ"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="@string/zCoor"
-                    android:textSize="18sp" />
+            <TableRow
+                android:id="@+id/tableRow5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/text_message"
-                android:layout_width="182dp"
-                android:layout_height="150dp"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="10.40"
-                android:text="@string/textMessageInit"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/text_info"
-                android:layout_width="182dp"
-                android:layout_height="150dp"
-                android:layout_marginLeft="48dp"
-                android:layout_weight="1"
-                android:text="@string/textInfoInit"
-                android:textSize="12sp" />
+            </TableRow>
 
-        </LinearLayout>
+            <TableRow
+                android:id="@+id/tableRow6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -143,38 +154,39 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
         android:orientation="horizontal" >
-
+
         <Button
             android:id="@+id/toggleTransmissionButton"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:text="@string/btnSendMS" />
-
+
         <Button
             android:id="@+id/startButton"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:text="@string/btnStartLog" />
-
+
         <Button
             android:id="@+id/stopButton"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:text="@string/btnStopLog" />
-
+
         <Button
             android:id="@+id/settingsButton"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="@string/Settings" />
+            android:text="@string/settings" />
+
     </LinearLayout>
 
 </RelativeLayout>

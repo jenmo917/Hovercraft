@@ -162,7 +162,8 @@ public class LogService extends IntentService implements SensorEventListener
 			}
 			else if(action.equalsIgnoreCase(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE))
 			{
-//				Log.d(TAG, "usLog received from ADK");
+				Log.d(TAG, "usLog received from ADK");
+				
 //				USSensors usSensorDataToLog = null;
 //				
 //				try 
@@ -188,9 +189,7 @@ public class LogService extends IntentService implements SensorEventListener
 //				i.putExtra("coordinates", "Sensor data: \n Senor 1: " + String.valueOf(us1Value) + "\n Sensor 2: " + String.valueOf(us2Value));
 //				sendBroadcast(i);
 //				
-//				
 //				sensorDataAdk.clear();
-//				
 //				sensorDataAdk.add(us1Value);
 //				sensorDataAdk.add(us2Value);
 //				sensorDataAdk.add(us3Value);

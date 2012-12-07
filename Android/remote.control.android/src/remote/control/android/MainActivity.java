@@ -46,6 +46,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	TextView messageText;
 	
 	boolean transmittingMotorSignals = false;
+	String currentInfo = "Info...";
 	int length = 0;
 	int i = 0;
 
@@ -96,9 +97,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private void initTextViews()
 	{
-		xCoordinate = (TextView) findViewById(R.id.textX);
-		yCoordinate = (TextView) findViewById(R.id.textY);
-		zCoordinate = (TextView) findViewById(R.id.textZ);
 		infoText = (TextView) findViewById(R.id.text_info);
 		messageText = (TextView) findViewById(R.id.text_message);
 	}
@@ -262,6 +260,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				if (intent.hasExtra("message")) {
 					String message = intent.getStringExtra("message");
 					infoText.setText(message);
+					currentInfo = message;
 				}
 
 				if (intent.hasExtra("coordinates")) {
@@ -297,6 +296,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	{
 		Log.d(TAG, "onResume Main");
 		initReceiver();
+		infoText.setText(currentInfo);
 		super.onResume();
 	}
 
