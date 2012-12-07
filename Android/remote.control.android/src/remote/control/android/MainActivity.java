@@ -316,7 +316,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		stopService(new Intent(this, LogService.class));
 		// Must be called before ending of BT service.
 		stopService(new Intent(this, MotorSignalsService.class));
-
 		// StopremoteBTService
 		stopRemoteBtServerService();
 	}

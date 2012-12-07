@@ -118,7 +118,7 @@ public class settingActivity extends Activity implements OnClickListener
 	    		
 	    		radioButtonClicked();
 	    		break;
-    	}    	   	
+    	}
     }
 	
 	 @Override
