@@ -7,14 +7,16 @@ public abstract class AbstractSignalAlgorithm implements
 	protected float		minValue;
 	protected float		deadZone;
 	protected float		mean;
+	protected float scale;
 	protected boolean	inverted;
 
-	AbstractSignalAlgorithm(float min, float max, float mean, float deadZone)
+	AbstractSignalAlgorithm(float min, float max, float mean, float deadZone, float scale)
 	{
 		this.minValue = min;
 		this.maxValue = max;
 		this.mean = mean;
 		this.deadZone = deadZone;
+		this.scale = scale;
 	}
 
 	abstract public float[] convert(float value);
@@ -38,7 +40,7 @@ public abstract class AbstractSignalAlgorithm implements
 		{
 			returnValue = this.maxValue;
 		}
-		return returnValue;
+		return returnValue * this.scale;
 	}
 
 	protected void invert(boolean inv)
