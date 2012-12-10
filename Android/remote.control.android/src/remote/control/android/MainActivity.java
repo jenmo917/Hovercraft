@@ -39,9 +39,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button buttonStopLog;
 	Button buttonLogSettings;
 
-	TextView xCoordinate;
-	TextView yCoordinate;
-	TextView zCoordinate;
 	TextView infoText;
 	TextView messageText;
 	
@@ -154,8 +151,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			callBtFunction(TOGGLE_BLUETOOTH_STATE);
 
 			//Semigood but may work on the server
-			Intent testIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-		    startActivity(testIntent);
+			//Intent testIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+			//startActivity(testIntent);
 			break;
 
 		case R.id.findBtDevicesButton:

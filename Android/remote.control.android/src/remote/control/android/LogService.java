@@ -12,6 +12,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
+import remote.control.android.Command.USSensorData;
+import remote.control.android.Command.USSensors;
+
+import com.google.protobuf.InvalidProtocolBufferException;
+
 import common.files.android.Constants;
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
@@ -25,12 +30,14 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 public class LogService extends IntentService implements SensorEventListener
 {
 
 	private static final String TAG = "REMOTE";
+	
+	public boolean isProtocol = false;
+	
 	public static boolean logStarted = false;
 	public static boolean accSensor = false;
 	public static boolean accBrainSensor = false;
@@ -41,7 +48,8 @@ public class LogService extends IntentService implements SensorEventListener
 	List<Float> sensorDataRemote = new ArrayList<Float>();
 	List<Float> sensorDataAdk = new ArrayList<Float>();
 	List<Float> sensorDataBrain = new ArrayList<Float>();
-
+	
+	public byte[] test = new byte[1];
 	private File accfile = new File(Environment.getExternalStorageDirectory()+File.separator + "remote_acc_data.txt");
 	private File accbrainfile = new File(Environment.getExternalStorageDirectory()+File.separator + "brain_acc_data.txt");
 	private File usfile = new File(Environment.getExternalStorageDirectory()+File.separator + "adk_us_data.txt");
@@ -163,50 +171,45 @@ public class LogService extends IntentService implements SensorEventListener
 			else if(action.equalsIgnoreCase(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE))
 			{
 				Log.d(TAG, "usLog received from ADK");
+				byte[] bufferMessage = intent.getByteArrayExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES);
+				USSensors usSensorDataToLog = null;
 				
-//				USSensors usSensorDataToLog = null;
-//				
-//				try 
-//				{
-//					usSensorDataToLog = USSensors.parseFrom(intent.getByteArrayExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES));
-//				} 
-//				catch (InvalidProtocolBufferException e) 
-//				{
-//					e.printStackTrace();
-//				}
-//				
-//				USSensorData us1 = usSensorDataToLog.getUSSensorData1();
-//				USSensorData us2 = usSensorDataToLog.getUSSensorData2();
-//				USSensorData us3 = usSensorDataToLog.getUSSensorData3();
-//				USSensorData us4 = usSensorDataToLog.getUSSensorData4();
-//				
-//				float us1Value = (float)us1.getValue();
-//				float us2Value = (float)us2.getValue();
-//				float us3Value = (float)us3.getValue();
-//				float us4Value = (float)us4.getValue();
-//				
-//				Intent i = new Intent("printMessage");
-//				i.putExtra("coordinates", "Sensor data: \n Senor 1: " + String.valueOf(us1Value) + "\n Sensor 2: " + String.valueOf(us2Value));
-//				sendBroadcast(i);
-//				
-//				sensorDataAdk.clear();
-//				sensorDataAdk.add(us1Value);
-//				sensorDataAdk.add(us2Value);
-//				sensorDataAdk.add(us3Value);
-//				sensorDataAdk.add(us4Value);
-//				
-//				try 
-//				{
-//					if(accfile.createNewFile())
-//						headerToSd(usfile);
-//				}
-//				catch (IOException e) 
-//				{
-//					e.printStackTrace();
-//				}
-//				
-//				Log.d(TAG, "Logging usAdk");
-//				accToSd(sensorDataAdk,usfile);
+				try 
+				{
+					usSensorDataToLog = USSensors.parseFrom(bufferMessage);
+					isProtocol = true;
+				} 
+ 				catch (IOException e) 
+				{
+					//e.printStackTrace();
+					isProtocol = false;
+				}
+				
+				if( isProtocol )
+				{
+					USSensorData us1 = usSensorDataToLog.getUSSensorData1();
+					USSensorData us2 = usSensorDataToLog.getUSSensorData2();
+					USSensorData us3 = usSensorDataToLog.getUSSensorData3();
+					USSensorData us4 = usSensorDataToLog.getUSSensorData4();
+					
+					float us1Value = (float)us1.getValue();
+					float us2Value = (float)us2.getValue();
+					float us3Value = (float)us3.getValue();
+					float us4Value = (float)us4.getValue();
+					
+					Intent i = new Intent("printMessage");
+					i.putExtra("coordinates", "Sensor data: \n Senor 1: " + String.valueOf(us1Value) + "\n Sensor 2: " + String.valueOf(us2Value));
+					sendBroadcast(i);
+					
+					sensorDataAdk.clear();
+					sensorDataAdk.add(us1Value);
+					sensorDataAdk.add(us2Value);
+					sensorDataAdk.add(us3Value);
+					sensorDataAdk.add(us4Value);
+					
+					Log.d(TAG, "Logging usAdk");
+					accToSd(sensorDataAdk,usfile);
+				}
 			}
 		}
 	};
@@ -214,39 +217,47 @@ public class LogService extends IntentService implements SensorEventListener
 	@Override
 	protected void onHandleIntent(Intent intent)
 	{
-		while(true)
+		test[0] = (byte) 0x3;
+		while( true )
 		{
-			if(logStarted==true)
+			if( logStarted == true )
 			{
 				// Titta vilka sensorer vi ska logga
-				if(accSensor == true)
+				if( accSensor == true )
 				{
 					Log.d(TAG, "Logging acc from remote");
 					accToSd(sensorDataRemote,accfile);
 				}
-				if(accBrainSensor == true)
+				
+				if( accBrainSensor == true )
 				{				
 					Intent logAccBrainIntent = new Intent(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_ACC_BRAIN_DATA);
 					logAccBrainIntent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET,Constants.TARGET_BRAIN);
-					
 					sendBroadcast(logAccBrainIntent);
-
-					Context context2 = getApplicationContext();
-					Toast.makeText(context2, "ACC BRAIN Log Started", Toast.LENGTH_SHORT).show();
-					//accToSd(accbrainfile);
+					try 
+					{
+						Thread.sleep(10);
+					} 
+					catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
 				}
-				if(usAdkSensor == true)
+				
+				if( usAdkSensor == true )
 				{
-					byte[] test = new byte[1];
-					test[0] = (byte)3;
-					
 					Intent logUsIntent = new Intent(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_US_DATA);
 					logUsIntent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.TARGET,Constants.TARGET_ADK);
 					logUsIntent.putExtra(Constants.Broadcast.BluetoothService.Actions.SendCommand.Intent.BYTES, test);
 					sendBroadcast(logUsIntent);
-
-					Context context2 = getApplicationContext();
-					Toast.makeText(context2, "US Log Started", Toast.LENGTH_SHORT).show();
+					try 
+					{
+						Thread.sleep(10);
+					} 
+					catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
 				} 
 			}
 			else
