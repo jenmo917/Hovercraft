@@ -12,10 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
-import remote.control.android.Command.USSensorData;
-import remote.control.android.Command.USSensors;
-
-import com.google.protobuf.InvalidProtocolBufferException;
+import common.files.android.Command.USSensorData;
+import common.files.android.Command.USSensors;
 
 import common.files.android.Constants;
 import android.app.IntentService;
@@ -173,6 +171,11 @@ public class LogService extends IntentService implements SensorEventListener
 				Log.d(TAG, "usLog received from ADK");
 				byte[] bufferMessage = intent.getByteArrayExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES);
 				USSensors usSensorDataToLog = null;
+				String test = new String(bufferMessage);
+				
+				Intent i = new Intent("printMessage");
+				i.putExtra("coordinates", test);
+				sendBroadcast(i);
 				
 				try 
 				{
@@ -197,9 +200,9 @@ public class LogService extends IntentService implements SensorEventListener
 					float us3Value = (float)us3.getValue();
 					float us4Value = (float)us4.getValue();
 					
-					Intent i = new Intent("printMessage");
-					i.putExtra("coordinates", "Sensor data: \n Senor 1: " + String.valueOf(us1Value) + "\n Sensor 2: " + String.valueOf(us2Value));
-					sendBroadcast(i);
+					Intent i2 = new Intent("printMessage");
+					i2.putExtra("coordinates", "Sensor data: \n Senor 1: " + String.valueOf(us1Value) + "\n Sensor 2: " + String.valueOf(us2Value));
+					sendBroadcast(i2);
 					
 					sensorDataAdk.clear();
 					sensorDataAdk.add(us1Value);
