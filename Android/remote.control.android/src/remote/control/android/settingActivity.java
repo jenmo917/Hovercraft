@@ -48,7 +48,6 @@ public class settingActivity extends Activity implements OnClickListener,
 		initSpinners();
         initOnClickListners();        
 		initOnItemSelectedListener();
-		setupBroadcastFilters();
 		Intent intent = new Intent(
 			Constants.Broadcast.MotorSignals.Algorithms.AVAILABLE_QUERY);
 		sendBroadcast(intent);
@@ -117,6 +116,7 @@ public class settingActivity extends Activity implements OnClickListener,
 	 {		 
 		 Log.d(TAG,"onPause settings");
 		 super.onPause();
+		unregisterReceiver(messageReceiver);
 		 finish();
 	 }
 
@@ -125,6 +125,7 @@ public class settingActivity extends Activity implements OnClickListener,
 	 {		 
 		 Log.d(TAG,"onResume settings");
 		 super.onResume();
+		setupBroadcastFilters();
 	 }
 	 
 	private class SettingsActivityBroadcastReceiver extends BroadcastReceiver
