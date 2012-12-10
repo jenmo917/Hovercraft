@@ -154,6 +154,30 @@ final public class Constants // final to prevent instantiation
 				public static String	ENABLE_TRANSMISSION		= "enableMotorSignalsTransmission";
 				public static String	DISABLE_TRANSMISSION	= "disableMotorSignalsTransmission";
 			}
+
+			public static class Algorithms
+			{
+				public final static String AVAILABLE_QUERY = "motorSignalsAlgorithmAvaliableQuery";
+				public final static String AVAILABLE_RESPONSE = "motorSignalsAlgorithmAvaliableResponse";
+				public final static String TYPE_QUERY = "motorSignalsAlgorithmTypeQuery";
+				public final static String TYPE_RESPONSE = "motorSignalsAlgorithmTypeResponse";
+				public final static String PITCH = "motorSignalsAlgorithmPitch";
+				public final static String ROLL = "motorSignalsAlgorithmRoll";
+
+				public static class Pitch
+				{
+					public final static String LIN = "Linear";
+					public final static String LOG = "Logarithmic";
+					public final static String EXP = "Exponential";
+				}
+
+				public static class Roll
+				{
+					public final static String LIN = "Linear";
+					public final static String LOG = "Logarithmic";
+					public final static String EXP = "Exponential";
+				}
+			}
 		}
 
 		public static class LogService
