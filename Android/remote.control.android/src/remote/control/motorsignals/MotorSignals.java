@@ -11,6 +11,16 @@ public class MotorSignals implements MotorSignalsInterface
 		pitchAlgorithm = si;
 	}
 
+	public AbstractSignalAlgorithm getPitchAlgorithm()
+	{
+		return this.pitchAlgorithm;
+	}
+
+	public AbstractSignalAlgorithm getRollAlgorithm()
+	{
+		return this.rollAlgorithm;
+	}
+
 	@Override
 	public void setRollAlgorithm(AbstractSignalAlgorithm si)
 	{
@@ -51,5 +61,4 @@ public class MotorSignals implements MotorSignalsInterface
 		}
 		return new int[] { lMotor, lMDirection, rMotor, rMDirection };
 	}
-
 }
