@@ -48,6 +48,8 @@ public class settingActivity extends Activity implements OnClickListener,
 		initSpinners();
         initOnClickListners();        
 		initOnItemSelectedListener();
+		algorithmSettings = getSharedPreferences(ALGORITHM_SETTINGS,
+			MODE_PRIVATE);
 		Intent intent = new Intent(
 			Constants.Broadcast.MotorSignals.Algorithms.AVAILABLE_QUERY);
 		sendBroadcast(intent);
@@ -137,24 +139,56 @@ public class settingActivity extends Activity implements OnClickListener,
 			if (action
 				.equals(Constants.Broadcast.MotorSignals.Algorithms.TYPE_RESPONSE))
 			{
-				String pitch = intent
-					.getStringExtra(Constants.Broadcast.MotorSignals.Algorithms.PITCH);
-				String roll = intent
-					.getStringExtra(Constants.Broadcast.MotorSignals.Algorithms.ROLL);
-				settingActivity.this.chooseSpinnerItemFromStrings(pitch, roll);
+				this.typeResponse(intent);
 			}
 			else if (action
 				.equals(Constants.Broadcast.MotorSignals.Algorithms.AVAILABLE_RESPONSE))
 			{
-				String[] pitches = intent
-					.getStringArrayExtra(Constants.Broadcast.MotorSignals.Algorithms.PITCH);
-				String[] rolls = intent
-					.getStringArrayExtra(Constants.Broadcast.MotorSignals.Algorithms.ROLL);
-				settingActivity.this.populateSpinners(pitches, rolls);
-				// Get current algorithms
+				this.availableResponse(intent);
+			}
+		}
+
+		public void typeResponse(Intent intent)
+		{
+			String pitch = intent
+				.getStringExtra(Constants.Broadcast.MotorSignals.Algorithms.PITCH);
+			String roll = intent
+				.getStringExtra(Constants.Broadcast.MotorSignals.Algorithms.ROLL);
+			int[] positions = settingActivity.this
+				.chooseSpinnerItemFromStrings(pitch, roll);
+			SharedPreferences.Editor editor = algorithmSettings.edit();
+			editor.putInt(
+				Constants.SharedPrefs.SettingsAct.Algorithms.Pitch.CHOSEN,
+				positions[0]);
+			editor.putInt(
+				Constants.SharedPrefs.SettingsAct.Algorithms.Roll.CHOSEN,
+				positions[1]);
+			editor.commit();
+		}
+
+		public void availableResponse(Intent intent)
+		{
+			String[] pitches = intent
+				.getStringArrayExtra(Constants.Broadcast.MotorSignals.Algorithms.PITCH);
+			String[] rolls = intent
+				.getStringArrayExtra(Constants.Broadcast.MotorSignals.Algorithms.ROLL);
+			settingActivity.this.populateSpinners(pitches, rolls);
+			// Get current algorithms
+			int def = Constants.SharedPrefs.SettingsAct.Algorithms.CHOSEN_DEF;
+			String pitchChosen = Constants.SharedPrefs.SettingsAct.Algorithms.Pitch.CHOSEN;
+			int pitchChosenValue = algorithmSettings.getInt(pitchChosen, def);
+			String rollChosen = Constants.SharedPrefs.SettingsAct.Algorithms.Roll.CHOSEN;
+			int rollChosenValue = algorithmSettings.getInt(rollChosen, def);
+			// Request from motor signals service if not set.
+			if (def == pitchChosenValue || def == rollChosenValue)
+			{
 				Intent query = new Intent(
 					Constants.Broadcast.MotorSignals.Algorithms.TYPE_QUERY);
 				sendBroadcast(query);
+			}
+			else
+			{
+				setSpinnerItems(pitchChosenValue, rollChosenValue);
 			}
 		}
 	}
@@ -175,7 +209,39 @@ public class settingActivity extends Activity implements OnClickListener,
 	{
 		if (parent == pitchSpinner)
 		{
-			Log.d(TAG, "It's the pitch spinner");
+			String chosen = Constants.SharedPrefs.SettingsAct.Algorithms.Pitch.CHOSEN;
+			int chosenDef = Constants.SharedPrefs.SettingsAct.Algorithms.CHOSEN_DEF;
+			int chosenValue = algorithmSettings.getInt(chosen, chosenDef);
+			if (chosenDef != chosenValue && chosenValue != pos)
+			{
+				Intent intent = new Intent(
+					Constants.Broadcast.MotorSignals.Algorithms.CHANGE);
+				intent.putExtra(
+					Constants.Broadcast.MotorSignals.Algorithms.ALGORITHM,
+					Constants.Broadcast.MotorSignals.Algorithms.PITCH);
+				intent.putExtra(
+					Constants.Broadcast.MotorSignals.Algorithms.TYPE,
+					(String) parent.getItemAtPosition(pos));
+				sendBroadcast(intent);
+			}
+		}
+		else if (parent == rollSpinner)
+		{
+			String chosen = Constants.SharedPrefs.SettingsAct.Algorithms.Roll.CHOSEN;
+			int chosenDef = Constants.SharedPrefs.SettingsAct.Algorithms.CHOSEN_DEF;
+			int chosenValue = algorithmSettings.getInt(chosen, chosenDef);
+			if (chosenDef != chosenValue && chosenValue != pos)
+			{
+				Intent intent = new Intent(
+					Constants.Broadcast.MotorSignals.Algorithms.CHANGE);
+				intent.putExtra(
+					Constants.Broadcast.MotorSignals.Algorithms.ALGORITHM,
+					Constants.Broadcast.MotorSignals.Algorithms.ROLL);
+				intent.putExtra(
+					Constants.Broadcast.MotorSignals.Algorithms.TYPE,
+					(String) parent.getItemAtPosition(pos));
+				sendBroadcast(intent);
+			}
 		}
 	}
 
@@ -208,15 +274,23 @@ public class settingActivity extends Activity implements OnClickListener,
 		rollSpinner.setAdapter(pitchAdapter);
 	}
 
-	private void chooseSpinnerItemFromStrings(String pitch, String roll)
+	private int[] chooseSpinnerItemFromStrings(String pitch, String roll)
 	{
 		@SuppressWarnings("unchecked")
 		ArrayAdapter<String> pitchAdapter =
 			(ArrayAdapter<String>) pitchSpinner.getAdapter();
-		pitchSpinner.setSelection(pitchAdapter.getPosition(pitch), false);
+		int pitchPosition = pitchAdapter.getPosition(pitch);
 		@SuppressWarnings("unchecked")
 		ArrayAdapter<String> rollAdapter =
 			(ArrayAdapter<String>) rollSpinner.getAdapter();
-		rollSpinner.setSelection(rollAdapter.getPosition(roll), false);
+		int rollPosition = rollAdapter.getPosition(roll);
+		this.setSpinnerItems(pitchPosition, rollPosition);
+		return new int[] { pitchPosition, rollPosition };
+	}
+
+	private void setSpinnerItems(int pitchPosition, int rollPosition)
+	{
+		pitchSpinner.setSelection(pitchPosition, false);
+		rollSpinner.setSelection(rollPosition, false);
 	}
 }	

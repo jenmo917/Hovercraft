@@ -100,6 +100,8 @@ public class MotorSignalsService extends IntentService implements
 			.addAction(Constants.Broadcast.MotorSignals.Algorithms.TYPE_QUERY);
 		filter
 			.addAction(Constants.Broadcast.MotorSignals.Algorithms.AVAILABLE_QUERY);
+		filter
+			.addAction(Constants.Broadcast.MotorSignals.Algorithms.CHANGE);
 		registerReceiver(messageReceiver, filter);
 	}
 
@@ -141,17 +143,7 @@ public class MotorSignalsService extends IntentService implements
 			else if (action
 				.equals(Constants.Broadcast.MotorSignals.Algorithms.TYPE_QUERY))
 			{
-				Intent response = new Intent(
-					Constants.Broadcast.MotorSignals.Algorithms.TYPE_RESPONSE);
-				response.putExtra(
-					Constants.Broadcast.MotorSignals.Algorithms.PITCH,
-					MotorSignalsService.this.motorSignals.getPitchAlgorithm()
-						.getType());
-				response.putExtra(
-					Constants.Broadcast.MotorSignals.Algorithms.ROLL,
-					MotorSignalsService.this.motorSignals.getRollAlgorithm()
-						.getType());
-				sendBroadcast(response);
+				broadcastAlgorithms();
 			}
 			else if (action
 				.equals(Constants.Broadcast.MotorSignals.Algorithms.AVAILABLE_QUERY))
@@ -176,6 +168,37 @@ public class MotorSignalsService extends IntentService implements
 					rolls);
 				sendBroadcast(response);
 			}
+			else if (action
+				.equals(Constants.Broadcast.MotorSignals.Algorithms.CHANGE))
+			{
+				changeAlgorithms(intent);
+				broadcastAlgorithms();
+			}
+		}
+
+		private void changeAlgorithms(Intent intent)
+		{
+			String algorithm = intent
+				.getStringExtra(Constants.Broadcast.MotorSignals.Algorithms.ALGORITHM);
+			String type = intent
+				.getStringExtra(Constants.Broadcast.MotorSignals.Algorithms.TYPE);
+			MotorSignalsService.this.director.changeAlgorithm(
+				MotorSignalsService.this.motorSignals, algorithm, type);
+		}
+
+		private void broadcastAlgorithms()
+		{
+			Intent response = new Intent(
+				Constants.Broadcast.MotorSignals.Algorithms.TYPE_RESPONSE);
+			response.putExtra(
+				Constants.Broadcast.MotorSignals.Algorithms.PITCH,
+				MotorSignalsService.this.motorSignals.getPitchAlgorithm()
+					.getType());
+			response.putExtra(
+				Constants.Broadcast.MotorSignals.Algorithms.ROLL,
+				MotorSignalsService.this.motorSignals.getRollAlgorithm()
+					.getType());
+			sendBroadcast(response);
 		}
 	}
 

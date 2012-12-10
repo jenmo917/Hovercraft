@@ -161,8 +161,11 @@ final public class Constants // final to prevent instantiation
 				public final static String AVAILABLE_RESPONSE = "motorSignalsAlgorithmAvaliableResponse";
 				public final static String TYPE_QUERY = "motorSignalsAlgorithmTypeQuery";
 				public final static String TYPE_RESPONSE = "motorSignalsAlgorithmTypeResponse";
+				public final static String ALGORITHM = "motorSignalsAlgorithm";
 				public final static String PITCH = "motorSignalsAlgorithmPitch";
 				public final static String ROLL = "motorSignalsAlgorithmRoll";
+				public final static String CHANGE = "motorSignalsAlgorithmChange";
+				public final static String TYPE = "motorSignalsAlgorithmType";
 
 				public static class Pitch
 				{
@@ -197,6 +200,27 @@ final public class Constants // final to prevent instantiation
 		public static class ConnectionStates
 		{
 			public static String	CONNECTION_STATE	= "connectionState";
+		}
+	}
+
+	public static class SharedPrefs
+	{
+		public static class SettingsAct
+		{
+			public static class Algorithms
+			{
+				public static class Pitch
+				{
+					public final static String CHOSEN = "sPSAApitchChosen";
+				}
+
+				public static class Roll
+				{
+					public final static String CHOSEN = "sPSAArollChosen";
+				}
+
+				public final static int CHOSEN_DEF = -1;
+			}
 		}
 	}
 
