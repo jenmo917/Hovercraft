@@ -100,44 +100,29 @@
                         android:textAppearance="?android:attr/textAppearanceLarge" />
                 </TableRow>
 
-                <TableRow
-                    android:id="@+id/tableRow10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <RadioGroup
-                        android:id="@+id/radioAlgorithmGroup"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp" >
-
-                        <RadioButton
-                            android:id="@+id/radioLinear"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:checked="true"
-                            android:text="@string/linearAlgoritm" />
-
-                        <RadioButton
-                            android:id="@+id/radioExponential"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:text="@string/exponentialAlgoritm" />
-
-                        <RadioButton
-                            android:id="@+id/radioLogarithmic"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:text="@string/logarithmicAlgoritm" />
+                        android:layout_height="wrap_content" >
 
-                    </RadioGroup>
+                        <Spinner
+                            android:id="@+id/pitchAlgorithm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
-                </TableRow>
+                        <Spinner
+                            android:id="@+id/rollAlgorithm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
             </TableLayout>
         </LinearLayout>
 
  </ScrollView>
-
+ 
 <Button
     android:id="@+id/backButton"
     android:layout_width="match_parent"

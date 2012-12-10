@@ -96,6 +96,10 @@ public class MotorSignalsService extends IntentService implements
 		filter.addAction(Constants.Broadcast.MotorSignals.Remote.DISABLE_TRANSMISSION);
 		filter.addAction(Constants.Broadcast.MotorSignals.Remote.ENABLE_TRANSMISSION);
 		filter.addAction(Constants.Broadcast.ControlSystem.Status.Query.ACTION);
+		filter
+			.addAction(Constants.Broadcast.MotorSignals.Algorithms.TYPE_QUERY);
+		filter
+			.addAction(Constants.Broadcast.MotorSignals.Algorithms.AVAILABLE_QUERY);
 		registerReceiver(messageReceiver, filter);
 	}
 
@@ -134,14 +138,51 @@ public class MotorSignalsService extends IntentService implements
 					sendBroadcast(responseIntent);
 				}
 			}
+			else if (action
+				.equals(Constants.Broadcast.MotorSignals.Algorithms.TYPE_QUERY))
+			{
+				Intent response = new Intent(
+					Constants.Broadcast.MotorSignals.Algorithms.TYPE_RESPONSE);
+				response.putExtra(
+					Constants.Broadcast.MotorSignals.Algorithms.PITCH,
+					MotorSignalsService.this.motorSignals.getPitchAlgorithm()
+						.getType());
+				response.putExtra(
+					Constants.Broadcast.MotorSignals.Algorithms.ROLL,
+					MotorSignalsService.this.motorSignals.getRollAlgorithm()
+						.getType());
+				sendBroadcast(response);
+			}
+			else if (action
+				.equals(Constants.Broadcast.MotorSignals.Algorithms.AVAILABLE_QUERY))
+			{
+				String[] pitches = new String[] {
+					Constants.Broadcast.MotorSignals.Algorithms.Pitch.LIN,
+					Constants.Broadcast.MotorSignals.Algorithms.Pitch.LOG,
+					Constants.Broadcast.MotorSignals.Algorithms.Pitch.EXP };
+				String[] rolls = new String[] {
+					Constants.Broadcast.MotorSignals.Algorithms.Roll.LIN,
+					Constants.Broadcast.MotorSignals.Algorithms.Roll.LOG,
+					Constants.Broadcast.MotorSignals.Algorithms.Roll.EXP };
+				Intent response = new Intent(
+					Constants.Broadcast.MotorSignals.Algorithms.AVAILABLE_RESPONSE);
+				response
+					.putExtra(
+						Constants.Broadcast.MotorSignals.Algorithms.PITCH,
+						pitches);
+				response
+					.putExtra(
+					Constants.Broadcast.MotorSignals.Algorithms.ROLL,
+					rolls);
+				sendBroadcast(response);
+			}
 		}
 	}
 
 	@Override
 	public void onAccuracyChanged(Sensor arg0, int arg1)
 	{
-		// TODO Auto-generated method stub
-
+		// Do nothing right now. Nothing is implemented.
 	}
 
 	@Override
