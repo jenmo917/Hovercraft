@@ -1,10 +1,13 @@
 package remote.control.motorsignals;
 
+import common.files.android.Constants;
+
 public class RollExp extends AbstractSignalAlgorithm
 {
 	public RollExp(float min, float max, float mean, float deadZone, float scale)
 	{
 		super(min, max, mean, deadZone, scale);
+		this.type = Constants.Broadcast.MotorSignals.Algorithms.Roll.EXP;
 	}
 
 	@Override

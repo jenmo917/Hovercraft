@@ -1,10 +1,13 @@
 package remote.control.motorsignals;
 
+import common.files.android.Constants;
+
 public class RollLog extends AbstractSignalAlgorithm
 {
 	public RollLog(float min, float max, float mean, float deadZone, float scale)
 	{
 		super(min, max, mean, deadZone, scale);
+		this.type = Constants.Broadcast.MotorSignals.Algorithms.Roll.LOG;
 	}
 
 	@Override

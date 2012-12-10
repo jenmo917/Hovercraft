@@ -1,11 +1,14 @@
 package remote.control.motorsignals;
 
+import common.files.android.Constants;
+
 public class PitchLog extends AbstractSignalAlgorithm
 {
 	public PitchLog(float min, float max, float mean, float deadZone,
 		float scale)
 	{
 		super(min, max, mean, deadZone, scale);
+		this.type = Constants.Broadcast.MotorSignals.Algorithms.Pitch.LOG;
 	}
 
 	@Override

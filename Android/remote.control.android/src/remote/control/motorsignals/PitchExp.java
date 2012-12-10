@@ -1,5 +1,7 @@
 package remote.control.motorsignals;
 
+import common.files.android.Constants;
+
 public class PitchExp extends AbstractSignalAlgorithm
 {
 
@@ -7,6 +9,7 @@ public class PitchExp extends AbstractSignalAlgorithm
 		float scale)
 	{
 		super(min, max, mean, deadZone, scale);
+		this.type = Constants.Broadcast.MotorSignals.Algorithms.Pitch.EXP;
 	}
 
 	@Override

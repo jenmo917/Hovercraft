@@ -9,6 +9,7 @@ public abstract class AbstractSignalAlgorithm implements
 	protected float		mean;
 	protected float scale;
 	protected boolean	inverted;
+	protected String type;
 
 	AbstractSignalAlgorithm(float min, float max, float mean, float deadZone, float scale)
 	{
@@ -46,5 +47,10 @@ public abstract class AbstractSignalAlgorithm implements
 	protected void invert(boolean inv)
 	{
 		this.inverted = inv;
+	}
+
+	public String getType()
+	{
+		return this.type;
 	}
 }
