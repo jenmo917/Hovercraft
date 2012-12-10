@@ -2,10 +2,9 @@ package remote.control.android;
 
 import remote.control.android.Command.DriveSignals;
 import remote.control.android.Command.Engines;
-import remote.control.motorsignals.AbstractSignalAlgorithm;
 import remote.control.motorsignals.MotorSignals;
-import remote.control.motorsignals.PitchLinear;
-import remote.control.motorsignals.RollLinear;
+import remote.control.motorsignals.MotorSignalsBuilder;
+import remote.control.motorsignals.MotorSignalsDirector;
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,33 +24,27 @@ public class MotorSignalsService extends IntentService implements
 	/**
 	 * This is true if the service is up and running
 	 */
-	public static boolean			isActive					= false;
+	public static boolean isActive = false;
 
-	private static String			TAG							= "MotorSignals";
+	private static String TAG = "MotorSignals";
 
-	private final BroadcastReceiver	messageReceiver				= new MotorSignalsBroadcastReceiver();
+	private final BroadcastReceiver messageReceiver =
+		new MotorSignalsBroadcastReceiver();
 
-	private SensorManager			mgr;
-	private Sensor					accel;
-	private boolean					enabled						= false;
+	private SensorManager mgr;
+	private Sensor accel;
+	private boolean enabled = false;
 
-	private float[]					accVals						= new float[3];
-	final float CONTROLLER_ROLL_MIN = -0.65f;
-	final float CONTROLLER_ROLL_MAX = 0.65f;
-	final float CONTROLLER_ROLL_MEAN = 0f;
-	final float CONTROLLER_ROLL_DEAD_ZONE = 0.02f;
-	final float CONTROLLER_PITCH_MIN = 0f;
-	final float CONTROLLER_PITCH_MAX = 1;
-	final float CONTROLLER_PITCH_MEAN = 0f;
-	final float CONTROLLER_PITCH_DEAD_ZONE = 0.03f;
+	private float[] accVals = new float[3];
 	float lpf = 0.8f;
-	private MotorSignals			motorSignals;
-	private AbstractSignalAlgorithm	pitch;
-	private AbstractSignalAlgorithm	roll;
+	private MotorSignals motorSignals;
+	private MotorSignalsDirector director;
+
 
 	public MotorSignalsService()
 	{
 		super("MotorSignals");
+
 	}
 
 	@Override
@@ -63,13 +56,8 @@ public class MotorSignalsService extends IntentService implements
 
 		mgr = (SensorManager) this.getSystemService(SENSOR_SERVICE);
 		accel = mgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		pitch = new PitchLinear(CONTROLLER_PITCH_MIN, CONTROLLER_PITCH_MAX,
-				CONTROLLER_PITCH_MEAN, CONTROLLER_PITCH_DEAD_ZONE);
-		roll = new RollLinear(CONTROLLER_ROLL_MIN, CONTROLLER_ROLL_MAX,
-				CONTROLLER_ROLL_MEAN, CONTROLLER_ROLL_DEAD_ZONE);
-		motorSignals = new MotorSignals();
-		motorSignals.setPitchAlgorithm(pitch);
-		motorSignals.setRollAlgorithm(roll);
+		director = new MotorSignalsDirector(new MotorSignalsBuilder());
+		motorSignals = director.buildLogSystem();
 	}
 
 	@Override
