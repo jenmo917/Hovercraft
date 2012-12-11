@@ -56,8 +56,8 @@ void sensorSetup()
 	int echoPins[4] = { echoPin1, echoPin2, echoPin3, echoPin4 };
 	for ( int i = 0; i < MAX_US_SENSORS; i++ )
 	{
-		struct USSensor newSensor;
-		USSensorList[i] = newSensor;
+		//struct USSensor newSensor;
+		//USSensorList[i] = newSensor;
 		USSensorList[i].type="Ultrasonic";
 		USSensorList[i].description = "No sensor";
 		USSensorList[i].echopin = echoPins[i];

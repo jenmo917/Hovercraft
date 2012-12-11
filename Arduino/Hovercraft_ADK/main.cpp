@@ -43,9 +43,9 @@ void setup()
 	disp.addEventListener( Events::EV_US_SENSOR_FINISHED, USBSendUSSensorDataHandler );
 	disp.addEventListener( Events::EV_I2C_SENSOR_FINISHED, USBSendI2CSensorDataHandler );
 	//disp.addEventListener( Events::EV_US_SENSOR_WARNING, USBSendUSWarningHandler );
-	disp.addEventListener( Events::EV_TIME_500, blinkyHandler );
-	disp.addEventListener( Events::EV_TIME_5000, USBSendEnginesObject );
-	disp.addEventListener( Events::EV_ENGINES_REQ, USBSendEnginesObject );
+	disp.addEventListener( Events::EV_TIME_1000, blinkyHandler );
+	//disp.addEventListener( Events::EV_TIME_5000, USBSendEnginesObject );
+	//disp.addEventListener( Events::EV_ENGINES_REQ, USBSendEnginesObject );
 	disp.addEventListener( Events::EV_TIME_100, connectionCheckEngines );
 	//disp.addEventListener( Events::EV_TIME_100, timeHandler100 );
 	//disp.addEventListener( Events::EV_ANALOG0, analogHandler );
@@ -84,7 +84,6 @@ void loop()
 	{
 		Serial << "No USB connection to an Android phone was found" << endl;
 		ErrorMsgSent = true;
-
 		DriveSignals signal;
 		signal.enable = false;
 		signal.forward = true;
@@ -109,7 +108,6 @@ int main(void)
 	// Must call init for arduino to work properly
 	init();
 	setup();
-
 	while( true )
 	{
 		loop();

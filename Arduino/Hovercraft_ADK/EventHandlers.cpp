@@ -15,19 +15,19 @@
 #include "Drive.h"
 
 /**
-* \brief Prints the number of seconds since reset
-*
-* Prints the number of seconds since reset
-*
-*
-* @param event Not used
-*
-* @param param Not used
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Prints the number of seconds since reset
+ *
+ * Prints the number of seconds since reset
+ *
+ *
+ * @param event Not used
+ *
+ * @param param Not used
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void timeHandler1000( int event, int param )
 {
 	Serial.print( "Time elapsed in seconds: " );
@@ -35,19 +35,19 @@ void timeHandler1000( int event, int param )
 }
 
 /**
-* \brief Prints the number of half seconds since reset
-*
-* Prints the number of half seconds since reset
-*
-*
-* @param event Not used
-*
-* @param param Not used
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Prints the number of half seconds since reset
+ *
+ * Prints the number of half seconds since reset
+ *
+ *
+ * @param event Not used
+ *
+ * @param param Not used
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void timeHandler500( int event, int param )
 {
 	Serial.print( "Time elapsed in half seconds: " );
@@ -55,19 +55,19 @@ void timeHandler500( int event, int param )
 }
 
 /**
-* \brief Prints the number of times 100 milliseconds have passed since reset
-*
-* Prints the number of times 100 milliseconds have passed since reset
-*
-*
-* @param event Not used
-*
-* @param param Not used
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Prints the number of times 100 milliseconds have passed since reset
+ *
+ * Prints the number of times 100 milliseconds have passed since reset
+ *
+ *
+ * @param event Not used
+ *
+ * @param param Not used
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void timeHandler100( int event, int param )
 {
 	Serial.print( "Time elapsed in 1/10 seconds: " );
@@ -75,19 +75,19 @@ void timeHandler100( int event, int param )
 }
 
 /**
-* \brief Change the output on the LED pin
-*
-* Inverts the output on LEDpin. Used together with a timeManager to obtain blinky
-*
-*
-* @param event Not used
-*
-* @param param Not used
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Change the output on the LED pin
+ *
+ * Inverts the output on LEDpin. Used together with a timeManager to obtain blinky
+ *
+ *
+ * @param event Not used
+ *
+ * @param param Not used
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void blinkyHandler( int event, int param )
 {
 	if ( blinkyFlag == true )
@@ -97,19 +97,18 @@ void blinkyHandler( int event, int param )
 }
 
 /**
-* \brief Prints the value of param
-*
-* Prints the value of param
-*
-*
-* @param event Not used
-*
-* @param param Value to be printed. Printed as an integer
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Prints the value of param
+ *
+ * Prints the value of param
+ *
+ * @param event Not used
+ *
+ * @param param Value to be printed. Printed as an integer
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void analogHandler( int event, int param )
 {
 	Serial.print( "Analog value: " );
@@ -117,18 +116,18 @@ void analogHandler( int event, int param )
 }
 
 /**
-* \brief Reads I2C data and starts an event to send it to target
-*
-* Reads I2C data and starts an event to send it to target
-*
-* @param event Not used
-*
-* @param target Used when adding a EV_I2C_SENSOR_FINISHED event to queue.
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Reads I2C data and starts an event to send it to target
+ *
+ * Reads I2C data and starts an event to send it to target
+ *
+ * @param event Not used
+ *
+ * @param target Used when adding a EV_I2C_SENSOR_FINISHED event to queue.
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void I2CSensorDataHandler( int event, int target )
 {
 	Serial << "********************************************************" << endl;
@@ -172,18 +171,18 @@ void I2CSensorDataHandler( int event, int target )
 }
 
 /**
-* \brief Reads Ultrasonic sensor data and starts an event to send it to target
-*
-* Reads Ultrasonic sensor data and starts an event to send it to target
-*
-* @param event Not used
-*
-* @param target Used when adding a EV_US_SENSOR_FINISHED event to queue.
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Reads Ultrasonic sensor data and starts an event to send it to target
+ *
+ * Reads Ultrasonic sensor data and starts an event to send it to target
+ *
+ * @param event Not used
+ *
+ * @param target Used when adding a EV_US_SENSOR_FINISHED event to queue.
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void USSensorHandler( int event, int target )
 {
 	Serial << "********************************************************" << endl;
@@ -214,18 +213,18 @@ void USSensorHandler( int event, int target )
 }
 
 /**
-* \brief Sorts the read USBdata to their correct buffer
-*
-* Sorts the read USBdata to their correct buffer
-*
-* @param event Not used
-*
-* @param param Not used
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Sorts the read USBdata to their correct buffer
+ *
+ * Sorts the read USBdata to their correct buffer
+ *
+ * @param event Not used
+ *
+ * @param param Not used
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void USBReadHandler( int event, int param )
 {
 	int i = 0;
@@ -243,55 +242,60 @@ void USBReadHandler( int event, int param )
 }
 
 /**
-* \brief Sends the ultrasonic sensors data saved in USSensorList via the USB
-*
-* Sends the ultrasonic sensors data saved in USSensorList via the USB
-*
-* @param event Not used
-*
-* @param target Describes which target to send to.
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Sends the ultrasonic sensors data saved in USSensorList via the USB
+ *
+ * Sends the ultrasonic sensors data saved in USSensorList via the USB
+ *
+ * @param event Not used
+ *
+ * @param target Describes which target to send to.
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void USBSendUSSensorDataHandler( int event, int target )
 {
 	//Serial << "USBSendUSSensorDataHandler" << endl;
 	if ( acc.isConnected() )
 	{
-		if( encodeUSSensorListMsg() )
+		/*if( encodeUSSensorListMsg() )
 		{
-			Serial << "USSensor sent to target: " << target << endl;
-			if ( target == 0 )
-			{
-				sendMessage( US_SENSOR_COMMAND, TARGET_REMOTE );
-			}
-			else
-			{
-				sendMessage( US_SENSOR_COMMAND, target );
-			}
+		 */
+		prepareUSSensorsForUSBTransfer();
+		Serial << "USSensor sent to target: " << target << endl;
+		if ( target == 0 )
+		{
+			sendMessage( US_SENSOR_COMMAND, TARGET_REMOTE );
 		}
+		else
+		{
+			sendMessage( US_SENSOR_COMMAND, target );
+		}
+		/*	}
+
 		else
 		{
 			Serial << "Failed to encode sensors in function: USBSendSensorDataHandler";
 		}
+
+		 */
 	}
 }
 
 /**
-* \brief Sends the I2C sensors data saved in I2CSensorList via the USB
-*
-* Sends the I2C sensors data saved in I2CSensorList via the USB
-*
-* @param event Not used
-*
-* @param target Describes which target to send to.
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Sends the I2C sensors data saved in I2CSensorList via the USB
+ *
+ * Sends the I2C sensors data saved in I2CSensorList via the USB
+ *
+ * @param event Not used
+ *
+ * @param target Describes which target to send to.
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void USBSendI2CSensorDataHandler( int event, int target )
 {
 	Serial << "USBSendI2CSensorDataHandler" << endl;
@@ -309,18 +313,18 @@ void USBSendI2CSensorDataHandler( int event, int target )
 }
 
 /**
-* \brief Sends the current drivesignals via the USB
-*
-* Sends the current drivesignals via the USB
-*
-* @param event Not used
-*
-* @param target Describes which target to send to.
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Sends the current drivesignals via the USB
+ *
+ * Sends the current drivesignals via the USB
+ *
+ * @param event Not used
+ *
+ * @param target Describes which target to send to.
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void USBSendEnginesObject( int event, int target )
 {
 	Engines engineSignals = getMotorSignals();
@@ -342,18 +346,18 @@ void USBSendEnginesObject( int event, int target )
 }
 
 /**
-* \brief Increases a counter and checks if the counter is 10. If 10 stops motors.
-*
-* Increases a counter and checks if the counter is 10. If 10 stops motors.
-*
-* @param event Not used
-*
-* @param param Not used
-*
-* @return No return
-*
-* \author Rickard Dahm
-*/
+ * \brief Increases a counter and checks if the counter is 10. If 10 stops motors.
+ *
+ * Increases a counter and checks if the counter is 10. If 10 stops motors.
+ *
+ * @param event Not used
+ *
+ * @param param Not used
+ *
+ * @return No return
+ *
+ * \author Rickard Dahm
+ */
 void connectionCheckEngines( int event, int param )
 {
 	connectionCounter++;

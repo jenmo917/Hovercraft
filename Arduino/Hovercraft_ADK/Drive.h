@@ -24,5 +24,6 @@ void setLeftDir( int dir );
 void setLeftPower( int power );
 void enableLeftMotor( bool enable );
 Engines getMotorSignals();
+void liftFansControl(bool liftOn);
 
 #endif /* DRIVE_H_ */

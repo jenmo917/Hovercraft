@@ -31,6 +31,8 @@
 // Drive control signals
 #define MOTOR_CONTROL_COMMAND 3
 #define PRINT_MESSAGE_COMMAND 4
+
+#define LIFT_FAN_COMMAND 7
 // Requests
 #define I2C_SENSOR_REQ_COMMAND 5
 #define US_SENSOR_REQ_COMMAND 6
