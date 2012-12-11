@@ -51,14 +51,18 @@ final public class Constants // final to prevent instantiation
 	 * message byte.
 	 */
 	public static final byte	US_SENSOR_REQ_COMMAND			= (byte) 6;
+	/**
+	 * Message: 1 for lift fans on and 0 for lift fans off.
+	 */
+	public static final byte LIFT_FAN_COMMAND = (byte) 7;
 	public static final byte	ACC_BRAIN_SENSOR_REQ_COMMAND	= (byte) 8;
 	public static final byte	ACC_BRAIN_SENSOR_STOP_REQ_COMMAND	= (byte) 9;
 
-	public static final byte MOTOR_SIGNAL_COMMAND 				= (byte) 7;
 
 	/*
 	 * Brain Commands (71-141)
 	 */
+	public static final byte MOTOR_SIGNAL_COMMAND = (byte) 71;
 
 	/*
 	 * Remote Commands (142-211)
