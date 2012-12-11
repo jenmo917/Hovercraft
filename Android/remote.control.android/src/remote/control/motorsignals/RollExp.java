@@ -2,13 +2,12 @@ package remote.control.motorsignals;
 
 import common.files.android.Constants;
 
-public class RollLinear extends AbstractSignalAlgorithm
+public class RollExp extends AbstractSignalAlgorithm
 {
-
-	public RollLinear(float min, float max, float mean, float deadZone, float scale)
+	public RollExp(float min, float max, float mean, float deadZone, float scale)
 	{
 		super(min, max, mean, deadZone, scale);
-		this.type = Constants.Broadcast.MotorSignals.Algorithms.Roll.LIN;
+		this.type = Constants.Broadcast.MotorSignals.Algorithms.Roll.EXP;
 	}
 
 	@Override
@@ -25,13 +24,14 @@ public class RollLinear extends AbstractSignalAlgorithm
 		float cutRoll = this.cut(roll) - mean;
 		if (minValue <= cutRoll && cutRoll < -deadZone)
 		{
-			leftMotor = -cutRoll / (maxValue - mean);
+			leftMotor = (float) (Math.exp(-cutRoll) /
+				Math.exp(mean - minValue));
 		}
 		if (deadZone < cutRoll && cutRoll <= maxValue)
 		{
-			rightMotor = cutRoll / (maxValue - mean);
+			rightMotor = (float) (Math.exp(cutRoll) /
+				Math.exp(maxValue - mean));
 		}
 		return new float[] { leftMotor, rightMotor };
 	}
-
 }

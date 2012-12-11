@@ -4,7 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_main_activity">Remote Control</string>
-    <string name="btnConnect">BT ON/OFF</string>
+    <string name="btnConnect">Connect</string>
     <string name="textInfoInit">No info</string>
     <string name="click">Search</string>
     <string name="bluetoothSwitch">Bluetooth</string>
@@ -24,7 +24,6 @@
     <string name="title_activity_main">MainActivity</string>
 	<string name="btnStartLog">Start Log</string>
 	<string name="btnStopLog">Stop Log</string>
-	<string name="Settings">Log Settings</string>
 	<string name="Accelerometer">Accelerometer</string>
 	<string name="Proximity">Proximity</string>
 	<string name="back">Back to Main Menu</string>
@@ -37,5 +36,16 @@
 	<string name="labelInfo">Info:</string>
 	<string name="lableMessage">Received messages:</string>
 	<string name="textMessageInit">No messages</string>
+	<string name="btnToggleBtON">BT ON</string>
+	<string name="btnToggleBtOFF">BT OFF</string>
+	<string name="algoritm">Algorithm:</string>
+	<string name="brainAcc">Brain - Accelerometer</string>
+	<string name="adkUltrasound">ADK - Ultrasound</string>
+	<string name="remoteAcc">Remote - Accelerometer</string>
+	<string name="logSensors">Log sensors:</string>
+	<string name="linearAlgoritm">Linear Algorithm</string>
+	<string name="exponentialAlgoritm">Exponential Algorithm</string>
+	<string name="logarithmicAlgoritm">Logarithmic Algorithm</string>
+	<string name="settings">Settings</string>
 
 </resources>

@@ -25,6 +25,14 @@ import common.files.android.Constants;
 
 public class BtService extends IntentService
 {
+	String TOGGLE_BLUETOOTH_STATE = "toggleBluetooth";
+	String FIND_BLUETOOTH_DEVICES = "findDevices";
+	String CHOOSE_BLUETOOTH_DEVICE = "chooseDevice";
+	String CONNECT_WITH_BLUETOOTH_DEVICE = "connectDevice";
+	String DISCONNECT_BLUETOOTH_DEVICE = "disconnectDevice";
+	String TOGGLE_BT_BUTTON_TEXT = "toggleBtButtonText";
+	String BT_STATUS = "btStatus";
+	
 	private static String TAG = "JM";
 	protected static final int REQUEST_ENABLE_BT = 1;
 	
@@ -52,10 +60,40 @@ public class BtService extends IntentService
 	@Override
 	public void onCreate()
 	{
+		if(bluetooth.isEnabled())
+		{
+			updateBtButtonText(true);
+		}
+		else
+		{
+			updateBtButtonText(false);
+		}
+
 		super.onCreate();
 		Log.d(TAG,"BtService: start BtService");
 	}
 
+	void updateBtButtonText(boolean status)
+	{
+		Intent toggle = new Intent(TOGGLE_BT_BUTTON_TEXT);
+		toggle.putExtra(BT_STATUS, status);
+		sendBroadcast(toggle);
+	}
+	
+	void toggleBtOnOff()
+	{
+		if(bluetooth.isEnabled())
+		{
+			bluetooth.disable();
+			updateBtButtonText(false);
+		}
+		else
+		{
+			bluetooth.enable();
+			updateBtButtonText(true);
+		}	
+	}
+	
 	@Override
 	protected void onHandleIntent(Intent arg0)
 	{
@@ -76,7 +114,6 @@ public class BtService extends IntentService
 			{
 				//TODO implement checkInput here
 				checkInput();
-				//readBuffer();
 			}
 		}
 	}
@@ -89,6 +126,8 @@ public class BtService extends IntentService
 		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.ACTION);
 		filter.addAction("callFunction");
 		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_US_DATA);
+		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_ACC_BRAIN_DATA);
+		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_STOP_ACC_BRAIN_DATA);
 		registerReceiver(BtRemoteServiceReciever, filter);
 	}
 	
@@ -112,13 +151,13 @@ public class BtService extends IntentService
 		sendBroadcastInfo("Search finished...");
 		Iterator<String> it = devicesFound.iterator();
 		String devs = "";
-
+		
 		while(it.hasNext())
 		{
-			devs += (String)it.next() + "\n";
+				devs += (String)it.next() + "\n";
 		}
 		
-		sendBroadcastInfo(devs);
+		sendBroadcastInfo("Devices found:\n\n" + devs);
 	}
 
 	int i = 0;
@@ -274,10 +313,24 @@ public class BtService extends IntentService
 		{
 			if(Constants.LOG_US_SENSOR_COMMAND == bufferInfo[0])
 			{
-				sendBroadcastMessage("Message received:\n" + String.valueOf(bufferInfo[0]));
+				sendBroadcastMessage("Message received: " + String.valueOf(bufferInfo[0]));
+				
 				Intent usSensors = new Intent(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE);
 				usSensors.putExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES, bufferMessage);
 				sendBroadcast(usSensors);
+			}
+			else if(Constants.LOG_ACC_BRAIN_SENSOR_COMMAND == bufferInfo[0])
+			{
+				String coords = new String(bufferMessage);
+				
+				String str = coords;
+				String[] splitCoords;
+				splitCoords = str.split(":");
+				sendBroadcastMessage("Message received: " + String.valueOf(bufferInfo[0]) + "\n" + splitCoords[0] + "\n" + splitCoords[1] + "\n" + splitCoords[2]);
+				
+				Intent sendToLog = new Intent("brainAccResponse");
+				sendToLog.putExtra("coords", coords);
+				sendBroadcast(sendToLog);
 			}
 						
 			//sendCommand(bufferInfo[0], bufferInfo[1], bufferMessage);
@@ -313,16 +366,20 @@ public class BtService extends IntentService
 	private void btConnectionLost(String message)
 	{
 		listenOnBtInputstream = false;
-		bluetoothSocketUp = false;
-		try
-		{
-			mmSocket.close();
-		}
-		catch (IOException e)
-		{ 
-			
-		}
 		
+		if(bluetoothSocketUp) //ADDED THIS??? check if lost connection does not work
+		{
+			try
+			{
+				mmSocket.close();
+				bluetoothSocketUp = false;
+			}
+			catch (IOException e)
+			{ 
+				
+			}
+		}
+
 		//Disable transmission
 		Intent disableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.DISABLE_TRANSMISSION);
 		sendBroadcast(disableMS);
@@ -360,7 +417,7 @@ public class BtService extends IntentService
 				{
 					devicesFound.add(device.getName());
 					devicesFound.add(device.getAddress());
-					sendBroadcastInfo(device.getName() + "\n" + device.getAddress());
+					sendBroadcastInfo("Found device:\n\n" + device.getName() + "\n" + device.getAddress());
 				}
 			}
 
@@ -373,24 +430,28 @@ public class BtService extends IntentService
 
 			if(action.equalsIgnoreCase("callFunction"))
 			{
-
-				if(intent.hasExtra("findDevices"))
+				if(intent.hasExtra(TOGGLE_BLUETOOTH_STATE))
+				{
+					toggleBtOnOff();
+				}
+			
+				if(intent.hasExtra(FIND_BLUETOOTH_DEVICES))
 				{
 					findBluetoothDevices();
 				}
 
-				if(intent.hasExtra("chooseDevice"))
+				if(intent.hasExtra(CHOOSE_BLUETOOTH_DEVICE))
 				{
 					chooseFoundBluetoothDevice();
 				}
 				
-				if(intent.hasExtra("disconnectDevice"))
+				if(intent.hasExtra(DISCONNECT_BLUETOOTH_DEVICE))
 				{
 					if( bluetoothSocketUp )
 						btConnectionLost("Connection lost...");
 				}
 
-				if(intent.hasExtra("connectDevice"))
+				if(intent.hasExtra(CONNECT_WITH_BLUETOOTH_DEVICE))
 				{
 					if( !bluetoothSocketUp && deviceAdress != null)
 					{
@@ -428,6 +489,22 @@ public class BtService extends IntentService
 				if( bluetoothSocketUp )
 					sendProtocol(Constants.US_SENSOR_REQ_COMMAND,Constants.TARGET_ADK,requestUsAdk);
 			}
+			if(action.equals(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_ACC_BRAIN_DATA))
+			{
+				byte[] requestAccBrain = new byte[1];
+				requestAccBrain[0] = Constants.TARGET_REMOTE;
+				
+				if( bluetoothSocketUp )
+					sendProtocol(Constants.ACC_BRAIN_SENSOR_REQ_COMMAND,Constants.TARGET_BRAIN,requestAccBrain);
+			}
+			if(action.equals(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_STOP_ACC_BRAIN_DATA))
+			{
+				byte[] requestAccBrain = new byte[1];
+				requestAccBrain[0] = Constants.TARGET_REMOTE;
+				
+				if( bluetoothSocketUp )
+					sendProtocol(Constants.ACC_BRAIN_SENSOR_STOP_REQ_COMMAND,Constants.TARGET_BRAIN, requestAccBrain);
+			}
 		}
 	};
 
@@ -441,5 +518,14 @@ public class BtService extends IntentService
 		dataTransmitt[2] = (byte) messageLength;
 		System.arraycopy(message, 0, dataTransmitt, 3, messageLength);
 		sendData(dataTransmitt);
+	}
+	
+	//THIS happens when phone locks, wanted??
+	@Override
+	public void onDestroy()
+	{
+		Log.d(TAG, "IntentService onDestroy");
+		btConnectionLost("Destroy..");
+		unregisterReceiver(BtRemoteServiceReciever);
 	}
 }

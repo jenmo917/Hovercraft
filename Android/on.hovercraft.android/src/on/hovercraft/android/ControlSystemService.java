@@ -15,7 +15,7 @@ public class ControlSystemService extends IntentService
 	 */
 	public static boolean isActive = false;
 	
-	private static String TAG = "ControlSystem";
+	private static String TAG = "JM";
 	
 	private final BroadcastReceiver messageReceiver =
 			new MotorSignalsBroadcastReceiver();
@@ -44,7 +44,7 @@ public class ControlSystemService extends IntentService
 	}
 
 	@Override
-	protected void onHandleIntent(Intent intent)
+	protected void onHandleIntent(Intent arg0)
 	{
 		Log.w(TAG, "ControlSystem onHandleIntent entered");
 

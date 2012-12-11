@@ -10,9 +10,9 @@ import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import on.hovercraft.android.Command.DriveSignals;
-import on.hovercraft.android.Command.Engines;
-import on.hovercraft.android.Command.SensorData;
+import common.files.android.Command.DriveSignals;
+import common.files.android.Command.Engines;
+
 import common.files.android.Constants;
 import common.files.android.Constants.ConnectionState;
 
@@ -96,24 +96,24 @@ public class UsbService extends IntentService
 		return driveSignal.build();
 	}
 
-	static SensorData createSensorDataProtocol(String type, String desc, int address, int value)
-	{
-		SensorData.Builder sensorData = SensorData.newBuilder();
-		sensorData.setType(type);
-		sensorData.setDescription(desc);
-		sensorData.setAddress(address);
-		sensorData.setValue(value);
-		return sensorData.build();
-	}
+//	static SensorData createSensorDataProtocol(String type, String desc, int address, int value)
+//	{
+//		SensorData.Builder sensorData = SensorData.newBuilder();
+//		sensorData.setType(type);
+//		sensorData.setDescription(desc);
+//		sensorData.setAddress(address);
+//		sensorData.setValue(value);
+//		return sensorData.build();
+//	}
 
-	@Override
-	public void onCreate()
-	{
-		super.onCreate();
-		Log.d(TAG, "UsbService started");
-		singleton = this;
-		isActive = true;
-	}
+//	@Override
+//	public void onCreate()
+//	{
+//		//super.onCreate();
+//		Log.d(TAG, "UsbService started");
+//		singleton = this;
+//		isActive = true;
+//	}
 
 	@Override
 	public void onDestroy()
@@ -272,7 +272,11 @@ public class UsbService extends IntentService
 	@Override
 	protected void onHandleIntent(Intent intent) 
 	{
-		Log.w(TAG,"onHandleIntent entered");
+		Log.d(TAG,"UsbService started");
+		
+		singleton = this;
+		isActive = true;
+		
 		UsbAccessory accessory = UsbManager.getAccessory(intent);
 
 		setupBroadcastFilters();
@@ -380,18 +384,18 @@ public class UsbService extends IntentService
 			break;
 		case 6:
 			Log.d(TAG, "brain command received: " + bufferInfo[0]);
-			try
-			{
-				SensorData sensorData = SensorData.parseFrom(bufferPB);
-				Log.d(TAG,"PB parse success");
-				Log.d(TAG,"sensorData desc: "+sensorData.getDescription());
-			}
-			catch (InvalidProtocolBufferException e) 
-			{
-				e.printStackTrace();
-				Log.d(TAG,"PB parse failed");
-				break;
-			}
+			Log.d(TAG, "FAIL!!!!, missing shit");
+//			try
+//			{
+//				SensorData sensorData = SensorData.parseFrom(bufferPB);
+//				Log.d(TAG,"PB parse success");
+//				Log.d(TAG,"sensorData desc: "+sensorData.getDescription());
+//			}
+//			catch (IOException e) 
+//			{
+//				Log.d(TAG,"PB parse failed");
+//				break;
+//			}
 			break;
 		default:
 			Log.d(TAG, "unknown command: " + bufferInfo[0]);

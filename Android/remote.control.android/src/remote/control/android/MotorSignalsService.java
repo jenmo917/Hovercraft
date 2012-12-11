@@ -1,11 +1,11 @@
 package remote.control.android;
 
-import remote.control.android.Command.DriveSignals;
-import remote.control.android.Command.Engines;
-import remote.control.motorsignals.AbstractSignalAlgorithm;
+import common.files.android.Command.DriveSignals;
+import common.files.android.Command.Engines;
+
 import remote.control.motorsignals.MotorSignals;
-import remote.control.motorsignals.PitchLinear;
-import remote.control.motorsignals.RollLinear;
+import remote.control.motorsignals.MotorSignalsBuilder;
+import remote.control.motorsignals.MotorSignalsDirector;
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,33 +25,27 @@ public class MotorSignalsService extends IntentService implements
 	/**
 	 * This is true if the service is up and running
 	 */
-	public static boolean			isActive					= false;
+	public static boolean isActive = false;
 
-	private static String			TAG							= "MotorSignals";
+	private static String TAG = "MotorSignals";
 
-	private final BroadcastReceiver	messageReceiver				= new MotorSignalsBroadcastReceiver();
+	private final BroadcastReceiver messageReceiver =
+		new MotorSignalsBroadcastReceiver();
 
-	private SensorManager			mgr;
-	private Sensor					accel;
-	private boolean					enabled						= false;
+	private SensorManager mgr;
+	private Sensor accel;
+	private boolean enabled = false;
 
-	private float[]					accVals						= new float[3];
-	final float						CONTROLLER_ROLL_MIN			= -45;
-	final float						CONTROLLER_ROLL_MAX			= 45;
-	final float						CONTROLLER_ROLL_MEAN		= 0;
-	final float						CONTROLLER_ROLL_DEAD_ZONE	= 3;
-	final float						CONTROLLER_PITCH_MIN		= 0;
-	final float						CONTROLLER_PITCH_MAX		= 128;
-	final float						CONTROLLER_PITCH_MEAN		= 64;
-	final float						CONTROLLER_PITCH_DEAD_ZONE	= 3;
-	float							lpf							= 0.8f;
-	private MotorSignals			motorSignals;
-	private AbstractSignalAlgorithm	pitch;
-	private AbstractSignalAlgorithm	roll;
+	private float[] accVals = new float[3];
+	float lpf = 0.8f;
+	private MotorSignals motorSignals;
+	private MotorSignalsDirector director;
+
 
 	public MotorSignalsService()
 	{
 		super("MotorSignals");
+
 	}
 
 	@Override
@@ -63,13 +57,8 @@ public class MotorSignalsService extends IntentService implements
 
 		mgr = (SensorManager) this.getSystemService(SENSOR_SERVICE);
 		accel = mgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		pitch = new PitchLinear(CONTROLLER_PITCH_MIN, CONTROLLER_PITCH_MAX,
-				CONTROLLER_PITCH_MEAN, CONTROLLER_PITCH_DEAD_ZONE);
-		roll = new RollLinear(CONTROLLER_ROLL_MIN, CONTROLLER_ROLL_MAX,
-				CONTROLLER_ROLL_MEAN, CONTROLLER_ROLL_DEAD_ZONE);
-		motorSignals = new MotorSignals();
-		motorSignals.setPitchAlgorithm(pitch);
-		motorSignals.setRollAlgorithm(roll);
+		director = new MotorSignalsDirector(new MotorSignalsBuilder());
+		motorSignals = director.buildLogSystem();
 	}
 
 	@Override
@@ -108,6 +97,12 @@ public class MotorSignalsService extends IntentService implements
 		filter.addAction(Constants.Broadcast.MotorSignals.Remote.DISABLE_TRANSMISSION);
 		filter.addAction(Constants.Broadcast.MotorSignals.Remote.ENABLE_TRANSMISSION);
 		filter.addAction(Constants.Broadcast.ControlSystem.Status.Query.ACTION);
+		filter
+			.addAction(Constants.Broadcast.MotorSignals.Algorithms.TYPE_QUERY);
+		filter
+			.addAction(Constants.Broadcast.MotorSignals.Algorithms.AVAILABLE_QUERY);
+		filter
+			.addAction(Constants.Broadcast.MotorSignals.Algorithms.CHANGE);
 		registerReceiver(messageReceiver, filter);
 	}
 
@@ -146,14 +141,72 @@ public class MotorSignalsService extends IntentService implements
 					sendBroadcast(responseIntent);
 				}
 			}
+			else if (action
+				.equals(Constants.Broadcast.MotorSignals.Algorithms.TYPE_QUERY))
+			{
+				broadcastAlgorithms();
+			}
+			else if (action
+				.equals(Constants.Broadcast.MotorSignals.Algorithms.AVAILABLE_QUERY))
+			{
+				String[] pitches = new String[] {
+					Constants.Broadcast.MotorSignals.Algorithms.Pitch.LIN,
+					Constants.Broadcast.MotorSignals.Algorithms.Pitch.LOG,
+					Constants.Broadcast.MotorSignals.Algorithms.Pitch.EXP };
+				String[] rolls = new String[] {
+					Constants.Broadcast.MotorSignals.Algorithms.Roll.LIN,
+					Constants.Broadcast.MotorSignals.Algorithms.Roll.LOG,
+					Constants.Broadcast.MotorSignals.Algorithms.Roll.EXP };
+				Intent response = new Intent(
+					Constants.Broadcast.MotorSignals.Algorithms.AVAILABLE_RESPONSE);
+				response
+					.putExtra(
+						Constants.Broadcast.MotorSignals.Algorithms.PITCH,
+						pitches);
+				response
+					.putExtra(
+					Constants.Broadcast.MotorSignals.Algorithms.ROLL,
+					rolls);
+				sendBroadcast(response);
+			}
+			else if (action
+				.equals(Constants.Broadcast.MotorSignals.Algorithms.CHANGE))
+			{
+				changeAlgorithms(intent);
+				broadcastAlgorithms();
+			}
+		}
+
+		private void changeAlgorithms(Intent intent)
+		{
+			String algorithm = intent
+				.getStringExtra(Constants.Broadcast.MotorSignals.Algorithms.ALGORITHM);
+			String type = intent
+				.getStringExtra(Constants.Broadcast.MotorSignals.Algorithms.TYPE);
+			MotorSignalsService.this.director.changeAlgorithm(
+				MotorSignalsService.this.motorSignals, algorithm, type);
+		}
+
+		private void broadcastAlgorithms()
+		{
+			Intent response = new Intent(
+				Constants.Broadcast.MotorSignals.Algorithms.TYPE_RESPONSE);
+			response.putExtra(
+				Constants.Broadcast.MotorSignals.Algorithms.PITCH,
+				MotorSignalsService.this.motorSignals.getPitchAlgorithm()
+					.getType());
+			response.putExtra(
+				Constants.Broadcast.MotorSignals.Algorithms.ROLL,
+				MotorSignalsService.this.motorSignals.getRollAlgorithm()
+					.getType());
+			sendBroadcast(response);
 		}
 	}
 
 	@Override
 	public void onAccuracyChanged(Sensor arg0, int arg1)
 	{
-		// TODO Auto-generated method stub
-
+		// Do nothing right now. Nothing is implemented.
 	}
 
 	@Override
@@ -173,19 +226,28 @@ public class MotorSignalsService extends IntentService implements
 		{
 			return;
 		}
-		accVals[0] = lpf * accVals[0] + (1 - lpf) * tempValues[0];
-		accVals[1] = lpf * accVals[1] + (1 - lpf) * tempValues[1];
-		accVals[2] = lpf * accVals[2] + (1 - lpf) * tempValues[2];
-		int[] apr = new int[3];
-		apr[0] = Math.round(Math.scalb(accVals[0], 7));
-		apr[1] = Math.round(Math.scalb(accVals[1], 7));
-		apr[2] = Math.round(Math.scalb(accVals[2], 7));
-		int[] motorValues = motorSignals.convert(apr[2], apr[1]);
+		float alpha = (float) 0.8;
+		accVals[0] = alpha * accVals[0] + (1 - alpha) * tempValues[0];
+		accVals[1] = alpha * accVals[1] + (1 - alpha) * tempValues[1];
+		accVals[2] = alpha * accVals[2] + (1 - alpha) * tempValues[2];
+		int[] motorValues = motorSignals.convert(accVals[2], accVals[1], 8);
+		boolean leftMotorForward = false, rightMotorForward = false;
+		if (1 == motorValues[1])
+		{
+			leftMotorForward = true;
+		}
+		if (1 == motorValues[3])
+		{
+			rightMotorForward = true;
+		}
+		Log.d(TAG, "LeftMotor; D: "
+			+ String.format("%d", motorValues[0])
+			+ " RightMotor: "
+			+ String.format("%d", motorValues[2]));
 		Engines engineValues = createEngineProtocol(
-				createDriveSignalProtocol(true, true, motorValues[1]),
-				createDriveSignalProtocol(true, true, motorValues[0]));
+			createDriveSignalProtocol(rightMotorForward, true, motorValues[2]),
+			createDriveSignalProtocol(leftMotorForward, true, motorValues[0]));
 		byte[] message = engineValues.toByteArray();
-		Log.d(TAG, message.toString());
 		Intent intent = new Intent(
 			Constants.Broadcast.BluetoothService.Actions.SendCommand.ACTION);
 		intent

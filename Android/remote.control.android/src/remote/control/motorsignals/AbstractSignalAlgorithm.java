@@ -1,21 +1,23 @@
 package remote.control.motorsignals;
 
-
 public abstract class AbstractSignalAlgorithm implements
-		SignalAlgorithmInterface
+	SignalAlgorithmInterface
 {
 	protected float		maxValue;
 	protected float		minValue;
 	protected float		deadZone;
 	protected float		mean;
+	protected float scale;
 	protected boolean	inverted;
+	protected String type;
 
-	AbstractSignalAlgorithm(float min, float max, float mean, float deadZone)
+	AbstractSignalAlgorithm(float min, float max, float mean, float deadZone, float scale)
 	{
 		this.minValue = min;
 		this.maxValue = max;
 		this.mean = mean;
 		this.deadZone = deadZone;
+		this.scale = scale;
 	}
 
 	abstract public float[] convert(float value);
@@ -39,11 +41,16 @@ public abstract class AbstractSignalAlgorithm implements
 		{
 			returnValue = this.maxValue;
 		}
-		return returnValue;
+		return returnValue * this.scale;
 	}
 
 	protected void invert(boolean inv)
 	{
 		this.inverted = inv;
+	}
+
+	public String getType()
+	{
+		return this.type;
 	}
 }

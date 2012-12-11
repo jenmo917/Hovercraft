@@ -47,16 +47,22 @@ final public class Constants // final to prevent instantiation
 	public static final byte	I2C_SENSOR_REQ_COMMAND	= (byte) 5;
 
 	/*
-	 * Desc: Sensor request for ultrasonic sensor. Args: Put receiver target in
+	 * Desc: Sensor request for ultrasonic/acc sensor. Args: Put receiver target in
 	 * message byte.
 	 */
-	public static final byte	US_SENSOR_REQ_COMMAND	= (byte) 6;
+	public static final byte	US_SENSOR_REQ_COMMAND			= (byte) 6;
+	/**
+	 * Message: 1 for lift fans on and 0 for lift fans off.
+	 */
+	public static final byte LIFT_FAN_COMMAND = (byte) 7;
+	public static final byte	ACC_BRAIN_SENSOR_REQ_COMMAND	= (byte) 8;
+	public static final byte	ACC_BRAIN_SENSOR_STOP_REQ_COMMAND	= (byte) 9;
 
-	public static final byte MOTOR_SIGNAL_COMMAND = (byte) 7;
 
 	/*
 	 * Brain Commands (71-141)
 	 */
+	public static final byte MOTOR_SIGNAL_COMMAND = (byte) 71;
 
 	/*
 	 * Remote Commands (142-211)
@@ -65,7 +71,8 @@ final public class Constants // final to prevent instantiation
 	 * Desc: Remote will log US sensor data when this command is received Args:
 	 * Protocol Buffer USSensorData
 	 */
-	public static final byte	LOG_US_SENSOR_COMMAND	= (byte) 142;
+	public static final byte	LOG_US_SENSOR_COMMAND			= (byte) 142;
+	public static final byte	LOG_ACC_BRAIN_SENSOR_COMMAND 	= (byte) 143;
 
 	/*
 	 * Shared Commands (212-255)
@@ -125,6 +132,9 @@ final public class Constants // final to prevent instantiation
 				{
 					public static String	ACTION	= "btActionSendCommand";
 					public static String	REQUEST_US_DATA = "btActionRequestUsData";
+					public static String	REQUEST_ACC_BRAIN_DATA = "btActionRequestAccBrainData";
+					public static String	REQUEST_STOP_ACC_BRAIN_DATA = "btActionRequestStopAccBrainData";
+
 
 					public static class Intent
 					{
@@ -148,6 +158,33 @@ final public class Constants // final to prevent instantiation
 				public static String	ENABLE_TRANSMISSION		= "enableMotorSignalsTransmission";
 				public static String	DISABLE_TRANSMISSION	= "disableMotorSignalsTransmission";
 			}
+
+			public static class Algorithms
+			{
+				public final static String AVAILABLE_QUERY = "motorSignalsAlgorithmAvaliableQuery";
+				public final static String AVAILABLE_RESPONSE = "motorSignalsAlgorithmAvaliableResponse";
+				public final static String TYPE_QUERY = "motorSignalsAlgorithmTypeQuery";
+				public final static String TYPE_RESPONSE = "motorSignalsAlgorithmTypeResponse";
+				public final static String ALGORITHM = "motorSignalsAlgorithm";
+				public final static String PITCH = "motorSignalsAlgorithmPitch";
+				public final static String ROLL = "motorSignalsAlgorithmRoll";
+				public final static String CHANGE = "motorSignalsAlgorithmChange";
+				public final static String TYPE = "motorSignalsAlgorithmType";
+
+				public static class Pitch
+				{
+					public final static String LIN = "Linear";
+					public final static String LOG = "Logarithmic";
+					public final static String EXP = "Exponential";
+				}
+
+				public static class Roll
+				{
+					public final static String LIN = "Linear";
+					public final static String LOG = "Logarithmic";
+					public final static String EXP = "Exponential";
+				}
+			}
 		}
 
 		public static class LogService
@@ -167,6 +204,27 @@ final public class Constants // final to prevent instantiation
 		public static class ConnectionStates
 		{
 			public static String	CONNECTION_STATE	= "connectionState";
+		}
+	}
+
+	public static class SharedPrefs
+	{
+		public static class SettingsAct
+		{
+			public static class Algorithms
+			{
+				public static class Pitch
+				{
+					public final static String CHOSEN = "sPSAApitchChosen";
+				}
+
+				public static class Roll
+				{
+					public final static String CHOSEN = "sPSAArollChosen";
+				}
+
+				public final static int CHOSEN_DEF = -1;
+			}
 		}
 	}
 

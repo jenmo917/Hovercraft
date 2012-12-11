@@ -2,7 +2,6 @@ package on.hovercraft.android;
 
 import com.android.future.usb.UsbManager;
 
-import on.hovercraft.android.R;
 import common.files.android.Constants;
 import common.files.android.Constants.ConnectionState;
 import android.app.Activity;
@@ -98,10 +97,11 @@ public class MainActivity extends Activity
 		initTextViews();
 
 		// Start USB and Blue service
-		startUsbService();
 		startBtServerService();
 		startControlSystemService();
-
+		startUsbService();
+		startLogServiceBrain();
+		
 		Log.d(TAG,"onCreate stop");
 	}
 
@@ -119,6 +119,7 @@ public class MainActivity extends Activity
 
 	private void startUsbService()
 	{
+		Log.d(TAG,"start UsbService");
 		Intent intent = new Intent(this, UsbService.class);
 		intent.fillIn(getIntent(), 0);
 		startService(intent);
@@ -128,9 +129,22 @@ public class MainActivity extends Activity
 	{
 		stopService(new Intent(this, UsbService.class));
 	}
+	private void startLogServiceBrain()
+	{
+		Log.d(TAG,"start LogServiceBrain");
+		Intent intent = new Intent(this, LogServiceBrain.class);
+		intent.fillIn(getIntent(), 0);
+		startService(intent);
+	}
+	
+	private void stopLogServiceBrain()
+	{
+		stopService(new Intent(this, LogServiceBrain.class));
+	}
 
 	private void startControlSystemService()
 	{
+		Log.d(TAG,"start ControlSystemService");
 		Intent intent = new Intent(this, ControlSystemService.class);
 		intent.fillIn(getIntent(), 0);
 		startService(intent);
@@ -191,6 +205,7 @@ public class MainActivity extends Activity
 		stopUsbService();
 		stopControlSystemService();
 		stopBtServerService();
+		stopLogServiceBrain();
 		Log.d(TAG,"onDestroy stop");
 	}
 
