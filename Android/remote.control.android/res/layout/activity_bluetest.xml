@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:gravity="top" >
-
+
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical" >
+
         -->
         <!-- </LinearLayout> -->
 
@@ -116,28 +117,28 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal" >
-
+
         <Button
             android:id="@+id/toggleBluetoothOnOff"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="@string/btnToggleBtOFF" />
-
+
         <Button
             android:id="@+id/findBtDevicesButton"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="@string/click" />
-
+
         <Button
             android:id="@+id/chooseBtDeviceButton"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="@string/btnChoose" />
-
+
         <Button
             android:id="@+id/connectBtDeviceButton"
             style="?android:attr/buttonStyleSmall"
@@ -178,7 +179,7 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:text="@string/btnStopLog" />
-
+
         <Button
             android:id="@+id/settingsButton"
             style="?android:attr/buttonStyleSmall"
