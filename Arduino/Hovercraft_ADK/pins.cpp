@@ -26,6 +26,7 @@ void pinSetup()
 	// Left motor controls
 	leftMotorPinsSetup();
 	sensorPinsSetup();
+	liftFanSetup();
 }
 
 /**
@@ -41,7 +42,7 @@ void pinSetup()
 void LEDPinsSetup()
 {
 	pinMode( LED, OUTPUT );
-	digitalWrite( LED , 0 );
+	digitalWrite( LED , LOW );
 }
 
 /**
@@ -113,5 +114,11 @@ void sensorPinsSetup()
 */
 void testPins()
 {
-	pinMode( 22, OUTPUT );
+	//pinMode( 22, OUTPUT );
 }
+
+void liftFanSetup()
+{
+	pinMode(liftFans, OUTPUT);
+}
+

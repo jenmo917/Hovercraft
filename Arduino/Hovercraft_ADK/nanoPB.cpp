@@ -159,6 +159,34 @@ bool encodeUSSensorMsg( USSensor sensorObject )
 	}
 }
 
+void prepareUSSensorsForUSBTransfer()
+{
+	String USString;
+
+
+	USString = "FR: " + convertInt(USSensorList[0].value) + "$FL: " + convertInt(USSensorList[0].value) + "$BR: " + convertInt(USSensorList[0].value)
+			+ "$BL: " + convertInt(USSensorList[0].value);
+	//USString.tocArray(sendMsg, USString.length());
+	USString.getBytes(sendMsg, 252, 0);
+	sendMsgLength = USString.length();
+}
+
+String convertInt(int number)
+{
+    if (number == 0)
+        return "0";
+    String temp="";
+    String returnvalue="";
+    while (number>0)
+    {
+        temp+=number%10+48;
+        number/=10;
+    }
+    for (int i=0;i<temp.length();i++)
+        returnvalue+=temp[temp.length()-i-1];
+    return returnvalue;
+}
+
 /**
 * \brief Encodes a I2CSensorData Protocol message
 *
@@ -254,7 +282,6 @@ bool encodeUSSensorListMsg()
 		/*Serial << "The message encoded: " << endl;
 		for(int i = 0; i < ostream.bytes_written; i++)
 		{
-
 			Serial.print((char) sendMsg[i]);
 			Serial << " "<< (uint8_t) sendMsg[i] << endl;
 		}*/

@@ -33,5 +33,6 @@ void USBSendI2CSensorDataHandler( int event, int target );
 void USBSendEnginesObject( int event, int target );
 void connectionCheckEngines( int event, int target );
 void USBSendUSWarningHandler( int event, int target );
+void LiftFansHandler( int event, int target );
 
 #endif /* EVENTHANDLERS_H_ */

@@ -255,3 +255,13 @@ Engines getMotorSignals()
 	Engines engines={ right, left };
 	return engines;
 }
+
+void liftFansControl(bool liftOn)
+{
+	digitalWrite( liftFans, (int) liftOn);
+}
+
+int liftFansStatus()
+{
+	return digitalRead(liftFans);
+}

@@ -20,5 +20,7 @@ bool encodeI2CSensorListMsg();
 void fillI2CSensorFields( I2CSensorData* sensorToBeFilled, int number );
 bool encodeUSSensorListMsg();
 void fillUSSensorFields( USSensorData* sensorToBeFilled, int number );
+void prepareUSSensorsForUSBTransfer();
+String convertInt(int number);
 
 #endif /* NANOPB_H_ */

@@ -15,24 +15,27 @@
 
 // Pins used for motor control
 #define rightPWM 2
-#define rightDir 4
-#define rightEnable 6
+#define rightDir 3
+#define rightEnable 4
 
-#define leftPWM 3
-#define leftDir 5
-#define leftEnable 7
+#define leftPWM 5
+#define leftDir 6
+#define leftEnable 8
+
+#define liftFans 9
 
 // Pins used for sensors
 // Pin 20 used for I2C
 // Pin 21 used for I2C
-#define trigPin1 11
-#define echoPin1 12
-#define trigPin2 22
-#define echoPin2 23
-#define trigPin3 24
-#define echoPin3 25
-#define trigPin4 26
-#define echoPin4 27
+
+#define trigPin1 A0
+#define echoPin1 A1
+#define trigPin2 A2
+#define echoPin2 A3
+#define trigPin3 A4
+#define echoPin3 A5
+#define trigPin4 A6
+#define echoPin4 A7
 
 void pinSetup();
 void LEDPinsSetup();
@@ -40,5 +43,6 @@ void rightMotorPinsSetup();
 void leftMotorPinsSetup();
 void sensorPinsSetup();
 void testPins();
+void liftFanSetup();
 
 #endif /* PINS_H_ */
