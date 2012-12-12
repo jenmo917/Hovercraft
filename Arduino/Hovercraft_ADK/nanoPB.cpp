@@ -164,8 +164,8 @@ void prepareUSSensorsForUSBTransfer()
 	String USString;
 
 
-	USString = "FR: " + convertInt(USSensorList[0].value) + "$FL: " + convertInt(USSensorList[0].value) + "$BR: " + convertInt(USSensorList[0].value)
-			+ "$BL: " + convertInt(USSensorList[0].value);
+	USString = "FR " + convertInt(USSensorList[0].value) + ":FL " + convertInt(USSensorList[0].value) + ":BR " + convertInt(USSensorList[0].value)
+			+ ":BL " + convertInt(USSensorList[0].value);
 	//USString.tocArray(sendMsg, USString.length());
 	USString.getBytes(sendMsg, 252, 0);
 	sendMsgLength = USString.length();
