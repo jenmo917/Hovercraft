@@ -406,6 +406,7 @@ void LiftFansHandler( int event, int command )
 			Serial << "Failed to encode sensors in function: USBSendSensorDataHandler";
 		}
 		sendMsg[0] = liftFansStatus();
+		sendMsgLength = 1;
 		sendMessage(LIFT_FAN_RESPONSE_COMMAND, TARGET_REMOTE);
 	}
 }
