@@ -32,7 +32,7 @@ public class BtService extends IntentService
 	private BluetoothAdapter mBluetoothAdapter;					/**< */
 	private InputStream btInputStream;							/**< */
 	private OutputStream btOutStream;							/**< */
-	private int bluetoothConnectionTimeout = 5000;				/**< */
+	private int bluetoothConnectionTimeout = 30000;				/**< */
 	private boolean bluetoothServerUp = false;					/**< */
 	private boolean bluetoothSocketUp = false;					/**< */
 	private static String TAG = "JM";							/**< */

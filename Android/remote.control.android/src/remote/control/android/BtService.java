@@ -314,8 +314,6 @@ public class BtService extends IntentService
 		{
 			if(Constants.LOG_US_SENSOR_COMMAND == bufferInfo[0])
 			{
-				sendBroadcastMessage("Message received: " + String.valueOf(bufferInfo[0]));
-				
 				Intent usSensors = new Intent(Constants.Broadcast.LogService.Actions.ADK_US_RESPONSE);
 				usSensors.putExtra(Constants.Broadcast.LogService.Actions.Intent.BYTES, bufferMessage);
 				sendBroadcast(usSensors);
@@ -376,7 +374,7 @@ public class BtService extends IntentService
 	{
 		listenOnBtInputstream = false;
 		
-		if(bluetoothSocketUp) //ADDED THIS??? check if lost connection does not work
+		if( bluetoothSocketUp ) //ADDED THIS??? check if lost connection does not work
 		{
 			try
 			{
