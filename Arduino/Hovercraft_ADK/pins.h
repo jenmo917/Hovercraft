@@ -43,5 +43,6 @@ void rightMotorPinsSetup();
 void leftMotorPinsSetup();
 void sensorPinsSetup();
 void testPins();
+void liftFanSetup();
 
 #endif /* PINS_H_ */

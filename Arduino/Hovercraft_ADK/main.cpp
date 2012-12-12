@@ -39,6 +39,7 @@ void setup()
 	driveSetup();
 	//disp.addEventListener( Events::EV_TIME_1000, timeHandler1000 );
 	disp.addEventListener( Events::EV_US_SENSOR_REQ, USSensorHandler );
+	disp.addEventListener( Events::EV_LIFT_FANS_REQ, LiftFansHandler);
 	disp.addEventListener( Events::EV_I2C_SENSOR_REQ, I2CSensorDataHandler );
 	disp.addEventListener( Events::EV_US_SENSOR_FINISHED, USBSendUSSensorDataHandler );
 	disp.addEventListener( Events::EV_I2C_SENSOR_FINISHED, USBSendI2CSensorDataHandler );

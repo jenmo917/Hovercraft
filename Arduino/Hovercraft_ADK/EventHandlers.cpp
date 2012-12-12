@@ -387,3 +387,25 @@ void USBSendUSWarningHandler( int event, int target )
 		}
 	}
 }
+
+void LiftFansHandler( int event, int command )
+{
+	//Serial << "USBSendUSSensorDataHandler" << endl;
+	if ( acc.isConnected() )
+	{
+		if (1 == command || 0 == command)
+		{
+			liftFansControl((bool) rcvPBmsg[0]);
+		}
+		if(2 == command)
+		{
+			// Just a query, do not set any thing
+		}
+		else
+		{
+			Serial << "Failed to encode sensors in function: USBSendSensorDataHandler";
+		}
+		sendMsg[0] = liftFansStatus();
+		sendMessage(LIFT_FAN_RESPONSE_COMMAND, TARGET_REMOTE);
+	}
+}

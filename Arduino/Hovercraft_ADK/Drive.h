@@ -25,5 +25,6 @@ void setLeftPower( int power );
 void enableLeftMotor( bool enable );
 Engines getMotorSignals();
 void liftFansControl(bool liftOn);
+int liftFansStatus();
 
 #endif /* DRIVE_H_ */
