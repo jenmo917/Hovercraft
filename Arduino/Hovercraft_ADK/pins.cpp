@@ -120,5 +120,6 @@ void testPins()
 void liftFanSetup()
 {
 	pinMode(liftFans, OUTPUT);
+	digitalWrite(liftFans, LOW);
 }
 

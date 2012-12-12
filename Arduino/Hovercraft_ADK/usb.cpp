@@ -144,7 +144,7 @@ void decodeMsgType()
 			q.enqueueEvent( Events::EV_ENGINES_REQ, rcvPBmsg[0] );
 			break;
 		case LIFT_FAN_REQUEST_COMMAND:
-			q.enqueueEvent( Events::EV_LIFT_FANS_REQ, rcvmsgInfo[3]);
+			q.enqueueEvent( Events::EV_LIFT_FANS_REQ, rcvPBmsg[0]);
 			break;
 		default:
 			Serial.println( "COMMAND: Error, message is of unknown type. No action performed" );
