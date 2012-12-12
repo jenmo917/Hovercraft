@@ -338,7 +338,7 @@ public class BtService extends IntentService
 				Intent intent = new Intent(
 					Constants.Broadcast.LiftFans.RESPONSE);
 				intent.putExtra(Constants.Broadcast.LiftFans.STATE,
-					bufferInfo[3]);
+					bufferMessage[0]);
 				sendBroadcast(intent);
 			}
 						
