@@ -222,7 +222,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				Toast.makeText(context, "Log Already Started",
 						Toast.LENGTH_SHORT).show();
 			} else {
-				// Skicka broadcast till service och s�ga start log
+					// Skicka broadcast till service och säga start log
 				Intent startLogIntent = new Intent("StartLogAction");
 				startLogIntent.putExtra("logDelay", 5000);
 				sendBroadcast(startLogIntent);
@@ -238,7 +238,7 @@ public class MainActivity extends Activity implements OnClickListener {
 						.show();
 			} else {
 				Log.d(TAG, "stopButton pushed");
-				// Skicka broadcast till service och s�ga stop log
+					// Skicka broadcast till service och säga stop log
 				Intent stopLogIntent = new Intent("StopLogAction");
 				sendBroadcast(stopLogIntent);
 				Context context = getApplicationContext();
