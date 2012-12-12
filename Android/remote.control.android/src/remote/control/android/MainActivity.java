@@ -35,14 +35,16 @@ public class MainActivity extends Activity implements OnClickListener {
 	Button buttonConnectBtDevice;
 	Button buttonChooseBtDevice;
 	Button buttonToggleTransmission;
+	Button buttonToggleLiftFans;
 	Button buttonStartLog;
 	Button buttonStopLog;
 	Button buttonLogSettings;
 
 	TextView infoText;
 	TextView messageText;
-	
+
 	boolean transmittingMotorSignals = false;
+	boolean liftFansOn = false;
 	String currentInfo = "Info...";
 	int length = 0;
 	int i = 0;
@@ -104,6 +106,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		filter.addAction("printMessage");
 		filter.addAction(Constants.Broadcast.ControlSystem.Status.Response.ACTION);
 		filter.addAction(TOGGLE_BT_BUTTON_TEXT);
+		filter.addAction(Constants.Broadcast.LiftFans.RESPONSE);
 		registerReceiver(mReceiver, filter);
 	}
 
@@ -122,6 +125,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// other buttons
 		buttonToggleTransmission = (Button) findViewById(R.id.toggleTransmissionButton);
+		buttonToggleLiftFans = (Button) findViewById(R.id.toggleLiftFansButton);
 	}
 
 	private void initOnClickListners()
@@ -130,6 +134,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		buttonStopLog.setOnClickListener(this);
 		buttonLogSettings.setOnClickListener(this);
 		buttonToggleTransmission.setOnClickListener(this);
+		buttonToggleLiftFans.setOnClickListener(this);
 		buttonChooseBtDevice.setOnClickListener(this);
 		buttonConnectBtDevice.setOnClickListener(this);
 		buttonFindBtDevice.setOnClickListener(this);
@@ -188,6 +193,23 @@ public class MainActivity extends Activity implements OnClickListener {
 			sendBroadcast(checkTransmissionSatus);
 			
 			break;
+
+			case R.id.toggleLiftFansButton:
+				Intent liftFans = new Intent(
+					Constants.Broadcast.LiftFans.REQUEST);
+				if (liftFansOn)
+				{
+					liftFans.putExtra(Constants.Broadcast.LiftFans.STATE,
+						Constants.Broadcast.LiftFans.DISABLE);
+				}
+				else
+				{
+					liftFans.putExtra(Constants.Broadcast.LiftFans.STATE,
+						Constants.Broadcast.LiftFans.ENABLE);
+				}
+				sendBroadcast(liftFans);
+
+				break;
 
 		case R.id.startButton:
 			Log.d(TAG, "startButton pushed");
@@ -283,6 +305,28 @@ public class MainActivity extends Activity implements OnClickListener {
 						buttonToggleTransmission.setText(R.string.btnStopMS);
 					else
 						buttonToggleTransmission.setText(R.string.btnSendMS);
+				}
+			}
+			else if (action.equals(Constants.Broadcast.LiftFans.RESPONSE))
+			{
+				liftFansResponse(intent);
+			}
+		}
+
+		private void liftFansResponse(Intent intent)
+		{
+			if (intent.hasExtra(Constants.Broadcast.LiftFans.STATE))
+			{
+				byte state = intent.getByteExtra(Constants.Broadcast.LiftFans.STATE, Constants.Broadcast.LiftFans.ERROR);
+				if (Constants.Broadcast.LiftFans.ENABLE == state)
+				{
+					MainActivity.this.liftFansOn = true;
+					buttonToggleLiftFans.setText(R.string.btnStopLF);
+				}
+				else if (Constants.Broadcast.LiftFans.DISABLE == state)
+				{
+					MainActivity.this.liftFansOn = false;
+					buttonToggleLiftFans.setText(R.string.btnSendLF);
 				}
 			}
 		}

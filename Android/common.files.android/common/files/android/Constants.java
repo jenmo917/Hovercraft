@@ -188,6 +188,17 @@ final public class Constants // final to prevent instantiation
 			}
 		}
 
+		public static class LiftFans
+		{
+			public final static String REQUEST = "liftFansRequest";
+			public final static String RESPONSE = "liftFansResponse";
+			public final static String STATE = "liftFansStatus";
+			public final static byte ENABLE = 1;
+			public final static byte DISABLE = 0;
+			public final static byte QUERY = 2;
+			public final static byte ERROR = -1;
+		}
+
 		public static class LogService
 		{
 			public static class Actions

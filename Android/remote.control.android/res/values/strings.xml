@@ -14,6 +14,8 @@
     <string name="btnPair">Pair</string>
     <string name="btnSendMS">Start MS</string>
     <string name="btnStopMS">Stop MS</string>
+    <string name="btnSendLF">Start LF</string>
+    <string name="btnStopLF">Stop LF</string>
     <string name="btnChoose">Choose</string>
     <string name="yCoor">Y</string>
     <string name="xCoor">X</string>

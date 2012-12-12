@@ -128,6 +128,7 @@ public class BtService extends IntentService
 		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_US_DATA);
 		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_ACC_BRAIN_DATA);
 		filter.addAction(Constants.Broadcast.BluetoothService.Actions.SendCommand.REQUEST_STOP_ACC_BRAIN_DATA);
+		filter.addAction(Constants.Broadcast.LiftFans.REQUEST);
 		registerReceiver(BtRemoteServiceReciever, filter);
 	}
 	
@@ -332,6 +333,14 @@ public class BtService extends IntentService
 				sendToLog.putExtra("coords", coords);
 				sendBroadcast(sendToLog);
 			}
+			else if (Constants.LIFT_FAN_RESPONSE_COMMAND == bufferInfo[0])
+			{
+				Intent intent = new Intent(
+					Constants.Broadcast.LiftFans.RESPONSE);
+				intent.putExtra(Constants.Broadcast.LiftFans.STATE,
+					bufferInfo[3]);
+				sendBroadcast(intent);
+			}
 						
 			//sendCommand(bufferInfo[0], bufferInfo[1], bufferMessage);
 		}
@@ -504,6 +513,26 @@ public class BtService extends IntentService
 				
 				if( bluetoothSocketUp )
 					sendProtocol(Constants.ACC_BRAIN_SENSOR_STOP_REQ_COMMAND,Constants.TARGET_BRAIN, requestAccBrain);
+			}
+			if (action.equals(Constants.Broadcast.LiftFans.REQUEST))
+			{
+				this.liftFansRequest(intent);
+			}
+		}
+
+		private void liftFansRequest(Intent intent)
+		{
+			if (intent.hasExtra(Constants.Broadcast.LiftFans.STATE))
+			{
+				byte[] requestStatus = new byte[1];
+				requestStatus[0] = intent.getByteExtra(
+					Constants.Broadcast.LiftFans.STATE,
+					Constants.Broadcast.LiftFans.ERROR);
+				if (requestStatus[0] != Constants.Broadcast.LiftFans.ERROR)
+				{
+					sendProtocol(Constants.LIFT_FAN_REQUEST_COMMAND,
+						Constants.TARGET_ADK, requestStatus);
+				}
 			}
 		}
 	};
