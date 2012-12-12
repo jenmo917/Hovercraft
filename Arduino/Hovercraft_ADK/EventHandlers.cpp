@@ -397,15 +397,15 @@ void LiftFansHandler( int event, int command )
 		{
 			liftFansControl((bool) rcvPBmsg[0]);
 		}
-		if(2 == command)
+		else if(2 == command)
 		{
 			// Just a query, do not set any thing
 		}
 		else
 		{
-			Serial << "Failed to encode sensors in function: USBSendSensorDataHandler";
+			Serial << "Failed to encode sensors in function: LiftFansHandler";
 		}
-		sendMsg[0] = liftFansStatus();
+		sendMsg[0] = (byte) liftFansStatus();
 		sendMsgLength = 1;
 		sendMessage(LIFT_FAN_RESPONSE_COMMAND, TARGET_REMOTE);
 	}
