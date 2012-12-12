@@ -51,12 +51,13 @@ final public class Constants // final to prevent instantiation
 	 * message byte.
 	 */
 	public static final byte	US_SENSOR_REQ_COMMAND			= (byte) 6;
+	public static final byte ACC_BRAIN_SENSOR_REQ_COMMAND = (byte) 8;
+	public static final byte ACC_BRAIN_SENSOR_STOP_REQ_COMMAND = (byte) 9;
 	/**
-	 * Message: 1 for lift fans on and 0 for lift fans off.
+	 * Message: 1 for lift fans on and 0 for lift fans off, 2 for query.
 	 */
-	public static final byte LIFT_FAN_COMMAND = (byte) 7;
-	public static final byte	ACC_BRAIN_SENSOR_REQ_COMMAND	= (byte) 8;
-	public static final byte	ACC_BRAIN_SENSOR_STOP_REQ_COMMAND	= (byte) 9;
+	public static final byte LIFT_FAN_REQUEST_COMMAND = (byte) 10;
+	public static final byte LIFT_FAN_RESPONSE_COMMAND = (byte) 11;
 
 
 	/*
