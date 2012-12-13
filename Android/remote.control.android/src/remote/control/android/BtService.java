@@ -33,6 +33,10 @@ public class BtService extends IntentService
 	String TOGGLE_BT_BUTTON_TEXT = "toggleBtButtonText";
 	String BT_STATUS = "btStatus";
 	
+	String BT_CONNECTION_STATUS = "btConnectionStatus";
+	String BT_CONNECTION_STATUS_CALL = "btConnectionStatusCall";
+	String BT_CONNECTION_STATUS_RESPONS = "btConnectionStatusRespons";
+	
 	private static String TAG = "JM";
 	protected static final int REQUEST_ENABLE_BT = 1;
 	
@@ -244,6 +248,11 @@ public class BtService extends IntentService
 						btConnectionLost("Connection failed...");
 					}
 				}
+				
+				//Send new status to Main
+				Intent i = new Intent(BT_CONNECTION_STATUS_RESPONS);
+				i.putExtra(BT_CONNECTION_STATUS, bluetoothSocketUp);
+				sendBroadcast(i);
 			}
 			else
 			{
@@ -386,6 +395,11 @@ public class BtService extends IntentService
 			{ 
 				
 			}
+			
+			//Send new status to Main
+			Intent i = new Intent(BT_CONNECTION_STATUS_RESPONS);
+			i.putExtra(BT_CONNECTION_STATUS, bluetoothSocketUp);
+			sendBroadcast(i);
 		}
 
 		//Disable transmission
@@ -473,6 +487,14 @@ public class BtService extends IntentService
 						}
 					}
 				}
+				
+				if(intent.hasExtra(BT_CONNECTION_STATUS_CALL))
+				{
+					Intent i = new Intent(BT_CONNECTION_STATUS_RESPONS);
+					i.putExtra(BT_CONNECTION_STATUS, bluetoothSocketUp);
+					sendBroadcast(i);
+				}
+				
 			}
 			
 			if(action.equals(Constants.Broadcast.BluetoothService.Actions.SendCommand.ACTION))

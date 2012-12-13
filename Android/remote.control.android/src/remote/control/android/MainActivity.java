@@ -30,6 +30,10 @@ public class MainActivity extends Activity implements OnClickListener {
 	String TOGGLE_BT_BUTTON_TEXT = "toggleBtButtonText";
 	String BT_STATUS = "btStatus";
 	
+	String BT_CONNECTION_STATUS = "btConnectionStatus";
+	String BT_CONNECTION_STATUS_CALL = "btConnectionStatusCall";
+	String BT_CONNECTION_STATUS_RESPONS = "btConnectionStatusRespons";
+	
 	Button buttonToggleBT;
 	Button buttonFindBtDevice;
 	Button buttonConnectBtDevice;
@@ -42,9 +46,13 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	TextView infoText;
 	TextView messageText;
+	
 
 	boolean transmittingMotorSignals = false;
 	boolean liftFansOn = false;
+	boolean btON = false;
+	boolean btConnected = false;
+	
 	String currentInfo = "Info...";
 	int length = 0;
 	int i = 0;
@@ -107,6 +115,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		filter.addAction(Constants.Broadcast.ControlSystem.Status.Response.ACTION);
 		filter.addAction(TOGGLE_BT_BUTTON_TEXT);
 		filter.addAction(Constants.Broadcast.LiftFans.RESPONSE);
+		filter.addAction(BT_CONNECTION_STATUS_RESPONS);
 		registerReceiver(mReceiver, filter);
 	}
 
@@ -177,17 +186,28 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		case R.id.toggleTransmissionButton:
 			
-			if(transmittingMotorSignals)
+			callBtFunction(BT_CONNECTION_STATUS_CALL);
+			
+			if( btConnected )
 			{
-				Intent disableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.DISABLE_TRANSMISSION);
-				sendBroadcast(disableMS);
+				if(transmittingMotorSignals)
+				{
+					Intent disableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.DISABLE_TRANSMISSION);
+					sendBroadcast(disableMS);
+				}
+				else
+				{
+					Intent enableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.ENABLE_TRANSMISSION);
+					sendBroadcast(enableMS);
+				}
 			}
 			else
 			{
-				Intent enableMS = new Intent(Constants.Broadcast.MotorSignals.Remote.ENABLE_TRANSMISSION);
-				sendBroadcast(enableMS);
+				Context context = getApplicationContext();
+				Toast.makeText(context, "No Bluetooth Connection",
+				Toast.LENGTH_SHORT).show();
 			}
-			
+
 			Intent checkTransmissionSatus = new Intent(Constants.Broadcast.ControlSystem.Status.Query.ACTION);
 			checkTransmissionSatus.putExtra(Constants.Broadcast.ControlSystem.Status.Query.TYPE, Constants.Broadcast.ControlSystem.Status.TRANSMISSION);
 			sendBroadcast(checkTransmissionSatus);
@@ -195,20 +215,30 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 
 			case R.id.toggleLiftFansButton:
-				Intent liftFans = new Intent(
-					Constants.Broadcast.LiftFans.REQUEST);
-				if (liftFansOn)
+				callBtFunction(BT_CONNECTION_STATUS_CALL);
+				
+				if(btConnected)
 				{
-					liftFans.putExtra(Constants.Broadcast.LiftFans.STATE,
-						Constants.Broadcast.LiftFans.DISABLE);
+					Intent liftFans = new Intent(
+							Constants.Broadcast.LiftFans.REQUEST);
+						if (liftFansOn)
+						{
+							liftFans.putExtra(Constants.Broadcast.LiftFans.STATE,
+								Constants.Broadcast.LiftFans.DISABLE);
+						}
+						else
+						{
+							liftFans.putExtra(Constants.Broadcast.LiftFans.STATE,
+								Constants.Broadcast.LiftFans.ENABLE);
+						}
+						sendBroadcast(liftFans);
 				}
 				else
 				{
-					liftFans.putExtra(Constants.Broadcast.LiftFans.STATE,
-						Constants.Broadcast.LiftFans.ENABLE);
+					Context context = getApplicationContext();
+					Toast.makeText(context, "No Bluetooth Connection",
+					Toast.LENGTH_SHORT).show();
 				}
-				sendBroadcast(liftFans);
-
 				break;
 
 		case R.id.startButton:
@@ -310,6 +340,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			else if (action.equals(Constants.Broadcast.LiftFans.RESPONSE))
 			{
 				liftFansResponse(intent);
+			}
+			
+			else if (action.equalsIgnoreCase(BT_CONNECTION_STATUS_RESPONS)) 
+			{
+				btConnected = intent.getBooleanExtra(BT_CONNECTION_STATUS, false);
 			}
 		}
 
