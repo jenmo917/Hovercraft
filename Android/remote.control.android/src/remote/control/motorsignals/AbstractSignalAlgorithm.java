@@ -20,6 +20,17 @@ public abstract class AbstractSignalAlgorithm implements
 		this.scale = scale;
 	}
 
+	AbstractSignalAlgorithm(String type, float min, float max, float mean,
+		float deadZone, float scale)
+	{
+		this.minValue = min;
+		this.maxValue = max;
+		this.mean = mean;
+		this.deadZone = deadZone;
+		this.scale = scale;
+		this.type = type;
+	}
+
 	abstract public float[] convert(float value);
 
 	protected float cut(float value)
