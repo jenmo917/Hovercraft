@@ -20,7 +20,7 @@ public class PitchLinear extends AbstractSignalAlgorithm
 		float mean = this.mean * scale;
 
 		float cutPitch = cut(pitch) - mean;
-		if (deadZone < cutPitch && cutPitch > -deadZone)
+		if (-deadZone < cutPitch && cutPitch < deadZone)
 		{
 			cutPitch = 0f;
 		}
