@@ -347,6 +347,9 @@ public class BtService extends IntentService
 				intent.putExtra(Constants.Broadcast.LiftFans.STATE,
 					bufferMessage[0]);
 				sendBroadcast(intent);
+				
+				String message = new String(bufferMessage);
+				sendBroadcastMessage("Message received: " + bufferInfo[0] + "\n" + message);				
 			}
 						
 			//sendCommand(bufferInfo[0], bufferInfo[1], bufferMessage);
