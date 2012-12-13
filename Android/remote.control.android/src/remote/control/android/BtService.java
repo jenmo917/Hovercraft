@@ -309,6 +309,7 @@ public class BtService extends IntentService
 			return;
 		}
 
+		Log.d(TAG, "BT Service received from remote.");
 		Log.d(TAG, "bufferInfo[0]"+bufferInfo[0]);
 		Log.d(TAG, "bufferInfo[1]"+bufferInfo[1]);
 		Log.d(TAG, "bufferInfo[2]"+bufferInfo[2]);

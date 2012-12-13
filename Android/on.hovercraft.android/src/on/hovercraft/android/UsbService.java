@@ -331,11 +331,14 @@ public class UsbService extends IntentService
 					i++;
 				}		
 
+				Log.d(TAG, "USB service msg from ADK");
 				byte[] bufferPB = new byte[buffer[2]];
 				i = 0;
 				while(i < buffer[2])
 				{
 					bufferPB[i] = buffer[i+3];
+					Log.d(TAG, "bufferPB["+i+"]"+bufferPB[i]);
+					
 					i++;
 				}				
 
@@ -346,10 +349,14 @@ public class UsbService extends IntentService
 					combinedInfoAndPB[i] = i < bufferInfo.length ? bufferInfo[i] : bufferPB[i - bufferInfo.length];
 					i++;
 				}
-
 				Log.d(TAG, "bufferInfo[0]"+bufferInfo[0]);
 				Log.d(TAG, "bufferInfo[1]"+bufferInfo[1]);
 				Log.d(TAG, "bufferInfo[2]"+bufferInfo[2]);
+
+				if(bufferInfo[0] == Constants.LIFT_FAN_RESPONSE_COMMAND)
+				{
+					Log.d("LF", "USBS Lift fans response received from ADK");
+				}
 
 				// commands from ADK to this device
 				if(Constants.TARGET_BRAIN == bufferInfo[1])
@@ -440,6 +447,10 @@ public class UsbService extends IntentService
 				// Skicka vidare till USB
 				byte[] bufferInfo = intent.getByteArrayExtra("bufferInfo");
 				byte[] bufferMessage = intent.getByteArrayExtra("bufferMessage");
+				if(bufferInfo[0] == Constants.LIFT_FAN_REQUEST_COMMAND)
+				{
+					Log.d("LF", "USBS Lift fans command received from remote.");
+				}
 				sendCommand(bufferInfo[0], Constants.TARGET_ADK, bufferMessage);
 				
 				//String blinky = "blinky";

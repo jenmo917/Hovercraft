@@ -7,8 +7,14 @@ public class PitchLinear extends AbstractSignalAlgorithm
 	public PitchLinear(float min, float max, float mean, float deadZone,
 		float scale)
 	{
-		super(min, max, mean, deadZone, scale);
-		this.type = Constants.Broadcast.MotorSignals.Algorithms.Pitch.LIN;
+		super(Constants.Broadcast.MotorSignals.Algorithms.Pitch.LIN, min, max,
+			mean, deadZone, scale);
+	}
+
+	public PitchLinear(String type, float min, float max, float mean,
+		float deadZone, float scale)
+	{
+		super(type, min, max, mean, deadZone, scale);
 	}
 
 	@Override
