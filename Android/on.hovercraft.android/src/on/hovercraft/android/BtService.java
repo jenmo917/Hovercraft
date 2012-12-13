@@ -527,7 +527,7 @@ public class BtService extends IntentService
 						int messageLength = (int)infoAndPB[2];
 						byte[] message = new byte[messageLength];
 						
-						for(int i = 0; i < messageLength - 3; i++)
+						for(int i = 0; i < messageLength; i++)
 						{
 							message[i] = infoAndPB[3 + i];
 						}
