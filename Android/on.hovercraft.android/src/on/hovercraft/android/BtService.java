@@ -309,6 +309,11 @@ public class BtService extends IntentService
 			return;
 		}
 
+		Log.d(TAG, "BT Service received from Remote");
+		if(bufferInfo[0] == Constants.LIFT_FAN_REQUEST_COMMAND)
+		{
+			Log.d("LF", "BTS Lift fans command received from remote.");
+		}
 		Log.d(TAG, "bufferInfo[0]"+bufferInfo[0]);
 		Log.d(TAG, "bufferInfo[1]"+bufferInfo[1]);
 		Log.d(TAG, "bufferInfo[2]"+bufferInfo[2]);
@@ -523,13 +528,21 @@ public class BtService extends IntentService
 						byte[] infoAndPB = intent.getByteArrayExtra("combinedInfoAndPB");
 						byte command = infoAndPB[0];
 						byte target = infoAndPB[1];
-						
+
+						Log.d(TAG, "BT Service receive");
+						if(command == Constants.LIFT_FAN_RESPONSE_COMMAND)
+						{
+							Log.d("LF", "BTS Lift fans command received from ADK");
+						}
+						Log.d(TAG, "command"+command);
+						Log.d(TAG, "target"+target);
 						int messageLength = (int)infoAndPB[2];
 						byte[] message = new byte[messageLength];
 						
 						for(int i = 0; i < messageLength; i++)
 						{
 							message[i] = infoAndPB[3 + i];
+							Log.d(TAG, "bufferInfo["+i+"]"+message[i]);
 						}
 						
 						if( bluetoothSocketUp )
