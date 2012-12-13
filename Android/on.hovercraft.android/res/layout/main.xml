@@ -14,24 +14,14 @@
     </LinearLayout>
 
     <!-- Buttons -->
-
+
     <Button
         android:id="@+id/bt_setup_button"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="82dp"
+        android:layout_marginTop="40dp"
         android:text="@string/bt_setup_button" />
-
-    <Button
-        android:id="@+id/adk_test_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bt_setup_button"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/bt_setup_button"
-        android:layout_marginTop="20dp"
-        android:text="@string/adk_test_button" />
 
     <!-- Info och message -->
 

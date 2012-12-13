@@ -107,7 +107,7 @@ public class MainActivity extends Activity
 
 	private void setupButtons()
 	{
-		setupADKTestButton();
+//		setupADKTestButton();
 		setupBTSetupButton();
 	}
 
@@ -215,20 +215,20 @@ public class MainActivity extends Activity
 		mBTStatusLed = (ImageView) findViewById(R.id.bt_connection_status_led);
 	}
 
-	private void setupADKTestButton() 
-	{
-		Button button = (Button) findViewById(R.id.adk_test_button);
-		button.setOnClickListener(new OnClickListener() 
-		{
-			@Override
-			public void onClick(View arg0) 
-			{
-				Log.d(TAG,"setupADKTestButton pushed");
-				Intent i = new Intent("sendADKTestCommand");
-				sendBroadcast(i);
-			}
-		});
-	}
+//	private void setupADKTestButton() 
+//	{
+//		Button button = (Button) findViewById(R.id.adk_test_button);
+//		button.setOnClickListener(new OnClickListener() 
+//		{
+//			@Override
+//			public void onClick(View arg0) 
+//			{
+//				Log.d(TAG,"setupADKTestButton pushed");
+//				Intent i = new Intent("sendADKTestCommand");
+//				sendBroadcast(i);
+//			}
+//		});
+//	}
 	
 	private void setupBTSetupButton()
 	{
