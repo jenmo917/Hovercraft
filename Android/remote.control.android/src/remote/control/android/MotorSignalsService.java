@@ -152,7 +152,8 @@ public class MotorSignalsService extends IntentService implements
 				String[] pitches = new String[] {
 					Constants.Broadcast.MotorSignals.Algorithms.Pitch.LIN,
 					Constants.Broadcast.MotorSignals.Algorithms.Pitch.LOG,
-					Constants.Broadcast.MotorSignals.Algorithms.Pitch.EXP };
+					Constants.Broadcast.MotorSignals.Algorithms.Pitch.EXP,
+					Constants.Broadcast.MotorSignals.Algorithms.Pitch.LIN_REV };
 				String[] rolls = new String[] {
 					Constants.Broadcast.MotorSignals.Algorithms.Roll.LIN,
 					Constants.Broadcast.MotorSignals.Algorithms.Roll.LOG,

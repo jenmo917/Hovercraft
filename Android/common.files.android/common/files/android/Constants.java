@@ -177,6 +177,7 @@ final public class Constants // final to prevent instantiation
 					public final static String LIN = "Linear";
 					public final static String LOG = "Logarithmic";
 					public final static String EXP = "Exponential";
+					public final static String LIN_REV = "Linear reverse";
 				}
 
 				public static class Roll

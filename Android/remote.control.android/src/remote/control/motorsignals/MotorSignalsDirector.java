@@ -9,6 +9,7 @@ public class MotorSignalsDirector
 	final float CONTROLLER_PITCH_MIN = 0f;
 	final float CONTROLLER_PITCH_MAX = 1f;
 	final float CONTROLLER_PITCH_MEAN = 0f;
+	final float CONTROLLER_PITCH_REVERSE_MEAN = 0.6f;
 
 	final float CONTROLLER_PITCH_LIN_DEAD_ZONE = 0.05f;
 	final float CONTROLLER_PITCH_LIN_SCALE = 1f;
@@ -79,6 +80,14 @@ public class MotorSignalsDirector
 		this.builder.buildPitchLog(CONTROLLER_PITCH_MIN, CONTROLLER_PITCH_MAX,
 			CONTROLLER_PITCH_MEAN, CONTROLLER_PITCH_LOG_DEAD_ZONE,
 			CONTROLLER_PITCH_LOG_SCALE);
+		return this.builder;
+	}
+
+	private MotorSignalsBuilder buildPitchReverseLin()
+	{
+		this.builder.buildPitchLin(CONTROLLER_PITCH_MIN,
+			CONTROLLER_PITCH_MAX, CONTROLLER_PITCH_REVERSE_MEAN,
+			CONTROLLER_PITCH_LIN_DEAD_ZONE, CONTROLLER_PITCH_LIN_SCALE);
 		return this.builder;
 	}
 
