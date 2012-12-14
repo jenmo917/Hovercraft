@@ -40,12 +40,12 @@ public class MotorSignals implements MotorSignalsInterface
 		if (0f > lmRaw)
 		{
 			lMDirection = -1;
-			lmRaw = -1;
+			lmRaw = -1 * lmRaw;
 		}
 		if (0f > rmRaw)
 		{
 			rMDirection = -1;
-			rmRaw = -1;
+			rmRaw = -1 * rmRaw;
 		}
 		int lMotor = (int) Math
 			.floor(Math.scalb(lmRaw, exp));
