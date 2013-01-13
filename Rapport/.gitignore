@@ -1,0 +1,4 @@
+.project
+.texlipse
+bin/*
+tmp/*
