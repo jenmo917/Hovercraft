@@ -1,8 +1,14 @@
-%%This is a very basic article template.
-%%There is just one section and two subsections.
 \documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[swedish]{babel}
+\usepackage[swedish,english]{babel}
+\usepackage[pdftex,bookmarks=true]{hyperref} 	% Fixar klickbara länkar i pdf
+\usepackage{graphicx} 					% Grafik
+\graphicspath{{../includes/figures/}}
+\setlength{\parskip}{10pt plus 1pt minus 1pt}
+\usepackage{mathtools}					% Matematiska formler
+\usepackage{color}						% Färger
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+
 \begin{document}
 
 \input{./title_page_1.tex}
