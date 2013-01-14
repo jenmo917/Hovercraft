@@ -7,7 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
-
+/**
+ * \brief This is an placeholder for an control system. At it current state it just 
+ * passes motor signals down to the ADK.
+ * \author Daniel Josefsson
+ */
 public class ControlSystemService extends IntentService
 {
 	/**
@@ -70,6 +74,12 @@ public class ControlSystemService extends IntentService
 		registerReceiver(messageReceiver, filter);
 	}
 
+	/**
+	 * \brief Passes motor signals to the ADK (USB service).
+	 * This is where one should send motor signals to the control system.
+	 * \author Daniel Josefsson
+	 *
+	 */
 	private class MotorSignalsBroadcastReceiver extends BroadcastReceiver
 	{
 		@Override
