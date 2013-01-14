@@ -119,6 +119,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		registerReceiver(mReceiver, filter);
 	}
 
+	/**
+	 * \brief Create button objects for log, BT, motor signals and lift fans.
+	 */
 	private void initButtons()
 	{
 		// log buttons
@@ -137,6 +140,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		buttonToggleLiftFans = (Button) findViewById(R.id.toggleLiftFansButton);
 	}
 
+	/**
+	 * \brief Setup buttons' on-click listeners .
+	 */
 	private void initOnClickListners()
 	{
 		buttonStartLog.setOnClickListener(this);
@@ -183,7 +189,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			callBtFunction(CHOOSE_BLUETOOTH_DEVICE);
 			break;
-
+		// Check if the BT-link is up and send the toggle signal to the ADK.
+		// The button is updated on response from the ADK.
 		case R.id.toggleTransmissionButton:
 			
 			callBtFunction(BT_CONNECTION_STATUS_CALL);
@@ -213,7 +220,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			sendBroadcast(checkTransmissionSatus);
 			
 			break;
-
+			// Check if the BT-link is up and send the toggle signal to the ADK.
+			// The button is updated on response from the ADK.
 			case R.id.toggleLiftFansButton:
 				callBtFunction(BT_CONNECTION_STATUS_CALL);
 				
@@ -325,6 +333,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				else
 					buttonToggleBT.setText(R.string.btnToggleBtOFF);	
 			}
+			// Updated toggle button text.
 			else if(Constants.Broadcast.ControlSystem.Status.Response.ACTION.equals(action))
 			{
 				if(intent.getStringExtra(Constants.Broadcast.ControlSystem.Status.Response.TYPE).equals(Constants.Broadcast.ControlSystem.Status.TRANSMISSION))
@@ -337,6 +346,7 @@ public class MainActivity extends Activity implements OnClickListener {
 						buttonToggleTransmission.setText(R.string.btnSendMS);
 				}
 			}
+			// Updated toggle button text
 			else if (action.equals(Constants.Broadcast.LiftFans.RESPONSE))
 			{
 				liftFansResponse(intent);
@@ -348,6 +358,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			}
 		}
 
+		/**
+		 * \brief Updates the lift fans toggle button text depending on status
+		 * from ADK.
+		 * \author Daniel Josefsson
+		 * @param intent
+		 */
 		private void liftFansResponse(Intent intent)
 		{
 			if (intent.hasExtra(Constants.Broadcast.LiftFans.STATE))

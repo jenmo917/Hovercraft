@@ -18,7 +18,14 @@ import android.hardware.SensorManager;
 import android.util.Log;
 
 import common.files.android.Constants;
-
+/**
+ * \brief MotorSignalsService takes care of the creation of a MotorSignal object and 
+ * commands passed to it. It also transfers the MotorSignals commands to the
+ * Bluetooth service for transfer to the ADK.
+ * 
+ * \author Daniel Josefsson
+ *
+ */
 public class MotorSignalsService extends IntentService implements
 		SensorEventListener
 {
@@ -41,13 +48,20 @@ public class MotorSignalsService extends IntentService implements
 	private MotorSignals motorSignals;
 	private MotorSignalsDirector director;
 
-
+	/**
+	 * \brief Basic constructor, utilizes the base class constructor.
+	 * \author Daniel Josefsson
+	 */
 	public MotorSignalsService()
 	{
 		super("MotorSignals");
 
 	}
 
+	/**
+	 * \brief Register for Accelerometer data. Builds a Log MotorSystem.
+	 * \author Daniel Josefsson
+	 */
 	@Override
 	public void onCreate()
 	{
@@ -61,6 +75,10 @@ public class MotorSignalsService extends IntentService implements
 		motorSignals = director.buildLogSystem();
 	}
 
+	/**
+	 * \brief Destroys the message receiver.
+	 * \author Daniel Josefsson
+	 */
 	@Override
 	public void onDestroy()
 	{
@@ -71,6 +89,11 @@ public class MotorSignalsService extends IntentService implements
 		Log.d(TAG, "MotorSignals destroyed");
 	}
 
+	/**
+	 * \brief Sets the broadcast filters.
+	 * \author Daniel Josefsson
+	 * @param intent
+	 */
 	@Override
 	protected void onHandleIntent(Intent intent)
 	{
@@ -91,6 +114,10 @@ public class MotorSignalsService extends IntentService implements
 		}
 	}
 
+	/**
+	 * \brief Sets the broadcast filters.
+	 * \author Daniel Josefsson
+	 */
 	private void setupBroadcastFilters()
 	{
 		IntentFilter filter = new IntentFilter();
@@ -106,6 +133,12 @@ public class MotorSignalsService extends IntentService implements
 		registerReceiver(messageReceiver, filter);
 	}
 
+	/**
+	 * Handles MotorSignals Intents.
+	 * \brief
+	 * \author
+	 *
+	 */
 	private class MotorSignalsBroadcastReceiver extends BroadcastReceiver
 	{
 		@Override
@@ -210,6 +243,12 @@ public class MotorSignalsService extends IntentService implements
 		// Do nothing right now. Nothing is implemented.
 	}
 
+	/**
+	 * \brief Calculates the MotorSignals according to accelerometer data.
+	 * The accelerometer data is low pass filtered.
+	 * \author Daniel Josefsson
+	 * @param event
+	 */
 	@Override
 	public void onSensorChanged(SensorEvent event)
 	{
@@ -266,6 +305,12 @@ public class MotorSignalsService extends IntentService implements
 		sendBroadcast(intent);
 	}
 
+	/**
+	 * \brief Normalize float array.
+	 * \author Daniel Josefsson
+	 * @param arr
+	 * @return
+	 */
 	public float[] normalise(float[] arr)
 	{
 		float sum = 0f;
@@ -282,6 +327,13 @@ public class MotorSignalsService extends IntentService implements
 		return arr;
 	}
 
+	/**
+	 * \brief Create Protocol buffer EnginesProtocol.
+	 * \author Daniel Josefsson
+	 * @param driveSignalRight
+	 * @param driveSignalLeft
+	 * @return
+	 */
 	static Engines createEngineProtocol(DriveSignals driveSignalRight,
 			DriveSignals driveSignalLeft)
 	{
@@ -291,6 +343,13 @@ public class MotorSignalsService extends IntentService implements
 		return engines.build();
 	}
 
+	/**
+	 * \brief Create Protocol buffer DriveSignalProtocol.
+	 * \author Daniel Josefsson
+	 * @param driveSignalRight
+	 * @param driveSignalLeft
+	 * @return
+	 */
 	static DriveSignals createDriveSignalProtocol(boolean forward,
 			boolean enable, int power)
 	{
