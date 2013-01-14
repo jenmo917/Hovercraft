@@ -1,4 +1,5 @@
 .project
 .texlipse
+.settings/*
 bin/*
 tmp/*
