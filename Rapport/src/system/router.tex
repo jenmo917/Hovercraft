@@ -1,2 +1,30 @@
 \subsection{Router}
-Jens\ldots
+Routern fungerar som en kommunikationslänk mellan fjärrkontroll och ADK. 
+När den tar emot meddelande kontrollerar den mottagare och skickar vidare till rätt destination. 
+Programmet är en Android-app och skriven i Java.
+
+Styrsystemet är för stunden implementerat på fjärrkontrollen men visionen är att ett fullfjädrat reglersystem skall 
+köras på router-telefonen och därför har routern utformats på ett sådant sätt att det skall vara enkelt att 
+implementera ett på sidan om routerfunktionen.
+
+Programmet är indelat i tre Android-services. En Blåtandsservice som hanterar all blåtandskommunkation. 
+En UsbService som hanterar all USBkommunkation och slutligen en Service för ett framtida reglersystem.
+Kommunkationen inom programmet sker via Android Broadcasts.
+
+Applikationen startas automatiskt genom att ansluta ADK:n till router-telefonen. 
+Om applikationen körs innan den ansluts till ADK:n kommer den att startas om för att upprätta USB-kommunikationen. 
+När appen körs visas en diod för respektive kommunkationsbuss. Om kommunkationen fungerar lyser dioden grönt och om 
+den inte fungerar så lyser den rött. Dioden kan även lysa gult men detta är inget man hinner se i vanliga fall då 
+den enbart gör så under uppkoppling. Knappen "Bluetooth setup" används för att upprätta en blåtandslänk.
+
+\subsubsection{Ekonomi}
+Det behövs en Android-telefon för att köra programmet och vi använde en Samsung Google Nexus S för 1400SEK. 
+Anledningen till att vi valde denna telefon var för att den fungerar bra ihop med ADK:n, den har en öppen 
+mjukvara vilket gjorde lätt att ladda in de senaste uppdateringarna men även för att den var ett av de billigare 
+alternativen.
+
+\subsubsection{Resultat}
+Programmet är stabilt och uppfyller alla krav. Dess huvudsyfte är att ta emot och skicka vidare meddelanden 
+vilket fungerar utmärkt.
+
+\subsubsection{Diskussion}

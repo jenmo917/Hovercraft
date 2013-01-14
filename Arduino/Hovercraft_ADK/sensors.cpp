@@ -71,6 +71,4 @@ void sensorSetup()
 	USSensorList[2].description = "backRight";
 	USSensorList[3].description = "backLeft";
 
-	USSensorList[2].type = "Empty";
-	USSensorList[3].type = "Empty";
 }

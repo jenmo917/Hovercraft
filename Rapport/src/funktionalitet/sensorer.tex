@@ -1,2 +1,43 @@
 \subsection{Sensorer}
-Rickard och Emil\ldots
+En sensor är en sorts detektor som mäter en fysisk mängd av något slag och konverterar den till en signal som kan tas 
+upp av en observeratör, i detta fall ett elektroniskt system.
+
+Svävaren har i nuläget tre olika sensorer som kan användas under drift. Det är dels accelerometersensorer både 
+på fjärrkontrollen och på telefonen som finns på svävaren och till sist finns det även ultraljudssensorer ombord på 
+svävaren. En accelerometers uppgift är att känna av vad den aktuella accelerationen är i x,y och z-led och ge ett värde 
+av accelerationen i varje koordinat.
+
+Accelerometern som finns i de båda telefonerna är något som finns innbyggt i praktiskt taget alla nya smartphones. 
+Det finns otroligt många användningsområden för accelerometern, inte minst i olika typer av spel. 
+Själva basfunktionen är dock att när man vrider telefonen till horisontalläge så känner accelerometern av det. 
+Då skall displayen vridas med så att användaren ser texten korrekt.
+
+På fjärrkontrollen så används accelerometern till att styra svävaren när användaren vrider fjärkontrollen men telefonen 
+lagrar även den aktuella datan från accelerometern vilket beskrivs senare i rapporten i avsnittet loggning av data där 
+även kommunikationen tas upp.
+
+Ombord på svävaren sitter det fyra stycken ultraljudssensorer som känner av vilket avstånd det finns till närliggande 
+objekt. Det sitter två sensorer framåt och två bakåt. Sensorerna sänder ut ett ultraljud och mäter tiden det tar för 
+returekot att komma tillbaka. Med hjälp av ljudhastigheten i luft så kan ett exakt värde tas fram.
+
+\subsubsection{Loggning av data}
+Uppgiften för de tre sensortyperna som beskrevs tidigare är att leverara information som sedan kan loggas. 
+Loggningen ställs in i inställningsmenyn på fjärrkontrollen och när den är igång så loggas datan var femte sekund. 
+Datan som loggas sparas sedan omgående på det externa minneskortet på fjärrkontrollen där den läggs i ett textdokument 
+med en ny rad för varje loggning. På varje textrad för loggningen finns aktuell sensordata, tidpunkt ned till 
+millisekunder och det aktuella datumet.
+
+Kommunikationen med de båda accelerometrarna sker uteslutande mjukvarumässigt. Accelerometern på fjärrkontrollen 
+kommunicerar inte med något annat utan sparar sensordatan direkt till minneskortet på fjärrkontrollen. 
+Den accelerometer som finns på telefonen som sitter ombord på svävaren skickar sin data via bluetooth till fjärrkontrollen 
+där den sparas till minneskortet.
+
+Ultraljudssensorerna kommunicerar via TTL-logik med ADKn. Då ADKn skickar en förfrågan om sensordata svarar sensorn med en puls som
+sedan tolkas av ADKn och resulterar i ett avstånd i cm. Om användaren väljer att logga data från ultraljudssensorerna skickas
+resultatet till fjärrkontrollen.
+
+När datan från ultraljudssensorerna kommer till fjärrkontrollen så sparas datan till minneskortet som med tidigare sensorer.
+
+Den stora förbättringsmöjligheten för hela loggfunktionen är att nu är den inte förberedd ifall näste användare vill lägga till ytterligare sensorer. 
+Då får man helt enkelt lägga in nya funktioner genom hela kedjan med kommunikation och det blir rätt jobbigt om det skall in flera nya sensorer. 
+För att lösa detta dilemma hade loggfunktionen kunnat göras dynamisk från första början så att den själv söker upp och använder de sensorer som finns. Med hjälp av en universalfunktion hade detta kunna lösas. Det är något att tänka på för framtida utveckling av loggfunktionen. Varför gjordes detta då inte? En dynamisk lösning kräver mycket bra programmeringskunskaper och en hel del mer tid avsatt. 
