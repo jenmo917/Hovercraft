@@ -185,6 +185,10 @@ void I2CSensorDataHandler( int event, int target )
  */
 void USSensorHandler( int event, int target )
 {
+	if(target == 0)
+	{
+		target = TARGET_REMOTE;
+	}
 	Serial << "********************************************************" << endl;
 	Serial << "Reading data from Ultrasonic Sensors" << endl;
 	int duration, distance;
@@ -197,7 +201,7 @@ void USSensorHandler( int event, int target )
 			digitalWrite( USSensorList[i].triggerpin, LOW );
 			duration = pulseIn( USSensorList[i].echopin, HIGH );
 			distance = ( duration / 2 ) / 29.1;
-			Serial << "Sensor " << i << ": ";
+			/*Serial << "Sensor " << i << ": ";
 			if ( distance >= 200 || distance <= 0 )
 			{
 				Serial.println( "Out of range" );
@@ -206,7 +210,7 @@ void USSensorHandler( int event, int target )
 			{
 				Serial.print( distance );
 				Serial.println( " cm" );
-			}
+			}*/
 		}
 	}
 	q.enqueueEvent( Events::EV_US_SENSOR_FINISHED, target );
@@ -369,6 +373,7 @@ void connectionCheckEngines( int event, int param )
 		DriveSignals stop = { false, true, 0 };
 		rightMotorControl( &stop );
 		leftMotorControl( &stop );
+		liftFansControl(false);
 	}
 }
 
@@ -409,4 +414,12 @@ void LiftFansHandler( int event, int command )
 		sendMsgLength = 1;
 		sendMessage(LIFT_FAN_RESPONSE_COMMAND, TARGET_REMOTE);
 	}
+}
+
+void sendTestStringHandler(int event, int param)
+{
+	liftFansControl((bool) rcvPBmsg[0]);
+	sendMsg[0] = (byte) liftFansStatus();
+	sendMsgLength = 1;
+	sendMessage(PRINT_MESSAGE_COMMAND, TARGET_ADK);
 }

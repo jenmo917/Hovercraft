@@ -19,23 +19,23 @@
 #define rightEnable 4
 
 #define leftPWM 5
-#define leftDir 6
-#define leftEnable 8
+#define leftDir A0
+#define leftEnable A1
 
-#define liftFans 9
+#define liftFans 12
 
 // Pins used for sensors
 // Pin 20 used for I2C
 // Pin 21 used for I2C
 
-#define trigPin1 A0
-#define echoPin1 A1
-#define trigPin2 A2
-#define echoPin2 A3
-#define trigPin3 A4
-#define echoPin3 A5
-#define trigPin4 A6
-#define echoPin4 A7
+#define trigPin1 A8
+#define echoPin1 A9
+#define trigPin2 A10
+#define echoPin2 A11
+#define trigPin3 A12
+#define echoPin3 A13
+#define trigPin4 A14
+#define echoPin4 A15
 
 void pinSetup();
 void LEDPinsSetup();

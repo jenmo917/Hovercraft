@@ -45,13 +45,15 @@ void setup()
 	disp.addEventListener( Events::EV_I2C_SENSOR_FINISHED, USBSendI2CSensorDataHandler );
 	//disp.addEventListener( Events::EV_US_SENSOR_WARNING, USBSendUSWarningHandler );
 	disp.addEventListener( Events::EV_TIME_1000, blinkyHandler );
-	//disp.addEventListener( Events::EV_TIME_5000, USBSendEnginesObject );
+	//disp.addEventListener( Events::EV_TIME_5000, sendTestStringHandler);
 	//disp.addEventListener( Events::EV_ENGINES_REQ, USBSendEnginesObject );
 	disp.addEventListener( Events::EV_TIME_100, connectionCheckEngines );
 	//disp.addEventListener( Events::EV_TIME_100, timeHandler100 );
 	//disp.addEventListener( Events::EV_ANALOG0, analogHandler );
 	disp.addEventListener( Events::EV_SERIAL, USBReadHandler );
+	//disp.addEventListener( Events::EV_TIME_1000, USSensorHandler );
 }
+
 
 /**
 * \brief The main loop.
@@ -91,6 +93,7 @@ void loop()
 		signal.power = 0;
 		rightMotorControl( &signal );
 		leftMotorControl( &signal );
+		liftFansControl(false);
 	}
 }
 
