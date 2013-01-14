@@ -16,25 +16,49 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+/**
+* \brief MainActivity
+* This is the main activity of the application. 
+*
+* \author Jens Moser
+*/
 public class MainActivity extends Activity
 {
-	private String TAG = "JM";
-	private ImageView mUSBStatusLed;
-	private ImageView mBTStatusLed;
-	TextView textInfo;
-	TextView textMessage;
+	private String TAG = "JM"; /**< LogCat TAG */
+	private ImageView mUSBStatusLed; /**< Connection state LED */
+	private ImageView mBTStatusLed; /**< Connection state LED */
+	TextView textInfo; /**< Info from BTservice */
+	TextView textMessage; /**< Message from BTservice */
 
-	private final BroadcastReceiver messageReceiver = new newMessage();
+	private final BroadcastReceiver messageReceiver = new newMessage(); /**< BroadcastReceiver */
 	final Context context = this;
-
+	
+	/**
+	* \brief Restart app
+	* This function will restart the app 
+	*
+	* \author Jens Moser
+	*/
 	private void restart()
 	{
 		AppRestart.doRestart(this);
 	}
 
+	/**
+	* \brief Broadcast receiver
+	*
+	* \author Jens Moser
+	*/	
 	private class newMessage extends BroadcastReceiver
 	{
+		/**
+		* \brief onReceive
+		* This function will execute when broadcast is received.
+		*
+		* @param intent Information sent with the broadcast
+		*
+		* \author Jens Moser
+		*/	
 		@Override
 		public void onReceive(Context context, Intent intent)
 		{
@@ -75,13 +99,27 @@ public class MainActivity extends Activity
 			}
 		}
 	}
-	
+
+	/**
+	* \brief Back button
+	*
+	* This function disables the back button on the phone
+	*
+	* \author Jens Moser
+	*/	
 	@Override
 	public void onBackPressed()
 	{
 
 	}
 
+	/**
+	* \brief onCreate
+	*
+	* Executes when app starts
+	*
+	* \author Jens Moser
+	*/		
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{				
@@ -104,19 +142,35 @@ public class MainActivity extends Activity
 		
 		Log.d(TAG,"onCreate stop");
 	}
-
+	
+	/**
+	* \brief Setup buttons
+	*
+	* \author Jens Moser
+	*/	
 	private void setupButtons()
 	{
-//		setupADKTestButton();
 		setupBTSetupButton();
 	}
-
+	
+	/**
+	* \brief Init text views
+	*
+	* Setup text views
+	*
+	* \author Jens Moser
+	*/	
 	private void initTextViews()
 	{
 		textInfo = (TextView) findViewById(R.id.textInfo);
 		textMessage = (TextView) findViewById(R.id.textMessage);
 	}
-
+	
+	/**
+	* \brief Start USB service
+	*
+	* \author Jens Moser
+	*/	
 	private void startUsbService()
 	{
 		Log.d(TAG,"start UsbService");
@@ -125,10 +179,21 @@ public class MainActivity extends Activity
 		startService(intent);
 	}
 	
+	/**
+	* \brief stop USB-service
+	*
+	* \author Jens Moser
+	*/		
 	private void stopUsbService()
 	{
 		stopService(new Intent(this, UsbService.class));
 	}
+
+	/**
+	* \brief Start Log-service
+	*
+	* \author Emil Andersson
+	*/		
 	private void startLogServiceBrain()
 	{
 		Log.d(TAG,"start LogServiceBrain");
@@ -137,11 +202,21 @@ public class MainActivity extends Activity
 		startService(intent);
 	}
 	
+	/**
+	* \brief Stop Log-service
+	*
+	* \author Emil Andersson
+	*/		
 	private void stopLogServiceBrain()
 	{
 		stopService(new Intent(this, LogServiceBrain.class));
 	}
 
+	/**
+	* \brief Start Controlsystem-service.
+	*
+	* \author Daniel Josefsson
+	*/		
 	private void startControlSystemService()
 	{
 		Log.d(TAG,"start ControlSystemService");
@@ -150,11 +225,21 @@ public class MainActivity extends Activity
 		startService(intent);
 	}
 	
+	/**
+	* \brief Stop Controlsystem-service.
+	*
+	* \author Daniel Josefsson
+	*/			
 	private void stopControlSystemService()
 	{
 		stopService(new Intent(this, ControlSystemService.class));
 	}
-
+	
+	/**
+	* \brief Start Bt-service.
+	*
+	* \author Johan Gustafsson
+	*/	
 	private void startBtServerService()
 	{
 		Log.d(TAG,"start BtService");
@@ -162,12 +247,23 @@ public class MainActivity extends Activity
 		intent.fillIn(getIntent(), 0);
 		startService(intent);
 	}
-
+	
+	/**
+	* \brief Stop Bt-service.
+	*
+	* \author Johan Gustafsson
+	*/	
 	private void stopBtServerService()
 	{
 		stopService(new Intent(this, BtService.class));
 	}
-
+	
+	/**
+	* \brief Init broadcast receiver
+	* This class will listen on below specified filters.
+	*
+	* \author Jens Moser
+	*/	
 	private void initReceiver()
 	{
 		IntentFilter filter = new IntentFilter();
@@ -178,7 +274,12 @@ public class MainActivity extends Activity
 		filter.addAction("android.intent.action.ACTION_POWER_CONNECTED");
 		registerReceiver(messageReceiver, filter);		
 	}
-
+	
+	/**
+	* \brief Executes when app is resumed.
+	*
+	* \author Jens Moser
+	*/	
 	@Override
 	protected void onResume()
 	{
@@ -187,7 +288,12 @@ public class MainActivity extends Activity
 		initReceiver();
 		Log.d(TAG,"onResume stop");
 	}
-
+	
+	/**
+	* \brief Executes when app is paused.
+	*
+	* \author Jens Moser
+	*/	
 	@Override
 	public void onPause()
 	{
@@ -196,7 +302,12 @@ public class MainActivity extends Activity
 		unregisterReceiver(messageReceiver);
 		Log.d(TAG,"onPause stop");
 	}
-
+	
+	/**
+	* \brief Executes when app is destroyed.
+	*
+	* \author Jens Moser
+	*/	
 	@Override
 	public void onDestroy()
 	{
@@ -208,28 +319,23 @@ public class MainActivity extends Activity
 		stopLogServiceBrain();
 		Log.d(TAG,"onDestroy stop");
 	}
-
+	
+	/**
+	* \brief Setup communication leds
+	*
+	* \author Jens Moser
+	*/	
 	private void setupStatusLeds()
 	{
 		mUSBStatusLed = (ImageView) findViewById(R.id.usb_connection_status_led);
 		mBTStatusLed = (ImageView) findViewById(R.id.bt_connection_status_led);
 	}
-
-//	private void setupADKTestButton() 
-//	{
-//		Button button = (Button) findViewById(R.id.adk_test_button);
-//		button.setOnClickListener(new OnClickListener() 
-//		{
-//			@Override
-//			public void onClick(View arg0) 
-//			{
-//				Log.d(TAG,"setupADKTestButton pushed");
-//				Intent i = new Intent("sendADKTestCommand");
-//				sendBroadcast(i);
-//			}
-//		});
-//	}
 	
+	/**
+	* \brief Setup BT-setup-button.
+	*
+	* \author Johan Gustafsson
+	*/		
 	private void setupBTSetupButton()
 	{
 		Button setupButton = (Button) findViewById(R.id.bt_setup_button);
@@ -255,6 +361,13 @@ public class MainActivity extends Activity
 		});
 	}
 
+    // TODO: One (not two very similar) function to update connectionState.
+	
+	/**
+	* \brief Set USB LED
+	*
+	* \author Jens Moser
+	*/	
 	private void updateUSBConnectionState(ConnectionState state)
 	{
 		switch(state)
@@ -270,7 +383,12 @@ public class MainActivity extends Activity
 			break;
 		}
 	}
-
+	
+	/**
+	* \brief Set BT LED
+	*
+	* \author Jens Moser
+	*/	
 	private void updateBTConnectionState(ConnectionState state)
 	{
 		switch(state)
