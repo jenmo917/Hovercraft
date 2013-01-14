@@ -23,36 +23,64 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
-
+/**
+* \brief USB-Service.
+* This service controls all USB-communication.
+*
+* \author Jens Moser
+*/
 public class UsbService extends IntentService
 {	
-	public static boolean isActive = false; // this is true if the service is up and running
-	private boolean accessoryDetached = false; // TODO: true if android accessory is detached
+	public static boolean isActive = false; /**< this is true if the service is up and running */
+	private boolean accessoryDetached = false; /**< TODO: true if android accessory is detached */
 
-	public static ConnectionState connectionState = ConnectionState.DISCONNECTED; // USB connection state
+	public static ConnectionState connectionState = ConnectionState.DISCONNECTED; /**<  USB connection state */
 
-	private static String TAG = "JM";
-	private static UsbService singleton;
+	private static String TAG = "JM"; /**< LogCat TAG */
+	private static UsbService singleton; /**< Singleton of this service */
 
-	private final BroadcastReceiver messageReceiver = new myBroadcastReceiver();	
+	private final BroadcastReceiver messageReceiver = new myBroadcastReceiver(); /**< BroadcastReceiver */
 
-    private UsbManager mUsbManager = UsbManager.getInstance(this);
-    private UsbAccessory mAccessory;
+    private UsbManager mUsbManager = UsbManager.getInstance( this ); /**< UsbManager */
+    private UsbAccessory mAccessory; /**< UsbAccessory */
     
-	private ParcelFileDescriptor mFileDescriptor;
-	private FileOutputStream mOutputStream;
-	private FileInputStream mInputStream;
-
+	private ParcelFileDescriptor mFileDescriptor; /**< ParcelFileDescriptor */
+	private FileOutputStream mOutputStream; /**< FileOutputStream */
+	private FileInputStream mInputStream; /**< FileInputStream */
+	
+	/**
+	* \brief Constructor
+	*
+	* Constructor
+	*
+	* \author Jens Moser
+	*/
 	public UsbService()
 	{
-		super("UsbService");
+		super( "UsbService" );
 	}
 
+	/**
+	* \brief get Service Instance
+	*
+	* returns Service Instance
+	*
+	* @return UsbService
+	*
+	* \author Jens Moser
+	*/	
 	public static UsbService getInstance() 
 	{
 		return singleton;
 	}
-
+	
+	/**
+	* \brief Test command
+	*
+	* Test command. Sends test commands to ADK.
+	*
+	* \author Jens Moser
+	*/
 	public void sendADKTestCommand()
 	{
 		Random generator = new Random();
@@ -71,14 +99,17 @@ public class UsbService extends IntentService
 		}
 		sendCommand(Constants.MOTOR_CONTROL_COMMAND,Constants.TARGET_ADK, message);
 		Log.d(TAG,"Send engine command");
-
-		//    	byte[] message = new byte[1];
-		//    	message[0] = Constants.TARGET_BRAIN;
-		//    	sendCommand(Constants.I2C_SENSOR_REQ_COMMAND,Constants.TARGET_ADK, message);
 	}
 
-
-
+	/**
+	* \brief Create Protocol buffer engine object
+	*
+	* Return Engine object
+	*
+	* @return Engines
+	*
+	* \author Jens Moser
+	*/
 	static Engines createEngineProtocol(DriveSignals driveSignalRight, DriveSignals driveSignalLeft) 
 	{
 		Engines.Builder engines = Engines.newBuilder();
@@ -86,7 +117,16 @@ public class UsbService extends IntentService
 		engines.setLeft(driveSignalLeft);		
 		return engines.build();
 	}
-
+	
+	/**
+	* \brief Create Protocol buffer DriveSignal object
+	*
+	* Return DriveSignal object
+	*
+	* @return DriveSignals
+	*
+	* \author Jens Moser
+	*/
 	static DriveSignals createDriveSignalProtocol(boolean forward, boolean enable, int power)
 	{
 		DriveSignals.Builder driveSignal = DriveSignals.newBuilder();		
@@ -96,25 +136,11 @@ public class UsbService extends IntentService
 		return driveSignal.build();
 	}
 
-//	static SensorData createSensorDataProtocol(String type, String desc, int address, int value)
-//	{
-//		SensorData.Builder sensorData = SensorData.newBuilder();
-//		sensorData.setType(type);
-//		sensorData.setDescription(desc);
-//		sensorData.setAddress(address);
-//		sensorData.setValue(value);
-//		return sensorData.build();
-//	}
-
-//	@Override
-//	public void onCreate()
-//	{
-//		//super.onCreate();
-//		Log.d(TAG, "UsbService started");
-//		singleton = this;
-//		isActive = true;
-//	}
-
+	/**
+	* \brief Called when service is destroyed
+	*
+	* \author Jens Moser
+	*/	
 	@Override
 	public void onDestroy()
 	{
@@ -126,7 +152,14 @@ public class UsbService extends IntentService
 
 		Log.d(TAG, "UsbService destroyed");
 	}
-
+	
+	/**
+	* \brief Tries to reopen accessory if connection is lost.
+	*
+	* @return NULL
+	*
+	* \author Jens Moser
+	*/
 	private void reOpenAccessoryIfNecessary(Intent intent)
 	{
 		updateConnectionState(ConnectionState.WAITING);
@@ -145,7 +178,12 @@ public class UsbService extends IntentService
 		}
 		updateConnectionState(ConnectionState.DISCONNECTED);
 	}
-
+	
+	/**
+	* \brief Open accessory connection.
+	*
+	* \author Jens Moser
+	*/
 	private void openAccessory()
 	{
 		try
@@ -172,7 +210,12 @@ public class UsbService extends IntentService
 			closeAccessory();
 		}
 	}
-
+	
+	/**
+	* \brief Close accessory connection.
+	*
+	* \author Jens Moser
+	*/
 	private void closeAccessory() 
 	{
 		try 
@@ -202,6 +245,15 @@ public class UsbService extends IntentService
 		updateConnectionState(ConnectionState.DISCONNECTED);
 	}
 
+	/**
+	* \brief Update USB connection state.
+	*
+	* Broadcast the new connection state. Broadcast received by MainActivity.
+	*
+	* @param state New connection state
+	*
+	* \author Jens Moser
+	*/
 	private void updateConnectionState(ConnectionState state)
 	{
 		if(connectionState != state)
@@ -212,7 +264,16 @@ public class UsbService extends IntentService
 			sendBroadcast(i);
 		}
 	}
-
+	
+	/**
+	* \brief Send USB Commands
+	*
+	* @param command Command to be sent
+	* @param target Target
+	* @param message Message to be sent	
+	*
+	* \author Jens Moser
+	*/
 	private void sendCommand(byte command, byte target, byte[] message)
 	{
 		Log.d(TAG,"SendCommand:" + (int) command);
@@ -248,6 +309,13 @@ public class UsbService extends IntentService
 		}
 	}
 
+	/**
+	* \brief Send Byte array over USB
+	*
+	* @param byteArray byteArray to be sent
+	*
+	* \author Jens Moser
+	*/	
 	private void sendByteArray(byte[] byteArray)
 	{
 		Log.d(TAG,"SendByteArray");
@@ -269,6 +337,13 @@ public class UsbService extends IntentService
 		}
 	}	
 
+	/**
+	* \brief Service main function
+	*
+	* @param intent The value passed to startService(Intent).
+	*
+	* \author Jens Moser
+	*/	
 	@Override
 	protected void onHandleIntent(Intent intent) 
 	{
@@ -304,7 +379,12 @@ public class UsbService extends IntentService
 			}
 		}
 	}
-
+	
+	/**
+	* \brief Check USB-input and route it to the appropriate target.
+	*
+	* \author Jens Moser
+	*/	
 	public void checkInput() 
 	{
 		if(mInputStream != null) 
@@ -376,7 +456,17 @@ public class UsbService extends IntentService
 			}
 		}
 	}	
-
+	
+	/**
+	* \brief This function handle commands sent to this phone (router).
+	* Router was called brain earlier.
+	*
+	* @param bufferInfo Target
+	* @param bufferPB PB-bytearray
+	* @param combinedInfoAndPB Target and message combined
+	*
+	* \author Jens Moser
+	*/	
 	private void handleBrainCommands(byte[] bufferInfo, byte[] bufferPB, byte[] combinedInfoAndPB)
 	{
 		switch (bufferInfo[0])
@@ -409,7 +499,15 @@ public class UsbService extends IntentService
 			break;
 		}		
 	}
-
+	
+	/**
+	* \brief Broadcast buffer over to BTService.
+	* Buffer will be sent to Remote.
+	*
+	* @param combinedInfoAndPB Byte array Buffer to be sent
+	* 
+	* \author Jens Moser
+	*/
 	private void broadcastBufferToBTService(byte[] combinedInfoAndPB)
 	{
 		Intent intent = new Intent("callFunction");
@@ -417,7 +515,13 @@ public class UsbService extends IntentService
 		intent.putExtra("combinedInfoAndPB", combinedInfoAndPB);
 		sendBroadcast(intent);		
 	}
-
+	
+	/**
+	* \brief Setup broadcast filters.
+	* This service will listen on specified filters.
+	*
+	* \author Jens Moser
+	*/
 	private void setupBroadcastFilters() 
 	{
 		IntentFilter filter = new IntentFilter();
@@ -428,8 +532,21 @@ public class UsbService extends IntentService
 		registerReceiver(messageReceiver, filter);
 	}
 
+	/**
+	* \brief Broadcast recevier
+	*
+	* \author Jens Moser
+	*/	
 	public class myBroadcastReceiver extends BroadcastReceiver 
 	{
+		/**
+		* \brief onReceive
+		* This function will execute when broadcast is received.
+		*
+		* @param intent Information sent with the broadcast
+		*
+		* \author Jens Moser
+		*/
 		@Override
 		public void onReceive(Context context, Intent intent) 
 		{    
