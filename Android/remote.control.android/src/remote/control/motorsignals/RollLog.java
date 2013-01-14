@@ -1,15 +1,30 @@
 package remote.control.motorsignals;
 
 import common.files.android.Constants;
-
+/**
+ * \brief Logarithmic roll algorithm.
+ * \author Daniel Josefsson
+ */
 public class RollLog extends AbstractSignalAlgorithm
 {
+	/**
+	 * \brief Basic constructor, utilizes abstract class basic constructor.
+	 * @param min
+	 * @param max
+	 * @param mean
+	 * @param deadZone
+	 * @param scale
+	 */
 	public RollLog(float min, float max, float mean, float deadZone, float scale)
 	{
 		super(min, max, mean, deadZone, scale);
 		this.type = Constants.Broadcast.MotorSignals.Algorithms.Roll.LOG;
 	}
 
+	/**
+	 * \brief Implementation of the logarithmic roll algorithm.
+	 * \author Daniel Josefsson
+	 */
 	@Override
 	public float[] convert(float roll)
 	{

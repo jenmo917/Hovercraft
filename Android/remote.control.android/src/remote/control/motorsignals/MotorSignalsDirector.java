@@ -1,7 +1,12 @@
 package remote.control.motorsignals;
 
 import common.files.android.Constants;
-
+/**
+ * Director part of builder pattern.
+ * \brief
+ * \author
+ *
+ */
 public class MotorSignalsDirector
 {
 	private MotorSignalsBuilder builder;
@@ -33,11 +38,21 @@ public class MotorSignalsDirector
 	final float CONTROLLER_ROLL_EXP_DEAD_ZONE = 0.05f;
 	final float CONTROLLER_ROLL_EXP_SCALE = 5f;
 
+	/**
+	 * \brief Basic constructor.
+	 * \author Daniel Josefsson
+	 * @param builder
+	 */
 	public MotorSignalsDirector(MotorSignalsBuilder builder)
 	{
 		this.builder = builder;
 	}
 
+	/**
+	 * \brief Returns a system with linear signal algorithms.
+	 * \author Daniel Josefsson
+	 * @return
+	 */
 	public MotorSignals buildLinearSystem()
 	{
 		this.buildPitchLin();
@@ -45,6 +60,11 @@ public class MotorSignalsDirector
 		return this.builder.getResult();
 	}
 
+	/**
+	 * \brief Returns a system with logarithmic signal algorithms.
+	 * \author Daniel Josefsson
+	 * @return
+	 */
 	public MotorSignals buildLogSystem()
 	{
 		this.buildPitchLog();
@@ -52,6 +72,11 @@ public class MotorSignalsDirector
 		return this.builder.getResult();
 	}
 
+	/**
+	 * \brief Returns a system with exponential pitch algorithms.
+	 * \author Daniel Josefsson
+	 * @return
+	 */
 	public MotorSignals buildExpSystem()
 	{
 		this.buildPitchExp();
@@ -59,6 +84,11 @@ public class MotorSignalsDirector
 		return this.builder.getResult();
 	}
 
+	/**
+	 * \brief Builds a exponential pitch algorithm.
+	 * \author Daniel Josefsson
+	 * @return
+	 */
 	private MotorSignalsBuilder buildPitchExp()
 	{
 		this.builder.buildPitchExp(CONTROLLER_PITCH_MIN, CONTROLLER_PITCH_MAX,
@@ -67,6 +97,11 @@ public class MotorSignalsDirector
 		return this.builder;
 	}
 
+	/**
+	 * \brief Builds a linear pitch algorithm.
+	 * \author Daniel Josefsson
+	 * @return
+	 */
 	private MotorSignalsBuilder buildPitchLin()
 	{
 		this.builder.buildPitchLin(CONTROLLER_PITCH_MIN,
@@ -75,6 +110,11 @@ public class MotorSignalsDirector
 		return this.builder;
 	}
 
+	/**
+	 * \brief Builds a logarithmic pitch algorithm.
+	 * \author Daniel Josefsson
+	 * @return
+	 */
 	private MotorSignalsBuilder buildPitchLog()
 	{
 		this.builder.buildPitchLog(CONTROLLER_PITCH_MIN, CONTROLLER_PITCH_MAX,
@@ -83,6 +123,11 @@ public class MotorSignalsDirector
 		return this.builder;
 	}
 
+	/**
+	 * \brief Builds a linear pitch algorithm that can reverse.
+	 * \author Daniel Josefsson
+	 * @return
+	 */
 	private MotorSignalsBuilder buildPitchReverseLin()
 	{
 		this.builder.buildPitchReverseLin(CONTROLLER_PITCH_MIN,
@@ -91,6 +136,11 @@ public class MotorSignalsDirector
 		return this.builder;
 	}
 
+	/**
+	 * \brief Builds a exponential roll algorithm.
+	 * \author Daniel Josefsson
+	 * @return
+	 */
 	private MotorSignalsBuilder buildRollExp()
 	{
 		this.builder.buildRollExp(CONTROLLER_ROLL_MIN, CONTROLLER_ROLL_MAX,
@@ -99,6 +149,11 @@ public class MotorSignalsDirector
 		return this.builder;
 	}
 
+	/**
+	 * \brief Builds a linear roll algorithm.
+	 * \author Daniel Josefsson
+	 * @return
+	 */
 	private MotorSignalsBuilder buildRollLin()
 	{
 		this.builder.buildRollLin(CONTROLLER_ROLL_MIN, CONTROLLER_ROLL_MAX,
@@ -107,6 +162,11 @@ public class MotorSignalsDirector
 		return this.builder;
 	}
 
+	/**
+	 * \brief Builds a logarithmic roll algorithm.
+	 * \author Daniel Josefsson
+	 * @return
+	 */
 	private MotorSignalsBuilder buildRollLog()
 	{
 		this.builder.buildRollLog(CONTROLLER_ROLL_MIN, CONTROLLER_ROLL_MAX,
@@ -115,6 +175,14 @@ public class MotorSignalsDirector
 		return this.builder;
 	}
 
+	/**
+	 * \brief Change an algorithm.
+	 * \author Daniel Josefsson
+	 * @param ms The MotorSignal object.
+	 * @param alg The algorithm.
+	 * @param type Type of algorithm.
+	 * @return
+	 */
 	public MotorSignals changeAlgorithm(MotorSignals ms, String alg, String type)
 	{
 		if (alg.equals(Constants.Broadcast.MotorSignals.Algorithms.PITCH))
@@ -128,6 +196,12 @@ public class MotorSignalsDirector
 		return this.builder.getResult();
 	}
 
+	/**
+	 * \brief Change the pitch algorithm.
+	 * \author Daniel Josefsson
+	 * @param ms
+	 * @param type
+	 */
 	private void changePitchAlgorithm(MotorSignals ms, String type)
 	{
 		if (type.equals(Constants.Broadcast.MotorSignals.Algorithms.Pitch.EXP))
@@ -151,6 +225,12 @@ public class MotorSignalsDirector
 		}
 	}
 
+	/**
+	 * \brief Change the roll algorithm.
+	 * \author Daniel Josefsson
+	 * @param ms
+	 * @param type
+	 */
 	private void changeRollAlgorithm(MotorSignals ms, String type)
 	{
 		if (type.equals(Constants.Broadcast.MotorSignals.Algorithms.Roll.EXP))
