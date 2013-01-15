@@ -21,24 +21,24 @@ import android.util.Log;
 
 public class BtService extends IntentService
 {
-	private static final UUID  MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-	private static final String NAME = "Bluetooth SPP";	
+	private static final UUID  MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");	/**< Bt profile UUID*/
+	private static final String NAME = "Bluetooth SPP";														/**< Bt profile name*/
 	
-	public static ConnectionState connectionState = ConnectionState.DISCONNECTED; // BT connection state	
+	public static ConnectionState connectionState = ConnectionState.DISCONNECTED; 							/**< Bt connectionstate*/
 	
-	private boolean listenOnBtInputstream = false;				/**< */
-	private BluetoothSocket bluetoothSocket;					/**< */
-	private BluetoothServerSocket bluetoothServerSocket;		/**< */
-	private BluetoothAdapter mBluetoothAdapter;					/**< */
-	private InputStream btInputStream;							/**< */
-	private OutputStream btOutStream;							/**< */
-	private int bluetoothConnectionTimeout = 30000;				/**< */
-	private boolean bluetoothServerUp = false;					/**< */
-	private boolean bluetoothSocketUp = false;					/**< */
-	private static String TAG = "JM";							/**< */
+	private boolean listenOnBtInputstream = false;				/**< Read inputstream when true*/
+	private BluetoothSocket bluetoothSocket;					/**< Bluetooth socket*/
+	private BluetoothServerSocket bluetoothServerSocket;		/**< Bluetooth server socket*/
+	private BluetoothAdapter mBluetoothAdapter;					/**< Bluetoorh adapter*/
+	private InputStream btInputStream;							/**< Bluetooth inputstream*/
+	private OutputStream btOutStream;							/**< Bluetooth outputstream*/
+	private int bluetoothConnectionTimeout = 30000;				/**< Connection timeout for Bt server socket*/
+	private boolean bluetoothServerUp = false;					/**< Bt server up when true*/
+	private boolean bluetoothSocketUp = false;					/**< Bt socket up when true*/
+	private static String TAG = "JM";							/**< TAG name*/
 
 	/**
-	* \brief 
+	* \brief Constructor
 	*
 	* \author Johan Gustafsson
 	*
@@ -51,12 +51,9 @@ public class BtService extends IntentService
 	/**
 	* \brief Update the Bluetooth connection state
 	*
-	* Description
-	*
-	* @param state 
+	* @param ConnectionState
 	*
 	* \author Johan Gustafsson
-	*
 	*/
 	private void updateBtConnectionState( ConnectionState state )
 	{
@@ -70,13 +67,9 @@ public class BtService extends IntentService
 	}	
 
 	/**
-	* \brief 
+	* \brief BtService main function
 	*
-	* Description
-	*
-	*
-	* @param arg0
-	*
+	* Read the inputstream if bluetooth is connected
 	*
 	* \author Johan Gustafsson
 	*
@@ -105,13 +98,11 @@ public class BtService extends IntentService
 	}
 	
 	/**
-	* \brief 
+	* \brief Close open bluetooth socket when connection is lost
 	*
-	* 
+	* This function is executed every time the bluetooth connection is lost.
 	*
-	*
-	* @param message
-	*
+	* @param Info about lost connection
 	*
 	* \author Johan Gustafsson
 	*
@@ -138,9 +129,7 @@ public class BtService extends IntentService
 	}
 	
 	/**
-	* \brief 
-	*
-	* Desription
+	* \brief Close the bluetooth server socket
 	*
 	* \author Johan Gustafsson
 	*
@@ -164,17 +153,13 @@ public class BtService extends IntentService
 	}
 
 	/**
-	* \brief 
+	* \brief Open a bluetooth server socket
 	*
-	* Description
+	* Initiates the bluetooth device and bluetooth server
 	*
-	*
-	*
-	* @return bluetoothServerUp
-	*
+	* @return bluetoothServerUp true when the bluetooth server is up
 	*
 	* \author Johan Gustafsson
-	*
 	*/
 	private boolean setupServer()
 	{
@@ -202,17 +187,13 @@ public class BtService extends IntentService
 	}
 
 	/**
-	* \brief 
+	* \brief Waiting for a device to connect
 	*
-	* Description
+	* Open a bluetooth server socket that a device can connect to
 	*
-	*
-	*
-	* @return bluetoothSocketUp
-	*
+	* @return bluetoothSocketUp true if the a device has connected and the socket is up
 	*
 	* \author Johan Gustafsson
-	*
 	*/
 	private boolean waitToConnect()
 	{
@@ -242,11 +223,10 @@ public class BtService extends IntentService
 	}
 
 	/**
-	* \brief 
-	*
-	* Description
-	*
-	*
+	* \brief Read data from the bluetooth inputstream
+	* 
+	* The basic version
+	* 
 	* \author Johan Gustafsson
 	*
 	*/
@@ -271,12 +251,9 @@ public class BtService extends IntentService
 	}
 
 	/**
-	* \brief Read the bluetooth input stream
+	* \brief Read the bluetooth inputstream
 	*
-	* Description
-	*
-	*
-	*
+	* Advanced version with data routing
 	*
 	* \author Jens Moser
 	*
@@ -336,10 +313,7 @@ public class BtService extends IntentService
 	}
 	
 	/**
-	* \brief 
-	*
-	* 
-	*
+	* \brief Route data to USB device
 	*
 	* @param bufferInfo
 	*
@@ -360,6 +334,8 @@ public class BtService extends IntentService
 		sendBroadcast(intent);
 	}
 
+	//TODO
+	
 	/**
 	* \brief 
 	*
@@ -371,7 +347,7 @@ public class BtService extends IntentService
 	* @param bufferMessage
 	*
 	*
-	* \author Johan Gustafsson
+	* \author 
 	*
 	*/
 	private void handleBrainCommands( byte[] bufferInfo, byte[] bufferMessage )
@@ -410,6 +386,7 @@ public class BtService extends IntentService
 		}	
 	}
 
+	//TODO
 	/**
 	* \brief 
 	*
@@ -467,16 +444,12 @@ public class BtService extends IntentService
 	}	
 
 	/**
-	* \brief 
-	*
-	* 
+	* \brief Broadcast a message to another service 
 	*
 	*
-	* @param message
-	*
+	* @param message as a String
 	*
 	* \author Johan Gustafsson
-	*
 	*/
 	private void broadcastMessage(String message)
 	{
@@ -488,8 +461,7 @@ public class BtService extends IntentService
 	/**
 	* \brief BtService BroadcastReceiver
 	*
-	* 
-	*
+	* Handles broadcasts received by the BtService BroadcastReceiver
 	*
 	* @param context 
 	*
