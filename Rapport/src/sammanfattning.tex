@@ -1,5 +1,35 @@
 \begin{abstract}
-Daniel\ldots
+Rapporten omfattar design och konstruktion av en radiostyrd svävare, där både
+mekanisk och elektronisk hårdvara samt mjukvara har utvecklats av
+projektgruppen. Fokus har legat på moduläritet för att få slutprodukten att fungera bra som en utvecklingsplattform. Projektgruppens förhoppning att detta projekt kan ligga
+till grund för många framtida studentprojekt, från årskurs 1 fram till examen.
+
+Svävarens elektroniska huvudsystem är baserade på olika Androidplattformar och
+för styrning av egenutvecklad elektronikhårdvara så användes Arduino ADK, som är
+en portning av Googles Android Development Kit (ADK).
+
+Rapporten täcker hårdvaruutveckling av H-bryggor samt strömförsörjningkort med
+med flera olika specifikationer. Altium Designer 6 har använts för utvecklingen
+av kretskorten.
+
+Mjukvaran på Androidplattformarna specifikt utvecklade för svävaren är skrivna i
+Java och testade på ett flertal olika plattformar.
+
+Kommunikation mellan plattformen ombord och fjärrkontrollen sker via
+Bluetooth. Kommunikation mellan plattformen ombord och ADKn sker via USB.
+Protokollet som används är baserat på Googles Protocol Buffer (PB) och
+kommandona är egenutvecklade. Detta för att möjliggöra konvertering av implementationer av 
+datatyper i olika språk. Nanopb, som är en portning av PB till inbyggda system,
+används ombord på ADKn för att använda mindre av det begränsade minnet.
+
+Styrsystemet är modulärt uppbyggt och baserar sig på designmönstrena Composite
+och Builder. Detta gör det lätt att lägga till nya styralgoritmer. Det är även
+förberett för ett reglersystem, men det hanns ej implementeras.
+
+Den mekaniska designen har gjorts i SolidWorks 2012 och slutprodukten stämmer
+bra överens med de tredimensionella ritningarna. Att noggranna ritningar gjordes
+underlättade mycket vid konstruktion av luftkjolen.
+
 \end{abstract}
 \thispagestyle{empty}
 \pagebreak
