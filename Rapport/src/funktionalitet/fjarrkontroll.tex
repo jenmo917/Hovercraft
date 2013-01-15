@@ -1,10 +1,12 @@
- På denna plattform körs sedan
-en Androidapplikation skriven i Java.
+\subsection{Fjärrkontroll}
+Som nämnt i avsnitt \ref{subsec:system/fjarrkontroll} så har Fjärrkontrollen två
+stora uppgifter: generera styrsignaler till svävaren samt att kunna logga
+händelser på svävaren.
 
- Vid skrivandet av rapporten hade tester dock bara
-genomförts på plattformar av smartphone-modell.
-
-Applikationen är uppdelad tre huvudsakliga delar som var och en utgörs av en Android-service. Dessa delar implementerar funktionalitet för kommunikation, loggning av sensordata samt generering av styrsignaler. Applikationen innehåller även Android-activity som fungerar som inställningsmeny för fjärrkontrollen.
+Applikationen är uppdelad tre huvudsakliga delar som var och en utgörs av en
+Android-service. Dessa delar implementerar funktionalitet för kommunikation,
+loggning av sensordata samt generering av styrsignaler. Applikationen innehåller
+även Android-activity som fungerar som inställningsmeny för fjärrkontrollen.
 
 \subsubsection{Kommunikation}
 En Bluetoothlänk sköter kommunikationen mellan svävaren och fjärrkontrollen.
@@ -27,12 +29,11 @@ På den senaste versionen av applikationen finns funktionalitet för loggning av
 På fjärrkontrollen genereras även de styrsignaler som används för att styra
 svävaren. Detta behandlas mer i kapitel \ref{subsec:styr och regler}.
 
-Ur en ekonomisk aspekt är det väldigt trevligt att jobba med utveckling av
-Androidapplikationer, både utvecklingsvertyget Android SDK och utvecklingsmiljön Eclipse är gratis.
-
 \subsubsection{Resultat}
 Fjärrkontrollen möter de krav som ställs i kravspecifikationen.
 
+ Vid skrivandet av rapporten hade tester dock bara
+genomförts på plattformar av smartphone-modell.
 
 \begin {itemize}
 \item Räckvidd 20 meter
