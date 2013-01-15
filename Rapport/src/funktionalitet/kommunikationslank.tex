@@ -1,12 +1,9 @@
-\subsection{Kommunikationslänk}
-Kommunikationslänken är uppdelad i två delar, USB kommunikation mellan routern
-och ADKn samt blåtandskommunikation mellan routern och fjärrkontrollen.
-Kommunikationen sker med hjälp av ett protokoll som  togs fram under projektets
-gång. De tre första bitarna som skickas innehåller information om vart
-meddelandet ska skickas, vilken slags meddelande det är samt meddelandets längd.
-Utöver dessa tre bitar skickas datapaketet som konstruerats enligt Protocol
-Buffer som beskrivs i avsnitt \ref{subsubsec: Protocol buffer}. I figur
-\ref{fig:protocol} ses en grafisk illustarion av protokollet.
+\subsection{Kommunikationslank}
+Kommunikationslänken är uppdelad i två delar, USB kommunikation mellan routern och ADKn 
+samt blåtandskommunikation mellan routern och fjärrkontrollen. Kommunikationen sker med hjälp av ett protokoll som 
+togs fram under projektets gång. De tre första bitarna som skickas innehåller information om vart meddelandet ska skickas, 
+vilken slags meddelande det är samt meddelandets längd. Utöver dessa tre bitar skickas datapaketet som konstruerats enligt 
+Protocol Buffer som beskrivs i avsnitt [\ldots]. I figur \ref{fig:protocol} ses en grafisk illustarion av protokollet.
 
 
 \begin{figure}[htbp!]
@@ -16,12 +13,10 @@ Buffer som beskrivs i avsnitt \ref{subsubsec: Protocol buffer}. I figur
 \label{fig:protocol}
 \end{figure}
 
-
 \subsubsection{USB-kommunikation}
-USB-kommunikationen mellan ADK:n och routern sker över Android Open Accessory
-(AOA) protokollet. För att få USB-kommunikationen att fungera användes Arduinos
-färdiga bibliotek \cite{USBHost}. En funktion i blioteket justerades för att
-lösa ett initieringsfel. Se Wiki på podio.
+USB-kommunikationen mellan ADK:n och routern sker över Android Open Accessory (AOA) protokollet. 
+För att få USB-kommunikationen att fungera användes Arduinos färdiga bibliotek [\ldots]. En funktion i biblioteket justerades för 
+att lösa ett initieringsfel. Se Wiki på podio.
  
 Fördelen med detta bibliotek är att den implementerar AOA och tillhandahåller enkla funktioner för att läsa och skriva via USB, vilket 
 gjorde det enklare att implementera det egendesignade protokollet.
@@ -30,10 +25,18 @@ I Android är implementationen av AOA och det egendesignade protokollet mer komp
 i klassen UsbService. I denna klass får applikationen tillgång till Blåtandsadaptern och inititerar kommunikationen med ADK:n. 
 Kommunikationen är väldokumenterad och mer information finns på Android.com.
  
-\subsubsection{Blåtandskommunikation}
-Johan\ldots
+\subsubsection{Bluetoothkommunikation}
+
+Då de flesta Androidplattformar har stöd för bluetooth vilket gör att trådlös kommunikation
+mellan olika enheter på ett tillfredställande sätt kan implementeras. 
+
+För att upprätta en fungerande Bluetoothlänk användes Android Bluetooth API. I detta API finns det färdiga funktioner som gör implementeringen av bluetoothfunktionalitet på enheten smidigare. 
+
+Kommunikationen mellan enheterna med hjälp av bluetoothprofilen Serial Port Profile (SPP)som upprättar en trådlös seriell kommunikationslänk mellan två bluetoothenhter.
+På vardera sida av länken finns en Android-service som sköter kommunikationen mellan enheterna. Dessa Services ser ganska lika ut men med vissa undatag. Då svävaren fungerar som Bluetooth Server har denna sida funktionalitet för att initera en länk. På fjärrkontrollen finns istället funktionalitet för att hitta bluetoothenheter samt att ansluta till en öppnad länk.
+
+
 \subsubsection{Protocol buffer}
-\label{subsubsec: Protocol buffer}
 Protocol Buffer\cite{Protocol buffer} är ett protokoll som används för
 serialisering av data.
 Protokollet är utvecklat av Google, där Google har gjort kompilatorer för Java,
@@ -65,8 +68,3 @@ Då förfrågan inte har en specifik ID kan inte ADKn skicka med information om 
 så ADKn skickar istället ett helt nytt meddelande. Då detta meddelande inte har information om vilken förfrågan den svarar 
 på får man som användare hoppas på att allt fungerar som det ska eftersom det inte finns någon slags felkontroll som kollar 
 om svar fås på varje förfrågan.
-
-\subsubsection{ADK till Telefon}
-Rickard och Jens\ldots
-\subsubsection{Telefon till fjärrkontroll}
-Johan\ldots
