@@ -1,7 +1,25 @@
 \subsection{Kommunikationslank}
 Mjukvarugänget\ldots
 \subsubsection{Protocol buffer}
-Olle\ldots
+Protocol Buffer\cite{Protocol buffer} är ett protokoll som används för
+serialisering av data.
+Protokollet är utvecklat av Google, där Google har gjort kompilatorer för Java,
+C++ och Python tillgängliga. Utöver dessa kompilatorer från Google så finns det
+andra kompilatorer utvecklade av privatpersoner eller företag för andra språk.
+
+Svävaren använder sig dels av Googles javakompilator för protokollet i 
+fjärrkontrollen samt telefonen. För ADK:n så används en simplare version av
+Protocol Buffer nämligen Nanopb \cite{Nanopb} som implementerar protokollet i
+statisk C kod.
+
+Det Protocol Buffer generar är programkod med funktionalitet för att kunna
+serialisera och deserialisera olika dataobjekt. Dessa dataobjekt beskrivs av
+användaren med ett IDL (Interface Definition Language).
+Svävaren använder sig av sju stycken olika dataobjekt för sin kommunikation och
+dessa är definierade i mappen PB i källkoden \cite{Source code}. Filen
+command\_1.proto är filen som definierar kommandon för Nanopb och filen
+Command.proto definierar samma kommandon för javaprojekten.
+
 \subsubsection{ADK till Telefon}
 Rickard och Jens\ldots
 \subsubsection{Telefon till fjärrkontroll}
