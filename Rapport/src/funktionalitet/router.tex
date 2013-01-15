@@ -1,25 +1,28 @@
+\subsection{Router}
+Routerns uppgifter är att handha reglersystemet och att agera som
+kommunikationslänk mellan de olika enheterna.
 
-reglersystemet och för att agera som kommunikat Att Routern är en Androidplattform har
-redan nämnts Huvudfunktionen för routern är att agera som kommunikationslänk mellan fjärrkontroll och ADK där den mesta kommunikationen går från fjärrkontrollen
-till ADKn.
-När den tar emot meddelande kontrollerar den mottagare och skickar vidare till rätt destination. 
-Programmet är en Android-app och skriven i Java.
-
-Styrsystemet är för stunden implementerat på fjärrkontrollen men visionen är att ett fullfjädrat reglersystem skall 
-köras på router-telefonen och därför har routern utformats på ett sådant sätt att det skall vara enkelt att 
-implementera ett på sidan om routerfunktionen.
-
-Programmet är indelat i tre Android-services. En Blåtandsservice som hanterar all blåtandskommunkation. 
-En UsbService som hanterar all USBkommunkation och slutligen en Service för ett framtida reglersystem.
-Kommunkationen inom programmet sker via Android Broadcasts.
+Programmet är indelat i tre Android-services och en Android-activity:
+\begin{itemize}
+	\item Bluetoothservice som hanterar all Bluetoothkommunkation,
+	\item UsbService som hanterar all USBkommunkation,
+	\item ControlSystemService som implementerar reglersystemet
+	\item och MainActivity som implementerar användargränssnittet.
+\end{itemize}
 
 Applikationen startas automatiskt genom att ansluta ADK:n till router-telefonen. 
-Om applikationen körs innan den ansluts till ADK:n kommer den att startas om för att upprätta USB-kommunikationen. 
-När appen körs visas en diod för respektive kommunkationsbuss. Om kommunkationen fungerar lyser dioden grönt och om 
-den inte fungerar så lyser den rött. Dioden kan även lysa gult men detta är inget man hinner se i vanliga fall då 
-den enbart gör så under uppkoppling. Knappen "Bluetooth setup" används för att upprätta en blåtandslänk.
+Om applikationen körs innan den ansluts till ADK:n kommer den att startas om för
+att upprätta USB-kommunikationen.
+När appen körs visas en diod för respektive kommunkationsbuss. Om kommunkationen
+fungerar lyser dioden grönt och om den inte fungerar så lyser den rött. Dioden
+kan även lysa gult men detta är inget man hinner se i vanliga fall då den enbart
+gör så under uppkoppling. Knappen "Bluetooth setup" används för att upprätta en
+Bluetoothlänk.
 
+Intern kommunkation inom applikationen sker via Android Broadcasts.
+Kommunikationen med andra enheter behandlas i avsnitt \ref{subsec:commlink} och
+reglersystemet behandlas i \ref{subsec:styr och regler}.
 
 \subsubsection{Resultat}
-Programmet är stabilt och uppfyller alla krav. Dess huvudsyfte är att ta emot och skicka vidare meddelanden 
-vilket fungerar utmärkt.
+Programmet är stabilt och uppfyller alla krav. Dess huvudsyfte är att ta emot
+och skicka vidare meddelanden vilket fungerar utmärkt.

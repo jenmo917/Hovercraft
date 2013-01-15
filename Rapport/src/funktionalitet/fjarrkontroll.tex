@@ -1,45 +1,42 @@
 \subsection{Fjärrkontroll}
-Som nämnt i avsnitt \ref{subsec:system/fjarrkontroll} så har Fjärrkontrollen två
-stora uppgifter: generera styrsignaler till svävaren samt att kunna logga
-händelser på svävaren.
+Som nämnt i avsnitt \ref{subsec:system/fjarrkontroll} så har Fjärrkontrollen tre
+stora uppgifter: generera styrsignaler till svävaren, kommunicera med de andra
+enheterna samt att kunna logga händelser på svävaren.
 
 Applikationen är uppdelad tre huvudsakliga delar som var och en utgörs av en
 Android-service. Dessa delar implementerar funktionalitet för kommunikation,
 loggning av sensordata samt generering av styrsignaler. Applikationen innehåller
 även Android-activity som fungerar som inställningsmeny för fjärrkontrollen.
 
-\subsubsection{Kommunikation}
-En Bluetoothlänk sköter kommunikationen mellan svävaren och fjärrkontrollen.
-Denna är implementerad med hjälp av Android Bluetooth API, där svävaren agerar
-som Bluetooth Server. I rollen som Bluetooth Server använder sig svävaren av
-Bluetoothprofilen Serial Port Profile (SPP), som i stora drag upprättar en
-trådlös seriell kommunikationslänk som fjärrkontrollen sedan kan ansluta sig
-till.
-Fjärrkontrollen har funktionalitet för att söka upp och välja vilken
-Bluetooth-enhet den ska anslutas till, vilket gör att det är lätt att ansluta
-till svävaren även om det finns andra aktiva enheter i omgivningen.
-För den mesta dataöverföringen mellan svävaren och fjärrkontrollen används
-Protocol Buffer som finns beskrivet i kapitel \ref{subsubsec: Protocol buffer}.
+Genomgång på hur kommunikationen mellan fjärrkontrollen och de andra enheterna
+sker gås igenom i avsnitt \ref{subsec:commlink} och generering av
+styrsignaler behandlas i \ref{subsec:styr och regler}. Nedan beskrivs hur
+loggning fungerar.
 
 \subsubsection{Loggning av sensordata}
-På fjärrkontrollen finns även funktionalitet för att logga olika typer av sensordata. Insamlade data sparas som textfiler på fjärrkontrollens SD-minne. 
-På den senaste versionen av applikationen finns funktionalitet för loggning av data från fjärrkontrollens accelerometer, svävarens accelerometer samt från svävarens ultraljudssensorer. Vilken data som skall loggas ställs in i inställningsmenyn. Om data från svävaren önskas skickas ett kommando till den som gör att den svarar med ett paket innehållande önskad data. 
-
-\subsubsection{Generering av styrsignaler}
-På fjärrkontrollen genereras även de styrsignaler som används för att styra
-svävaren. Detta behandlas mer i kapitel \ref{subsec:styr och regler}.
+Funktionaliteten för att logga olika typer av sensordata sker genom att kryssa
+i vilka sensorer som data ska sparas i från. Insamlade data sparas som textfiler
+på fjärrkontrollens SD-minne.
+På den senaste versionen av applikationen finns funktionalitet för loggning av
+data från fjärrkontrollens accelerometer, svävarens accelerometer samt från
+svävarens ultraljudssensorer. Vilken data som skall loggas ställs in i
+inställningsmenyn. Om data från svävaren önskas skickas ett kommando till den
+som gör att den svarar med ett paket innehållande önskad data.
 
 \subsubsection{Resultat}
-Fjärrkontrollen möter de krav som ställs i kravspecifikationen.
-
- Vid skrivandet av rapporten hade tester dock bara
-genomförts på plattformar av smartphone-modell.
+Fjärrkontrollen möter de krav som ställs i kravspecifikationen. Vid skrivandet
+av rapporten hade tester dock bara genomförts på plattformar av
+smartphone-modell.
 
 \begin {itemize}
 \item Räckvidd 20 meter
 \item Indikera när kommunikationen med svävaren bryts.
-\item Kunna kommunicera med svävaren. Samt ge de kommandon som gränssnittet till svävaren tillåter.
+\item Kunna kommunicera med svävaren. Samt ge de kommandon som gränssnittet till
+svävaren tillåter.
 \end {itemize}
 
-som är lätt att implementera i egna applikationer i och med
-Android Bluetooth API.
+\subsubsection{Vidareutveckling}
+Som brukligt så blir man aldrig riktigt klar med utveckling av mjukvara, det
+finns alltid saker att finslipa. Loggningsfunktionen bör kontrolleras noggrant
+och utökas så att fler sensorer går att logga. Protocol Buffer är inte
+implementerat som protokoll och det skulle med relativ enkelhet kunna ändras.
