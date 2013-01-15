@@ -1,2 +1,80 @@
 \subsection{Strömförsörjning}
-Rikard\ldots
+Strömförsörjningen designades med moduläritet i  åtanke så att flera olika
+spänningsnivåer uppnås genom samma design på kretskort. De olika
+strömförsörjningskorten som det designades för är:
+\begin{itemize}
+	\item 3,3 V, 3 A, med en felmarginal på $\pm$0.2 V.
+	\item 5 V, 3 A, med en felmarginal på $\pm$0.5 V.
+	\item 12 V, 3 A, med en felmarginal på $\pm$0.8 V.
+	\item En justerbar spänningsnivå med en felmarginal på $\pm$10 \% av den
+önskade spänningen och kunna leverera 3 A.
+\end{itemize}
+
+Varje typ av strömförsörjning skulle finnas på ett separat PCB, dock med samma
+layout för enkel tillverkning och att eventuell beställning av kort skulle vara
+billig.
+
+Strömförsörjningarna designades också så att de gick att parallellkoppla, både
+på ingångs- och utgångssidan. Detta för att kunna utöka kapaciteten vid behov.
+
+För att uppnå kraven och för att nå god effektivitet så används switchade
+regulatorer, för mer teori och val av design och komponenter se Appendix
+\ref{apx:PSU}.
+
+\subsubsection{Resultat}
+
+Totalt 6 stycken strömförsörjningskort används i svävaren och versionerna som
+konstruerades är:
+\begin{itemize}
+\item 2 stycken justerbara 13.8 V som driver lyftfläktarna (ett
+strömförsörjningskort till två fläktar).
+\item 2 stycken justerbara 10 V för drivning av drivfläktarna (ett
+strömförsörjningskort per fläkt).
+\item 1 stycke 12 V till drivkretsarna på båda H-bryggorna.
+\item 1 stycke 5 V för ADK och logikkretsarna på båda H-bryggorna.
+\end{itemize}
+
+Korten klarar av att hålla både ström och spänningsnivåerna bra utan störningar
+eller spikar.
+
+\subsubsection{Diskussion}
+Då kraven på strömförsörjningen specificerades så var det inte bestämt om det
+skulle byggas ett nytt chassi med andra motorer eller inte. Därför så valdes
+spännings och strömnivåer från den gamla svävaren som grund och korten
+designades därefter. Detta ledde till att det behövdes fler
+strömförsörjningskort än planerat. Men det medförde dock inte några problem och
+detta tack vare det modulära tänkandet.
+
+Vid för tung belastning, t.ex med starkare motorer och fläktar,
+sjunker spänningen och strömmen ökar och därav bör det användas säkringar
+på 4-6~A.
+
+Det visade sig att de justerbara spänningsnivå korten var ett mycket bra val, då
+vi lätt kunde öka nivån för fläktar och motorer så bäst funktion kunde erhållas.
+Vid de högre spänningarna är det värt att notera att det behövdes kylflänsar
+på regulatorerna.
+
+Strömförsörjnningskorten har plats för filterkomponenter både innan regulatorn
+och efter, dessa platser är i nuläget tomma och förbikopplade då inga större
+störningar eller spikar kunnat uppmätas.
+
+\subsubsection{Förbättringar}
+I själva designen för strömförsörjningskorten så bör man inkludera en en
+diod som förhindrar backspänning från de andra korten som lägger sig
+över avstängda kort. Problemet kan återskapas lätt genom att stänga av ett
+strömförsörjningskort men att ha det sammankopplat med andra
+strömförsörjningskort som är i drift. Då kan statusdioder lysa trots att kortet
+är avstängt. Den backspänning som uppkommer gör ingen skada på
+strömförsörjningskorten, men det är lite förvillande att ett korts statusdioder
+lyser trots att kortet är avstängt. Notera även  att det är H-bryggorna som
+bidrar med att denna backspänning uppstår då de har flera spänningar inkopplade.
+
+Då nuvarande strömförsörjning inte klarar att ge mer än 3 A vid sin
+spänningsnivå begränsar det, mer än förväntat, val av motorer och fläktar. Så
+ett strömförsörjningskort designat för högre ström skulle vara en klar
+förbättring. Detta skulle också minska antalet strömförsörjningskort.
+För detta kort rekommenderas det att man ej använder en färdig regulator utan
+själv bygger upp det för att få bra funktion och strömbegrännsning.
+
+\subsubsection{Ekonomi}
+Todo\ldots

@@ -1,2 +1,41 @@
 \subsection{Batterier}
-Rikard\ldots
+En studie av olika batteritekniker gjordes för att se vilka som skulle klara
+kraven. Valet föll på LiPo-tekniken, då denna har hög effektdensitet och är
+kostnadseffektiv.
+
+\subsubsection{Resultat}
+Två stycken 5 cells LiPo-batterier på 18,5 V och 3.3 Ah används, där ett går
+till enbart strömförsörjningen för lyftfläktarna (då dessa kräver högst spänning
+och mest ström) och det andra till resterande elektronik. Batteriernas
+specifikation kan läsas i Tabell \ref{tbl:Battery}.
+
+\begin{table}[htbp!]
+\centering
+\caption{Batterispecifikation}
+\label{tbl:Battery}
+\begin{tabular}{l|l}
+Egenskap & Värde \\
+\hline
+Minsta strömkapacitet & 3300 mAh\\
+Konfiguration & 5S1P / 18.5V / 5Cell\\
+Maximal konstant urladdning & 30C\\
+Maximal toppurladdning (10 s) & 40C\\
+Vikt & 480g\\
+Dimensioner (l * b * h) & 139 mm * 43 mm * 35mm\\
+\end{tabular}
+\end{table}
+
+Spänningsnivån på 18,5 V är framförallt på grund av att regulatorn på
+strömförsörjningskortet behöver ha minst 15 V in för att kunna hålla 12 V eller
+högre ut. 3.3 Ah för att klara kraven på 10 minuters drifttid vid max
+påfrestning. Inget test av maximal drifttid har gjorts men tester med minst 30
+minuters körning klarades.
+
+\subsubsection{Diskussion}
+Batterierna mötte kraven väl. Eventuellt så skulle man kunna minska
+strömkapaciteten för att minska totalvikten på svävaren. Projektgruppen tyckte
+inte att den extra kostnaden, både i tid och pengar, samt
+att försämringen av prestandan var värd inköp av andra batterier.
+
+\subsubsection{Ekonomi}
+Inköpet av batterier kostade 979 SEK, inklusive tull och frakt.
