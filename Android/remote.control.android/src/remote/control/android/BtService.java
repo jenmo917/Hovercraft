@@ -37,30 +37,42 @@ public class BtService extends IntentService
 	String BT_CONNECTION_STATUS_CALL = "btConnectionStatusCall";
 	String BT_CONNECTION_STATUS_RESPONS = "btConnectionStatusRespons";
 	
-	private static String TAG = "JM";
 	protected static final int REQUEST_ENABLE_BT = 1;
 	
-	public List<String> devicesFound = new ArrayList<String>();
+	private static String TAG = "JM";											/**< TAG name*/
+	public List<String> devicesFound = new ArrayList<String>();					/**< List of found Bt devices*/
 	
-	boolean bluetoothSocketUp = false;
-	boolean listenOnBtInputstream = false;
+	boolean bluetoothSocketUp = false;											/**< Bt socket up when true*/
+	boolean listenOnBtInputstream = false;										/**< Read Bt inputstream when true*/
 
-	String deviceAdress = null;
-	String deviceName = null;
-	int lengthOfDeviceArray = 0;
+	String deviceAdress = null;													/**< Device adress of chosen Bt device*/
+	String deviceName = null;													/**< Device name of chosen Bt device*/
+	int lengthOfDeviceArray = 0;												/**< Numer of found devices*/
 
-	BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
-	private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-	private BluetoothSocket mmSocket;
-	private OutputStream mmOutStream;
+	BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();										/**< Bluetooth adapter*/
+	private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");	/**< Bt profile UUID*/
+	private BluetoothSocket mmSocket;																		/**< Bluetooth socket*/
+	private OutputStream mmOutStream;																		/**< Bluetooth inputstream*/
+	private InputStream mInputStream;																		/**< Bluetooth outputstream*/
 	
-	private InputStream mInputStream;
 
+	/**
+	* \brief Constructor
+	*
+	*
+	* \author Johan Gustafsson
+	*/
 	public BtService() 
 	{
 		super("BtService");
 	}
-
+	
+	/**
+	* \brief OnCreate
+	*
+	*
+	* \author Johan Gustafsson
+	*/
 	@Override
 	public void onCreate()
 	{
@@ -76,7 +88,13 @@ public class BtService extends IntentService
 		super.onCreate();
 		Log.d(TAG,"BtService: start BtService");
 	}
-
+	
+	/**
+	* \brief Update the text on the BT button
+	*
+	*
+	* \author Johan Gustafsson
+	*/
 	void updateBtButtonText(boolean status)
 	{
 		Intent toggle = new Intent(TOGGLE_BT_BUTTON_TEXT);
@@ -84,6 +102,12 @@ public class BtService extends IntentService
 		sendBroadcast(toggle);
 	}
 	
+	/**
+	* \brief Enable/disable bluetooth for the device
+	*
+	*
+	* \author Johan Gustafsson
+	*/
 	void toggleBtOnOff()
 	{
 		if(bluetooth.isEnabled())
@@ -98,6 +122,14 @@ public class BtService extends IntentService
 		}	
 	}
 	
+	/**
+	* \brief BtService main function
+	* 
+	* Read the inputstream when a device is connected
+	*
+	*
+	* \author Johan Gustafsson
+	*/
 	@Override
 	protected void onHandleIntent(Intent arg0)
 	{
@@ -122,6 +154,11 @@ public class BtService extends IntentService
 		}
 	}
 
+	/**
+	* \brief Initiate the BtService broadcast receiver
+	*
+	* \author Johan Gustafsson
+	*/
 	private void initReceiver()
 	{
 		IntentFilter filter = new IntentFilter();
@@ -136,6 +173,11 @@ public class BtService extends IntentService
 		registerReceiver(BtRemoteServiceReciever, filter);
 	}
 	
+	/**
+	* \brief Start a search for bluetooth devices
+	*
+	* \author Johan Gustafsson
+	*/
 	private void findBluetoothDevices()
 	{
 		//Clear list of devices
@@ -151,6 +193,11 @@ public class BtService extends IntentService
 		}
 	}
 
+	/**
+	* \brief Print a list of found bluetoth devices in the GUI
+	*
+	* \author Johan Gustafsson
+	*/
 	private void printBluetoothDevicesFound()
 	{
 		sendBroadcastInfo("Search finished...");
@@ -166,6 +213,12 @@ public class BtService extends IntentService
 	}
 
 	int i = 0;
+	
+	/**
+	* \brief Choose a bluetooth device from the list of found devices
+	* 
+	* \author Johan Gustafsson
+	*/
 	private void chooseFoundBluetoothDevice()
 	{
 		bluetooth.cancelDiscovery();
@@ -207,6 +260,11 @@ public class BtService extends IntentService
 		}
 	}
 
+	/**
+	* \brief Connect to the selected bluetooth device
+	*
+	* \author Johan Gustafsson
+	*/
 	private void connectDevice() throws IOException 
 	{
 		if( !bluetoothSocketUp )
@@ -261,6 +319,13 @@ public class BtService extends IntentService
 		}	
 	}
 	
+	/**
+	* \brief Read the bluetooth inputstream
+	*
+	* Basic version
+	*
+	* \author Johan Gustafsson
+	*/
 	private void startReadingBluetoothInputstream()
 	{
 		if( bluetoothSocketUp )
@@ -281,6 +346,11 @@ public class BtService extends IntentService
 		}
 	}
 	
+	/**
+	* \brief Read the bluetooth inputstream
+	*
+	* Advanced version with message routing
+	*/
 	void checkInput()
 	{
 		byte[] bufferInfo = new byte[3];
@@ -362,6 +432,12 @@ public class BtService extends IntentService
 		}
 	}
 
+	/**
+	* \brief Send data over bluetooth
+	*
+	*
+	* \author Johan Gustafsson
+	*/
 	private void sendData(byte[] data)
 	{	
 		try 
@@ -383,6 +459,11 @@ public class BtService extends IntentService
 		}
 	}
 
+	/**
+	* \brief Close bluetooth socker when a connection is lost
+	*
+	* \author Johan Gustafsson
+	*/
 	private void btConnectionLost(String message)
 	{
 		listenOnBtInputstream = false;
@@ -411,6 +492,12 @@ public class BtService extends IntentService
 		sendBroadcastInfo(message);
 	}
 
+	/**
+	* \brief Send a info message as a broadcast
+	*
+	*
+	* \author Johan Gustafsson
+	*/
 	private void sendBroadcastInfo(String message)
 	{
 		Intent i = new Intent("printMessage");
@@ -418,6 +505,12 @@ public class BtService extends IntentService
 		sendBroadcast(i);
 	}
 	
+	/**
+	* \brief Send a text message as a broadcast
+	*
+	*
+	* \author Johan Gustafsson
+	*/
 	private void sendBroadcastMessage(String message)
 	{
 		Intent i = new Intent("printMessage");
@@ -425,6 +518,11 @@ public class BtService extends IntentService
 		sendBroadcast(i);
 	}
 	
+	/**
+	* \brief BtService broadcast receiver
+	*
+	* \author Johan Gustafsson
+	*/
 	private final BroadcastReceiver BtRemoteServiceReciever = new BroadcastReceiver()
 	{
 		@Override
@@ -561,7 +659,10 @@ public class BtService extends IntentService
 		}
 	};
 
-	// TODO: Should it give any status as return?
+	/**
+	* \brief Send a Protocol
+	*
+	*/
 	public void sendProtocol(byte command, byte target, byte[] message)
 	{
 		int messageLength = message.length;
@@ -573,7 +674,11 @@ public class BtService extends IntentService
 		sendData(dataTransmitt);
 	}
 	
-	//THIS happens when phone locks, wanted??
+	/**
+	* \brief Destroy Service
+	* 
+	* \author Johan Gustafsson
+	*/
 	@Override
 	public void onDestroy()
 	{
