@@ -4,21 +4,25 @@ Fjärrkontrollens huvudsakliga uppgift är att styra svävaren. Den fysiska fjä
 Applikationen är uppdelad tre huvudsakliga delar som var och en utgörs av en Android-service. Dessa delar implementerar funktionalitet för kommunikation, loggning av sensordata samt generering av styrsignaler. Applikationen innehåller även Android-activity som fungerar som inställningsmeny för fjärrkontrollen.
 
 \subsubsection{Kommunikation}
-Kommunikationen mellan svävaren och fjärrkontrollen sker via en Bluetoothlänk
-implementerad med hjälp av Android Bluetooth API, där svävaren agerar som
-Bluetooth Server. I rollen som Bluetooth Server använder sig svävaren av
+En Bluetoothlänk sköter kommunikationen mellan svävaren och fjärrkontrollen.
+Denna är implementerad med hjälp av Android Bluetooth API, där svävaren agerar
+som Bluetooth Server. I rollen som Bluetooth Server använder sig svävaren av
 Bluetoothprofilen Serial Port Profile (SPP), som i stora drag upprättar en
 trådlös seriell kommunikationslänk som fjärrkontrollen sedan kan ansluta sig
 till.
-Fjärrkontrollen har funktionalitet för att söka upp och välja vilken Bluetooth-enhet den ska anslutas till, vilket gör att det är lätt att ansluta till svävaren även om det finns andra aktiva enheter i omgivningen.
-För den mesta dataöverföringen mellan svävaren och fjärrkontrollen används Protocol Buffer som finns beskrivet i […].
+Fjärrkontrollen har funktionalitet för att söka upp och välja vilken
+Bluetooth-enhet den ska anslutas till, vilket gör att det är lätt att ansluta
+till svävaren även om det finns andra aktiva enheter i omgivningen.
+För den mesta dataöverföringen mellan svävaren och fjärrkontrollen används
+Protocol Buffer som finns beskrivet i kapitel \ref{subsubsec: Protocol buffer}.
 
 \subsubsection{Loggning av sensordata}
 På fjärrkontrollen finns även funktionalitet för att logga olika typer av sensordata. Insamlade data sparas som textfiler på fjärrkontrollens SD-minne. 
 På den senaste versionen av applikationen finns funktionalitet för loggning av data från fjärrkontrollens accelerometer, svävarens accelerometer samt från svävarens ultraljudssensorer. Vilken data som skall loggas ställs in i inställningsmenyn. Om data från svävaren önskas skickas ett kommando till den som gör att den svarar med ett paket innehållande önskad data. 
 
 \subsubsection{Generering av styrsignaler}
-På fjärrkontrollen genereras även de styrsignaler som används för att styra svävaren. Detta behandlas mer i […]
+På fjärrkontrollen genereras även de styrsignaler som används för att styra
+svävaren. Detta behandlas mer i kapitel \ref{subsec:styr och regler}.
 
 \subsubsection{Ekonomi}
 Ur en ekonomisk aspekt är det väldigt trevligt att jobba med utveckling av Androidapplikationer, både utvecklingsvertyget Android SDK och utvecklingsmiljön Eclipse är gratis.
