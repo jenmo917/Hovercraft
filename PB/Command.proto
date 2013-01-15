@@ -1,0 +1,47 @@
+package common.files.android;
+
+
+message AccelerometerData{
+required uint32 x_value = 1;
+required uint32 y_value = 2;
+required uint32 z_value = 3;
+}
+message USSensorData {
+required string type = 1;
+required string description = 2;
+required uint32 echopin = 3;
+required uint32 triggerpin = 4;
+required uint32 value = 5;
+}
+
+message I2CSensorData {
+required string type = 1;
+required string description = 2;
+required uint32 address = 3;
+required uint32 value = 4;
+}
+
+message DriveSignals {
+required bool forward= 1;   
+required bool enable = 2; 
+required uint32 power = 3;      
+}
+
+message Engines {
+required DriveSignals right = 1;
+required DriveSignals left = 2;
+}
+message USSensors {
+required USSensorData uSSensorData1 = 1;
+required USSensorData uSSensorData2 = 2;
+required USSensorData uSSensorData3 = 3;
+required USSensorData uSSensorData4 = 4;
+}
+
+message I2CSensors {
+required I2CSensorData i2CSensorData1 = 1;
+required I2CSensorData i2CSensorData2 = 2;
+required I2CSensorData i2CSensorData3 = 3;
+required I2CSensorData i2CSensorData4 = 4;
+required I2CSensorData i2CSensorData5 = 5;
+}
