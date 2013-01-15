@@ -15,24 +15,27 @@ Protocol Buffer som beskrivs i avsnitt \ref{komlank:ProtocolBuffer}. I figur \re
 
 \subsubsection{USB-kommunikation}
 USB-kommunikationen mellan ADK:n och routern sker över Android Open Accessory (AOA) protokollet. 
-För att få USB-kommunikationen att fungera användes Arduinos färdiga bibliotek [\ldots][VAD SKA REFEREAS TILL?]. En funktion i biblioteket justerades för 
-att lösa ett initieringsfel. Se Wiki på podio.
+För att få USB-kommunikationen att fungera användes Arduinos färdiga bibliotek
+\cite{USBHost}. En funktion i biblioteket justerades för att lösa ett
+initieringsfel. Se Wiki på podio.
  
 Fördelen med detta bibliotek är att den implementerar AOA och tillhandahåller enkla funktioner för att läsa och skriva via USB, vilket 
 gjorde det enklare att implementera det egendesignade protokollet.
 
 I Android är implementationen av AOA och det egendesignade protokollet mer komplicerat. Den kod som hanterar USB-kommunikationen ligger 
-i klassen UsbService. I denna klass får applikationen tillgång till Blåtandsadaptern och inititerar kommunikationen med ADK:n. 
+i klassen UsbService. I denna klass får applikationen tillgång till
+Bluetoothsadaptern och inititerar kommunikationen med ADK:n.
 Kommunikationen är väldokumenterad och mer information finns på Android.com.
  
 \subsubsection{Bluetoothkommunikation}
 
-Då de flesta Androidplattformar har stöd för bluetooth vilket gör att trådlös kommunikation
-mellan olika enheter på ett tillfredställande sätt kan implementeras. 
+Då de flesta Androidplattformar har stöd för Bluetooth vilket gör att trådlös
+kommunikation mellan olika enheter på ett tillfredställande sätt kan implementeras. 
 
 För att upprätta en fungerande Bluetoothlänk användes Android Bluetooth API. I detta API finns det färdiga funktioner som gör implementeringen av bluetoothfunktionalitet på enheten smidigare. 
 
-Kommunikationen mellan enheterna med hjälp av bluetoothprofilen Serial Port Profile (SPP)som upprättar en trådlös seriell kommunikationslänk mellan två bluetoothenhter.
+Kommunikationen mellan enheterna med hjälp av bluetoothprofilen Serial Port
+Profile (SPP) som upprättar en trådlös seriell kommunikationslänk mellan två bluetoothenhter.
 På vardera sida av länken finns en Android-service som sköter kommunikationen mellan enheterna. Dessa Services ser ganska lika ut men med vissa undatag. Då svävaren fungerar som Bluetooth Server har denna sida funktionalitet för att initera en länk. På fjärrkontrollen finns istället funktionalitet för att hitta bluetoothenheter samt att ansluta till en öppnad länk.
 
 

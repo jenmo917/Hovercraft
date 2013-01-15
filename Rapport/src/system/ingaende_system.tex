@@ -1,8 +1,26 @@
 \section{Ingående system}
-Daniel\ldots
+Svävaren har flertalet olika delsystem och i figur \ref{fig:Systemskiss} så ser
+man hur de olika delarna är sammankopplade. Blocken som i figuren kallas
+fjärrkontroll och Android är två separata Androidplattformar. Det senare kommer
+i fortsättningen av rapporten att kallas för Router, då det är det som den har
+som huvuduppgift.
+
+\begin{figure}[htbp!] 
+\centering 
+\includegraphics[width=13cm]{../includes/figures/Systemskiss} 
+\caption{Systemskiss över svävaren.} 
+\label{fig:Systemskiss} 
+\end{figure}
+
+Att arbeta med Android som bas för plattformar valdes för att mycket
+funktionalitet fås till ett billigt pris. Ur ett
+hårdvaruperspektiv så ingår det ett flertal sensorer och kommunikationskanaler
+som är användbara vid utveckling av en radiostyrd enhet.
+
+I kommande underavdelingar finns mer detaljerad information om varje delsystem.
 \input{./system/adk.tex}
-\input{./system/router.tex}
 \input{./system/fjarrkontroll.tex}
+\input{./system/router.tex}
 \input{./system/h-brygga.tex}
 \input{./system/motorer_och_flaktar.tex}
 \input{./system/stromforsorjning.tex}
