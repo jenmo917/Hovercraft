@@ -1,16 +1,30 @@
 package remote.control.motorsignals;
 
 import common.files.android.Constants;
-
+/**
+ * \brief Linear roll algorithm.
+ * \author Daniel Josefsson
+ */
 public class RollLinear extends AbstractSignalAlgorithm
 {
-
+	/**
+	 * \brief Basic constructor, utilizes abstract class basic constructor.
+	 * @param min
+	 * @param max
+	 * @param mean
+	 * @param deadZone
+	 * @param scale
+	 */
 	public RollLinear(float min, float max, float mean, float deadZone, float scale)
 	{
 		super(min, max, mean, deadZone, scale);
 		this.type = Constants.Broadcast.MotorSignals.Algorithms.Roll.LIN;
 	}
 
+	/**
+	 * \brief Implementation of the linear roll algorithm.
+	 * \author Daniel Josefsson
+	 */
 	@Override
 	public float[] convert(float roll)
 	{

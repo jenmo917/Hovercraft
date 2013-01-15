@@ -22,7 +22,25 @@ Kommunikationen är väldokumenterad och mer information finns på Android.com.
 \subsubsection{Blåtandskommunikation}
 Johan\ldots
 \subsubsection{Protocol buffer}
-Olle\ldots
+Protocol Buffer\cite{Protocol buffer} är ett protokoll som används för
+serialisering av data.
+Protokollet är utvecklat av Google, där Google har gjort kompilatorer för Java,
+C++ och Python tillgängliga. Utöver dessa kompilatorer från Google så finns det
+andra kompilatorer utvecklade av privatpersoner eller företag för andra språk.
+
+Svävaren använder sig dels av Googles javakompilator för protokollet i 
+fjärrkontrollen samt telefonen. För ADK:n så används en simplare version av
+Protocol Buffer nämligen Nanopb \cite{Nanopb} som implementerar protokollet i
+statisk C kod.
+
+Det Protocol Buffer generar är programkod med funktionalitet för att kunna
+serialisera och deserialisera olika dataobjekt. Dessa dataobjekt beskrivs av
+användaren med ett IDL (Interface Definition Language).
+Svävaren använder sig av sju stycken olika dataobjekt för sin kommunikation och
+dessa är definierade i mappen PB i källkoden \cite{Source code}. Filen
+command\_1.proto är filen som definierar kommandon för Nanopb och filen
+Command.proto definierar samma kommandon för javaprojekten.
+
 \subsubsection{Diskussion}
 I nuläget skickas viss information där datapaketet inte har konstruerats i Protocol Buffer utan utgörs istället av 
 en sträng. Detta är någonting som i en framtida version bör ändras så att alla meddelanden följer samma standard och 
@@ -35,3 +53,8 @@ Då förfrågan inte har en specifik ID kan inte ADKn skicka med information om 
 så ADKn skickar istället ett helt nytt meddelande. Då detta meddelande inte har information om vilken förfrågan den svarar 
 på får man som användare hoppas på att allt fungerar som det ska eftersom det inte finns någon slags felkontroll som kollar 
 om svar fås på varje förfrågan.
+
+\subsubsection{ADK till Telefon}
+Rickard och Jens\ldots
+\subsubsection{Telefon till fjärrkontroll}
+Johan\ldots

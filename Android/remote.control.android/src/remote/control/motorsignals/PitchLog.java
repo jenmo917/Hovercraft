@@ -1,9 +1,21 @@
 package remote.control.motorsignals;
 
 import common.files.android.Constants;
-
+/**
+ * \brief Logarithmic pitch algorithm.
+ * \author Daniel Josefsson
+ *
+ */
 public class PitchLog extends AbstractSignalAlgorithm
 {
+	/**
+	 * \brief Basic constructor, utilizes abstract class basic constructor.
+	 * @param min
+	 * @param max
+	 * @param mean
+	 * @param deadZone
+	 * @param scale
+	 */
 	public PitchLog(float min, float max, float mean, float deadZone,
 		float scale)
 	{
@@ -19,6 +31,10 @@ public class PitchLog extends AbstractSignalAlgorithm
 		float maxValue = this.maxValue * scale;
 		float mean = this.mean * scale;
 
+		/**
+		 * \brief Implementation of the logarithmic pitch algorithm.
+		 * \author Daniel Josefsson
+		 */
 		float cutPitch = this.cut(pitch) - mean;
 		float power = 0f;
 		if (minValue <= cutPitch && cutPitch < -deadZone)

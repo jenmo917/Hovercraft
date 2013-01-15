@@ -1,15 +1,30 @@
 package remote.control.motorsignals;
 
 import common.files.android.Constants;
-
+/**
+ * \brief Exponential roll algorithm.
+ * \author Daniel Josefsson
+ */
 public class RollExp extends AbstractSignalAlgorithm
 {
+	/**
+	 * \brief Basic constructor, utilizes abstract class basic constructor.
+	 * @param min
+	 * @param max
+	 * @param mean
+	 * @param deadZone
+	 * @param scale
+	 */
 	public RollExp(float min, float max, float mean, float deadZone, float scale)
 	{
 		super(min, max, mean, deadZone, scale);
 		this.type = Constants.Broadcast.MotorSignals.Algorithms.Roll.EXP;
 	}
 
+	/**
+	 * \brief Implementation of the exponential roll algorithm.
+	 * \author Daniel Josefsson
+	 */
 	@Override
 	public float[] convert(float roll)
 	{

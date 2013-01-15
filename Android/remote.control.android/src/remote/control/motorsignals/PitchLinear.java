@@ -1,9 +1,20 @@
 package remote.control.motorsignals;
 
 import common.files.android.Constants;
-
+/**
+ * \brief Exponential pitch algorithm.
+ * \author Daniel Josefsson
+ */
 public class PitchLinear extends AbstractSignalAlgorithm
 {
+	/**
+	 * \brief Basic constructor, utilizes abstract class basic constructor.
+	 * @param min
+	 * @param max
+	 * @param mean
+	 * @param deadZone
+	 * @param scale
+	 */
 	public PitchLinear(float min, float max, float mean, float deadZone,
 		float scale)
 	{
@@ -17,6 +28,10 @@ public class PitchLinear extends AbstractSignalAlgorithm
 		super(type, min, max, mean, deadZone, scale);
 	}
 
+	/**
+	 * \brief Implementation of the linear pitch algorithm.
+	 * \author Daniel Josefsson
+	 */
 	@Override
 	public float[] convert(float pitch)
 	{
