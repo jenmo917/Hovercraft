@@ -1,42 +1,20 @@
 \subsection{ADK}
-ADKn ansvarar för att skicka styrsignaler till motorer och fläktar och hantera sensorer på svävaren. 
-Den kommunicerar med routern via USB.
-
-För att få en bättre kodstruktur på C-koden togs beslutet att ett realtids operativsystem (RTOS) 
-eller eventsystem skulle användas.
+Ett Android Development Kit (ADK) användes för att kontrollera svävaren. 
+Ett ADK är ett utvecklingskort speciellt anpassat för att användas tillsammans med Android.
+Det fanns några alternativ men gruppen valde att införskaffa två olika kort för att testa 
+vilket som till slut skulle användas på svävaren. De två korten var Embedded Artists kort 
+``Android Open Accessory Application Kit'' (AOAA) [XXXXXX] och Arduinos ``Arduino ADK'' [XXXXXX]. 
 
 \subsubsection{Ekonomi}
 Då gruppen valde att införskaffa två olika utvecklingskort gick kostnaden upp något. Arduino ADK kostade 57.71 \euro och 
 Embedded Artists AOAA kostade 65.18 \euro som vid införskaffandets växlingskurs uppgår till totalt 1385 sek. 
 
 \subsubsection{Resultat}
-USB länken har under tester varit stabil.
-Kommunikationen består av protocollbuffer meddelanden.
+Det bestämdes att kortet från Arduino skulle användas då kortet visade sig vara 
+lättare att programera för än Embedded Artists men uppfyllde fortfarande de krav vi hade för svävaren. 
 
-ADKn styr svävaren genom att tolka och vidarebefordra styrsignalerna 
-som den får från fjärrkontrollen till svävarens motorer och fläktar. 
-Förutom att hantera styrsignaler kan ADKn ta in sensordata från de fyra ultraljuds 
-sensorerna som finns på svävaren och med hjälp av dessa få fram avstånd till objekt framför och bakom svävaren.
-Det finns även kod som sköter inläsning av kompassdata från en elektronisk kompass [XXXXX] via I2C men den 
-används ej då kompassen inte behövdes i den slutgiltiga versionen.
-
-Efter en undersökning om vilka alternativ som fanns tillgängliga av eventsystem och RTOS togs beslutet 
-att använda ett eventsystem då de RTOS som hittades var mer komplicerade än vad som behövdes för detta projekt.
-Det eventsystem som används är enkelt att använda och utifrån de tester som utförts verkar det stabilt vid normal drift. 
-Detta medför att det blir enkelt att som programmerare lägga till till nya events på ADKn och 
-vara säker på att dessa hanteras. 
-Dock upptäcktes det svagheter i eventsystemet vid stresstest, dvs då man ökar hur ofta den ska behandla events. 
-Det berodde på att ADKn inte hann utföra alla events och man kunde då inte längre lita på att alla events utfördes.
-
+ADKn är kopplad till telefonen som sitter på svävaren (Router telefonen) via USB.
 \subsubsection{Diskussion}
-ADKn utför sin uppgift på ett tillfredsställande sätt. 
-Det finns dock flera svagheter som går att förbättra om vidareutveckling skulle ske.
-Ett exempel är eventsystemet, det är simpelt vilket innebär att det är lätt att sätta sig in i och använda men det
-har stabilitetsproblem om man ökar antalet events eller hur ofta de sker. Det skulle kunna förbättras genom att ändra i 
-den kod som används idag, hitta ett annat eventsystem eller kanske framförallt byta till ett fungerande RTOS. 
-Ett RTOS skulle öka stabiliteten och man skulle kunna öka antalet parallella aktiviter men skulle ta mycket tid att 
-förstå och få att fungera.
-
-Om mer tid och pengar funnits hade det även varit intressant att använda sig av sensorer med stöd för I2C för avståndsberäkning. 
-Det skulle innebära att färre pinnar på ADKn skulle användas och leda till en estetiskt mer tilltalande koppling. 
-Det skulle även vara intressant att öka antalet sensorer så att man kan få in mer sensordata, t.ex. kompass eller gps-data.
+Det skulle gå att byta utvecklingskort helt och köra på Embedded Artists AOAA vilket öppnar upp för fler funktioner, 
+t.ex kommunikation via CAN-bussen. Kortet är dock svårare att programmera för vilket är anledningen till att det inte användes
+i detta projekt.

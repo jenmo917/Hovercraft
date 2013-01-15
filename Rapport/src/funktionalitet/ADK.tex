@@ -1,0 +1,59 @@
+\subsection{ADK}
+ADK:n ansvarar för att skicka styrsignaler till motorer och fläktar och hantera sensorer på svävaren. 
+Den kommunicerar med routern via USB.
+
+För att få en bättre kodstruktur på C-koden togs beslutet att ett realtids operativsystem (RTOS) 
+eller eventsystem skulle användas.
+
+Flera färdiga kodbibliotek användes i arbetet med ADK:n. 
+
+\begin{table}[htb]
+\centering
+\caption{Bibliotek som används på ADK:n}
+\label{tbl:BOM}
+\begin{tabular}{|l|p{0.5\textwidth}|c|}
+\hline
+\textbf{Namn} & \textbf{Information} & \textbf{Referens} \\
+\hline
+Arduino Core & Stöd för Arduinos funktioner. Krävs för att arbeta med Arduino i Eclipse &  \cite{Delta_BFB1212VH-R00}\\ 
+\hline
+USB\_Host & Sköter USB kommunikation och tillhandahåller enkla läs och skrivfunktioner för USB & \cite{USBHost}\\
+\hline
+Wire & Standardbibliotek för Arduino som sköter I2C kommunikation &  \cite{Wire}\\
+\hline
+Event System & Ett simpelt event system anpassat för Arduino & \cite{Eventsystem} \\
+\hline
+\end{tabular}	
+\end{table}
+
+\subsubsection{Resultat}
+USB länken har under tester varit stabil.
+Kommunikationen består av protocollbuffer meddelanden.
+
+ADKn styr svävaren genom att tolka och vidarebefordra styrsignalerna 
+som den får från fjärrkontrollen till svävarens motorer och fläktar. 
+Förutom att hantera styrsignaler kan ADKn ta in sensordata från de fyra ultraljuds 
+sensorerna som finns på svävaren och med hjälp av dessa få fram avstånd till objekt framför och bakom svävaren.
+Det finns även kod som sköter inläsning av kompassdata från en elektronisk kompass [XXXXX] via I2C men den 
+används ej då kompassen inte behövdes i den slutgiltiga versionen.
+
+Efter en undersökning om vilka alternativ som fanns tillgängliga av eventsystem och RTOS togs beslutet 
+att använda ett eventsystem då de RTOS som hittades var mer komplicerade än vad som behövdes för detta projekt.
+Det eventsystem som används är enkelt att använda och utifrån de tester som utförts verkar det stabilt vid normal drift. 
+Detta medför att det blir enkelt att som programmerare lägga till till nya events på ADKn och 
+vara säker på att dessa hanteras. 
+Dock upptäcktes det svagheter i eventsystemet vid stresstest, dvs då man ökar hur ofta den ska behandla events. 
+Det berodde på att ADKn inte hann utföra alla events och man kunde då inte längre lita på att alla events utfördes.
+
+\subsubsection{Diskussion}
+ADKn utför sin uppgift på ett tillfredsställande sätt. 
+Det finns dock flera svagheter som går att förbättra om vidareutveckling skulle ske.
+Ett exempel är eventsystemet, det är simpelt vilket innebär att det är lätt att sätta sig in i och använda men det
+har stabilitetsproblem om man ökar antalet events eller hur ofta de sker. Det skulle kunna förbättras genom att ändra i 
+den kod som används idag, hitta ett annat eventsystem eller kanske framförallt byta till ett fungerande RTOS. 
+Ett RTOS skulle öka stabiliteten och man skulle kunna öka antalet parallella aktiviter men skulle ta mycket tid att 
+förstå och få att fungera.
+
+Om mer tid och pengar funnits hade det även varit intressant att använda sig av sensorer med stöd för I2C för avståndsberäkning. 
+Det skulle innebära att färre pinnar på ADKn skulle användas och leda till en estetiskt mer tilltalande koppling. 
+Det skulle även vara intressant att öka antalet sensorer så att man kan få in mer sensordata, t.ex. kompass eller gps-data.
