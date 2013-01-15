@@ -4,7 +4,12 @@ Fjärrkontrollens huvudsakliga uppgift är att styra svävaren. Den fysiska fjä
 Applikationen är uppdelad tre huvudsakliga delar som var och en utgörs av en Android-service. Dessa delar implementerar funktionalitet för kommunikation, loggning av sensordata samt generering av styrsignaler. Applikationen innehåller även Android-activity som fungerar som inställningsmeny för fjärrkontrollen.
 
 \subsubsection{Kommunikation}
-Kommunikationen mellan svävaren och fjärrkontrollen sker via en Bluetoothlänk implementerad med hjälp av Android Bluetooth API, där svävaren agerar som Bluetooth Server. I rollen som Bluetooth Server använder sig svävaren av Bluetoothprofilen Serial Port Profile (SPP), som i stora drag upprättar en trådlös seriell kommunikationslänk som fjärrkontrollen sedan kan ansluta sig till. 
+Kommunikationen mellan svävaren och fjärrkontrollen sker via en Bluetoothlänk
+implementerad med hjälp av Android Bluetooth API, där svävaren agerar som
+Bluetooth Server. I rollen som Bluetooth Server använder sig svävaren av
+Bluetoothprofilen Serial Port Profile (SPP), som i stora drag upprättar en
+trådlös seriell kommunikationslänk som fjärrkontrollen sedan kan ansluta sig
+till.
 Fjärrkontrollen har funktionalitet för att söka upp och välja vilken Bluetooth-enhet den ska anslutas till, vilket gör att det är lätt att ansluta till svävaren även om det finns andra aktiva enheter i omgivningen.
 För den mesta dataöverföringen mellan svävaren och fjärrkontrollen används Protocol Buffer som finns beskrivet i […].
 
