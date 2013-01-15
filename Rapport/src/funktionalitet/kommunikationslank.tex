@@ -1,8 +1,37 @@
 \subsection{Kommunikationslank}
-Mjukvarugänget\ldots
+Kommunikationslänken är uppdelad i två delar, USB kommunikation mellan routern och ADKn 
+samt blåtandskommunikation mellan routern och fjärrkontrollen. Kommunikationen sker med hjälp av ett protokoll som 
+togs fram under projektets gång. De tre första bitarna som skickas innehåller information om vart meddelandet ska skickas, 
+vilken slags meddelande det är samt meddelandets längd. Utöver dessa tre bitar skickas datapaketet som konstruerats enligt 
+Protocol Buffer som beskrivs i avsnitt [\ldots].
+
+\includegraphics[figures/protocol.png]
+
+\subsubsection{USB-kommunikation}
+USB-kommunikationen mellan ADK:n och routern sker över Android Open Accessory (AOA) protokollet. 
+För att få USB-kommunikationen att fungera användes Arduinos färdiga bibliotek [\ldots]. En funktion i blioteket justerades för 
+att lösa ett initieringsfel. Se Wiki på podio.
+ 
+Fördelen med detta bibliotek är att den implementerar AOA och tillhandahåller enkla funktioner för att läsa och skriva via USB, vilket 
+gjorde det enklare att implementera det egendesignade protokollet.
+
+I Android är implementationen av AOA och det egendesignade protokollet mer komplicerat. Den kod som hanterar USB-kommunikationen ligger 
+i klassen UsbService. I denna klass får applikationen tillgång till Blåtandsadaptern och inititerar kommunikationen med ADK:n. 
+Kommunikationen är väldokumenterad och mer information finns på Android.com.
+ 
+\subsubsection{Blåtandskommunikation}
+Johan\ldots
 \subsubsection{Protocol buffer}
 Olle\ldots
-\subsubsection{ADK till Telefon}
-Rickard och Jens\ldots
-\subsubsection{Telefon till fjärrkontroll}
-Johan\ldots
+\subsubsection{Diskussion}
+I nuläget skickas viss information där datapaketet inte har konstruerats i Protocol Buffer utan utgörs istället av 
+en sträng. Detta är någonting som i en framtida version bör ändras så att alla meddelanden följer samma standard och 
+konstrueras enligt Protocol Buffer. 
+
+En stor brist i dagens kommunikationslänk är att meddelanden inte får en specifik ID och 
+att det därför inte går att ge ett svar på en specifik förfrågan. Ett exempel på detta är då fjärrkontrollen skickar en 
+förfrågan om sensordata från ADKn, detta leder till att ADKn samlar in sin sensordata och skickar tillbaka denna data. 
+Då förfrågan inte har en specifik ID kan inte ADKn skicka med information om vilken förfrågan den egentligen svarar på 
+så ADKn skickar istället ett helt nytt meddelande. Då detta meddelande inte har information om vilken förfrågan den svarar 
+på får man som användare hoppas på att allt fungerar som det ska eftersom det inte finns någon slags felkontroll som kollar 
+om svar fås på varje förfrågan.
