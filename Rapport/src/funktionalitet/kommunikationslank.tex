@@ -1,9 +1,12 @@
 \subsection{Kommunikationslank}
-Kommunikationslänken är uppdelad i två delar, USB kommunikation mellan routern och ADKn 
-samt blåtandskommunikation mellan routern och fjärrkontrollen. Kommunikationen sker med hjälp av ett protokoll som 
-togs fram under projektets gång. De tre första bitarna som skickas innehåller information om vart meddelandet ska skickas, 
-vilken slags meddelande det är samt meddelandets längd. Utöver dessa tre bitar skickas datapaketet som konstruerats enligt 
-Protocol Buffer som beskrivs i avsnitt [\ldots]. I figur \ref{fig:protocol} ses en grafisk illustarion av protokollet.
+Kommunikationslänken är uppdelad i två delar, USB kommunikation mellan routern
+och ADKn samt blåtandskommunikation mellan routern och fjärrkontrollen.
+Kommunikationen sker med hjälp av ett protokoll som  togs fram under projektets
+gång. De tre första bitarna som skickas innehåller information om vart
+meddelandet ska skickas, vilken slags meddelande det är samt meddelandets längd.
+Utöver dessa tre bitar skickas datapaketet som konstruerats enligt Protocol
+Buffer som beskrivs i avsnitt \ref{subsubsec: Protocol buffer}. I figur
+\ref{fig:protocol} ses en grafisk illustarion av protokollet.
 
 
 \begin{figure}[htbp!]
@@ -15,9 +18,10 @@ Protocol Buffer som beskrivs i avsnitt [\ldots]. I figur \ref{fig:protocol} ses 
 
 
 \subsubsection{USB-kommunikation}
-USB-kommunikationen mellan ADK:n och routern sker över Android Open Accessory (AOA) protokollet. 
-För att få USB-kommunikationen att fungera användes Arduinos färdiga bibliotek [\ldots]. En funktion i blioteket justerades för 
-att lösa ett initieringsfel. Se Wiki på podio.
+USB-kommunikationen mellan ADK:n och routern sker över Android Open Accessory
+(AOA) protokollet. För att få USB-kommunikationen att fungera användes Arduinos
+färdiga bibliotek \cite{USBHost}. En funktion i blioteket justerades för att
+lösa ett initieringsfel. Se Wiki på podio.
  
 Fördelen med detta bibliotek är att den implementerar AOA och tillhandahåller enkla funktioner för att läsa och skriva via USB, vilket 
 gjorde det enklare att implementera det egendesignade protokollet.
