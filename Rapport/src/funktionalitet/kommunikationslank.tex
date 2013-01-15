@@ -3,9 +3,16 @@ Kommunikationslänken är uppdelad i två delar, USB kommunikation mellan router
 samt blåtandskommunikation mellan routern och fjärrkontrollen. Kommunikationen sker med hjälp av ett protokoll som 
 togs fram under projektets gång. De tre första bitarna som skickas innehåller information om vart meddelandet ska skickas, 
 vilken slags meddelande det är samt meddelandets längd. Utöver dessa tre bitar skickas datapaketet som konstruerats enligt 
-Protocol Buffer som beskrivs i avsnitt [\ldots].
+Protocol Buffer som beskrivs i avsnitt [\ldots]. I figur \ref{fig:protocol} ses en grafisk illustarion av protokollet.
 
-\includegraphics[../../includes/figures/protocol]
+
+\begin{figure}[htbp!]
+\centering
+\includegraphics[width=10cm]{../../includes/figures/protocol.png}
+\caption{Illustering av protokoll.}
+\label{fig:protocol}
+\end{figure}
+
 
 \subsubsection{USB-kommunikation}
 USB-kommunikationen mellan ADK:n och routern sker över Android Open Accessory (AOA) protokollet. 
