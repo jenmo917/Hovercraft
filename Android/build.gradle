@@ -1,0 +1,30 @@
+subprojects {
+  apply plugin: 'java'
+
+    repositories {
+       mavenCentral()
+    }
+
+    dependencies {
+        testCompile 'junit:junit:4.11'
+    }
+
+    version = '1.0'
+
+    jar {
+        manifest.attributes provider: 'gradle'
+    }
+}
+
+project(':remote.control.android') {
+  dependencies {
+    compile project(':common.files.android')
+  }
+}
+
+project('on.hovercraft.android') {
+  dependencies {
+    compile project(':common.files.android')
+  }
+}
+
