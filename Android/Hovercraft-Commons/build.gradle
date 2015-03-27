@@ -9,7 +9,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId getGroup()
-            artifactId 'Hoovercraft-Common'
+            artifactId 'Hoovercraft-Commons'
             version getVersion()
             from components.java
         }
