@@ -12,8 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
-import common.files.android.Command.USSensorData;
-import common.files.android.Command.USSensors;
+import se.liu.ed.Command.USSensorData;
+import se.liu.ed.Command.USSensors;
 
 import se.liu.ed.Constants;
 import android.app.IntentService;

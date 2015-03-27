@@ -949,12 +949,12 @@ public final class Command {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
@@ -980,113 +980,106 @@ public final class Command {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
-    public static common.files.android.Command.USSensorData parseFrom(
+
+    public static se.liu.ed.Command.USSensorData parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
-    public static common.files.android.Command.USSensorData parseFrom(
+    public static se.liu.ed.Command.USSensorData parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static common.files.android.Command.USSensorData parseFrom(byte[] data)
+    public static se.liu.ed.Command.USSensorData parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
-    public static common.files.android.Command.USSensorData parseFrom(
+    public static se.liu.ed.Command.USSensorData parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static common.files.android.Command.USSensorData parseFrom(java.io.InputStream input)
+    public static se.liu.ed.Command.USSensorData parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
-    public static common.files.android.Command.USSensorData parseFrom(
+    public static se.liu.ed.Command.USSensorData parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static common.files.android.Command.USSensorData parseDelimitedFrom(java.io.InputStream input)
+    public static se.liu.ed.Command.USSensorData parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
-    public static common.files.android.Command.USSensorData parseDelimitedFrom(
+    public static se.liu.ed.Command.USSensorData parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static common.files.android.Command.USSensorData parseFrom(
+    public static se.liu.ed.Command.USSensorData parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
-    public static common.files.android.Command.USSensorData parseFrom(
+    public static se.liu.ed.Command.USSensorData parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(common.files.android.Command.USSensorData prototype) {
+    public static Builder newBuilder(se.liu.ed.Command.USSensorData prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code se.liu.ed.USSensorData}
+     */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements common.files.android.Command.USSensorDataOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:se.liu.ed.USSensorData)
+        se.liu.ed.Command.USSensorDataOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return common.files.android.Command.internal_static_common_files_android_USSensorData_descriptor;
+        return se.liu.ed.Command.internal_static_se_liu_ed_USSensorData_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return common.files.android.Command.internal_static_common_files_android_USSensorData_fieldAccessorTable;
+        return se.liu.ed.Command.internal_static_se_liu_ed_USSensorData_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                se.liu.ed.Command.USSensorData.class, se.liu.ed.Command.USSensorData.Builder.class);
       }
-      
-      // Construct using common.files.android.Command.USSensorData.newBuilder()
+
+      // Construct using se.liu.ed.Command.USSensorData.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1097,7 +1090,7 @@ public final class Command {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         type_ = "";
@@ -1112,40 +1105,30 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return common.files.android.Command.USSensorData.getDescriptor();
+        return se.liu.ed.Command.internal_static_se_liu_ed_USSensorData_descriptor;
       }
-      
-      public common.files.android.Command.USSensorData getDefaultInstanceForType() {
-        return common.files.android.Command.USSensorData.getDefaultInstance();
+
+      public se.liu.ed.Command.USSensorData getDefaultInstanceForType() {
+        return se.liu.ed.Command.USSensorData.getDefaultInstance();
       }
-      
-      public common.files.android.Command.USSensorData build() {
-        common.files.android.Command.USSensorData result = buildPartial();
+
+      public se.liu.ed.Command.USSensorData build() {
+        se.liu.ed.Command.USSensorData result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
-      
-      private common.files.android.Command.USSensorData buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        common.files.android.Command.USSensorData result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
-      public common.files.android.Command.USSensorData buildPartial() {
-        common.files.android.Command.USSensorData result = new common.files.android.Command.USSensorData(this);
+
+      public se.liu.ed.Command.USSensorData buildPartial() {
+        se.liu.ed.Command.USSensorData result = new se.liu.ed.Command.USSensorData(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1172,23 +1155,27 @@ public final class Command {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof common.files.android.Command.USSensorData) {
-          return mergeFrom((common.files.android.Command.USSensorData)other);
+        if (other instanceof se.liu.ed.Command.USSensorData) {
+          return mergeFrom((se.liu.ed.Command.USSensorData)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
-      
-      public Builder mergeFrom(common.files.android.Command.USSensorData other) {
-        if (other == common.files.android.Command.USSensorData.getDefaultInstance()) return this;
+
+      public Builder mergeFrom(se.liu.ed.Command.USSensorData other) {
+        if (other == se.liu.ed.Command.USSensorData.getDefaultInstance()) return this;
         if (other.hasType()) {
-          setType(other.getType());
+          bitField0_ |= 0x00000001;
+          type_ = other.type_;
+          onChanged();
         }
         if (other.hasDescription()) {
-          setDescription(other.getDescription());
+          bitField0_ |= 0x00000002;
+          description_ = other.description_;
+          onChanged();
         }
         if (other.hasEchopin()) {
           setEchopin(other.getEchopin());
@@ -1202,7 +1189,7 @@ public final class Command {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         if (!hasType()) {
           
@@ -1226,77 +1213,71 @@ public final class Command {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              bitField0_ |= 0x00000001;
-              type_ = input.readBytes();
-              break;
-            }
-            case 18: {
-              bitField0_ |= 0x00000002;
-              description_ = input.readBytes();
-              break;
-            }
-            case 24: {
-              bitField0_ |= 0x00000004;
-              echopin_ = input.readUInt32();
-              break;
-            }
-            case 32: {
-              bitField0_ |= 0x00000008;
-              triggerpin_ = input.readUInt32();
-              break;
-            }
-            case 40: {
-              bitField0_ |= 0x00000010;
-              value_ = input.readUInt32();
-              break;
-            }
+        se.liu.ed.Command.USSensorData parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (se.liu.ed.Command.USSensorData) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
-      // required string type = 1;
+
       private java.lang.Object type_ = "";
+      /**
+       * <code>required string type = 1;</code>
+       */
       public boolean hasType() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public String getType() {
+      /**
+       * <code>required string type = 1;</code>
+       */
+      public java.lang.String getType() {
         java.lang.Object ref = type_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          type_ = s;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            type_ = s;
+          }
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-      public Builder setType(String value) {
+      /**
+       * <code>required string type = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTypeBytes() {
+        java.lang.Object ref = type_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          type_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string type = 1;</code>
+       */
+      public Builder setType(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1305,34 +1286,74 @@ public final class Command {
         onChanged();
         return this;
       }
+      /**
+       * <code>required string type = 1;</code>
+       */
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000001);
         type_ = getDefaultInstance().getType();
         onChanged();
         return this;
       }
-      void setType(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000001;
+      /**
+       * <code>required string type = 1;</code>
+       */
+      public Builder setTypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         type_ = value;
         onChanged();
+        return this;
       }
-      
-      // required string description = 2;
+
       private java.lang.Object description_ = "";
+      /**
+       * <code>required string description = 2;</code>
+       */
       public boolean hasDescription() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public String getDescription() {
+      /**
+       * <code>required string description = 2;</code>
+       */
+      public java.lang.String getDescription() {
         java.lang.Object ref = description_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          description_ = s;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            description_ = s;
+          }
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-      public Builder setDescription(String value) {
+      /**
+       * <code>required string description = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDescriptionBytes() {
+        java.lang.Object ref = description_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          description_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string description = 2;</code>
+       */
+      public Builder setDescription(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1341,224 +1362,414 @@ public final class Command {
         onChanged();
         return this;
       }
+      /**
+       * <code>required string description = 2;</code>
+       */
       public Builder clearDescription() {
         bitField0_ = (bitField0_ & ~0x00000002);
         description_ = getDefaultInstance().getDescription();
         onChanged();
         return this;
       }
-      void setDescription(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000002;
+      /**
+       * <code>required string description = 2;</code>
+       */
+      public Builder setDescriptionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
         description_ = value;
         onChanged();
+        return this;
       }
-      
-      // required uint32 echopin = 3;
+
       private int echopin_ ;
+      /**
+       * <code>required uint32 echopin = 3;</code>
+       */
       public boolean hasEchopin() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
+      /**
+       * <code>required uint32 echopin = 3;</code>
+       */
       public int getEchopin() {
         return echopin_;
       }
+      /**
+       * <code>required uint32 echopin = 3;</code>
+       */
       public Builder setEchopin(int value) {
         bitField0_ |= 0x00000004;
         echopin_ = value;
         onChanged();
         return this;
       }
+      /**
+       * <code>required uint32 echopin = 3;</code>
+       */
       public Builder clearEchopin() {
         bitField0_ = (bitField0_ & ~0x00000004);
         echopin_ = 0;
         onChanged();
         return this;
       }
-      
-      // required uint32 triggerpin = 4;
+
       private int triggerpin_ ;
+      /**
+       * <code>required uint32 triggerpin = 4;</code>
+       */
       public boolean hasTriggerpin() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
+      /**
+       * <code>required uint32 triggerpin = 4;</code>
+       */
       public int getTriggerpin() {
         return triggerpin_;
       }
+      /**
+       * <code>required uint32 triggerpin = 4;</code>
+       */
       public Builder setTriggerpin(int value) {
         bitField0_ |= 0x00000008;
         triggerpin_ = value;
         onChanged();
         return this;
       }
+      /**
+       * <code>required uint32 triggerpin = 4;</code>
+       */
       public Builder clearTriggerpin() {
         bitField0_ = (bitField0_ & ~0x00000008);
         triggerpin_ = 0;
         onChanged();
         return this;
       }
-      
-      // required uint32 value = 5;
+
       private int value_ ;
+      /**
+       * <code>required uint32 value = 5;</code>
+       */
       public boolean hasValue() {
         return ((bitField0_ & 0x00000010) == 0x00000010);
       }
+      /**
+       * <code>required uint32 value = 5;</code>
+       */
       public int getValue() {
         return value_;
       }
+      /**
+       * <code>required uint32 value = 5;</code>
+       */
       public Builder setValue(int value) {
         bitField0_ |= 0x00000010;
         value_ = value;
         onChanged();
         return this;
       }
+      /**
+       * <code>required uint32 value = 5;</code>
+       */
       public Builder clearValue() {
         bitField0_ = (bitField0_ & ~0x00000010);
         value_ = 0;
         onChanged();
         return this;
       }
-      
-      // @@protoc_insertion_point(builder_scope:common.files.android.USSensorData)
+
+      // @@protoc_insertion_point(builder_scope:se.liu.ed.USSensorData)
     }
-    
+
     static {
       defaultInstance = new USSensorData(true);
       defaultInstance.initFields();
     }
-    
-    // @@protoc_insertion_point(class_scope:common.files.android.USSensorData)
+
+    // @@protoc_insertion_point(class_scope:se.liu.ed.USSensorData)
   }
-  
-  public interface I2CSensorDataOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-    
-    // required string type = 1;
+
+  public interface I2CSensorDataOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:se.liu.ed.I2CSensorData)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required string type = 1;</code>
+     */
     boolean hasType();
-    String getType();
-    
-    // required string description = 2;
+    /**
+     * <code>required string type = 1;</code>
+     */
+    java.lang.String getType();
+    /**
+     * <code>required string type = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getTypeBytes();
+
+    /**
+     * <code>required string description = 2;</code>
+     */
     boolean hasDescription();
-    String getDescription();
-    
-    // required uint32 address = 3;
+    /**
+     * <code>required string description = 2;</code>
+     */
+    java.lang.String getDescription();
+    /**
+     * <code>required string description = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getDescriptionBytes();
+
+    /**
+     * <code>required uint32 address = 3;</code>
+     */
     boolean hasAddress();
+    /**
+     * <code>required uint32 address = 3;</code>
+     */
     int getAddress();
-    
-    // required uint32 value = 4;
+
+    /**
+     * <code>required uint32 value = 4;</code>
+     */
     boolean hasValue();
+    /**
+     * <code>required uint32 value = 4;</code>
+     */
     int getValue();
   }
+  /**
+   * Protobuf type {@code se.liu.ed.I2CSensorData}
+   */
   public static final class I2CSensorData extends
-      com.google.protobuf.GeneratedMessage
-      implements I2CSensorDataOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:se.liu.ed.I2CSensorData)
+      I2CSensorDataOrBuilder {
     // Use I2CSensorData.newBuilder() to construct.
-    private I2CSensorData(Builder builder) {
+    private I2CSensorData(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private I2CSensorData(boolean noInit) {}
-    
+    private I2CSensorData(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final I2CSensorData defaultInstance;
     public static I2CSensorData getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public I2CSensorData getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private I2CSensorData(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              type_ = bs;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              description_ = bs;
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              address_ = input.readUInt32();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              value_ = input.readUInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return common.files.android.Command.internal_static_common_files_android_I2CSensorData_descriptor;
+      return se.liu.ed.Command.internal_static_se_liu_ed_I2CSensorData_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return common.files.android.Command.internal_static_common_files_android_I2CSensorData_fieldAccessorTable;
+      return se.liu.ed.Command.internal_static_se_liu_ed_I2CSensorData_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              se.liu.ed.Command.I2CSensorData.class, se.liu.ed.Command.I2CSensorData.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<I2CSensorData> PARSER =
+        new com.google.protobuf.AbstractParser<I2CSensorData>() {
+      public I2CSensorData parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new I2CSensorData(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<I2CSensorData> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
-    // required string type = 1;
     public static final int TYPE_FIELD_NUMBER = 1;
     private java.lang.Object type_;
+    /**
+     * <code>required string type = 1;</code>
+     */
     public boolean hasType() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public String getType() {
+    /**
+     * <code>required string type = 1;</code>
+     */
+    public java.lang.String getType() {
       java.lang.Object ref = type_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           type_ = s;
         }
         return s;
       }
     }
-    private com.google.protobuf.ByteString getTypeBytes() {
+    /**
+     * <code>required string type = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTypeBytes() {
       java.lang.Object ref = type_;
-      if (ref instanceof String) {
+      if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         type_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
-    
-    // required string description = 2;
+
     public static final int DESCRIPTION_FIELD_NUMBER = 2;
     private java.lang.Object description_;
+    /**
+     * <code>required string description = 2;</code>
+     */
     public boolean hasDescription() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-    public String getDescription() {
+    /**
+     * <code>required string description = 2;</code>
+     */
+    public java.lang.String getDescription() {
       java.lang.Object ref = description_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           description_ = s;
         }
         return s;
       }
     }
-    private com.google.protobuf.ByteString getDescriptionBytes() {
+    /**
+     * <code>required string description = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDescriptionBytes() {
       java.lang.Object ref = description_;
-      if (ref instanceof String) {
+      if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         description_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
-    
-    // required uint32 address = 3;
+
     public static final int ADDRESS_FIELD_NUMBER = 3;
     private int address_;
+    /**
+     * <code>required uint32 address = 3;</code>
+     */
     public boolean hasAddress() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
+    /**
+     * <code>required uint32 address = 3;</code>
+     */
     public int getAddress() {
       return address_;
     }
-    
-    // required uint32 value = 4;
+
     public static final int VALUE_FIELD_NUMBER = 4;
     private int value_;
+    /**
+     * <code>required uint32 value = 4;</code>
+     */
     public boolean hasValue() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
+    /**
+     * <code>required uint32 value = 4;</code>
+     */
     public int getValue() {
       return value_;
     }
-    
+
     private void initFields() {
       type_ = "";
       description_ = "";
@@ -1568,8 +1779,9 @@ public final class Command {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-      
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
       if (!hasType()) {
         memoizedIsInitialized = 0;
         return false;
@@ -1589,7 +1801,7 @@ public final class Command {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -1607,12 +1819,12 @@ public final class Command {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
@@ -1634,113 +1846,106 @@ public final class Command {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
-    public static common.files.android.Command.I2CSensorData parseFrom(
+
+    public static se.liu.ed.Command.I2CSensorData parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
-    public static common.files.android.Command.I2CSensorData parseFrom(
+    public static se.liu.ed.Command.I2CSensorData parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static common.files.android.Command.I2CSensorData parseFrom(byte[] data)
+    public static se.liu.ed.Command.I2CSensorData parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
-    public static common.files.android.Command.I2CSensorData parseFrom(
+    public static se.liu.ed.Command.I2CSensorData parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static common.files.android.Command.I2CSensorData parseFrom(java.io.InputStream input)
+    public static se.liu.ed.Command.I2CSensorData parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
-    public static common.files.android.Command.I2CSensorData parseFrom(
+    public static se.liu.ed.Command.I2CSensorData parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static common.files.android.Command.I2CSensorData parseDelimitedFrom(java.io.InputStream input)
+    public static se.liu.ed.Command.I2CSensorData parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
-    public static common.files.android.Command.I2CSensorData parseDelimitedFrom(
+    public static se.liu.ed.Command.I2CSensorData parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static common.files.android.Command.I2CSensorData parseFrom(
+    public static se.liu.ed.Command.I2CSensorData parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
-    public static common.files.android.Command.I2CSensorData parseFrom(
+    public static se.liu.ed.Command.I2CSensorData parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(common.files.android.Command.I2CSensorData prototype) {
+    public static Builder newBuilder(se.liu.ed.Command.I2CSensorData prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code se.liu.ed.I2CSensorData}
+     */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements common.files.android.Command.I2CSensorDataOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:se.liu.ed.I2CSensorData)
+        se.liu.ed.Command.I2CSensorDataOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return common.files.android.Command.internal_static_common_files_android_I2CSensorData_descriptor;
+        return se.liu.ed.Command.internal_static_se_liu_ed_I2CSensorData_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return common.files.android.Command.internal_static_common_files_android_I2CSensorData_fieldAccessorTable;
+        return se.liu.ed.Command.internal_static_se_liu_ed_I2CSensorData_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                se.liu.ed.Command.I2CSensorData.class, se.liu.ed.Command.I2CSensorData.Builder.class);
       }
-      
-      // Construct using common.files.android.Command.I2CSensorData.newBuilder()
+
+      // Construct using se.liu.ed.Command.I2CSensorData.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1751,7 +1956,7 @@ public final class Command {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         type_ = "";
@@ -1764,40 +1969,30 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return common.files.android.Command.I2CSensorData.getDescriptor();
+        return se.liu.ed.Command.internal_static_se_liu_ed_I2CSensorData_descriptor;
       }
-      
-      public common.files.android.Command.I2CSensorData getDefaultInstanceForType() {
-        return common.files.android.Command.I2CSensorData.getDefaultInstance();
+
+      public se.liu.ed.Command.I2CSensorData getDefaultInstanceForType() {
+        return se.liu.ed.Command.I2CSensorData.getDefaultInstance();
       }
-      
-      public common.files.android.Command.I2CSensorData build() {
-        common.files.android.Command.I2CSensorData result = buildPartial();
+
+      public se.liu.ed.Command.I2CSensorData build() {
+        se.liu.ed.Command.I2CSensorData result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
-      
-      private common.files.android.Command.I2CSensorData buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        common.files.android.Command.I2CSensorData result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
-      public common.files.android.Command.I2CSensorData buildPartial() {
-        common.files.android.Command.I2CSensorData result = new common.files.android.Command.I2CSensorData(this);
+
+      public se.liu.ed.Command.I2CSensorData buildPartial() {
+        se.liu.ed.Command.I2CSensorData result = new se.liu.ed.Command.I2CSensorData(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1820,23 +2015,27 @@ public final class Command {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof common.files.android.Command.I2CSensorData) {
-          return mergeFrom((common.files.android.Command.I2CSensorData)other);
+        if (other instanceof se.liu.ed.Command.I2CSensorData) {
+          return mergeFrom((se.liu.ed.Command.I2CSensorData)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
-      
-      public Builder mergeFrom(common.files.android.Command.I2CSensorData other) {
-        if (other == common.files.android.Command.I2CSensorData.getDefaultInstance()) return this;
+
+      public Builder mergeFrom(se.liu.ed.Command.I2CSensorData other) {
+        if (other == se.liu.ed.Command.I2CSensorData.getDefaultInstance()) return this;
         if (other.hasType()) {
-          setType(other.getType());
+          bitField0_ |= 0x00000001;
+          type_ = other.type_;
+          onChanged();
         }
         if (other.hasDescription()) {
-          setDescription(other.getDescription());
+          bitField0_ |= 0x00000002;
+          description_ = other.description_;
+          onChanged();
         }
         if (other.hasAddress()) {
           setAddress(other.getAddress());
@@ -1847,7 +2046,7 @@ public final class Command {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         if (!hasType()) {
           
@@ -1867,72 +2066,71 @@ public final class Command {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              bitField0_ |= 0x00000001;
-              type_ = input.readBytes();
-              break;
-            }
-            case 18: {
-              bitField0_ |= 0x00000002;
-              description_ = input.readBytes();
-              break;
-            }
-            case 24: {
-              bitField0_ |= 0x00000004;
-              address_ = input.readUInt32();
-              break;
-            }
-            case 32: {
-              bitField0_ |= 0x00000008;
-              value_ = input.readUInt32();
-              break;
-            }
+        se.liu.ed.Command.I2CSensorData parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (se.liu.ed.Command.I2CSensorData) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
-      // required string type = 1;
+
       private java.lang.Object type_ = "";
+      /**
+       * <code>required string type = 1;</code>
+       */
       public boolean hasType() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public String getType() {
+      /**
+       * <code>required string type = 1;</code>
+       */
+      public java.lang.String getType() {
         java.lang.Object ref = type_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          type_ = s;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            type_ = s;
+          }
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-      public Builder setType(String value) {
+      /**
+       * <code>required string type = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTypeBytes() {
+        java.lang.Object ref = type_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          type_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string type = 1;</code>
+       */
+      public Builder setType(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1941,34 +2139,74 @@ public final class Command {
         onChanged();
         return this;
       }
+      /**
+       * <code>required string type = 1;</code>
+       */
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000001);
         type_ = getDefaultInstance().getType();
         onChanged();
         return this;
       }
-      void setType(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000001;
+      /**
+       * <code>required string type = 1;</code>
+       */
+      public Builder setTypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         type_ = value;
         onChanged();
+        return this;
       }
-      
-      // required string description = 2;
+
       private java.lang.Object description_ = "";
+      /**
+       * <code>required string description = 2;</code>
+       */
       public boolean hasDescription() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public String getDescription() {
+      /**
+       * <code>required string description = 2;</code>
+       */
+      public java.lang.String getDescription() {
         java.lang.Object ref = description_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          description_ = s;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            description_ = s;
+          }
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-      public Builder setDescription(String value) {
+      /**
+       * <code>required string description = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDescriptionBytes() {
+        java.lang.Object ref = description_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          description_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string description = 2;</code>
+       */
+      public Builder setDescription(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1977,449 +2215,184 @@ public final class Command {
         onChanged();
         return this;
       }
+      /**
+       * <code>required string description = 2;</code>
+       */
       public Builder clearDescription() {
         bitField0_ = (bitField0_ & ~0x00000002);
         description_ = getDefaultInstance().getDescription();
         onChanged();
         return this;
       }
-      void setDescription(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000002;
+      /**
+       * <code>required string description = 2;</code>
+       */
+      public Builder setDescriptionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
         description_ = value;
         onChanged();
+        return this;
       }
-      
-      // required uint32 address = 3;
+
       private int address_ ;
+      /**
+       * <code>required uint32 address = 3;</code>
+       */
       public boolean hasAddress() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
+      /**
+       * <code>required uint32 address = 3;</code>
+       */
       public int getAddress() {
         return address_;
       }
+      /**
+       * <code>required uint32 address = 3;</code>
+       */
       public Builder setAddress(int value) {
         bitField0_ |= 0x00000004;
         address_ = value;
         onChanged();
         return this;
       }
+      /**
+       * <code>required uint32 address = 3;</code>
+       */
       public Builder clearAddress() {
         bitField0_ = (bitField0_ & ~0x00000004);
         address_ = 0;
         onChanged();
         return this;
       }
-      
-      // required uint32 value = 4;
+
       private int value_ ;
+      /**
+       * <code>required uint32 value = 4;</code>
+       */
       public boolean hasValue() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
+      /**
+       * <code>required uint32 value = 4;</code>
+       */
       public int getValue() {
         return value_;
       }
+      /**
+       * <code>required uint32 value = 4;</code>
+       */
       public Builder setValue(int value) {
         bitField0_ |= 0x00000008;
         value_ = value;
         onChanged();
         return this;
       }
+      /**
+       * <code>required uint32 value = 4;</code>
+       */
       public Builder clearValue() {
         bitField0_ = (bitField0_ & ~0x00000008);
         value_ = 0;
         onChanged();
         return this;
       }
-      
-      // @@protoc_insertion_point(builder_scope:common.files.android.I2CSensorData)
+
+      // @@protoc_insertion_point(builder_scope:se.liu.ed.I2CSensorData)
     }
-    
+
     static {
       defaultInstance = new I2CSensorData(true);
       defaultInstance.initFields();
     }
-    
-    // @@protoc_insertion_point(class_scope:common.files.android.I2CSensorData)
+
+    // @@protoc_insertion_point(class_scope:se.liu.ed.I2CSensorData)
   }
-  
-  public interface DriveSignalsOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-    
-    // required bool forward = 1;
+
+  public interface DriveSignalsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:se.liu.ed.DriveSignals)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required bool forward = 1;</code>
+     */
     boolean hasForward();
+    /**
+     * <code>required bool forward = 1;</code>
+     */
     boolean getForward();
-    
-    // required bool enable = 2;
+
+    /**
+     * <code>required bool enable = 2;</code>
+     */
     boolean hasEnable();
+    /**
+     * <code>required bool enable = 2;</code>
+     */
     boolean getEnable();
-    
-    // required uint32 power = 3;
+
+    /**
+     * <code>required uint32 power = 3;</code>
+     */
     boolean hasPower();
+    /**
+     * <code>required uint32 power = 3;</code>
+     */
     int getPower();
   }
+  /**
+   * Protobuf type {@code se.liu.ed.DriveSignals}
+   */
   public static final class DriveSignals extends
-      com.google.protobuf.GeneratedMessage
-      implements DriveSignalsOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:se.liu.ed.DriveSignals)
+      DriveSignalsOrBuilder {
     // Use DriveSignals.newBuilder() to construct.
-    private DriveSignals(Builder builder) {
+    private DriveSignals(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private DriveSignals(boolean noInit) {}
-    
+    private DriveSignals(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final DriveSignals defaultInstance;
     public static DriveSignals getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public DriveSignals getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return common.files.android.Command.internal_static_common_files_android_DriveSignals_descriptor;
-    }
-    
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return common.files.android.Command.internal_static_common_files_android_DriveSignals_fieldAccessorTable;
-    }
-    
-    private int bitField0_;
-    // required bool forward = 1;
-    public static final int FORWARD_FIELD_NUMBER = 1;
-    private boolean forward_;
-    public boolean hasForward() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    public boolean getForward() {
-      return forward_;
-    }
-    
-    // required bool enable = 2;
-    public static final int ENABLE_FIELD_NUMBER = 2;
-    private boolean enable_;
-    public boolean hasEnable() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    public boolean getEnable() {
-      return enable_;
-    }
-    
-    // required uint32 power = 3;
-    public static final int POWER_FIELD_NUMBER = 3;
-    private int power_;
-    public boolean hasPower() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    public int getPower() {
-      return power_;
-    }
-    
-    private void initFields() {
-      forward_ = false;
-      enable_ = false;
-      power_ = 0;
-    }
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-      
-      if (!hasForward()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasEnable()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasPower()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      memoizedIsInitialized = 1;
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBool(1, forward_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBool(2, enable_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeUInt32(3, power_);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(1, forward_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, enable_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(3, power_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    private static final long serialVersionUID = 0L;
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
     }
-    
-    public static common.files.android.Command.DriveSignals parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static common.files.android.Command.DriveSignals parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static common.files.android.Command.DriveSignals parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static common.files.android.Command.DriveSignals parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static common.files.android.Command.DriveSignals parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static common.files.android.Command.DriveSignals parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static common.files.android.Command.DriveSignals parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static common.files.android.Command.DriveSignals parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
-    }
-    public static common.files.android.Command.DriveSignals parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static common.files.android.Command.DriveSignals parseFrom(
+    private DriveSignals(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(common.files.android.Command.DriveSignals prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-    
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements common.files.android.Command.DriveSignalsOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return common.files.android.Command.internal_static_common_files_android_DriveSignals_descriptor;
-      }
-      
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return common.files.android.Command.internal_static_common_files_android_DriveSignals_fieldAccessorTable;
-      }
-      
-      // Construct using common.files.android.Command.DriveSignals.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-      
-      private Builder(BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-        }
-      }
-      private static Builder create() {
-        return new Builder();
-      }
-      
-      public Builder clear() {
-        super.clear();
-        forward_ = false;
-        bitField0_ = (bitField0_ & ~0x00000001);
-        enable_ = false;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        power_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000004);
-        return this;
-      }
-      
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-      
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return common.files.android.Command.DriveSignals.getDescriptor();
-      }
-      
-      public common.files.android.Command.DriveSignals getDefaultInstanceForType() {
-        return common.files.android.Command.DriveSignals.getDefaultInstance();
-      }
-      
-      public common.files.android.Command.DriveSignals build() {
-        common.files.android.Command.DriveSignals result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-      
-      private common.files.android.Command.DriveSignals buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        common.files.android.Command.DriveSignals result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
-      public common.files.android.Command.DriveSignals buildPartial() {
-        common.files.android.Command.DriveSignals result = new common.files.android.Command.DriveSignals(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
-        result.forward_ = forward_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        result.enable_ = enable_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.power_ = power_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof common.files.android.Command.DriveSignals) {
-          return mergeFrom((common.files.android.Command.DriveSignals)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(common.files.android.Command.DriveSignals other) {
-        if (other == common.files.android.Command.DriveSignals.getDefaultInstance()) return this;
-        if (other.hasForward()) {
-          setForward(other.getForward());
-        }
-        if (other.hasEnable()) {
-          setEnable(other.getEnable());
-        }
-        if (other.hasPower()) {
-          setPower(other.getPower());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public final boolean isInitialized() {
-        if (!hasForward()) {
-          
-          return false;
-        }
-        if (!hasEnable()) {
-          
-          return false;
-        }
-        if (!hasPower()) {
-          
-          return false;
-        }
-        return true;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
           int tag = input.readTag();
           switch (tag) {
             case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
+              done = true;
+              break;
             default: {
               if (!parseUnknownField(input, unknownFields,
                                      extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
+                done = true;
               }
               break;
             }
@@ -2440,161 +2413,683 @@ public final class Command {
             }
           }
         }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
       }
-      
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return se.liu.ed.Command.internal_static_se_liu_ed_DriveSignals_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return se.liu.ed.Command.internal_static_se_liu_ed_DriveSignals_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              se.liu.ed.Command.DriveSignals.class, se.liu.ed.Command.DriveSignals.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<DriveSignals> PARSER =
+        new com.google.protobuf.AbstractParser<DriveSignals>() {
+      public DriveSignals parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DriveSignals(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DriveSignals> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int FORWARD_FIELD_NUMBER = 1;
+    private boolean forward_;
+    /**
+     * <code>required bool forward = 1;</code>
+     */
+    public boolean hasForward() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required bool forward = 1;</code>
+     */
+    public boolean getForward() {
+      return forward_;
+    }
+
+    public static final int ENABLE_FIELD_NUMBER = 2;
+    private boolean enable_;
+    /**
+     * <code>required bool enable = 2;</code>
+     */
+    public boolean hasEnable() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required bool enable = 2;</code>
+     */
+    public boolean getEnable() {
+      return enable_;
+    }
+
+    public static final int POWER_FIELD_NUMBER = 3;
+    private int power_;
+    /**
+     * <code>required uint32 power = 3;</code>
+     */
+    public boolean hasPower() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required uint32 power = 3;</code>
+     */
+    public int getPower() {
+      return power_;
+    }
+
+    private void initFields() {
+      forward_ = false;
+      enable_ = false;
+      power_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasForward()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasEnable()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasPower()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBool(1, forward_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBool(2, enable_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeUInt32(3, power_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, forward_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, enable_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, power_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static se.liu.ed.Command.DriveSignals parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static se.liu.ed.Command.DriveSignals parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static se.liu.ed.Command.DriveSignals parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static se.liu.ed.Command.DriveSignals parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static se.liu.ed.Command.DriveSignals parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static se.liu.ed.Command.DriveSignals parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static se.liu.ed.Command.DriveSignals parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static se.liu.ed.Command.DriveSignals parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static se.liu.ed.Command.DriveSignals parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static se.liu.ed.Command.DriveSignals parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(se.liu.ed.Command.DriveSignals prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code se.liu.ed.DriveSignals}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:se.liu.ed.DriveSignals)
+        se.liu.ed.Command.DriveSignalsOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return se.liu.ed.Command.internal_static_se_liu_ed_DriveSignals_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return se.liu.ed.Command.internal_static_se_liu_ed_DriveSignals_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                se.liu.ed.Command.DriveSignals.class, se.liu.ed.Command.DriveSignals.Builder.class);
+      }
+
+      // Construct using se.liu.ed.Command.DriveSignals.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        forward_ = false;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        enable_ = false;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        power_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return se.liu.ed.Command.internal_static_se_liu_ed_DriveSignals_descriptor;
+      }
+
+      public se.liu.ed.Command.DriveSignals getDefaultInstanceForType() {
+        return se.liu.ed.Command.DriveSignals.getDefaultInstance();
+      }
+
+      public se.liu.ed.Command.DriveSignals build() {
+        se.liu.ed.Command.DriveSignals result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public se.liu.ed.Command.DriveSignals buildPartial() {
+        se.liu.ed.Command.DriveSignals result = new se.liu.ed.Command.DriveSignals(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.forward_ = forward_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.enable_ = enable_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.power_ = power_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof se.liu.ed.Command.DriveSignals) {
+          return mergeFrom((se.liu.ed.Command.DriveSignals)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(se.liu.ed.Command.DriveSignals other) {
+        if (other == se.liu.ed.Command.DriveSignals.getDefaultInstance()) return this;
+        if (other.hasForward()) {
+          setForward(other.getForward());
+        }
+        if (other.hasEnable()) {
+          setEnable(other.getEnable());
+        }
+        if (other.hasPower()) {
+          setPower(other.getPower());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasForward()) {
+          
+          return false;
+        }
+        if (!hasEnable()) {
+          
+          return false;
+        }
+        if (!hasPower()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        se.liu.ed.Command.DriveSignals parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (se.liu.ed.Command.DriveSignals) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
       private int bitField0_;
-      
-      // required bool forward = 1;
+
       private boolean forward_ ;
+      /**
+       * <code>required bool forward = 1;</code>
+       */
       public boolean hasForward() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
+      /**
+       * <code>required bool forward = 1;</code>
+       */
       public boolean getForward() {
         return forward_;
       }
+      /**
+       * <code>required bool forward = 1;</code>
+       */
       public Builder setForward(boolean value) {
         bitField0_ |= 0x00000001;
         forward_ = value;
         onChanged();
         return this;
       }
+      /**
+       * <code>required bool forward = 1;</code>
+       */
       public Builder clearForward() {
         bitField0_ = (bitField0_ & ~0x00000001);
         forward_ = false;
         onChanged();
         return this;
       }
-      
-      // required bool enable = 2;
+
       private boolean enable_ ;
+      /**
+       * <code>required bool enable = 2;</code>
+       */
       public boolean hasEnable() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
+      /**
+       * <code>required bool enable = 2;</code>
+       */
       public boolean getEnable() {
         return enable_;
       }
+      /**
+       * <code>required bool enable = 2;</code>
+       */
       public Builder setEnable(boolean value) {
         bitField0_ |= 0x00000002;
         enable_ = value;
         onChanged();
         return this;
       }
+      /**
+       * <code>required bool enable = 2;</code>
+       */
       public Builder clearEnable() {
         bitField0_ = (bitField0_ & ~0x00000002);
         enable_ = false;
         onChanged();
         return this;
       }
-      
-      // required uint32 power = 3;
+
       private int power_ ;
+      /**
+       * <code>required uint32 power = 3;</code>
+       */
       public boolean hasPower() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
+      /**
+       * <code>required uint32 power = 3;</code>
+       */
       public int getPower() {
         return power_;
       }
+      /**
+       * <code>required uint32 power = 3;</code>
+       */
       public Builder setPower(int value) {
         bitField0_ |= 0x00000004;
         power_ = value;
         onChanged();
         return this;
       }
+      /**
+       * <code>required uint32 power = 3;</code>
+       */
       public Builder clearPower() {
         bitField0_ = (bitField0_ & ~0x00000004);
         power_ = 0;
         onChanged();
         return this;
       }
-      
-      // @@protoc_insertion_point(builder_scope:common.files.android.DriveSignals)
+
+      // @@protoc_insertion_point(builder_scope:se.liu.ed.DriveSignals)
     }
-    
+
     static {
       defaultInstance = new DriveSignals(true);
       defaultInstance.initFields();
     }
-    
-    // @@protoc_insertion_point(class_scope:common.files.android.DriveSignals)
+
+    // @@protoc_insertion_point(class_scope:se.liu.ed.DriveSignals)
   }
-  
-  public interface EnginesOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-    
-    // required .common.files.android.DriveSignals right = 1;
+
+  public interface EnginesOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:se.liu.ed.Engines)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+     */
     boolean hasRight();
-    common.files.android.Command.DriveSignals getRight();
-    common.files.android.Command.DriveSignalsOrBuilder getRightOrBuilder();
-    
-    // required .common.files.android.DriveSignals left = 2;
+    /**
+     * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+     */
+    se.liu.ed.Command.DriveSignals getRight();
+    /**
+     * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+     */
+    se.liu.ed.Command.DriveSignalsOrBuilder getRightOrBuilder();
+
+    /**
+     * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+     */
     boolean hasLeft();
-    common.files.android.Command.DriveSignals getLeft();
-    common.files.android.Command.DriveSignalsOrBuilder getLeftOrBuilder();
+    /**
+     * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+     */
+    se.liu.ed.Command.DriveSignals getLeft();
+    /**
+     * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+     */
+    se.liu.ed.Command.DriveSignalsOrBuilder getLeftOrBuilder();
   }
+  /**
+   * Protobuf type {@code se.liu.ed.Engines}
+   */
   public static final class Engines extends
-      com.google.protobuf.GeneratedMessage
-      implements EnginesOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:se.liu.ed.Engines)
+      EnginesOrBuilder {
     // Use Engines.newBuilder() to construct.
-    private Engines(Builder builder) {
+    private Engines(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private Engines(boolean noInit) {}
-    
+    private Engines(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final Engines defaultInstance;
     public static Engines getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public Engines getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Engines(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              se.liu.ed.Command.DriveSignals.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                subBuilder = right_.toBuilder();
+              }
+              right_ = input.readMessage(se.liu.ed.Command.DriveSignals.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(right_);
+                right_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000001;
+              break;
+            }
+            case 18: {
+              se.liu.ed.Command.DriveSignals.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                subBuilder = left_.toBuilder();
+              }
+              left_ = input.readMessage(se.liu.ed.Command.DriveSignals.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(left_);
+                left_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000002;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return common.files.android.Command.internal_static_common_files_android_Engines_descriptor;
+      return se.liu.ed.Command.internal_static_se_liu_ed_Engines_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return common.files.android.Command.internal_static_common_files_android_Engines_fieldAccessorTable;
+      return se.liu.ed.Command.internal_static_se_liu_ed_Engines_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              se.liu.ed.Command.Engines.class, se.liu.ed.Command.Engines.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<Engines> PARSER =
+        new com.google.protobuf.AbstractParser<Engines>() {
+      public Engines parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Engines(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Engines> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
-    // required .common.files.android.DriveSignals right = 1;
     public static final int RIGHT_FIELD_NUMBER = 1;
-    private common.files.android.Command.DriveSignals right_;
+    private se.liu.ed.Command.DriveSignals right_;
+    /**
+     * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+     */
     public boolean hasRight() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public common.files.android.Command.DriveSignals getRight() {
+    /**
+     * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+     */
+    public se.liu.ed.Command.DriveSignals getRight() {
       return right_;
     }
-    public common.files.android.Command.DriveSignalsOrBuilder getRightOrBuilder() {
+    /**
+     * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+     */
+    public se.liu.ed.Command.DriveSignalsOrBuilder getRightOrBuilder() {
       return right_;
     }
-    
-    // required .common.files.android.DriveSignals left = 2;
+
     public static final int LEFT_FIELD_NUMBER = 2;
-    private common.files.android.Command.DriveSignals left_;
+    private se.liu.ed.Command.DriveSignals left_;
+    /**
+     * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+     */
     public boolean hasLeft() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-    public common.files.android.Command.DriveSignals getLeft() {
+    /**
+     * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+     */
+    public se.liu.ed.Command.DriveSignals getLeft() {
       return left_;
     }
-    public common.files.android.Command.DriveSignalsOrBuilder getLeftOrBuilder() {
+    /**
+     * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+     */
+    public se.liu.ed.Command.DriveSignalsOrBuilder getLeftOrBuilder() {
       return left_;
     }
-    
+
     private void initFields() {
-      right_ = common.files.android.Command.DriveSignals.getDefaultInstance();
-      left_ = common.files.android.Command.DriveSignals.getDefaultInstance();
+      right_ = se.liu.ed.Command.DriveSignals.getDefaultInstance();
+      left_ = se.liu.ed.Command.DriveSignals.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-      
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
       if (!hasRight()) {
         memoizedIsInitialized = 0;
         return false;
@@ -2614,7 +3109,7 @@ public final class Command {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -2626,12 +3121,12 @@ public final class Command {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
@@ -2645,113 +3140,106 @@ public final class Command {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
-    public static common.files.android.Command.Engines parseFrom(
+
+    public static se.liu.ed.Command.Engines parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
-    public static common.files.android.Command.Engines parseFrom(
+    public static se.liu.ed.Command.Engines parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static common.files.android.Command.Engines parseFrom(byte[] data)
+    public static se.liu.ed.Command.Engines parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
-    public static common.files.android.Command.Engines parseFrom(
+    public static se.liu.ed.Command.Engines parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static common.files.android.Command.Engines parseFrom(java.io.InputStream input)
+    public static se.liu.ed.Command.Engines parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
-    public static common.files.android.Command.Engines parseFrom(
+    public static se.liu.ed.Command.Engines parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static common.files.android.Command.Engines parseDelimitedFrom(java.io.InputStream input)
+    public static se.liu.ed.Command.Engines parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
-    public static common.files.android.Command.Engines parseDelimitedFrom(
+    public static se.liu.ed.Command.Engines parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static common.files.android.Command.Engines parseFrom(
+    public static se.liu.ed.Command.Engines parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
-    public static common.files.android.Command.Engines parseFrom(
+    public static se.liu.ed.Command.Engines parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(common.files.android.Command.Engines prototype) {
+    public static Builder newBuilder(se.liu.ed.Command.Engines prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code se.liu.ed.Engines}
+     */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements common.files.android.Command.EnginesOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:se.liu.ed.Engines)
+        se.liu.ed.Command.EnginesOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return common.files.android.Command.internal_static_common_files_android_Engines_descriptor;
+        return se.liu.ed.Command.internal_static_se_liu_ed_Engines_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return common.files.android.Command.internal_static_common_files_android_Engines_fieldAccessorTable;
+        return se.liu.ed.Command.internal_static_se_liu_ed_Engines_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                se.liu.ed.Command.Engines.class, se.liu.ed.Command.Engines.Builder.class);
       }
-      
-      // Construct using common.files.android.Command.Engines.newBuilder()
+
+      // Construct using se.liu.ed.Command.Engines.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -2764,57 +3252,47 @@ public final class Command {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         if (rightBuilder_ == null) {
-          right_ = common.files.android.Command.DriveSignals.getDefaultInstance();
+          right_ = se.liu.ed.Command.DriveSignals.getDefaultInstance();
         } else {
           rightBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000001);
         if (leftBuilder_ == null) {
-          left_ = common.files.android.Command.DriveSignals.getDefaultInstance();
+          left_ = se.liu.ed.Command.DriveSignals.getDefaultInstance();
         } else {
           leftBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return common.files.android.Command.Engines.getDescriptor();
+        return se.liu.ed.Command.internal_static_se_liu_ed_Engines_descriptor;
       }
-      
-      public common.files.android.Command.Engines getDefaultInstanceForType() {
-        return common.files.android.Command.Engines.getDefaultInstance();
+
+      public se.liu.ed.Command.Engines getDefaultInstanceForType() {
+        return se.liu.ed.Command.Engines.getDefaultInstance();
       }
-      
-      public common.files.android.Command.Engines build() {
-        common.files.android.Command.Engines result = buildPartial();
+
+      public se.liu.ed.Command.Engines build() {
+        se.liu.ed.Command.Engines result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
-      
-      private common.files.android.Command.Engines buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        common.files.android.Command.Engines result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
-      public common.files.android.Command.Engines buildPartial() {
-        common.files.android.Command.Engines result = new common.files.android.Command.Engines(this);
+
+      public se.liu.ed.Command.Engines buildPartial() {
+        se.liu.ed.Command.Engines result = new se.liu.ed.Command.Engines(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -2837,18 +3315,18 @@ public final class Command {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof common.files.android.Command.Engines) {
-          return mergeFrom((common.files.android.Command.Engines)other);
+        if (other instanceof se.liu.ed.Command.Engines) {
+          return mergeFrom((se.liu.ed.Command.Engines)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
-      
-      public Builder mergeFrom(common.files.android.Command.Engines other) {
-        if (other == common.files.android.Command.Engines.getDefaultInstance()) return this;
+
+      public Builder mergeFrom(se.liu.ed.Command.Engines other) {
+        if (other == se.liu.ed.Command.Engines.getDefaultInstance()) return this;
         if (other.hasRight()) {
           mergeRight(other.getRight());
         }
@@ -2858,7 +3336,7 @@ public final class Command {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         if (!hasRight()) {
           
@@ -2878,69 +3356,49 @@ public final class Command {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              common.files.android.Command.DriveSignals.Builder subBuilder = common.files.android.Command.DriveSignals.newBuilder();
-              if (hasRight()) {
-                subBuilder.mergeFrom(getRight());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setRight(subBuilder.buildPartial());
-              break;
-            }
-            case 18: {
-              common.files.android.Command.DriveSignals.Builder subBuilder = common.files.android.Command.DriveSignals.newBuilder();
-              if (hasLeft()) {
-                subBuilder.mergeFrom(getLeft());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setLeft(subBuilder.buildPartial());
-              break;
-            }
+        se.liu.ed.Command.Engines parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (se.liu.ed.Command.Engines) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
-      // required .common.files.android.DriveSignals right = 1;
-      private common.files.android.Command.DriveSignals right_ = common.files.android.Command.DriveSignals.getDefaultInstance();
+
+      private se.liu.ed.Command.DriveSignals right_ = se.liu.ed.Command.DriveSignals.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.DriveSignals, common.files.android.Command.DriveSignals.Builder, common.files.android.Command.DriveSignalsOrBuilder> rightBuilder_;
+          se.liu.ed.Command.DriveSignals, se.liu.ed.Command.DriveSignals.Builder, se.liu.ed.Command.DriveSignalsOrBuilder> rightBuilder_;
+      /**
+       * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+       */
       public boolean hasRight() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public common.files.android.Command.DriveSignals getRight() {
+      /**
+       * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+       */
+      public se.liu.ed.Command.DriveSignals getRight() {
         if (rightBuilder_ == null) {
           return right_;
         } else {
           return rightBuilder_.getMessage();
         }
       }
-      public Builder setRight(common.files.android.Command.DriveSignals value) {
+      /**
+       * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+       */
+      public Builder setRight(se.liu.ed.Command.DriveSignals value) {
         if (rightBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2953,8 +3411,11 @@ public final class Command {
         bitField0_ |= 0x00000001;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+       */
       public Builder setRight(
-          common.files.android.Command.DriveSignals.Builder builderForValue) {
+          se.liu.ed.Command.DriveSignals.Builder builderForValue) {
         if (rightBuilder_ == null) {
           right_ = builderForValue.build();
           onChanged();
@@ -2964,12 +3425,15 @@ public final class Command {
         bitField0_ |= 0x00000001;
         return this;
       }
-      public Builder mergeRight(common.files.android.Command.DriveSignals value) {
+      /**
+       * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+       */
+      public Builder mergeRight(se.liu.ed.Command.DriveSignals value) {
         if (rightBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              right_ != common.files.android.Command.DriveSignals.getDefaultInstance()) {
+              right_ != se.liu.ed.Command.DriveSignals.getDefaultInstance()) {
             right_ =
-              common.files.android.Command.DriveSignals.newBuilder(right_).mergeFrom(value).buildPartial();
+              se.liu.ed.Command.DriveSignals.newBuilder(right_).mergeFrom(value).buildPartial();
           } else {
             right_ = value;
           }
@@ -2980,9 +3444,12 @@ public final class Command {
         bitField0_ |= 0x00000001;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+       */
       public Builder clearRight() {
         if (rightBuilder_ == null) {
-          right_ = common.files.android.Command.DriveSignals.getDefaultInstance();
+          right_ = se.liu.ed.Command.DriveSignals.getDefaultInstance();
           onChanged();
         } else {
           rightBuilder_.clear();
@@ -2990,47 +3457,64 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
-      public common.files.android.Command.DriveSignals.Builder getRightBuilder() {
+      /**
+       * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+       */
+      public se.liu.ed.Command.DriveSignals.Builder getRightBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getRightFieldBuilder().getBuilder();
       }
-      public common.files.android.Command.DriveSignalsOrBuilder getRightOrBuilder() {
+      /**
+       * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+       */
+      public se.liu.ed.Command.DriveSignalsOrBuilder getRightOrBuilder() {
         if (rightBuilder_ != null) {
           return rightBuilder_.getMessageOrBuilder();
         } else {
           return right_;
         }
       }
+      /**
+       * <code>required .se.liu.ed.DriveSignals right = 1;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.DriveSignals, common.files.android.Command.DriveSignals.Builder, common.files.android.Command.DriveSignalsOrBuilder> 
+          se.liu.ed.Command.DriveSignals, se.liu.ed.Command.DriveSignals.Builder, se.liu.ed.Command.DriveSignalsOrBuilder> 
           getRightFieldBuilder() {
         if (rightBuilder_ == null) {
           rightBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              common.files.android.Command.DriveSignals, common.files.android.Command.DriveSignals.Builder, common.files.android.Command.DriveSignalsOrBuilder>(
-                  right_,
+              se.liu.ed.Command.DriveSignals, se.liu.ed.Command.DriveSignals.Builder, se.liu.ed.Command.DriveSignalsOrBuilder>(
+                  getRight(),
                   getParentForChildren(),
                   isClean());
           right_ = null;
         }
         return rightBuilder_;
       }
-      
-      // required .common.files.android.DriveSignals left = 2;
-      private common.files.android.Command.DriveSignals left_ = common.files.android.Command.DriveSignals.getDefaultInstance();
+
+      private se.liu.ed.Command.DriveSignals left_ = se.liu.ed.Command.DriveSignals.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.DriveSignals, common.files.android.Command.DriveSignals.Builder, common.files.android.Command.DriveSignalsOrBuilder> leftBuilder_;
+          se.liu.ed.Command.DriveSignals, se.liu.ed.Command.DriveSignals.Builder, se.liu.ed.Command.DriveSignalsOrBuilder> leftBuilder_;
+      /**
+       * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+       */
       public boolean hasLeft() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public common.files.android.Command.DriveSignals getLeft() {
+      /**
+       * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+       */
+      public se.liu.ed.Command.DriveSignals getLeft() {
         if (leftBuilder_ == null) {
           return left_;
         } else {
           return leftBuilder_.getMessage();
         }
       }
-      public Builder setLeft(common.files.android.Command.DriveSignals value) {
+      /**
+       * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+       */
+      public Builder setLeft(se.liu.ed.Command.DriveSignals value) {
         if (leftBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3043,8 +3527,11 @@ public final class Command {
         bitField0_ |= 0x00000002;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+       */
       public Builder setLeft(
-          common.files.android.Command.DriveSignals.Builder builderForValue) {
+          se.liu.ed.Command.DriveSignals.Builder builderForValue) {
         if (leftBuilder_ == null) {
           left_ = builderForValue.build();
           onChanged();
@@ -3054,12 +3541,15 @@ public final class Command {
         bitField0_ |= 0x00000002;
         return this;
       }
-      public Builder mergeLeft(common.files.android.Command.DriveSignals value) {
+      /**
+       * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+       */
+      public Builder mergeLeft(se.liu.ed.Command.DriveSignals value) {
         if (leftBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002) &&
-              left_ != common.files.android.Command.DriveSignals.getDefaultInstance()) {
+              left_ != se.liu.ed.Command.DriveSignals.getDefaultInstance()) {
             left_ =
-              common.files.android.Command.DriveSignals.newBuilder(left_).mergeFrom(value).buildPartial();
+              se.liu.ed.Command.DriveSignals.newBuilder(left_).mergeFrom(value).buildPartial();
           } else {
             left_ = value;
           }
@@ -3070,9 +3560,12 @@ public final class Command {
         bitField0_ |= 0x00000002;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+       */
       public Builder clearLeft() {
         if (leftBuilder_ == null) {
-          left_ = common.files.android.Command.DriveSignals.getDefaultInstance();
+          left_ = se.liu.ed.Command.DriveSignals.getDefaultInstance();
           onChanged();
         } else {
           leftBuilder_.clear();
@@ -3080,158 +3573,348 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
-      public common.files.android.Command.DriveSignals.Builder getLeftBuilder() {
+      /**
+       * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+       */
+      public se.liu.ed.Command.DriveSignals.Builder getLeftBuilder() {
         bitField0_ |= 0x00000002;
         onChanged();
         return getLeftFieldBuilder().getBuilder();
       }
-      public common.files.android.Command.DriveSignalsOrBuilder getLeftOrBuilder() {
+      /**
+       * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+       */
+      public se.liu.ed.Command.DriveSignalsOrBuilder getLeftOrBuilder() {
         if (leftBuilder_ != null) {
           return leftBuilder_.getMessageOrBuilder();
         } else {
           return left_;
         }
       }
+      /**
+       * <code>required .se.liu.ed.DriveSignals left = 2;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.DriveSignals, common.files.android.Command.DriveSignals.Builder, common.files.android.Command.DriveSignalsOrBuilder> 
+          se.liu.ed.Command.DriveSignals, se.liu.ed.Command.DriveSignals.Builder, se.liu.ed.Command.DriveSignalsOrBuilder> 
           getLeftFieldBuilder() {
         if (leftBuilder_ == null) {
           leftBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              common.files.android.Command.DriveSignals, common.files.android.Command.DriveSignals.Builder, common.files.android.Command.DriveSignalsOrBuilder>(
-                  left_,
+              se.liu.ed.Command.DriveSignals, se.liu.ed.Command.DriveSignals.Builder, se.liu.ed.Command.DriveSignalsOrBuilder>(
+                  getLeft(),
                   getParentForChildren(),
                   isClean());
           left_ = null;
         }
         return leftBuilder_;
       }
-      
-      // @@protoc_insertion_point(builder_scope:common.files.android.Engines)
+
+      // @@protoc_insertion_point(builder_scope:se.liu.ed.Engines)
     }
-    
+
     static {
       defaultInstance = new Engines(true);
       defaultInstance.initFields();
     }
-    
-    // @@protoc_insertion_point(class_scope:common.files.android.Engines)
+
+    // @@protoc_insertion_point(class_scope:se.liu.ed.Engines)
   }
-  
-  public interface USSensorsOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-    
-    // required .common.files.android.USSensorData uSSensorData1 = 1;
+
+  public interface USSensorsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:se.liu.ed.USSensors)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+     */
     boolean hasUSSensorData1();
-    common.files.android.Command.USSensorData getUSSensorData1();
-    common.files.android.Command.USSensorDataOrBuilder getUSSensorData1OrBuilder();
-    
-    // required .common.files.android.USSensorData uSSensorData2 = 2;
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+     */
+    se.liu.ed.Command.USSensorData getUSSensorData1();
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+     */
+    se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData1OrBuilder();
+
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+     */
     boolean hasUSSensorData2();
-    common.files.android.Command.USSensorData getUSSensorData2();
-    common.files.android.Command.USSensorDataOrBuilder getUSSensorData2OrBuilder();
-    
-    // required .common.files.android.USSensorData uSSensorData3 = 3;
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+     */
+    se.liu.ed.Command.USSensorData getUSSensorData2();
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+     */
+    se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData2OrBuilder();
+
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+     */
     boolean hasUSSensorData3();
-    common.files.android.Command.USSensorData getUSSensorData3();
-    common.files.android.Command.USSensorDataOrBuilder getUSSensorData3OrBuilder();
-    
-    // required .common.files.android.USSensorData uSSensorData4 = 4;
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+     */
+    se.liu.ed.Command.USSensorData getUSSensorData3();
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+     */
+    se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData3OrBuilder();
+
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+     */
     boolean hasUSSensorData4();
-    common.files.android.Command.USSensorData getUSSensorData4();
-    common.files.android.Command.USSensorDataOrBuilder getUSSensorData4OrBuilder();
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+     */
+    se.liu.ed.Command.USSensorData getUSSensorData4();
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+     */
+    se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData4OrBuilder();
   }
+  /**
+   * Protobuf type {@code se.liu.ed.USSensors}
+   */
   public static final class USSensors extends
-      com.google.protobuf.GeneratedMessage
-      implements USSensorsOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:se.liu.ed.USSensors)
+      USSensorsOrBuilder {
     // Use USSensors.newBuilder() to construct.
-    private USSensors(Builder builder) {
+    private USSensors(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private USSensors(boolean noInit) {}
-    
+    private USSensors(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final USSensors defaultInstance;
     public static USSensors getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public USSensors getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private USSensors(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              se.liu.ed.Command.USSensorData.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                subBuilder = uSSensorData1_.toBuilder();
+              }
+              uSSensorData1_ = input.readMessage(se.liu.ed.Command.USSensorData.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(uSSensorData1_);
+                uSSensorData1_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000001;
+              break;
+            }
+            case 18: {
+              se.liu.ed.Command.USSensorData.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                subBuilder = uSSensorData2_.toBuilder();
+              }
+              uSSensorData2_ = input.readMessage(se.liu.ed.Command.USSensorData.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(uSSensorData2_);
+                uSSensorData2_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000002;
+              break;
+            }
+            case 26: {
+              se.liu.ed.Command.USSensorData.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000004) == 0x00000004)) {
+                subBuilder = uSSensorData3_.toBuilder();
+              }
+              uSSensorData3_ = input.readMessage(se.liu.ed.Command.USSensorData.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(uSSensorData3_);
+                uSSensorData3_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000004;
+              break;
+            }
+            case 34: {
+              se.liu.ed.Command.USSensorData.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000008) == 0x00000008)) {
+                subBuilder = uSSensorData4_.toBuilder();
+              }
+              uSSensorData4_ = input.readMessage(se.liu.ed.Command.USSensorData.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(uSSensorData4_);
+                uSSensorData4_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000008;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return common.files.android.Command.internal_static_common_files_android_USSensors_descriptor;
+      return se.liu.ed.Command.internal_static_se_liu_ed_USSensors_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return common.files.android.Command.internal_static_common_files_android_USSensors_fieldAccessorTable;
+      return se.liu.ed.Command.internal_static_se_liu_ed_USSensors_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              se.liu.ed.Command.USSensors.class, se.liu.ed.Command.USSensors.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<USSensors> PARSER =
+        new com.google.protobuf.AbstractParser<USSensors>() {
+      public USSensors parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new USSensors(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<USSensors> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
-    // required .common.files.android.USSensorData uSSensorData1 = 1;
     public static final int USSENSORDATA1_FIELD_NUMBER = 1;
-    private common.files.android.Command.USSensorData uSSensorData1_;
+    private se.liu.ed.Command.USSensorData uSSensorData1_;
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+     */
     public boolean hasUSSensorData1() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public common.files.android.Command.USSensorData getUSSensorData1() {
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+     */
+    public se.liu.ed.Command.USSensorData getUSSensorData1() {
       return uSSensorData1_;
     }
-    public common.files.android.Command.USSensorDataOrBuilder getUSSensorData1OrBuilder() {
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+     */
+    public se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData1OrBuilder() {
       return uSSensorData1_;
     }
-    
-    // required .common.files.android.USSensorData uSSensorData2 = 2;
+
     public static final int USSENSORDATA2_FIELD_NUMBER = 2;
-    private common.files.android.Command.USSensorData uSSensorData2_;
+    private se.liu.ed.Command.USSensorData uSSensorData2_;
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+     */
     public boolean hasUSSensorData2() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-    public common.files.android.Command.USSensorData getUSSensorData2() {
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+     */
+    public se.liu.ed.Command.USSensorData getUSSensorData2() {
       return uSSensorData2_;
     }
-    public common.files.android.Command.USSensorDataOrBuilder getUSSensorData2OrBuilder() {
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+     */
+    public se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData2OrBuilder() {
       return uSSensorData2_;
     }
-    
-    // required .common.files.android.USSensorData uSSensorData3 = 3;
+
     public static final int USSENSORDATA3_FIELD_NUMBER = 3;
-    private common.files.android.Command.USSensorData uSSensorData3_;
+    private se.liu.ed.Command.USSensorData uSSensorData3_;
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+     */
     public boolean hasUSSensorData3() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
-    public common.files.android.Command.USSensorData getUSSensorData3() {
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+     */
+    public se.liu.ed.Command.USSensorData getUSSensorData3() {
       return uSSensorData3_;
     }
-    public common.files.android.Command.USSensorDataOrBuilder getUSSensorData3OrBuilder() {
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+     */
+    public se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData3OrBuilder() {
       return uSSensorData3_;
     }
-    
-    // required .common.files.android.USSensorData uSSensorData4 = 4;
+
     public static final int USSENSORDATA4_FIELD_NUMBER = 4;
-    private common.files.android.Command.USSensorData uSSensorData4_;
+    private se.liu.ed.Command.USSensorData uSSensorData4_;
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+     */
     public boolean hasUSSensorData4() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
-    public common.files.android.Command.USSensorData getUSSensorData4() {
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+     */
+    public se.liu.ed.Command.USSensorData getUSSensorData4() {
       return uSSensorData4_;
     }
-    public common.files.android.Command.USSensorDataOrBuilder getUSSensorData4OrBuilder() {
+    /**
+     * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+     */
+    public se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData4OrBuilder() {
       return uSSensorData4_;
     }
-    
+
     private void initFields() {
-      uSSensorData1_ = common.files.android.Command.USSensorData.getDefaultInstance();
-      uSSensorData2_ = common.files.android.Command.USSensorData.getDefaultInstance();
-      uSSensorData3_ = common.files.android.Command.USSensorData.getDefaultInstance();
-      uSSensorData4_ = common.files.android.Command.USSensorData.getDefaultInstance();
+      uSSensorData1_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
+      uSSensorData2_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
+      uSSensorData3_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
+      uSSensorData4_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-      
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
       if (!hasUSSensorData1()) {
         memoizedIsInitialized = 0;
         return false;
@@ -3267,7 +3950,7 @@ public final class Command {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -3285,12 +3968,12 @@ public final class Command {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
@@ -3312,113 +3995,106 @@ public final class Command {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
-    public static common.files.android.Command.USSensors parseFrom(
+
+    public static se.liu.ed.Command.USSensors parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
-    public static common.files.android.Command.USSensors parseFrom(
+    public static se.liu.ed.Command.USSensors parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static common.files.android.Command.USSensors parseFrom(byte[] data)
+    public static se.liu.ed.Command.USSensors parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
-    public static common.files.android.Command.USSensors parseFrom(
+    public static se.liu.ed.Command.USSensors parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static common.files.android.Command.USSensors parseFrom(java.io.InputStream input)
+    public static se.liu.ed.Command.USSensors parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
-    public static common.files.android.Command.USSensors parseFrom(
+    public static se.liu.ed.Command.USSensors parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static common.files.android.Command.USSensors parseDelimitedFrom(java.io.InputStream input)
+    public static se.liu.ed.Command.USSensors parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
-    public static common.files.android.Command.USSensors parseDelimitedFrom(
+    public static se.liu.ed.Command.USSensors parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static common.files.android.Command.USSensors parseFrom(
+    public static se.liu.ed.Command.USSensors parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
-    public static common.files.android.Command.USSensors parseFrom(
+    public static se.liu.ed.Command.USSensors parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(common.files.android.Command.USSensors prototype) {
+    public static Builder newBuilder(se.liu.ed.Command.USSensors prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code se.liu.ed.USSensors}
+     */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements common.files.android.Command.USSensorsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:se.liu.ed.USSensors)
+        se.liu.ed.Command.USSensorsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return common.files.android.Command.internal_static_common_files_android_USSensors_descriptor;
+        return se.liu.ed.Command.internal_static_se_liu_ed_USSensors_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return common.files.android.Command.internal_static_common_files_android_USSensors_fieldAccessorTable;
+        return se.liu.ed.Command.internal_static_se_liu_ed_USSensors_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                se.liu.ed.Command.USSensors.class, se.liu.ed.Command.USSensors.Builder.class);
       }
-      
-      // Construct using common.files.android.Command.USSensors.newBuilder()
+
+      // Construct using se.liu.ed.Command.USSensors.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -3433,69 +4109,59 @@ public final class Command {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         if (uSSensorData1Builder_ == null) {
-          uSSensorData1_ = common.files.android.Command.USSensorData.getDefaultInstance();
+          uSSensorData1_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
         } else {
           uSSensorData1Builder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000001);
         if (uSSensorData2Builder_ == null) {
-          uSSensorData2_ = common.files.android.Command.USSensorData.getDefaultInstance();
+          uSSensorData2_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
         } else {
           uSSensorData2Builder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
         if (uSSensorData3Builder_ == null) {
-          uSSensorData3_ = common.files.android.Command.USSensorData.getDefaultInstance();
+          uSSensorData3_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
         } else {
           uSSensorData3Builder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000004);
         if (uSSensorData4Builder_ == null) {
-          uSSensorData4_ = common.files.android.Command.USSensorData.getDefaultInstance();
+          uSSensorData4_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
         } else {
           uSSensorData4Builder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return common.files.android.Command.USSensors.getDescriptor();
+        return se.liu.ed.Command.internal_static_se_liu_ed_USSensors_descriptor;
       }
-      
-      public common.files.android.Command.USSensors getDefaultInstanceForType() {
-        return common.files.android.Command.USSensors.getDefaultInstance();
+
+      public se.liu.ed.Command.USSensors getDefaultInstanceForType() {
+        return se.liu.ed.Command.USSensors.getDefaultInstance();
       }
-      
-      public common.files.android.Command.USSensors build() {
-        common.files.android.Command.USSensors result = buildPartial();
+
+      public se.liu.ed.Command.USSensors build() {
+        se.liu.ed.Command.USSensors result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
-      
-      private common.files.android.Command.USSensors buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        common.files.android.Command.USSensors result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
-      public common.files.android.Command.USSensors buildPartial() {
-        common.files.android.Command.USSensors result = new common.files.android.Command.USSensors(this);
+
+      public se.liu.ed.Command.USSensors buildPartial() {
+        se.liu.ed.Command.USSensors result = new se.liu.ed.Command.USSensors(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -3534,18 +4200,18 @@ public final class Command {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof common.files.android.Command.USSensors) {
-          return mergeFrom((common.files.android.Command.USSensors)other);
+        if (other instanceof se.liu.ed.Command.USSensors) {
+          return mergeFrom((se.liu.ed.Command.USSensors)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
-      
-      public Builder mergeFrom(common.files.android.Command.USSensors other) {
-        if (other == common.files.android.Command.USSensors.getDefaultInstance()) return this;
+
+      public Builder mergeFrom(se.liu.ed.Command.USSensors other) {
+        if (other == se.liu.ed.Command.USSensors.getDefaultInstance()) return this;
         if (other.hasUSSensorData1()) {
           mergeUSSensorData1(other.getUSSensorData1());
         }
@@ -3561,7 +4227,7 @@ public final class Command {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         if (!hasUSSensorData1()) {
           
@@ -3597,87 +4263,49 @@ public final class Command {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              common.files.android.Command.USSensorData.Builder subBuilder = common.files.android.Command.USSensorData.newBuilder();
-              if (hasUSSensorData1()) {
-                subBuilder.mergeFrom(getUSSensorData1());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setUSSensorData1(subBuilder.buildPartial());
-              break;
-            }
-            case 18: {
-              common.files.android.Command.USSensorData.Builder subBuilder = common.files.android.Command.USSensorData.newBuilder();
-              if (hasUSSensorData2()) {
-                subBuilder.mergeFrom(getUSSensorData2());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setUSSensorData2(subBuilder.buildPartial());
-              break;
-            }
-            case 26: {
-              common.files.android.Command.USSensorData.Builder subBuilder = common.files.android.Command.USSensorData.newBuilder();
-              if (hasUSSensorData3()) {
-                subBuilder.mergeFrom(getUSSensorData3());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setUSSensorData3(subBuilder.buildPartial());
-              break;
-            }
-            case 34: {
-              common.files.android.Command.USSensorData.Builder subBuilder = common.files.android.Command.USSensorData.newBuilder();
-              if (hasUSSensorData4()) {
-                subBuilder.mergeFrom(getUSSensorData4());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setUSSensorData4(subBuilder.buildPartial());
-              break;
-            }
+        se.liu.ed.Command.USSensors parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (se.liu.ed.Command.USSensors) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
-      // required .common.files.android.USSensorData uSSensorData1 = 1;
-      private common.files.android.Command.USSensorData uSSensorData1_ = common.files.android.Command.USSensorData.getDefaultInstance();
+
+      private se.liu.ed.Command.USSensorData uSSensorData1_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder> uSSensorData1Builder_;
+          se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder> uSSensorData1Builder_;
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+       */
       public boolean hasUSSensorData1() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public common.files.android.Command.USSensorData getUSSensorData1() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+       */
+      public se.liu.ed.Command.USSensorData getUSSensorData1() {
         if (uSSensorData1Builder_ == null) {
           return uSSensorData1_;
         } else {
           return uSSensorData1Builder_.getMessage();
         }
       }
-      public Builder setUSSensorData1(common.files.android.Command.USSensorData value) {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+       */
+      public Builder setUSSensorData1(se.liu.ed.Command.USSensorData value) {
         if (uSSensorData1Builder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3690,8 +4318,11 @@ public final class Command {
         bitField0_ |= 0x00000001;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+       */
       public Builder setUSSensorData1(
-          common.files.android.Command.USSensorData.Builder builderForValue) {
+          se.liu.ed.Command.USSensorData.Builder builderForValue) {
         if (uSSensorData1Builder_ == null) {
           uSSensorData1_ = builderForValue.build();
           onChanged();
@@ -3701,12 +4332,15 @@ public final class Command {
         bitField0_ |= 0x00000001;
         return this;
       }
-      public Builder mergeUSSensorData1(common.files.android.Command.USSensorData value) {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+       */
+      public Builder mergeUSSensorData1(se.liu.ed.Command.USSensorData value) {
         if (uSSensorData1Builder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              uSSensorData1_ != common.files.android.Command.USSensorData.getDefaultInstance()) {
+              uSSensorData1_ != se.liu.ed.Command.USSensorData.getDefaultInstance()) {
             uSSensorData1_ =
-              common.files.android.Command.USSensorData.newBuilder(uSSensorData1_).mergeFrom(value).buildPartial();
+              se.liu.ed.Command.USSensorData.newBuilder(uSSensorData1_).mergeFrom(value).buildPartial();
           } else {
             uSSensorData1_ = value;
           }
@@ -3717,9 +4351,12 @@ public final class Command {
         bitField0_ |= 0x00000001;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+       */
       public Builder clearUSSensorData1() {
         if (uSSensorData1Builder_ == null) {
-          uSSensorData1_ = common.files.android.Command.USSensorData.getDefaultInstance();
+          uSSensorData1_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
           onChanged();
         } else {
           uSSensorData1Builder_.clear();
@@ -3727,47 +4364,64 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
-      public common.files.android.Command.USSensorData.Builder getUSSensorData1Builder() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+       */
+      public se.liu.ed.Command.USSensorData.Builder getUSSensorData1Builder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getUSSensorData1FieldBuilder().getBuilder();
       }
-      public common.files.android.Command.USSensorDataOrBuilder getUSSensorData1OrBuilder() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+       */
+      public se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData1OrBuilder() {
         if (uSSensorData1Builder_ != null) {
           return uSSensorData1Builder_.getMessageOrBuilder();
         } else {
           return uSSensorData1_;
         }
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData1 = 1;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder> 
+          se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder> 
           getUSSensorData1FieldBuilder() {
         if (uSSensorData1Builder_ == null) {
           uSSensorData1Builder_ = new com.google.protobuf.SingleFieldBuilder<
-              common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder>(
-                  uSSensorData1_,
+              se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder>(
+                  getUSSensorData1(),
                   getParentForChildren(),
                   isClean());
           uSSensorData1_ = null;
         }
         return uSSensorData1Builder_;
       }
-      
-      // required .common.files.android.USSensorData uSSensorData2 = 2;
-      private common.files.android.Command.USSensorData uSSensorData2_ = common.files.android.Command.USSensorData.getDefaultInstance();
+
+      private se.liu.ed.Command.USSensorData uSSensorData2_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder> uSSensorData2Builder_;
+          se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder> uSSensorData2Builder_;
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+       */
       public boolean hasUSSensorData2() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public common.files.android.Command.USSensorData getUSSensorData2() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+       */
+      public se.liu.ed.Command.USSensorData getUSSensorData2() {
         if (uSSensorData2Builder_ == null) {
           return uSSensorData2_;
         } else {
           return uSSensorData2Builder_.getMessage();
         }
       }
-      public Builder setUSSensorData2(common.files.android.Command.USSensorData value) {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+       */
+      public Builder setUSSensorData2(se.liu.ed.Command.USSensorData value) {
         if (uSSensorData2Builder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3780,8 +4434,11 @@ public final class Command {
         bitField0_ |= 0x00000002;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+       */
       public Builder setUSSensorData2(
-          common.files.android.Command.USSensorData.Builder builderForValue) {
+          se.liu.ed.Command.USSensorData.Builder builderForValue) {
         if (uSSensorData2Builder_ == null) {
           uSSensorData2_ = builderForValue.build();
           onChanged();
@@ -3791,12 +4448,15 @@ public final class Command {
         bitField0_ |= 0x00000002;
         return this;
       }
-      public Builder mergeUSSensorData2(common.files.android.Command.USSensorData value) {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+       */
+      public Builder mergeUSSensorData2(se.liu.ed.Command.USSensorData value) {
         if (uSSensorData2Builder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002) &&
-              uSSensorData2_ != common.files.android.Command.USSensorData.getDefaultInstance()) {
+              uSSensorData2_ != se.liu.ed.Command.USSensorData.getDefaultInstance()) {
             uSSensorData2_ =
-              common.files.android.Command.USSensorData.newBuilder(uSSensorData2_).mergeFrom(value).buildPartial();
+              se.liu.ed.Command.USSensorData.newBuilder(uSSensorData2_).mergeFrom(value).buildPartial();
           } else {
             uSSensorData2_ = value;
           }
@@ -3807,9 +4467,12 @@ public final class Command {
         bitField0_ |= 0x00000002;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+       */
       public Builder clearUSSensorData2() {
         if (uSSensorData2Builder_ == null) {
-          uSSensorData2_ = common.files.android.Command.USSensorData.getDefaultInstance();
+          uSSensorData2_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
           onChanged();
         } else {
           uSSensorData2Builder_.clear();
@@ -3817,47 +4480,64 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
-      public common.files.android.Command.USSensorData.Builder getUSSensorData2Builder() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+       */
+      public se.liu.ed.Command.USSensorData.Builder getUSSensorData2Builder() {
         bitField0_ |= 0x00000002;
         onChanged();
         return getUSSensorData2FieldBuilder().getBuilder();
       }
-      public common.files.android.Command.USSensorDataOrBuilder getUSSensorData2OrBuilder() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+       */
+      public se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData2OrBuilder() {
         if (uSSensorData2Builder_ != null) {
           return uSSensorData2Builder_.getMessageOrBuilder();
         } else {
           return uSSensorData2_;
         }
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData2 = 2;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder> 
+          se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder> 
           getUSSensorData2FieldBuilder() {
         if (uSSensorData2Builder_ == null) {
           uSSensorData2Builder_ = new com.google.protobuf.SingleFieldBuilder<
-              common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder>(
-                  uSSensorData2_,
+              se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder>(
+                  getUSSensorData2(),
                   getParentForChildren(),
                   isClean());
           uSSensorData2_ = null;
         }
         return uSSensorData2Builder_;
       }
-      
-      // required .common.files.android.USSensorData uSSensorData3 = 3;
-      private common.files.android.Command.USSensorData uSSensorData3_ = common.files.android.Command.USSensorData.getDefaultInstance();
+
+      private se.liu.ed.Command.USSensorData uSSensorData3_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder> uSSensorData3Builder_;
+          se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder> uSSensorData3Builder_;
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+       */
       public boolean hasUSSensorData3() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
-      public common.files.android.Command.USSensorData getUSSensorData3() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+       */
+      public se.liu.ed.Command.USSensorData getUSSensorData3() {
         if (uSSensorData3Builder_ == null) {
           return uSSensorData3_;
         } else {
           return uSSensorData3Builder_.getMessage();
         }
       }
-      public Builder setUSSensorData3(common.files.android.Command.USSensorData value) {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+       */
+      public Builder setUSSensorData3(se.liu.ed.Command.USSensorData value) {
         if (uSSensorData3Builder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3870,8 +4550,11 @@ public final class Command {
         bitField0_ |= 0x00000004;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+       */
       public Builder setUSSensorData3(
-          common.files.android.Command.USSensorData.Builder builderForValue) {
+          se.liu.ed.Command.USSensorData.Builder builderForValue) {
         if (uSSensorData3Builder_ == null) {
           uSSensorData3_ = builderForValue.build();
           onChanged();
@@ -3881,12 +4564,15 @@ public final class Command {
         bitField0_ |= 0x00000004;
         return this;
       }
-      public Builder mergeUSSensorData3(common.files.android.Command.USSensorData value) {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+       */
+      public Builder mergeUSSensorData3(se.liu.ed.Command.USSensorData value) {
         if (uSSensorData3Builder_ == null) {
           if (((bitField0_ & 0x00000004) == 0x00000004) &&
-              uSSensorData3_ != common.files.android.Command.USSensorData.getDefaultInstance()) {
+              uSSensorData3_ != se.liu.ed.Command.USSensorData.getDefaultInstance()) {
             uSSensorData3_ =
-              common.files.android.Command.USSensorData.newBuilder(uSSensorData3_).mergeFrom(value).buildPartial();
+              se.liu.ed.Command.USSensorData.newBuilder(uSSensorData3_).mergeFrom(value).buildPartial();
           } else {
             uSSensorData3_ = value;
           }
@@ -3897,9 +4583,12 @@ public final class Command {
         bitField0_ |= 0x00000004;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+       */
       public Builder clearUSSensorData3() {
         if (uSSensorData3Builder_ == null) {
-          uSSensorData3_ = common.files.android.Command.USSensorData.getDefaultInstance();
+          uSSensorData3_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
           onChanged();
         } else {
           uSSensorData3Builder_.clear();
@@ -3907,47 +4596,64 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
-      public common.files.android.Command.USSensorData.Builder getUSSensorData3Builder() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+       */
+      public se.liu.ed.Command.USSensorData.Builder getUSSensorData3Builder() {
         bitField0_ |= 0x00000004;
         onChanged();
         return getUSSensorData3FieldBuilder().getBuilder();
       }
-      public common.files.android.Command.USSensorDataOrBuilder getUSSensorData3OrBuilder() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+       */
+      public se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData3OrBuilder() {
         if (uSSensorData3Builder_ != null) {
           return uSSensorData3Builder_.getMessageOrBuilder();
         } else {
           return uSSensorData3_;
         }
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData3 = 3;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder> 
+          se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder> 
           getUSSensorData3FieldBuilder() {
         if (uSSensorData3Builder_ == null) {
           uSSensorData3Builder_ = new com.google.protobuf.SingleFieldBuilder<
-              common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder>(
-                  uSSensorData3_,
+              se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder>(
+                  getUSSensorData3(),
                   getParentForChildren(),
                   isClean());
           uSSensorData3_ = null;
         }
         return uSSensorData3Builder_;
       }
-      
-      // required .common.files.android.USSensorData uSSensorData4 = 4;
-      private common.files.android.Command.USSensorData uSSensorData4_ = common.files.android.Command.USSensorData.getDefaultInstance();
+
+      private se.liu.ed.Command.USSensorData uSSensorData4_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder> uSSensorData4Builder_;
+          se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder> uSSensorData4Builder_;
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+       */
       public boolean hasUSSensorData4() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
-      public common.files.android.Command.USSensorData getUSSensorData4() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+       */
+      public se.liu.ed.Command.USSensorData getUSSensorData4() {
         if (uSSensorData4Builder_ == null) {
           return uSSensorData4_;
         } else {
           return uSSensorData4Builder_.getMessage();
         }
       }
-      public Builder setUSSensorData4(common.files.android.Command.USSensorData value) {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+       */
+      public Builder setUSSensorData4(se.liu.ed.Command.USSensorData value) {
         if (uSSensorData4Builder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3960,8 +4666,11 @@ public final class Command {
         bitField0_ |= 0x00000008;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+       */
       public Builder setUSSensorData4(
-          common.files.android.Command.USSensorData.Builder builderForValue) {
+          se.liu.ed.Command.USSensorData.Builder builderForValue) {
         if (uSSensorData4Builder_ == null) {
           uSSensorData4_ = builderForValue.build();
           onChanged();
@@ -3971,12 +4680,15 @@ public final class Command {
         bitField0_ |= 0x00000008;
         return this;
       }
-      public Builder mergeUSSensorData4(common.files.android.Command.USSensorData value) {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+       */
+      public Builder mergeUSSensorData4(se.liu.ed.Command.USSensorData value) {
         if (uSSensorData4Builder_ == null) {
           if (((bitField0_ & 0x00000008) == 0x00000008) &&
-              uSSensorData4_ != common.files.android.Command.USSensorData.getDefaultInstance()) {
+              uSSensorData4_ != se.liu.ed.Command.USSensorData.getDefaultInstance()) {
             uSSensorData4_ =
-              common.files.android.Command.USSensorData.newBuilder(uSSensorData4_).mergeFrom(value).buildPartial();
+              se.liu.ed.Command.USSensorData.newBuilder(uSSensorData4_).mergeFrom(value).buildPartial();
           } else {
             uSSensorData4_ = value;
           }
@@ -3987,9 +4699,12 @@ public final class Command {
         bitField0_ |= 0x00000008;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+       */
       public Builder clearUSSensorData4() {
         if (uSSensorData4Builder_ == null) {
-          uSSensorData4_ = common.files.android.Command.USSensorData.getDefaultInstance();
+          uSSensorData4_ = se.liu.ed.Command.USSensorData.getDefaultInstance();
           onChanged();
         } else {
           uSSensorData4Builder_.clear();
@@ -3997,177 +4712,396 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
-      public common.files.android.Command.USSensorData.Builder getUSSensorData4Builder() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+       */
+      public se.liu.ed.Command.USSensorData.Builder getUSSensorData4Builder() {
         bitField0_ |= 0x00000008;
         onChanged();
         return getUSSensorData4FieldBuilder().getBuilder();
       }
-      public common.files.android.Command.USSensorDataOrBuilder getUSSensorData4OrBuilder() {
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+       */
+      public se.liu.ed.Command.USSensorDataOrBuilder getUSSensorData4OrBuilder() {
         if (uSSensorData4Builder_ != null) {
           return uSSensorData4Builder_.getMessageOrBuilder();
         } else {
           return uSSensorData4_;
         }
       }
+      /**
+       * <code>required .se.liu.ed.USSensorData uSSensorData4 = 4;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder> 
+          se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder> 
           getUSSensorData4FieldBuilder() {
         if (uSSensorData4Builder_ == null) {
           uSSensorData4Builder_ = new com.google.protobuf.SingleFieldBuilder<
-              common.files.android.Command.USSensorData, common.files.android.Command.USSensorData.Builder, common.files.android.Command.USSensorDataOrBuilder>(
-                  uSSensorData4_,
+              se.liu.ed.Command.USSensorData, se.liu.ed.Command.USSensorData.Builder, se.liu.ed.Command.USSensorDataOrBuilder>(
+                  getUSSensorData4(),
                   getParentForChildren(),
                   isClean());
           uSSensorData4_ = null;
         }
         return uSSensorData4Builder_;
       }
-      
-      // @@protoc_insertion_point(builder_scope:common.files.android.USSensors)
+
+      // @@protoc_insertion_point(builder_scope:se.liu.ed.USSensors)
     }
-    
+
     static {
       defaultInstance = new USSensors(true);
       defaultInstance.initFields();
     }
-    
-    // @@protoc_insertion_point(class_scope:common.files.android.USSensors)
+
+    // @@protoc_insertion_point(class_scope:se.liu.ed.USSensors)
   }
-  
-  public interface I2CSensorsOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-    
-    // required .common.files.android.I2CSensorData i2CSensorData1 = 1;
+
+  public interface I2CSensorsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:se.liu.ed.I2CSensors)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+     */
     boolean hasI2CSensorData1();
-    common.files.android.Command.I2CSensorData getI2CSensorData1();
-    common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData1OrBuilder();
-    
-    // required .common.files.android.I2CSensorData i2CSensorData2 = 2;
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+     */
+    se.liu.ed.Command.I2CSensorData getI2CSensorData1();
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+     */
+    se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData1OrBuilder();
+
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+     */
     boolean hasI2CSensorData2();
-    common.files.android.Command.I2CSensorData getI2CSensorData2();
-    common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData2OrBuilder();
-    
-    // required .common.files.android.I2CSensorData i2CSensorData3 = 3;
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+     */
+    se.liu.ed.Command.I2CSensorData getI2CSensorData2();
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+     */
+    se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData2OrBuilder();
+
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+     */
     boolean hasI2CSensorData3();
-    common.files.android.Command.I2CSensorData getI2CSensorData3();
-    common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData3OrBuilder();
-    
-    // required .common.files.android.I2CSensorData i2CSensorData4 = 4;
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+     */
+    se.liu.ed.Command.I2CSensorData getI2CSensorData3();
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+     */
+    se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData3OrBuilder();
+
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+     */
     boolean hasI2CSensorData4();
-    common.files.android.Command.I2CSensorData getI2CSensorData4();
-    common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData4OrBuilder();
-    
-    // required .common.files.android.I2CSensorData i2CSensorData5 = 5;
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+     */
+    se.liu.ed.Command.I2CSensorData getI2CSensorData4();
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+     */
+    se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData4OrBuilder();
+
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+     */
     boolean hasI2CSensorData5();
-    common.files.android.Command.I2CSensorData getI2CSensorData5();
-    common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData5OrBuilder();
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+     */
+    se.liu.ed.Command.I2CSensorData getI2CSensorData5();
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+     */
+    se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData5OrBuilder();
   }
+  /**
+   * Protobuf type {@code se.liu.ed.I2CSensors}
+   */
   public static final class I2CSensors extends
-      com.google.protobuf.GeneratedMessage
-      implements I2CSensorsOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:se.liu.ed.I2CSensors)
+      I2CSensorsOrBuilder {
     // Use I2CSensors.newBuilder() to construct.
-    private I2CSensors(Builder builder) {
+    private I2CSensors(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private I2CSensors(boolean noInit) {}
-    
+    private I2CSensors(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final I2CSensors defaultInstance;
     public static I2CSensors getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public I2CSensors getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private I2CSensors(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              se.liu.ed.Command.I2CSensorData.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
+                subBuilder = i2CSensorData1_.toBuilder();
+              }
+              i2CSensorData1_ = input.readMessage(se.liu.ed.Command.I2CSensorData.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(i2CSensorData1_);
+                i2CSensorData1_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000001;
+              break;
+            }
+            case 18: {
+              se.liu.ed.Command.I2CSensorData.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                subBuilder = i2CSensorData2_.toBuilder();
+              }
+              i2CSensorData2_ = input.readMessage(se.liu.ed.Command.I2CSensorData.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(i2CSensorData2_);
+                i2CSensorData2_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000002;
+              break;
+            }
+            case 26: {
+              se.liu.ed.Command.I2CSensorData.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000004) == 0x00000004)) {
+                subBuilder = i2CSensorData3_.toBuilder();
+              }
+              i2CSensorData3_ = input.readMessage(se.liu.ed.Command.I2CSensorData.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(i2CSensorData3_);
+                i2CSensorData3_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000004;
+              break;
+            }
+            case 34: {
+              se.liu.ed.Command.I2CSensorData.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000008) == 0x00000008)) {
+                subBuilder = i2CSensorData4_.toBuilder();
+              }
+              i2CSensorData4_ = input.readMessage(se.liu.ed.Command.I2CSensorData.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(i2CSensorData4_);
+                i2CSensorData4_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000008;
+              break;
+            }
+            case 42: {
+              se.liu.ed.Command.I2CSensorData.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000010) == 0x00000010)) {
+                subBuilder = i2CSensorData5_.toBuilder();
+              }
+              i2CSensorData5_ = input.readMessage(se.liu.ed.Command.I2CSensorData.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(i2CSensorData5_);
+                i2CSensorData5_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000010;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return common.files.android.Command.internal_static_common_files_android_I2CSensors_descriptor;
+      return se.liu.ed.Command.internal_static_se_liu_ed_I2CSensors_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return common.files.android.Command.internal_static_common_files_android_I2CSensors_fieldAccessorTable;
+      return se.liu.ed.Command.internal_static_se_liu_ed_I2CSensors_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              se.liu.ed.Command.I2CSensors.class, se.liu.ed.Command.I2CSensors.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<I2CSensors> PARSER =
+        new com.google.protobuf.AbstractParser<I2CSensors>() {
+      public I2CSensors parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new I2CSensors(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<I2CSensors> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
-    // required .common.files.android.I2CSensorData i2CSensorData1 = 1;
     public static final int I2CSENSORDATA1_FIELD_NUMBER = 1;
-    private common.files.android.Command.I2CSensorData i2CSensorData1_;
+    private se.liu.ed.Command.I2CSensorData i2CSensorData1_;
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+     */
     public boolean hasI2CSensorData1() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public common.files.android.Command.I2CSensorData getI2CSensorData1() {
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+     */
+    public se.liu.ed.Command.I2CSensorData getI2CSensorData1() {
       return i2CSensorData1_;
     }
-    public common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData1OrBuilder() {
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+     */
+    public se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData1OrBuilder() {
       return i2CSensorData1_;
     }
-    
-    // required .common.files.android.I2CSensorData i2CSensorData2 = 2;
+
     public static final int I2CSENSORDATA2_FIELD_NUMBER = 2;
-    private common.files.android.Command.I2CSensorData i2CSensorData2_;
+    private se.liu.ed.Command.I2CSensorData i2CSensorData2_;
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+     */
     public boolean hasI2CSensorData2() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-    public common.files.android.Command.I2CSensorData getI2CSensorData2() {
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+     */
+    public se.liu.ed.Command.I2CSensorData getI2CSensorData2() {
       return i2CSensorData2_;
     }
-    public common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData2OrBuilder() {
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+     */
+    public se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData2OrBuilder() {
       return i2CSensorData2_;
     }
-    
-    // required .common.files.android.I2CSensorData i2CSensorData3 = 3;
+
     public static final int I2CSENSORDATA3_FIELD_NUMBER = 3;
-    private common.files.android.Command.I2CSensorData i2CSensorData3_;
+    private se.liu.ed.Command.I2CSensorData i2CSensorData3_;
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+     */
     public boolean hasI2CSensorData3() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
-    public common.files.android.Command.I2CSensorData getI2CSensorData3() {
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+     */
+    public se.liu.ed.Command.I2CSensorData getI2CSensorData3() {
       return i2CSensorData3_;
     }
-    public common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData3OrBuilder() {
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+     */
+    public se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData3OrBuilder() {
       return i2CSensorData3_;
     }
-    
-    // required .common.files.android.I2CSensorData i2CSensorData4 = 4;
+
     public static final int I2CSENSORDATA4_FIELD_NUMBER = 4;
-    private common.files.android.Command.I2CSensorData i2CSensorData4_;
+    private se.liu.ed.Command.I2CSensorData i2CSensorData4_;
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+     */
     public boolean hasI2CSensorData4() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
-    public common.files.android.Command.I2CSensorData getI2CSensorData4() {
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+     */
+    public se.liu.ed.Command.I2CSensorData getI2CSensorData4() {
       return i2CSensorData4_;
     }
-    public common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData4OrBuilder() {
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+     */
+    public se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData4OrBuilder() {
       return i2CSensorData4_;
     }
-    
-    // required .common.files.android.I2CSensorData i2CSensorData5 = 5;
+
     public static final int I2CSENSORDATA5_FIELD_NUMBER = 5;
-    private common.files.android.Command.I2CSensorData i2CSensorData5_;
+    private se.liu.ed.Command.I2CSensorData i2CSensorData5_;
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+     */
     public boolean hasI2CSensorData5() {
       return ((bitField0_ & 0x00000010) == 0x00000010);
     }
-    public common.files.android.Command.I2CSensorData getI2CSensorData5() {
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+     */
+    public se.liu.ed.Command.I2CSensorData getI2CSensorData5() {
       return i2CSensorData5_;
     }
-    public common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData5OrBuilder() {
+    /**
+     * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+     */
+    public se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData5OrBuilder() {
       return i2CSensorData5_;
     }
-    
+
     private void initFields() {
-      i2CSensorData1_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
-      i2CSensorData2_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
-      i2CSensorData3_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
-      i2CSensorData4_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
-      i2CSensorData5_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+      i2CSensorData1_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
+      i2CSensorData2_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
+      i2CSensorData3_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
+      i2CSensorData4_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
+      i2CSensorData5_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-      
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
       if (!hasI2CSensorData1()) {
         memoizedIsInitialized = 0;
         return false;
@@ -4211,7 +5145,7 @@ public final class Command {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -4232,12 +5166,12 @@ public final class Command {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
@@ -4263,113 +5197,106 @@ public final class Command {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
-    public static common.files.android.Command.I2CSensors parseFrom(
+
+    public static se.liu.ed.Command.I2CSensors parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
-    public static common.files.android.Command.I2CSensors parseFrom(
+    public static se.liu.ed.Command.I2CSensors parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static common.files.android.Command.I2CSensors parseFrom(byte[] data)
+    public static se.liu.ed.Command.I2CSensors parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
-    public static common.files.android.Command.I2CSensors parseFrom(
+    public static se.liu.ed.Command.I2CSensors parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static common.files.android.Command.I2CSensors parseFrom(java.io.InputStream input)
+    public static se.liu.ed.Command.I2CSensors parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
-    public static common.files.android.Command.I2CSensors parseFrom(
+    public static se.liu.ed.Command.I2CSensors parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static common.files.android.Command.I2CSensors parseDelimitedFrom(java.io.InputStream input)
+    public static se.liu.ed.Command.I2CSensors parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
-    public static common.files.android.Command.I2CSensors parseDelimitedFrom(
+    public static se.liu.ed.Command.I2CSensors parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static common.files.android.Command.I2CSensors parseFrom(
+    public static se.liu.ed.Command.I2CSensors parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
-    public static common.files.android.Command.I2CSensors parseFrom(
+    public static se.liu.ed.Command.I2CSensors parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(common.files.android.Command.I2CSensors prototype) {
+    public static Builder newBuilder(se.liu.ed.Command.I2CSensors prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code se.liu.ed.I2CSensors}
+     */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements common.files.android.Command.I2CSensorsOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:se.liu.ed.I2CSensors)
+        se.liu.ed.Command.I2CSensorsOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return common.files.android.Command.internal_static_common_files_android_I2CSensors_descriptor;
+        return se.liu.ed.Command.internal_static_se_liu_ed_I2CSensors_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return common.files.android.Command.internal_static_common_files_android_I2CSensors_fieldAccessorTable;
+        return se.liu.ed.Command.internal_static_se_liu_ed_I2CSensors_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                se.liu.ed.Command.I2CSensors.class, se.liu.ed.Command.I2CSensors.Builder.class);
       }
-      
-      // Construct using common.files.android.Command.I2CSensors.newBuilder()
+
+      // Construct using se.liu.ed.Command.I2CSensors.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -4385,75 +5312,65 @@ public final class Command {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         if (i2CSensorData1Builder_ == null) {
-          i2CSensorData1_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+          i2CSensorData1_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
         } else {
           i2CSensorData1Builder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000001);
         if (i2CSensorData2Builder_ == null) {
-          i2CSensorData2_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+          i2CSensorData2_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
         } else {
           i2CSensorData2Builder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
         if (i2CSensorData3Builder_ == null) {
-          i2CSensorData3_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+          i2CSensorData3_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
         } else {
           i2CSensorData3Builder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000004);
         if (i2CSensorData4Builder_ == null) {
-          i2CSensorData4_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+          i2CSensorData4_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
         } else {
           i2CSensorData4Builder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000008);
         if (i2CSensorData5Builder_ == null) {
-          i2CSensorData5_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+          i2CSensorData5_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
         } else {
           i2CSensorData5Builder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return common.files.android.Command.I2CSensors.getDescriptor();
+        return se.liu.ed.Command.internal_static_se_liu_ed_I2CSensors_descriptor;
       }
-      
-      public common.files.android.Command.I2CSensors getDefaultInstanceForType() {
-        return common.files.android.Command.I2CSensors.getDefaultInstance();
+
+      public se.liu.ed.Command.I2CSensors getDefaultInstanceForType() {
+        return se.liu.ed.Command.I2CSensors.getDefaultInstance();
       }
-      
-      public common.files.android.Command.I2CSensors build() {
-        common.files.android.Command.I2CSensors result = buildPartial();
+
+      public se.liu.ed.Command.I2CSensors build() {
+        se.liu.ed.Command.I2CSensors result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
-      
-      private common.files.android.Command.I2CSensors buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        common.files.android.Command.I2CSensors result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
-      public common.files.android.Command.I2CSensors buildPartial() {
-        common.files.android.Command.I2CSensors result = new common.files.android.Command.I2CSensors(this);
+
+      public se.liu.ed.Command.I2CSensors buildPartial() {
+        se.liu.ed.Command.I2CSensors result = new se.liu.ed.Command.I2CSensors(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -4500,18 +5417,18 @@ public final class Command {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof common.files.android.Command.I2CSensors) {
-          return mergeFrom((common.files.android.Command.I2CSensors)other);
+        if (other instanceof se.liu.ed.Command.I2CSensors) {
+          return mergeFrom((se.liu.ed.Command.I2CSensors)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
-      
-      public Builder mergeFrom(common.files.android.Command.I2CSensors other) {
-        if (other == common.files.android.Command.I2CSensors.getDefaultInstance()) return this;
+
+      public Builder mergeFrom(se.liu.ed.Command.I2CSensors other) {
+        if (other == se.liu.ed.Command.I2CSensors.getDefaultInstance()) return this;
         if (other.hasI2CSensorData1()) {
           mergeI2CSensorData1(other.getI2CSensorData1());
         }
@@ -4530,7 +5447,7 @@ public final class Command {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         if (!hasI2CSensorData1()) {
           
@@ -4574,96 +5491,49 @@ public final class Command {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              common.files.android.Command.I2CSensorData.Builder subBuilder = common.files.android.Command.I2CSensorData.newBuilder();
-              if (hasI2CSensorData1()) {
-                subBuilder.mergeFrom(getI2CSensorData1());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setI2CSensorData1(subBuilder.buildPartial());
-              break;
-            }
-            case 18: {
-              common.files.android.Command.I2CSensorData.Builder subBuilder = common.files.android.Command.I2CSensorData.newBuilder();
-              if (hasI2CSensorData2()) {
-                subBuilder.mergeFrom(getI2CSensorData2());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setI2CSensorData2(subBuilder.buildPartial());
-              break;
-            }
-            case 26: {
-              common.files.android.Command.I2CSensorData.Builder subBuilder = common.files.android.Command.I2CSensorData.newBuilder();
-              if (hasI2CSensorData3()) {
-                subBuilder.mergeFrom(getI2CSensorData3());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setI2CSensorData3(subBuilder.buildPartial());
-              break;
-            }
-            case 34: {
-              common.files.android.Command.I2CSensorData.Builder subBuilder = common.files.android.Command.I2CSensorData.newBuilder();
-              if (hasI2CSensorData4()) {
-                subBuilder.mergeFrom(getI2CSensorData4());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setI2CSensorData4(subBuilder.buildPartial());
-              break;
-            }
-            case 42: {
-              common.files.android.Command.I2CSensorData.Builder subBuilder = common.files.android.Command.I2CSensorData.newBuilder();
-              if (hasI2CSensorData5()) {
-                subBuilder.mergeFrom(getI2CSensorData5());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setI2CSensorData5(subBuilder.buildPartial());
-              break;
-            }
+        se.liu.ed.Command.I2CSensors parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (se.liu.ed.Command.I2CSensors) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
-      // required .common.files.android.I2CSensorData i2CSensorData1 = 1;
-      private common.files.android.Command.I2CSensorData i2CSensorData1_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+
+      private se.liu.ed.Command.I2CSensorData i2CSensorData1_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder> i2CSensorData1Builder_;
+          se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder> i2CSensorData1Builder_;
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+       */
       public boolean hasI2CSensorData1() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public common.files.android.Command.I2CSensorData getI2CSensorData1() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+       */
+      public se.liu.ed.Command.I2CSensorData getI2CSensorData1() {
         if (i2CSensorData1Builder_ == null) {
           return i2CSensorData1_;
         } else {
           return i2CSensorData1Builder_.getMessage();
         }
       }
-      public Builder setI2CSensorData1(common.files.android.Command.I2CSensorData value) {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+       */
+      public Builder setI2CSensorData1(se.liu.ed.Command.I2CSensorData value) {
         if (i2CSensorData1Builder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4676,8 +5546,11 @@ public final class Command {
         bitField0_ |= 0x00000001;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+       */
       public Builder setI2CSensorData1(
-          common.files.android.Command.I2CSensorData.Builder builderForValue) {
+          se.liu.ed.Command.I2CSensorData.Builder builderForValue) {
         if (i2CSensorData1Builder_ == null) {
           i2CSensorData1_ = builderForValue.build();
           onChanged();
@@ -4687,12 +5560,15 @@ public final class Command {
         bitField0_ |= 0x00000001;
         return this;
       }
-      public Builder mergeI2CSensorData1(common.files.android.Command.I2CSensorData value) {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+       */
+      public Builder mergeI2CSensorData1(se.liu.ed.Command.I2CSensorData value) {
         if (i2CSensorData1Builder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              i2CSensorData1_ != common.files.android.Command.I2CSensorData.getDefaultInstance()) {
+              i2CSensorData1_ != se.liu.ed.Command.I2CSensorData.getDefaultInstance()) {
             i2CSensorData1_ =
-              common.files.android.Command.I2CSensorData.newBuilder(i2CSensorData1_).mergeFrom(value).buildPartial();
+              se.liu.ed.Command.I2CSensorData.newBuilder(i2CSensorData1_).mergeFrom(value).buildPartial();
           } else {
             i2CSensorData1_ = value;
           }
@@ -4703,9 +5579,12 @@ public final class Command {
         bitField0_ |= 0x00000001;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+       */
       public Builder clearI2CSensorData1() {
         if (i2CSensorData1Builder_ == null) {
-          i2CSensorData1_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+          i2CSensorData1_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
           onChanged();
         } else {
           i2CSensorData1Builder_.clear();
@@ -4713,47 +5592,64 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
-      public common.files.android.Command.I2CSensorData.Builder getI2CSensorData1Builder() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+       */
+      public se.liu.ed.Command.I2CSensorData.Builder getI2CSensorData1Builder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getI2CSensorData1FieldBuilder().getBuilder();
       }
-      public common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData1OrBuilder() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+       */
+      public se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData1OrBuilder() {
         if (i2CSensorData1Builder_ != null) {
           return i2CSensorData1Builder_.getMessageOrBuilder();
         } else {
           return i2CSensorData1_;
         }
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData1 = 1;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder> 
+          se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder> 
           getI2CSensorData1FieldBuilder() {
         if (i2CSensorData1Builder_ == null) {
           i2CSensorData1Builder_ = new com.google.protobuf.SingleFieldBuilder<
-              common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder>(
-                  i2CSensorData1_,
+              se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder>(
+                  getI2CSensorData1(),
                   getParentForChildren(),
                   isClean());
           i2CSensorData1_ = null;
         }
         return i2CSensorData1Builder_;
       }
-      
-      // required .common.files.android.I2CSensorData i2CSensorData2 = 2;
-      private common.files.android.Command.I2CSensorData i2CSensorData2_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+
+      private se.liu.ed.Command.I2CSensorData i2CSensorData2_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder> i2CSensorData2Builder_;
+          se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder> i2CSensorData2Builder_;
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+       */
       public boolean hasI2CSensorData2() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-      public common.files.android.Command.I2CSensorData getI2CSensorData2() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+       */
+      public se.liu.ed.Command.I2CSensorData getI2CSensorData2() {
         if (i2CSensorData2Builder_ == null) {
           return i2CSensorData2_;
         } else {
           return i2CSensorData2Builder_.getMessage();
         }
       }
-      public Builder setI2CSensorData2(common.files.android.Command.I2CSensorData value) {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+       */
+      public Builder setI2CSensorData2(se.liu.ed.Command.I2CSensorData value) {
         if (i2CSensorData2Builder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4766,8 +5662,11 @@ public final class Command {
         bitField0_ |= 0x00000002;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+       */
       public Builder setI2CSensorData2(
-          common.files.android.Command.I2CSensorData.Builder builderForValue) {
+          se.liu.ed.Command.I2CSensorData.Builder builderForValue) {
         if (i2CSensorData2Builder_ == null) {
           i2CSensorData2_ = builderForValue.build();
           onChanged();
@@ -4777,12 +5676,15 @@ public final class Command {
         bitField0_ |= 0x00000002;
         return this;
       }
-      public Builder mergeI2CSensorData2(common.files.android.Command.I2CSensorData value) {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+       */
+      public Builder mergeI2CSensorData2(se.liu.ed.Command.I2CSensorData value) {
         if (i2CSensorData2Builder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002) &&
-              i2CSensorData2_ != common.files.android.Command.I2CSensorData.getDefaultInstance()) {
+              i2CSensorData2_ != se.liu.ed.Command.I2CSensorData.getDefaultInstance()) {
             i2CSensorData2_ =
-              common.files.android.Command.I2CSensorData.newBuilder(i2CSensorData2_).mergeFrom(value).buildPartial();
+              se.liu.ed.Command.I2CSensorData.newBuilder(i2CSensorData2_).mergeFrom(value).buildPartial();
           } else {
             i2CSensorData2_ = value;
           }
@@ -4793,9 +5695,12 @@ public final class Command {
         bitField0_ |= 0x00000002;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+       */
       public Builder clearI2CSensorData2() {
         if (i2CSensorData2Builder_ == null) {
-          i2CSensorData2_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+          i2CSensorData2_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
           onChanged();
         } else {
           i2CSensorData2Builder_.clear();
@@ -4803,47 +5708,64 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
-      public common.files.android.Command.I2CSensorData.Builder getI2CSensorData2Builder() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+       */
+      public se.liu.ed.Command.I2CSensorData.Builder getI2CSensorData2Builder() {
         bitField0_ |= 0x00000002;
         onChanged();
         return getI2CSensorData2FieldBuilder().getBuilder();
       }
-      public common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData2OrBuilder() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+       */
+      public se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData2OrBuilder() {
         if (i2CSensorData2Builder_ != null) {
           return i2CSensorData2Builder_.getMessageOrBuilder();
         } else {
           return i2CSensorData2_;
         }
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData2 = 2;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder> 
+          se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder> 
           getI2CSensorData2FieldBuilder() {
         if (i2CSensorData2Builder_ == null) {
           i2CSensorData2Builder_ = new com.google.protobuf.SingleFieldBuilder<
-              common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder>(
-                  i2CSensorData2_,
+              se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder>(
+                  getI2CSensorData2(),
                   getParentForChildren(),
                   isClean());
           i2CSensorData2_ = null;
         }
         return i2CSensorData2Builder_;
       }
-      
-      // required .common.files.android.I2CSensorData i2CSensorData3 = 3;
-      private common.files.android.Command.I2CSensorData i2CSensorData3_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+
+      private se.liu.ed.Command.I2CSensorData i2CSensorData3_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder> i2CSensorData3Builder_;
+          se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder> i2CSensorData3Builder_;
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+       */
       public boolean hasI2CSensorData3() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
-      public common.files.android.Command.I2CSensorData getI2CSensorData3() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+       */
+      public se.liu.ed.Command.I2CSensorData getI2CSensorData3() {
         if (i2CSensorData3Builder_ == null) {
           return i2CSensorData3_;
         } else {
           return i2CSensorData3Builder_.getMessage();
         }
       }
-      public Builder setI2CSensorData3(common.files.android.Command.I2CSensorData value) {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+       */
+      public Builder setI2CSensorData3(se.liu.ed.Command.I2CSensorData value) {
         if (i2CSensorData3Builder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4856,8 +5778,11 @@ public final class Command {
         bitField0_ |= 0x00000004;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+       */
       public Builder setI2CSensorData3(
-          common.files.android.Command.I2CSensorData.Builder builderForValue) {
+          se.liu.ed.Command.I2CSensorData.Builder builderForValue) {
         if (i2CSensorData3Builder_ == null) {
           i2CSensorData3_ = builderForValue.build();
           onChanged();
@@ -4867,12 +5792,15 @@ public final class Command {
         bitField0_ |= 0x00000004;
         return this;
       }
-      public Builder mergeI2CSensorData3(common.files.android.Command.I2CSensorData value) {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+       */
+      public Builder mergeI2CSensorData3(se.liu.ed.Command.I2CSensorData value) {
         if (i2CSensorData3Builder_ == null) {
           if (((bitField0_ & 0x00000004) == 0x00000004) &&
-              i2CSensorData3_ != common.files.android.Command.I2CSensorData.getDefaultInstance()) {
+              i2CSensorData3_ != se.liu.ed.Command.I2CSensorData.getDefaultInstance()) {
             i2CSensorData3_ =
-              common.files.android.Command.I2CSensorData.newBuilder(i2CSensorData3_).mergeFrom(value).buildPartial();
+              se.liu.ed.Command.I2CSensorData.newBuilder(i2CSensorData3_).mergeFrom(value).buildPartial();
           } else {
             i2CSensorData3_ = value;
           }
@@ -4883,9 +5811,12 @@ public final class Command {
         bitField0_ |= 0x00000004;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+       */
       public Builder clearI2CSensorData3() {
         if (i2CSensorData3Builder_ == null) {
-          i2CSensorData3_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+          i2CSensorData3_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
           onChanged();
         } else {
           i2CSensorData3Builder_.clear();
@@ -4893,47 +5824,64 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
-      public common.files.android.Command.I2CSensorData.Builder getI2CSensorData3Builder() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+       */
+      public se.liu.ed.Command.I2CSensorData.Builder getI2CSensorData3Builder() {
         bitField0_ |= 0x00000004;
         onChanged();
         return getI2CSensorData3FieldBuilder().getBuilder();
       }
-      public common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData3OrBuilder() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+       */
+      public se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData3OrBuilder() {
         if (i2CSensorData3Builder_ != null) {
           return i2CSensorData3Builder_.getMessageOrBuilder();
         } else {
           return i2CSensorData3_;
         }
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData3 = 3;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder> 
+          se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder> 
           getI2CSensorData3FieldBuilder() {
         if (i2CSensorData3Builder_ == null) {
           i2CSensorData3Builder_ = new com.google.protobuf.SingleFieldBuilder<
-              common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder>(
-                  i2CSensorData3_,
+              se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder>(
+                  getI2CSensorData3(),
                   getParentForChildren(),
                   isClean());
           i2CSensorData3_ = null;
         }
         return i2CSensorData3Builder_;
       }
-      
-      // required .common.files.android.I2CSensorData i2CSensorData4 = 4;
-      private common.files.android.Command.I2CSensorData i2CSensorData4_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+
+      private se.liu.ed.Command.I2CSensorData i2CSensorData4_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder> i2CSensorData4Builder_;
+          se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder> i2CSensorData4Builder_;
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+       */
       public boolean hasI2CSensorData4() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
-      public common.files.android.Command.I2CSensorData getI2CSensorData4() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+       */
+      public se.liu.ed.Command.I2CSensorData getI2CSensorData4() {
         if (i2CSensorData4Builder_ == null) {
           return i2CSensorData4_;
         } else {
           return i2CSensorData4Builder_.getMessage();
         }
       }
-      public Builder setI2CSensorData4(common.files.android.Command.I2CSensorData value) {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+       */
+      public Builder setI2CSensorData4(se.liu.ed.Command.I2CSensorData value) {
         if (i2CSensorData4Builder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4946,8 +5894,11 @@ public final class Command {
         bitField0_ |= 0x00000008;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+       */
       public Builder setI2CSensorData4(
-          common.files.android.Command.I2CSensorData.Builder builderForValue) {
+          se.liu.ed.Command.I2CSensorData.Builder builderForValue) {
         if (i2CSensorData4Builder_ == null) {
           i2CSensorData4_ = builderForValue.build();
           onChanged();
@@ -4957,12 +5908,15 @@ public final class Command {
         bitField0_ |= 0x00000008;
         return this;
       }
-      public Builder mergeI2CSensorData4(common.files.android.Command.I2CSensorData value) {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+       */
+      public Builder mergeI2CSensorData4(se.liu.ed.Command.I2CSensorData value) {
         if (i2CSensorData4Builder_ == null) {
           if (((bitField0_ & 0x00000008) == 0x00000008) &&
-              i2CSensorData4_ != common.files.android.Command.I2CSensorData.getDefaultInstance()) {
+              i2CSensorData4_ != se.liu.ed.Command.I2CSensorData.getDefaultInstance()) {
             i2CSensorData4_ =
-              common.files.android.Command.I2CSensorData.newBuilder(i2CSensorData4_).mergeFrom(value).buildPartial();
+              se.liu.ed.Command.I2CSensorData.newBuilder(i2CSensorData4_).mergeFrom(value).buildPartial();
           } else {
             i2CSensorData4_ = value;
           }
@@ -4973,9 +5927,12 @@ public final class Command {
         bitField0_ |= 0x00000008;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+       */
       public Builder clearI2CSensorData4() {
         if (i2CSensorData4Builder_ == null) {
-          i2CSensorData4_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+          i2CSensorData4_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
           onChanged();
         } else {
           i2CSensorData4Builder_.clear();
@@ -4983,47 +5940,64 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
-      public common.files.android.Command.I2CSensorData.Builder getI2CSensorData4Builder() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+       */
+      public se.liu.ed.Command.I2CSensorData.Builder getI2CSensorData4Builder() {
         bitField0_ |= 0x00000008;
         onChanged();
         return getI2CSensorData4FieldBuilder().getBuilder();
       }
-      public common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData4OrBuilder() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+       */
+      public se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData4OrBuilder() {
         if (i2CSensorData4Builder_ != null) {
           return i2CSensorData4Builder_.getMessageOrBuilder();
         } else {
           return i2CSensorData4_;
         }
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData4 = 4;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder> 
+          se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder> 
           getI2CSensorData4FieldBuilder() {
         if (i2CSensorData4Builder_ == null) {
           i2CSensorData4Builder_ = new com.google.protobuf.SingleFieldBuilder<
-              common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder>(
-                  i2CSensorData4_,
+              se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder>(
+                  getI2CSensorData4(),
                   getParentForChildren(),
                   isClean());
           i2CSensorData4_ = null;
         }
         return i2CSensorData4Builder_;
       }
-      
-      // required .common.files.android.I2CSensorData i2CSensorData5 = 5;
-      private common.files.android.Command.I2CSensorData i2CSensorData5_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+
+      private se.liu.ed.Command.I2CSensorData i2CSensorData5_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder> i2CSensorData5Builder_;
+          se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder> i2CSensorData5Builder_;
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+       */
       public boolean hasI2CSensorData5() {
         return ((bitField0_ & 0x00000010) == 0x00000010);
       }
-      public common.files.android.Command.I2CSensorData getI2CSensorData5() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+       */
+      public se.liu.ed.Command.I2CSensorData getI2CSensorData5() {
         if (i2CSensorData5Builder_ == null) {
           return i2CSensorData5_;
         } else {
           return i2CSensorData5Builder_.getMessage();
         }
       }
-      public Builder setI2CSensorData5(common.files.android.Command.I2CSensorData value) {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+       */
+      public Builder setI2CSensorData5(se.liu.ed.Command.I2CSensorData value) {
         if (i2CSensorData5Builder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5036,8 +6010,11 @@ public final class Command {
         bitField0_ |= 0x00000010;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+       */
       public Builder setI2CSensorData5(
-          common.files.android.Command.I2CSensorData.Builder builderForValue) {
+          se.liu.ed.Command.I2CSensorData.Builder builderForValue) {
         if (i2CSensorData5Builder_ == null) {
           i2CSensorData5_ = builderForValue.build();
           onChanged();
@@ -5047,12 +6024,15 @@ public final class Command {
         bitField0_ |= 0x00000010;
         return this;
       }
-      public Builder mergeI2CSensorData5(common.files.android.Command.I2CSensorData value) {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+       */
+      public Builder mergeI2CSensorData5(se.liu.ed.Command.I2CSensorData value) {
         if (i2CSensorData5Builder_ == null) {
           if (((bitField0_ & 0x00000010) == 0x00000010) &&
-              i2CSensorData5_ != common.files.android.Command.I2CSensorData.getDefaultInstance()) {
+              i2CSensorData5_ != se.liu.ed.Command.I2CSensorData.getDefaultInstance()) {
             i2CSensorData5_ =
-              common.files.android.Command.I2CSensorData.newBuilder(i2CSensorData5_).mergeFrom(value).buildPartial();
+              se.liu.ed.Command.I2CSensorData.newBuilder(i2CSensorData5_).mergeFrom(value).buildPartial();
           } else {
             i2CSensorData5_ = value;
           }
@@ -5063,9 +6043,12 @@ public final class Command {
         bitField0_ |= 0x00000010;
         return this;
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+       */
       public Builder clearI2CSensorData5() {
         if (i2CSensorData5Builder_ == null) {
-          i2CSensorData5_ = common.files.android.Command.I2CSensorData.getDefaultInstance();
+          i2CSensorData5_ = se.liu.ed.Command.I2CSensorData.getDefaultInstance();
           onChanged();
         } else {
           i2CSensorData5Builder_.clear();
@@ -5073,79 +6056,88 @@ public final class Command {
         bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
-      public common.files.android.Command.I2CSensorData.Builder getI2CSensorData5Builder() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+       */
+      public se.liu.ed.Command.I2CSensorData.Builder getI2CSensorData5Builder() {
         bitField0_ |= 0x00000010;
         onChanged();
         return getI2CSensorData5FieldBuilder().getBuilder();
       }
-      public common.files.android.Command.I2CSensorDataOrBuilder getI2CSensorData5OrBuilder() {
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+       */
+      public se.liu.ed.Command.I2CSensorDataOrBuilder getI2CSensorData5OrBuilder() {
         if (i2CSensorData5Builder_ != null) {
           return i2CSensorData5Builder_.getMessageOrBuilder();
         } else {
           return i2CSensorData5_;
         }
       }
+      /**
+       * <code>required .se.liu.ed.I2CSensorData i2CSensorData5 = 5;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-          common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder> 
+          se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder> 
           getI2CSensorData5FieldBuilder() {
         if (i2CSensorData5Builder_ == null) {
           i2CSensorData5Builder_ = new com.google.protobuf.SingleFieldBuilder<
-              common.files.android.Command.I2CSensorData, common.files.android.Command.I2CSensorData.Builder, common.files.android.Command.I2CSensorDataOrBuilder>(
-                  i2CSensorData5_,
+              se.liu.ed.Command.I2CSensorData, se.liu.ed.Command.I2CSensorData.Builder, se.liu.ed.Command.I2CSensorDataOrBuilder>(
+                  getI2CSensorData5(),
                   getParentForChildren(),
                   isClean());
           i2CSensorData5_ = null;
         }
         return i2CSensorData5Builder_;
       }
-      
-      // @@protoc_insertion_point(builder_scope:common.files.android.I2CSensors)
+
+      // @@protoc_insertion_point(builder_scope:se.liu.ed.I2CSensors)
     }
-    
+
     static {
       defaultInstance = new I2CSensors(true);
       defaultInstance.initFields();
     }
-    
-    // @@protoc_insertion_point(class_scope:common.files.android.I2CSensors)
+
+    // @@protoc_insertion_point(class_scope:se.liu.ed.I2CSensors)
   }
-  
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_common_files_android_AccelerometerData_descriptor;
+
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_se_liu_ed_AccelerometerData_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_common_files_android_AccelerometerData_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_common_files_android_USSensorData_descriptor;
+      internal_static_se_liu_ed_AccelerometerData_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_se_liu_ed_USSensorData_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_common_files_android_USSensorData_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_common_files_android_I2CSensorData_descriptor;
+      internal_static_se_liu_ed_USSensorData_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_se_liu_ed_I2CSensorData_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_common_files_android_I2CSensorData_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_common_files_android_DriveSignals_descriptor;
+      internal_static_se_liu_ed_I2CSensorData_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_se_liu_ed_DriveSignals_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_common_files_android_DriveSignals_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_common_files_android_Engines_descriptor;
+      internal_static_se_liu_ed_DriveSignals_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_se_liu_ed_Engines_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_common_files_android_Engines_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_common_files_android_USSensors_descriptor;
+      internal_static_se_liu_ed_Engines_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_se_liu_ed_USSensors_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_common_files_android_USSensors_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_common_files_android_I2CSensors_descriptor;
+      internal_static_se_liu_ed_USSensors_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_se_liu_ed_I2CSensors_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_common_files_android_I2CSensors_fieldAccessorTable;
-  
+      internal_static_se_liu_ed_I2CSensors_fieldAccessorTable;
+
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
@@ -5154,103 +6146,85 @@ public final class Command {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rCommand.proto\022\024common.files.android\"F\n" +
-      "\021AccelerometerData\022\017\n\007x_value\030\001 \002(\r\022\017\n\007y" +
-      "_value\030\002 \002(\r\022\017\n\007z_value\030\003 \002(\r\"e\n\014USSenso" +
-      "rData\022\014\n\004type\030\001 \002(\t\022\023\n\013description\030\002 \002(\t" +
-      "\022\017\n\007echopin\030\003 \002(\r\022\022\n\ntriggerpin\030\004 \002(\r\022\r\n" +
-      "\005value\030\005 \002(\r\"R\n\rI2CSensorData\022\014\n\004type\030\001 " +
-      "\002(\t\022\023\n\013description\030\002 \002(\t\022\017\n\007address\030\003 \002(" +
-      "\r\022\r\n\005value\030\004 \002(\r\">\n\014DriveSignals\022\017\n\007forw" +
-      "ard\030\001 \002(\010\022\016\n\006enable\030\002 \002(\010\022\r\n\005power\030\003 \002(\r" +
-      "\"n\n\007Engines\0221\n\005right\030\001 \002(\0132\".common.file",
-      "s.android.DriveSignals\0220\n\004left\030\002 \002(\0132\".c" +
-      "ommon.files.android.DriveSignals\"\367\001\n\tUSS" +
-      "ensors\0229\n\ruSSensorData1\030\001 \002(\0132\".common.f" +
-      "iles.android.USSensorData\0229\n\ruSSensorDat" +
-      "a2\030\002 \002(\0132\".common.files.android.USSensor" +
-      "Data\0229\n\ruSSensorData3\030\003 \002(\0132\".common.fil" +
-      "es.android.USSensorData\0229\n\ruSSensorData4" +
-      "\030\004 \002(\0132\".common.files.android.USSensorDa" +
-      "ta\"\275\002\n\nI2CSensors\022;\n\016i2CSensorData1\030\001 \002(" +
-      "\0132#.common.files.android.I2CSensorData\022;",
-      "\n\016i2CSensorData2\030\002 \002(\0132#.common.files.an" +
-      "droid.I2CSensorData\022;\n\016i2CSensorData3\030\003 " +
-      "\002(\0132#.common.files.android.I2CSensorData" +
-      "\022;\n\016i2CSensorData4\030\004 \002(\0132#.common.files." +
-      "android.I2CSensorData\022;\n\016i2CSensorData5\030" +
-      "\005 \002(\0132#.common.files.android.I2CSensorDa" +
-      "ta"
+      "\n\rCommand.proto\022\tse.liu.ed\"F\n\021Accelerome" +
+      "terData\022\017\n\007x_value\030\001 \002(\r\022\017\n\007y_value\030\002 \002(" +
+      "\r\022\017\n\007z_value\030\003 \002(\r\"e\n\014USSensorData\022\014\n\004ty" +
+      "pe\030\001 \002(\t\022\023\n\013description\030\002 \002(\t\022\017\n\007echopin" +
+      "\030\003 \002(\r\022\022\n\ntriggerpin\030\004 \002(\r\022\r\n\005value\030\005 \002(" +
+      "\r\"R\n\rI2CSensorData\022\014\n\004type\030\001 \002(\t\022\023\n\013desc" +
+      "ription\030\002 \002(\t\022\017\n\007address\030\003 \002(\r\022\r\n\005value\030" +
+      "\004 \002(\r\">\n\014DriveSignals\022\017\n\007forward\030\001 \002(\010\022\016" +
+      "\n\006enable\030\002 \002(\010\022\r\n\005power\030\003 \002(\r\"X\n\007Engines" +
+      "\022&\n\005right\030\001 \002(\0132\027.se.liu.ed.DriveSignals",
+      "\022%\n\004left\030\002 \002(\0132\027.se.liu.ed.DriveSignals\"" +
+      "\313\001\n\tUSSensors\022.\n\ruSSensorData1\030\001 \002(\0132\027.s" +
+      "e.liu.ed.USSensorData\022.\n\ruSSensorData2\030\002" +
+      " \002(\0132\027.se.liu.ed.USSensorData\022.\n\ruSSenso" +
+      "rData3\030\003 \002(\0132\027.se.liu.ed.USSensorData\022.\n" +
+      "\ruSSensorData4\030\004 \002(\0132\027.se.liu.ed.USSenso" +
+      "rData\"\206\002\n\nI2CSensors\0220\n\016i2CSensorData1\030\001" +
+      " \002(\0132\030.se.liu.ed.I2CSensorData\0220\n\016i2CSen" +
+      "sorData2\030\002 \002(\0132\030.se.liu.ed.I2CSensorData" +
+      "\0220\n\016i2CSensorData3\030\003 \002(\0132\030.se.liu.ed.I2C",
+      "SensorData\0220\n\016i2CSensorData4\030\004 \002(\0132\030.se." +
+      "liu.ed.I2CSensorData\0220\n\016i2CSensorData5\030\005" +
+      " \002(\0132\030.se.liu.ed.I2CSensorData"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_common_files_android_AccelerometerData_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_common_files_android_AccelerometerData_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_common_files_android_AccelerometerData_descriptor,
-              new java.lang.String[] { "XValue", "YValue", "ZValue", },
-              common.files.android.Command.AccelerometerData.class,
-              common.files.android.Command.AccelerometerData.Builder.class);
-          internal_static_common_files_android_USSensorData_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_common_files_android_USSensorData_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_common_files_android_USSensorData_descriptor,
-              new java.lang.String[] { "Type", "Description", "Echopin", "Triggerpin", "Value", },
-              common.files.android.Command.USSensorData.class,
-              common.files.android.Command.USSensorData.Builder.class);
-          internal_static_common_files_android_I2CSensorData_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_common_files_android_I2CSensorData_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_common_files_android_I2CSensorData_descriptor,
-              new java.lang.String[] { "Type", "Description", "Address", "Value", },
-              common.files.android.Command.I2CSensorData.class,
-              common.files.android.Command.I2CSensorData.Builder.class);
-          internal_static_common_files_android_DriveSignals_descriptor =
-            getDescriptor().getMessageTypes().get(3);
-          internal_static_common_files_android_DriveSignals_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_common_files_android_DriveSignals_descriptor,
-              new java.lang.String[] { "Forward", "Enable", "Power", },
-              common.files.android.Command.DriveSignals.class,
-              common.files.android.Command.DriveSignals.Builder.class);
-          internal_static_common_files_android_Engines_descriptor =
-            getDescriptor().getMessageTypes().get(4);
-          internal_static_common_files_android_Engines_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_common_files_android_Engines_descriptor,
-              new java.lang.String[] { "Right", "Left", },
-              common.files.android.Command.Engines.class,
-              common.files.android.Command.Engines.Builder.class);
-          internal_static_common_files_android_USSensors_descriptor =
-            getDescriptor().getMessageTypes().get(5);
-          internal_static_common_files_android_USSensors_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_common_files_android_USSensors_descriptor,
-              new java.lang.String[] { "USSensorData1", "USSensorData2", "USSensorData3", "USSensorData4", },
-              common.files.android.Command.USSensors.class,
-              common.files.android.Command.USSensors.Builder.class);
-          internal_static_common_files_android_I2CSensors_descriptor =
-            getDescriptor().getMessageTypes().get(6);
-          internal_static_common_files_android_I2CSensors_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_common_files_android_I2CSensors_descriptor,
-              new java.lang.String[] { "I2CSensorData1", "I2CSensorData2", "I2CSensorData3", "I2CSensorData4", "I2CSensorData5", },
-              common.files.android.Command.I2CSensors.class,
-              common.files.android.Command.I2CSensors.Builder.class);
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_se_liu_ed_AccelerometerData_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_se_liu_ed_AccelerometerData_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_se_liu_ed_AccelerometerData_descriptor,
+        new java.lang.String[] { "XValue", "YValue", "ZValue", });
+    internal_static_se_liu_ed_USSensorData_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_se_liu_ed_USSensorData_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_se_liu_ed_USSensorData_descriptor,
+        new java.lang.String[] { "Type", "Description", "Echopin", "Triggerpin", "Value", });
+    internal_static_se_liu_ed_I2CSensorData_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_se_liu_ed_I2CSensorData_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_se_liu_ed_I2CSensorData_descriptor,
+        new java.lang.String[] { "Type", "Description", "Address", "Value", });
+    internal_static_se_liu_ed_DriveSignals_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_se_liu_ed_DriveSignals_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_se_liu_ed_DriveSignals_descriptor,
+        new java.lang.String[] { "Forward", "Enable", "Power", });
+    internal_static_se_liu_ed_Engines_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_se_liu_ed_Engines_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_se_liu_ed_Engines_descriptor,
+        new java.lang.String[] { "Right", "Left", });
+    internal_static_se_liu_ed_USSensors_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_se_liu_ed_USSensors_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_se_liu_ed_USSensors_descriptor,
+        new java.lang.String[] { "USSensorData1", "USSensorData2", "USSensorData3", "USSensorData4", });
+    internal_static_se_liu_ed_I2CSensors_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_se_liu_ed_I2CSensors_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_se_liu_ed_I2CSensors_descriptor,
+        new java.lang.String[] { "I2CSensorData1", "I2CSensorData2", "I2CSensorData3", "I2CSensorData4", "I2CSensorData5", });
   }
-  
+
   // @@protoc_insertion_point(outer_class_scope)
 }

@@ -1,7 +1,7 @@
 package remote.control.android;
 
-import common.files.android.Command.DriveSignals;
-import common.files.android.Command.Engines;
+import se.liu.ed.Command.DriveSignals;
+import se.liu.ed.Command.Engines;
 
 import remote.control.motorsignals.MotorSignals;
 import remote.control.motorsignals.MotorSignalsBuilder;
