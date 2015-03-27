@@ -1,6 +1,5 @@
 subprojects {
   apply plugin: 'java'
-
     repositories {
        mavenCentral()
     }
@@ -9,6 +8,7 @@ subprojects {
         testCompile 'junit:junit:4.11'
     }
 
+    group = 'se.liu.ed'
     version = '1.0'
 
     jar {
@@ -16,15 +16,9 @@ subprojects {
     }
 }
 
-project(':remote.control.android') {
-  dependencies {
-    compile project(':common.files.android')
-  }
+project('Hovercraft-Remote') {
 }
 
-project('on.hovercraft.android') {
-  dependencies {
-    compile project(':common.files.android')
-  }
+project('Hovercraft-AOA') {
 }
 

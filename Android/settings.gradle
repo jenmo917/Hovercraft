@@ -1,2 +1,2 @@
-include "common.files.android", "remote.control.android", "on.hovercraft.android"
+include "Hovercraft-Remote", "Hovercraft-Commons", "Hovercraft-AOA"
 

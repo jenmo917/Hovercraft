@@ -1,0 +1,2 @@
+include ':Android', ':Android:Hoovercraft-Remote', ':Android:Hoovercraft-Commons', ':Android:Hoovecraft-ADK'
+
