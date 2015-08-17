@@ -1,4 +1,4 @@
-package common.files.android;
+package se.liu.ed;
 
 
 message AccelerometerData{

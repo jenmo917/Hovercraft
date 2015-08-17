@@ -1,3 +1,8 @@
 .metadata/*
 TNE085_report/*
 *~
+**/.idea
+**/.gradle
+*.swp
+**/build
+

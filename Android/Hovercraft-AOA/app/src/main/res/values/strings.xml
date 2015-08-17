@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hover project</string>
+    <string name="Info">No info</string>
+    <string name="Message">No messages</string>
+    <string name="adk_test_button">Send test command to ADK</string>
+    <string name="bt_listen_button">Bluetooth listen</string>
+    <string name="bt_setup_button">Bluetooth setup</string>
+    <string name="bt_connection">Bluetooth connection</string>
+    <string name="usb_connection">USB connection</string>
+</resources>
