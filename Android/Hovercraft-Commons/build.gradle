@@ -1,0 +1,25 @@
+apply plugin : 'java'
+apply plugin : 'maven'
+apply plugin : 'maven-publish'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId getGroup()
+            artifactId 'Hoovercraft-Commons'
+            version getVersion()
+            from components.java
+        }
+    }
+}
+
+repositories {
+    mavenCentral();
+}
+
+dependencies {
+    compile 'com.google.protobuf:protobuf-java:2.6.1'
+}
